@@ -1,0 +1,34 @@
+Chosen columns: ['Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
+
+GENERATION 0:
+before feature gen (891, 10)
+after feature gen (891, 60)
+After first preprocessing:(891, 60)
+before feature gen (891, 60)
+after feature gen (891, 107)
+After second preprocessing:(891, 107)
+before feature gen (891, 107)
+after feature gen (891, 107)
+After third preprocessing:(891, 107)
+after feature clean (891, 94)
+Model score after gen 0 (prep): 0.8395204318624068
+#selected features 20
+before feature gen (891, 107)
+after feature gen (891, 154)
+After first engineering:(891, 154)
+before feature gen (891, 154)
+after feature gen (891, 204)
+After second engineering :(891, 204)
+before feature gen (891, 204)
+after feature gen (891, 204)
+After third engineering:(891, 204)
+after feature clean (891, 188)
+Model score after gen 0 (eng): 0.8383905592869247
+#selected features 20
+Index(['Fare_squared', 'ticket_alpha_count_log', 'Ticket_common', 'Age_sqrt',
+       'age_sqrt_ratio', 'Pclass_normalized', 'Fare_low',
+       'Age_sibsp_young_high', 'family_size_normalized', 'sibsp_squared',
+       'cabinA_freq_sum', 'Pclass_one_hot_1', 'Fare_min_max_scaled',
+       'parch_sex_diff', 'Parch_ordinal', 'Cabin_factorized', 'fare_squared',
+       'SibSp_zero_one_encoded', 'Parch_with_family', 'Cabin_freq_enc'],
+      dtype='object')
