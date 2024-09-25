@@ -1,0 +1,101 @@
+Chosen columns: ['Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
+
+GENERATION 1:
+before feature gen (891, 10)
+after feature gen (891, 60)
+After first preprocessing:(891, 60)
+before feature gen (891, 60)
+after feature gen (891, 110)
+After second preprocessing:(891, 110)
+before feature gen (891, 110)
+after feature gen (891, 158)
+After third preprocessing:(891, 158)
+after feature clean (891, 144)
+Model score after gen 0 (prep): 0.8372732408511705
+before feature gen (891, 158)
+after feature gen (891, 174)
+After first engineering:(891, 174)
+before feature gen (891, 174)
+after feature gen (891, 224)
+After second engineering :(891, 224)
+before feature gen (891, 224)
+after feature gen (891, 224)
+After third engineering:(891, 224)
+after feature clean (891, 210)
+Model score after gen 0 (eng): 0.8260749482141737
+Index(['embarked_ascii', 'Age_scaled', 'cabin_age_sum',
+       'pclass_fare_age_ratio', 'Pclass_binary_2', 'title_count',
+       'age_cabin_numeric_product', 'age_range', 'Parch_log', 'log_sibsp',
+       'sibsp_mrs_sum', 'cabin_alpha_count', 'ticket_trigram_count',
+       'age_filled', 'Fare_per_person', 'SibSp_log', 'master_age_interaction',
+       'Age_bucket', 'first_name_length', 'first_ticket_char_ascii'],
+      dtype='object')
+Model score with selected features: 0.7699893289812316
+GENERATION 2:
+before feature gen (891, 224)
+after feature gen (891, 272)
+After first preprocessing:(891, 272)
+before feature gen (891, 272)
+after feature gen (891, 322)
+After second preprocessing:(891, 322)
+before feature gen (891, 322)
+after feature gen (891, 354)
+After third preprocessing:(891, 354)
+after feature clean (891, 340)
+Model score after gen 1 (prep): 0.8305567760969179
+before feature gen (891, 354)
+after feature gen (891, 403)
+After first engineering:(891, 403)
+before feature gen (891, 403)
+after feature gen (891, 452)
+After second engineering :(891, 452)
+before feature gen (891, 452)
+after feature gen (891, 452)
+After third engineering:(891, 452)
+after feature clean (891, 438)
+Model score after gen 1 (eng): 0.8271671583704727
+Index(['Fare_per_person_sqrt', 'interaction_isalone_sibsp_log',
+       'sqrt_fare_per_person', 'first_name_length',
+       'product_parch_age_scaled_extended', 'fare_per_person',
+       'normalized_embarked_ascii', 'log_cabin_frequency_normalized',
+       'ratio_cabin_age_sum_sibsp_mrs', 'mrs_fare_interaction_normalized',
+       'age_impute_age_diff', 'name_length', 'title_count',
+       'log_mrs_fare_interaction', 'ratio_mrs_fare_embarked_ascii', 'mr_title',
+       'sum_digits_prefix_cabin_squared', 'embarked_c', 'age_filled',
+       'sum_log_cabin_sibsp_product'],
+      dtype='object')
+Model score with selected features: 0.808097420124286
+GENERATION 3:
+before feature gen (891, 452)
+after feature gen (891, 490)
+After first preprocessing:(891, 490)
+before feature gen (891, 490)
+after feature gen (891, 533)
+After second preprocessing:(891, 533)
+before feature gen (891, 533)
+after feature gen (891, 576)
+After third preprocessing:(891, 576)
+after feature clean (891, 559)
+Model score after gen 2 (prep): 0.8249450756386919
+before feature gen (891, 576)
+after feature gen (891, 624)
+After first engineering:(891, 624)
+before feature gen (891, 624)
+after feature gen (891, 674)
+After second engineering :(891, 674)
+before feature gen (891, 674)
+after feature gen (891, 674)
+After third engineering:(891, 674)
+after feature clean (891, 657)
+Model score after gen 2 (eng): 0.8316615403929447
+Index(['sex_age_interaction', 'master_sex_diff', 'Pclass_scaled',
+       'vowels_scaled_ratio', 'ticket_frequency', 'Pclass', 'FamilySize',
+       'embarked_ascii_sex_product', 'cabin_interaction_times_fare',
+       'sibsp_cabin_freq_extended', 'Title_encoded',
+       'ratio_cabin_embarked_age_scaled_squared', 'Fare_scaled',
+       'diff_consonant_log_cabin', 'freq_encoded_name_length',
+       'embarked_ascii_times_age_bucket', 'FamilySize_log',
+       'sum_poly2_age_consonant', 'sum_digits_prefix_first_ascii',
+       'age_scaled_divided_by_fare'],
+      dtype='object')
+Model score with selected features: 0.8339150084740444

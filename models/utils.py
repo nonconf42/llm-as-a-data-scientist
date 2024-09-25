@@ -3,7 +3,8 @@ import pandas as pd
 import textwrap
 import re
 import eli5
-from scipy.special import softmax
+# from scipy.special import softmax
+from sklearn.preprocessing import StandardScaler
 import numpy as np
 
 instruction_dict = {
@@ -100,6 +101,44 @@ preprocessing_techniques = {
         "Label Encoding"
     ]
 }
+
+def softmax(logits, temperature=1.0):
+    """
+    Computes the softmax of a list or numpy array of logits with temperature scaling.
+
+    Parameters:
+    logits (array-like): Input data (logits) to softmax function.
+    temperature (float): Temperature parameter for scaling logits.
+
+    Returns:
+    numpy.ndarray: Probability distribution after applying temperature softmax.
+    """
+    # Convert logits to a NumPy array
+    logits = np.asarray(logits, dtype=np.float64)
+
+    # Handle temperature scaling
+    if temperature <= 0:
+        raise ValueError("Temperature must be greater than zero.")
+
+    # Scale logits by temperature
+    scaled_logits = logits / temperature
+
+    # Numerical stability: subtract the max to prevent overflow
+    max_logits = np.max(scaled_logits)
+    stabilized_logits = scaled_logits - max_logits
+
+    exp_logits = np.exp(stabilized_logits)
+    sum_exp_logits = np.sum(exp_logits)
+
+    # Avoid division by zero
+    if sum_exp_logits == 0:
+        raise ValueError("Sum of exponential logits is zero. Check input values or temperature.")
+
+    softmax_probs = exp_logits / sum_exp_logits
+
+    return softmax_probs
+
+
 def normalize_indentation(code_string, indent_size=4):
     lines = code_string.splitlines()
 
@@ -174,8 +213,10 @@ def get_feature_importance(ml_model):
 
 def prepare_data_for_model(dataset):
     #remove all non-numeric columns from data.train_input
+    scaler = StandardScaler()
     dataset.train_input_clean = dataset.train_input._get_numeric_data()
     dataset.train_input_clean.replace([np.inf, -np.inf], np.nan, inplace=True)
+    dataset.train_input_clean = pd.DataFrame(scaler.fit_transform(dataset.train_input_clean), columns=dataset.train_input_clean.columns)
     print("after feature clean", dataset.train_input_clean.shape)
 
 def combine_datasets(dataset):
@@ -183,17 +224,20 @@ def combine_datasets(dataset):
     # dataset.train_input = dataset.train_input + dataset.train_input_new_features
     pass
 
-def select_features(dataset, feature_importances, num_features):
+def select_features(dataset, feature_importances, num_features, method='random'):
     
     # given features and their importances
     # create prob distrib over features - softmax from numpy
     # then select randonly num_features - given prob distrib
-    # dataset.train_input_selected = dataset.train_input[[selected_cols]]
-    probabilities = softmax(list(feature_importances.values()))
-    features = list(feature_importances.keys())
-    selected_features = np.random.choice(features, num_features, p=probabilities, replace=False)
-    print("#selected features", len(selected_features))
-    dataset.train_input_selected = dataset.train_input[selected_features]
+    # dataset.train_input_selected = dataset.train_input[[selected_cols]]\
+    if method == 'random':
+        probabilities = softmax(list(feature_importances.values()))
+        features = list(feature_importances.keys())
+        selected_features = np.random.choice(features, num_features, p=probabilities, replace=False)
+        dataset.train_input_selected = dataset.train_input[selected_features]
+    elif method == 'top':
+        top_features = list(feature_importances.keys())[0:num_features]
+        dataset.train_input_selected = dataset.train_input[top_features]
 
 def get_cols_info_prompt(dataset):
     cols_info_prompt = ''

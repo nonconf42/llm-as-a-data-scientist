@@ -27,7 +27,7 @@ class Model:
                 nthread= -1,
                 scale_pos_weight=1)
             
-    def fit(self, data):
+    def fit(self, data, subset='all'):
         if self.model_name == 'XGB':
             parameters = {
                 'max_depth': [3, 5, 7, 9], 
@@ -41,8 +41,14 @@ class Model:
             cv=5,
             scoring=problem_type_score[self.problem_type],
         )
-        self.grid_search.fit(data.train_input_clean, data.train_labels)
-        self.model = self.grid_search.best_estimator_
-        self.score = self.grid_search.best_score_
+        if subset == 'all':
+            self.grid_search.fit(data.train_input_clean, data.train_labels)
+            self.model = self.grid_search.best_estimator_
+            self.score = self.grid_search.best_score_
+        elif subset == 'top':
+            self.grid_search.fit(data.train_input_selected, data.train_labels)
+            self.model = self.grid_search.best_estimator_
+            self.score = self.grid_search.best_score_
+
 
         

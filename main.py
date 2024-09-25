@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 warnings.filterwarnings("ignore")
 
-NUM_OF_GENERATIONS = 1
+NUM_OF_GENERATIONS = 3
 NUM_OF_FEATURES = 20
 
 dataset = DataReader('Titanic')
@@ -28,7 +28,7 @@ if args.debug:
 
 
 for i in tqdm(range(NUM_OF_GENERATIONS)):
-    print(f'GENERATION {i}:')
+    print(f'GENERATION {i+1}:')
     ### PREPROCESSING PART ###
 
     prep_1_prompt = generate_prompt(
@@ -138,12 +138,19 @@ for i in tqdm(range(NUM_OF_GENERATIONS)):
     # if args.debug:
     #     print(f'Feature Importances:\n {feature_importances}')
     
-    
-    select_features(dataset, feature_importances, NUM_OF_FEATURES)
-    dataset.chosen_features = list(dataset.train_input_selected.columns)
+    if i + 1 == NUM_OF_GENERATIONS:
+        select_features(dataset, feature_importances, NUM_OF_FEATURES, method='top')
+        dataset.chosen_features = list(dataset.train_input_selected.columns)
+    else:
+        select_features(dataset, feature_importances, NUM_OF_FEATURES)
+        dataset.chosen_features = list(dataset.train_input_selected.columns)
+        
     if args.debug:
         print(dataset.train_input_selected.columns)
 
+    ml_model.fit(data=dataset, subset='top')
+    if args.debug:
+        print(f'Model score with selected features: {ml_model.score}')
 
 ### GPT PREPROCESSING CALL ###
 # instruction_type = 'preprocessing'

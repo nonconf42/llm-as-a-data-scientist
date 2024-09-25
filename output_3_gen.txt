@@ -1,0 +1,47 @@
+Chosen columns: ['Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
+
+GENERATION 0:
+before feature gen (891, 10)
+after feature gen (891, 57)
+After first preprocessing:(891, 57)
+before feature gen (891, 57)
+after feature gen (891, 106)
+After second preprocessing:(891, 106)
+before feature gen (891, 106)
+after feature gen (891, 147)
+After third preprocessing:(891, 147)
+after feature clean (891, 138)
+Model score after gen 0 (prep): 0.8473856004017325
+#selected features 20
+before feature gen (891, 147)
+after feature gen (891, 156)
+After first engineering:(891, 156)
+before feature gen (891, 156)
+after feature gen (891, 206)
+After second engineering :(891, 206)
+before feature gen (891, 206)
+after feature gen (891, 206)
+After third engineering:(891, 206)
+after feature clean (891, 197)
+Model score after gen 0 (eng): 0.8339401167534994
+#selected features 20
+Index(['parch_norm', 'name_title_others_SibSp_ratio', 'new_feature_18',
+       'new_feature_44', 'Ticket_num_chars', 'ticket_length_bin',
+       'Ticket_freq', 'SibSp_ticket_length_bin_ratio', 'cabin_num_exists',
+       'Age_above_50', 'new_feature_50', 'ticket_numeric_new_feature_17_ratio',
+       'pclass_mean_fare_age_imputed_diff', 'is_ticket_numeric',
+       'age_imputed_new_feature_22_ratio', 'cabin_num', 'new_feature_47',
+       'new_feature_26', 'new_feature_22_has_family_diff',
+       'Fare_above_median'],
+      dtype='object')
+GENERATION 1:
+before feature gen (891, 206)
+after feature gen (891, 206)
+After first preprocessing:(891, 206)
+before feature gen (891, 206)
+after feature gen (891, 259)
+After second preprocessing:(891, 259)
+before feature gen (891, 259)
+after feature gen (891, 259)
+After third preprocessing:(891, 259)
+after feature clean (891, 250)
