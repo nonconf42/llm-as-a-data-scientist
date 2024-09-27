@@ -1,0 +1,62 @@
+Chosen columns: ['Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
+
+TEMPERATURE VALUE: 0.1
+GENERATION 1:
+before feature gen (891, 10)
+after feature gen (891, 59)
+After first preprocessing:(891, 59)
+before feature gen (891, 59)
+after feature gen (891, 65)
+After second preprocessing:(891, 65)
+before feature gen (891, 65)
+after feature gen (891, 103)
+After third preprocessing:(891, 103)
+before feature gen (891, 103)
+after feature gen (891, 149)
+After forth preprocessing:(891, 149)
+before feature gen (891, 149)
+after feature gen (891, 149)
+After fifth preprocessing:(891, 149)
+after feature clean (891, 98)
+Model score after gen 0 (prep): 0.8339024543343168
+before feature gen (891, 149)
+after feature gen (891, 199)
+After first engineering:(891, 199)
+before feature gen (891, 199)
+after feature gen (891, 249)
+After second engineering :(891, 249)
+before feature gen (891, 249)
+after feature gen (891, 249)
+After third engineering:(891, 249)
+after feature clean (891, 190)
+Model score after gen 0 (eng): 0.8305191136777351
+Index(['new_feature_34', 'Family_size', 'new_feature_39', 'Pclass',
+       'new_feature_32', 'new_feature_17', 'Family_size_squared',
+       'Cabin_first_letter_freq', 'new_feature_50', 'new_feature_43',
+       'Fare_log', 'Cabin_first_letter', 'Age_squared', 'Ticket_unique',
+       'new_feature_42', 'Title_Rare', 'Parch', 'Title_Mrs',
+       'Cabin_first_letter_numeric', 'new_feature_14', 'new_feature_38',
+       'new_feature_1', 'fare_min_max_per_class_squared', 'new_feature_20',
+       'new_feature_48', 'SibSp', 'age_sex_class_median_imputed', 'Ticket_len',
+       'name_title', 'new_feature_35', 'Embarked_first_letter',
+       'new_feature_22', 'Fare_bin', 'Fare_per_person', 'new_feature_41',
+       'new_feature_24', 'new_feature_4', 'new_feature_21', 'new_feature_26',
+       'new_feature_9', 'new_feature_10', 'new_feature_7', 'new_feature_13',
+       'SibSp_squared', 'cabin_deck_encoded', 'new_feature_46',
+       'Sex_label_enc', 'new_feature_5', 'Age', 'Name_len', 'Fare',
+       'Log_Fare_per_person', 'new_feature_3', 'new_feature_40',
+       'Ticket_num_digits', 'new_feature_15', 'age_class_mean_imputed',
+       'new_feature_37', 'fare_min_max_per_class', 'new_feature_29',
+       'new_feature_30', 'new_feature_23', 'ticket_len_log',
+       'Ticket_non_digits_count', 'new_feature_2', 'age_min_max_per_sex',
+       'new_feature_36', 'new_feature_44', 'Ticket_label_enc',
+       'new_feature_27', 'new_feature_28', 'Pclass_2', 'name_len_cubed',
+       'Embarked_S', 'Has_Cabin', 'name_len_log', 'SibSp_greater_than_0',
+       'new_feature_19', 'Embarked_Q', 'Name_word_count', 'Title_freq_enc',
+       'new_feature_31', 'Pclass_freq_enc', 'new_feature_18', 'Cabin_freq',
+       'Age_imputed_mean', 'Embarked_C', 'Ticket_is_numeric',
+       'fare_per_person_squared', 'new_feature_16'],
+      dtype='object')
+Model score with selected features: 0.8260310087251271
+TEMPERATURE VALUE: 0.5
+GENERATION 1:

@@ -193,10 +193,14 @@ def generate_features(dataset, code_text):
             #print(code)
             #print("ERROR:", e)
             pass
-    dataset.train_input = data
+    
+    # dataset.train_input = data
     for feature in features_description:
-        if feature not in dataset.train_input.columns:
+        if feature not in data.columns:
             continue
+        if feature in dataset.train_input.columns:
+            pass # rename feature
+        dataset.train_input[feature] = data[feature]
         dataset.features_description[feature] = features_description[feature]
     print("after feature gen", dataset.train_input.shape)
 
@@ -217,6 +221,7 @@ def prepare_data_for_model(dataset):
     dataset.train_input_clean = dataset.train_input._get_numeric_data()
     dataset.train_input_clean.replace([np.inf, -np.inf], np.nan, inplace=True)
     dataset.train_input_clean = pd.DataFrame(scaler.fit_transform(dataset.train_input_clean), columns=dataset.train_input_clean.columns)
+    dataset.train_input_clean = dataset.train_input_clean.T.drop_duplicates().T
     print("after feature clean", dataset.train_input_clean.shape)
 
 def combine_datasets(dataset):
@@ -224,20 +229,25 @@ def combine_datasets(dataset):
     # dataset.train_input = dataset.train_input + dataset.train_input_new_features
     pass
 
-def select_features(dataset, feature_importances, num_features, method='random'):
+def select_features(dataset, feature_importances, num_features, temp, method='random'):
     
     # given features and their importances
     # create prob distrib over features - softmax from numpy
     # then select randonly num_features - given prob distrib
     # dataset.train_input_selected = dataset.train_input[[selected_cols]]\
     if method == 'random':
-        probabilities = softmax(list(feature_importances.values()))
+        probabilities = softmax(list(feature_importances.values()), temperature=temp)
         features = list(feature_importances.keys())
         selected_features = np.random.choice(features, num_features, p=probabilities, replace=False)
         dataset.train_input_selected = dataset.train_input[selected_features]
+
     elif method == 'top':
         top_features = list(feature_importances.keys())[0:num_features]
         dataset.train_input_selected = dataset.train_input[top_features]
+
+    elif method == 'positive importance':
+        positive_importance_features = [k for k,v in feature_importances.items() if v > 0]
+        dataset.train_input_selected = dataset.train_input[positive_importance_features]
 
 def get_cols_info_prompt(dataset):
     cols_info_prompt = ''
@@ -293,7 +303,8 @@ def generate_prompt(instruction_type, dataset, transformation_type=None):
                             Do not use features other than given above.
                             Your response should follow the format below, 
                             where transformation function is some preprocessing you do over one existing feature. 
-                            Transformation should not include interactions between several features. 
+                            Transformation should not include interactions between several features. Do not name features like 'feature_1'.
+                            Give meaningfull name that describes transformation.
                             Do not use for loop. Do not use lambda functions. Do not use features other than given above.
                             Do not use target feature. Do not create/read 'data' and 'features_description' objects.
                             Use feature names exactly as they are given above. New features must be of numerical datatype.
@@ -303,6 +314,7 @@ def generate_prompt(instruction_type, dataset, transformation_type=None):
                             Please generate 50 new features based on the given features.
                             Your response should follow the format below, where transformation function is some operation you do over existing features. 
                             Do not use for loop. Do not use lambda functions. Do not use features other than given above. 
+                            Do not name features like 'feature_1'. Give meaningfull name that describes transformation.
                             Do not use target feature. Do not create/read 'data' and 'features_description' objects.
                             Use feature names exactly as they are given above. New features must be of numerical datatype. 
                             Format:
