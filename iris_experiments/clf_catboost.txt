@@ -1,0 +1,90 @@
+Training CatBoostClassifier_VarianceThreshold...
+CatBoostClassifier_VarianceThreshold performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+Training CatBoostClassifier_SelectKBest...
+CatBoostClassifier_SelectKBest performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+Training CatBoostClassifier_SelectKBest...
+CatBoostClassifier_SelectKBest performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest failed with error: A worker process managed by the executor was unexpectedly terminated. This could be caused by a segmentation fault while calling the function or by an excessive memory usage causing the Operating System to kill the worker.
+
+The exit codes of the workers are {SIGSEGV(-11)}
+Training CatBoostClassifier_RFE...
+CatBoostClassifier_RFE performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+Training Bagging_str_RFE...
+Bagging_str_RFE performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+
+Best Models:
+CatBoostClassifier_VarianceThreshold performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666
+CatBoostClassifier_SelectKBest performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+Bagging_str_SelectKBest performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+CatBoostClassifier_RFE performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+Bagging_str_RFE performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+
+Voting Classifier performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666
+
+Stacking Classifier performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666

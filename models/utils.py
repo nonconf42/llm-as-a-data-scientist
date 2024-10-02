@@ -220,6 +220,7 @@ def prepare_data_for_model(dataset):
     scaler = StandardScaler()
     dataset.train_input_clean = dataset.train_input._get_numeric_data()
     dataset.train_input_clean.replace([np.inf, -np.inf], np.nan, inplace=True)
+    dataset.train_input_clean = dataset.train_input_clean.select_dtypes(exclude=[complex])
     dataset.train_input_clean = pd.DataFrame(scaler.fit_transform(dataset.train_input_clean), columns=dataset.train_input_clean.columns)
     dataset.train_input_clean = dataset.train_input_clean.T.drop_duplicates().T
     print("after feature clean", dataset.train_input_clean.shape)
