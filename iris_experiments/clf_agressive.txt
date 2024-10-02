@@ -1,0 +1,80 @@
+Training PassiveAggressiveClassifier_VarianceThreshold...
+PassiveAggressiveClassifier_VarianceThreshold performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.9000
+  precision: 0.9024
+  recall: 0.9000
+  f1: 0.8997
+Training PassiveAggressiveClassifier_SelectKBest...
+PassiveAggressiveClassifier_SelectKBest performance:
+  accuracy: 0.9000
+  precision: 0.9024
+  recall: 0.9000
+  f1: 0.8997
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+Training PassiveAggressiveClassifier_SelectKBest...
+PassiveAggressiveClassifier_SelectKBest performance:
+  accuracy: 0.9000
+  precision: 0.9231
+  recall: 0.9000
+  f1: 0.8977
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+Training PassiveAggressiveClassifier_RFE...
+PassiveAggressiveClassifier_RFE performance:
+  accuracy: 0.9000
+  precision: 0.9024
+  recall: 0.9000
+  f1: 0.8997
+Training Bagging_str_RFE...
+Bagging_str_RFE performance:
+  accuracy: 0.9000
+  precision: 0.9024
+  recall: 0.9000
+  f1: 0.8997
+
+Best Models:
+PassiveAggressiveClassifier_VarianceThreshold performance:
+  accuracy: 0.9667
+  precision: 0.9697
+  recall: 0.9667
+  f1: 0.9666
+Bagging_str_SelectKBest performance:
+  accuracy: 0.9333
+  precision: 0.9333
+  recall: 0.9333
+  f1: 0.9333
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.9000
+  precision: 0.9024
+  recall: 0.9000
+  f1: 0.8997
+PassiveAggressiveClassifier_SelectKBest performance:
+  accuracy: 0.9000
+  precision: 0.9231
+  recall: 0.9000
+  f1: 0.8977
+PassiveAggressiveClassifier_RFE performance:
+  accuracy: 0.9000
+  precision: 0.9024
+  recall: 0.9000
+  f1: 0.8997
+Bagging_str_RFE performance:
+  accuracy: 0.9000
+  precision: 0.9024
+  recall: 0.9000
+  f1: 0.8997
