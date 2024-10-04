@@ -1,0 +1,52 @@
+Training LinearDiscriminantAnalysis_VarianceThreshold...
+LinearDiscriminantAnalysis_VarianceThreshold performance:
+  accuracy: 0.8212
+  f1: 0.8207
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.8156
+  f1: 0.8136
+Training LinearDiscriminantAnalysis_SelectKBest...
+LinearDiscriminantAnalysis_SelectKBest performance:
+  accuracy: 0.8212
+  f1: 0.8207
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 0.8156
+  f1: 0.8136
+Training LinearDiscriminantAnalysis_RFE...
+LinearDiscriminantAnalysis_RFE performance:
+  accuracy: 0.8324
+  f1: 0.8288
+Training Bagging_str_RFE...
+Bagging_str_RFE performance:
+  accuracy: 0.8268
+  f1: 0.8234
+
+Best Models:
+LinearDiscriminantAnalysis_RFE performance:
+  accuracy: 0.8324
+  f1: 0.8288
+Bagging_str_RFE performance:
+  accuracy: 0.8268
+  f1: 0.8234
+LinearDiscriminantAnalysis_VarianceThreshold performance:
+  accuracy: 0.8212
+  f1: 0.8207
+LinearDiscriminantAnalysis_SelectKBest performance:
+  accuracy: 0.8212
+  f1: 0.8207
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.8156
+  f1: 0.8136
+Bagging_str_SelectKBest performance:
+  accuracy: 0.8156
+  f1: 0.8136
+
+Voting Classifier performance:
+  accuracy: 0.8324
+  f1: 0.8295
+
+Stacking Classifier performance:
+  accuracy: 0.8324
+  f1: 0.8302

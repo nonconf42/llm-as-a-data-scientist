@@ -186,12 +186,12 @@ def generate_features(dataset, code_text):
 
     features_description = {}
     for code in executables:
-        #print("Code:", code)
+        print("Code:", code)
         try:
-            exec(code, globals(), locals())
+            exec(normalize_indentation(code), globals(), locals())
         except Exception as e:
-            #print(code)
-            #print("ERROR:", e)
+            print(code)
+            print("ERROR:", e)
             pass
     
     # dataset.train_input = data
@@ -343,7 +343,7 @@ def generate_prompt(instruction_type, dataset, transformation_type=None):
             features_description['new_feature_2'] = 'description of new_feature_2'
             data['new_feature_2'] = transformation(data['old_feature_2'])
 
-            #Same logic applies to other features until Feature 50.
+            
             """)
     
     # final prompt

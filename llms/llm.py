@@ -1,5 +1,8 @@
 from openai import OpenAI
 import os
+import openai
+
+TOKEN_TRACKING_FILE = 'total_tokens.txt'
 
 class LLM:
     def __init__(self, llm_name):
@@ -23,13 +26,22 @@ class LLM:
                     {"role": "user", "content": prompt}
                 ]
             )
+            # with open(TOKEN_TRACKING_FILE, 'a') as file:
+            #     file.write(output_text['usage']['total_tokens'])
+            #     file.write("\n") 
+                
             output_text = output_text.choices[0].message.content
         
         elif self.llm_name == 'llama':
             output_text = self.llm_model.chat.completions.create(
-                model="meta-llama/Meta-Llama-3.1-405B-Instruct",
+                model=model_name,
                 messages=[{"role": "user", "content": prompt}],
             )
             output_text = output_text.choices[0].message.content
         
         return output_text
+
+
+
+
+

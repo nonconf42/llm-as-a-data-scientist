@@ -1,0 +1,9 @@
+Training CatBoostClassifier_VarianceThreshold...
+CatBoostClassifier_VarianceThreshold performance:
+  accuracy: 0.8045
+  f1: 0.8030
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.7989
+  f1: 0.7962
+Training CatBoostClassifier_SelectKBest...

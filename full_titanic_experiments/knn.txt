@@ -1,0 +1,52 @@
+Training KNeighborsClassifier_VarianceThreshold...
+KNeighborsClassifier_VarianceThreshold performance:
+  accuracy: 0.7765
+  f1: 0.7736
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.7374
+  f1: 0.7311
+Training KNeighborsClassifier_SelectKBest...
+KNeighborsClassifier_SelectKBest performance:
+  accuracy: 0.7765
+  f1: 0.7744
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 0.7709
+  f1: 0.7713
+Training KNeighborsClassifier_RFE...
+KNeighborsClassifier_RFE performance:
+  accuracy: 0.7821
+  f1: 0.7746
+Training Bagging_str_RFE...
+Bagging_str_RFE performance:
+  accuracy: 0.7709
+  f1: 0.7692
+
+Best Models:
+KNeighborsClassifier_RFE performance:
+  accuracy: 0.7821
+  f1: 0.7746
+KNeighborsClassifier_VarianceThreshold performance:
+  accuracy: 0.7765
+  f1: 0.7736
+KNeighborsClassifier_SelectKBest performance:
+  accuracy: 0.7765
+  f1: 0.7744
+Bagging_str_SelectKBest performance:
+  accuracy: 0.7709
+  f1: 0.7713
+Bagging_str_RFE performance:
+  accuracy: 0.7709
+  f1: 0.7692
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.7374
+  f1: 0.7311
+
+Voting Classifier performance:
+  accuracy: 0.7877
+  f1: 0.7877
+
+Stacking Classifier performance:
+  accuracy: 0.7877
+  f1: 0.7871

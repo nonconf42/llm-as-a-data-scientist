@@ -1,0 +1,52 @@
+Training GradientBoostingClassifier_VarianceThreshold...
+GradientBoostingClassifier_VarianceThreshold performance:
+  accuracy: 0.8212
+  f1: 0.8195
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.7933
+  f1: 0.7910
+Training GradientBoostingClassifier_SelectKBest...
+GradientBoostingClassifier_SelectKBest performance:
+  accuracy: 0.8212
+  f1: 0.8195
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 0.7989
+  f1: 0.7954
+Training GradientBoostingClassifier_RFE...
+GradientBoostingClassifier_RFE performance:
+  accuracy: 0.8156
+  f1: 0.8163
+Training Bagging_str_RFE...
+Bagging_str_RFE performance:
+  accuracy: 0.8156
+  f1: 0.8148
+
+Best Models:
+GradientBoostingClassifier_VarianceThreshold performance:
+  accuracy: 0.8212
+  f1: 0.8195
+GradientBoostingClassifier_SelectKBest performance:
+  accuracy: 0.8212
+  f1: 0.8195
+GradientBoostingClassifier_RFE performance:
+  accuracy: 0.8156
+  f1: 0.8163
+Bagging_str_RFE performance:
+  accuracy: 0.8156
+  f1: 0.8148
+Bagging_str_SelectKBest performance:
+  accuracy: 0.7989
+  f1: 0.7954
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.7933
+  f1: 0.7910
+
+Voting Classifier performance:
+  accuracy: 0.8380
+  f1: 0.8367
+
+Stacking Classifier performance:
+  accuracy: 0.8380
+  f1: 0.8373

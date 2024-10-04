@@ -1,0 +1,52 @@
+Training BernoulliNB_VarianceThreshold...
+BernoulliNB_VarianceThreshold performance:
+  accuracy: 0.6872
+  f1: 0.6788
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.6760
+  f1: 0.6674
+Training BernoulliNB_SelectKBest...
+BernoulliNB_SelectKBest performance:
+  accuracy: 0.7598
+  f1: 0.7620
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 0.7374
+  f1: 0.7399
+Training BernoulliNB_RFE...
+BernoulliNB_RFE performance:
+  accuracy: 0.7821
+  f1: 0.7829
+Training Bagging_str_RFE...
+Bagging_str_RFE performance:
+  accuracy: 0.7542
+  f1: 0.7499
+
+Best Models:
+BernoulliNB_RFE performance:
+  accuracy: 0.7821
+  f1: 0.7829
+BernoulliNB_SelectKBest performance:
+  accuracy: 0.7598
+  f1: 0.7620
+Bagging_str_RFE performance:
+  accuracy: 0.7542
+  f1: 0.7499
+Bagging_str_SelectKBest performance:
+  accuracy: 0.7374
+  f1: 0.7399
+BernoulliNB_VarianceThreshold performance:
+  accuracy: 0.6872
+  f1: 0.6788
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.6760
+  f1: 0.6674
+
+Voting Classifier performance:
+  accuracy: 0.7654
+  f1: 0.7674
+
+Stacking Classifier performance:
+  accuracy: 0.7263
+  f1: 0.7242
