@@ -49,11 +49,12 @@ You are a data scientist analyzing a dataset. Given the column descriptions, sta
 
 Types of hypotheses may include:
 
-- Interesting clusters in the data.
+- Useful clusters in the data.
 - If-then rules (e.g., if X happens, then Y is likely to happen).
 - Cause-effect relationships (e.g., A affects B in a certain way).
 - Reasoning about latent variables that might explain patterns in the data.
-- Specific situations that might be interesting to explore.
+- Domain specific situations that might be useful to explore.
+- Available external data that might be useful to explore.
 
 Column Descriptions:
 {json.dumps(self.column_descriptions, indent=2)}
