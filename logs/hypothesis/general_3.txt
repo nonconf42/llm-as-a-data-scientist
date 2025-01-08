@@ -1,0 +1,276 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (# of siblings / spouses aboard the Titanic)
+Parch (# of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.
+Hypothesis Generation Methods:
+Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.
+Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.
+Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.
+Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.
+Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.
+Chi-Square Test for Independence: Test if two categorical variables are independent.
+ANOVA (Analysis of Variance): Compare the means across multiple groups.
+Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.
+Normality Tests: Test if the distribution of a variable follows a normal distribution.
+Homogeneity Tests: Determine if different samples come from populations with the same distribution.
+Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.
+Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.
+Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.
+Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.
+Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 15 hypotheses for the dataset described above. For each hypothesis:
+1.  Write a brief description and save it as a string variable called description.
+2.  Provide Python code to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "{description for hypothesis 1}"
+{test() for hypothesis 1}
+# Hypothesis 2.
+description = "{description for hypothesis 2}"
+{test() for hypothesis 2}
+…
+# Hypothesis 15.
+description = "{description for hypothesis 15}"
+{test() for hypothesis 15}
+
+############
+```python
+# Hypothesis 1.
+description = "The survival rate is significantly different between males and females."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Sex'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 2.
+description = "The mean age of survivors is significantly different from that of non-survivors."
+def test(dataset):
+    from scipy.stats import ttest_ind
+    import numpy as np
+    
+    survivors_age = dataset['Age'][dataset['Survived'] == 1].dropna()
+    non_survivors_age = dataset['Age'][dataset['Survived'] == 0].dropna()
+    
+    t_stat, p_value = ttest_ind(survivors_age, non_survivors_age, equal_var=False)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 3.
+description = "The proportion of first class passengers who survived is significantly different from second and third class passengers."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Pclass'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 4.
+description = "There is a significant correlation between the fare paid and the likelihood of survival."
+def test(dataset):
+    from scipy.stats import pointbiserialr
+
+    correlation, p_value = pointbiserialr(dataset['Survived'], dataset['Fare'].fillna(dataset['Fare'].median()))
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 5.
+description = "The survival rate is independent of the port of embarkation."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Embarked'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 6.
+description = "The number of siblings/spouses aboard affects the survival rate."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    contingency_table = pd.crosstab(dataset['SibSp'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 7.
+description = "The number of parents/children aboard affects the survival rate."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    contingency_table = pd.crosstab(dataset['Parch'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 8.
+description = "Passengers from different Pclass have different mean ages."
+def test(dataset):
+    from scipy.stats import f_oneway
+    
+    age_pclass_1 = dataset['Age'][dataset['Pclass'] == 1].dropna()
+    age_pclass_2 = dataset['Age'][dataset['Pclass'] == 2].dropna()
+    age_pclass_3 = dataset['Age'][dataset['Pclass'] == 3].dropna()
+    
+    f_stat, p_value = f_oneway(age_pclass_1, age_pclass_2, age_pclass_3)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 9.
+description = "The distribution of fares differs significantly among different classes."
+def test(dataset):
+    from scipy.stats import kruskal
+    
+    fare_pclass_1 = dataset['Fare'][dataset['Pclass'] == 1].dropna()
+    fare_pclass_2 = dataset['Fare'][dataset['Pclass'] == 2].dropna()
+    fare_pclass_3 = dataset['Fare'][dataset['Pclass'] == 3].dropna()
+    
+    stat, p_value = kruskal(fare_pclass_1, fare_pclass_2, fare_pclass_3)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 10.
+description = "A higher class and fare are positively correlated."
+def test(dataset):
+    from scipy.stats import spearmanr
+
+    correlation, p_value = spearmanr(dataset['Pclass'], dataset['Fare'].fillna(dataset['Fare'].median()))
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 11.
+description = "Survival varies significantly by combination of gender and class."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    dataset['GenderClass'] = dataset['Sex'] + '_' + dataset['Pclass'].astype(str)
+    contingency_table = pd.crosstab(dataset['GenderClass'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 12.
+description = "Survival likelihood changes with different ranges of ages."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    bins = [0, 12, 18, 30, 50, 80]
+    labels = ['Child', 'Teen', 'Young Adult', 'Adult', 'Senior']
+    dataset['AgeGroup'] = pd.cut(dataset['Age'], bins, labels=labels)
+    contingency_table = pd.crosstab(dataset['AgeGroup'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 13.
+description = "There is a significant difference in the median fare between passengers who survived and those who did not."
+def test(dataset):
+    from scipy.stats import mannwhitneyu
+    import numpy as np
+
+    fares_survived = dataset['Fare'][dataset['Survived'] == 1].dropna()
+    fares_non_survived = dataset['Fare'][dataset['Survived'] == 0].dropna()
+    
+    _, p_value = mannwhitneyu(fares_survived, fares_non_survived)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 14.
+description = "The distribution of cabin numbers is independent of survival status."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset['CabinBool'] = dataset['Cabin'].apply(lambda x: 0 if pd.isna(x) else 1)
+    contingency_table = pd.crosstab(dataset['CabinBool'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 15.
+description = "The median age of passengers is the same for different embarkation ports."
+def test(dataset):
+    from scipy.stats import kruskal
+    import numpy as np
+
+    age_C = dataset['Age'][dataset['Embarked'] == 'C'].dropna()
+    age_Q = dataset['Age'][dataset['Embarked'] == 'Q'].dropna()
+    age_S = dataset['Age'][dataset['Embarked'] == 'S'].dropna()
+    
+    stat, p_value = kruskal(age_C, age_Q, age_S)
+    result = 1 if p_value < 0.05 else 0
+    return result
+```
+############
+['# Hypothesis 1.\ndescription = "The survival rate is significantly different between males and females."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'Sex\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 2.\ndescription = "The mean age of survivors is significantly different from that of non-survivors."\ndef test(dataset):\n    from scipy.stats import ttest_ind\n    import numpy as np\n    \n    survivors_age = dataset[\'Age\'][dataset[\'Survived\'] == 1].dropna()\n    non_survivors_age = dataset[\'Age\'][dataset[\'Survived\'] == 0].dropna()\n    \n    t_stat, p_value = ttest_ind(survivors_age, non_survivors_age, equal_var=False)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 3.\ndescription = "The proportion of first class passengers who survived is significantly different from second and third class passengers."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'Pclass\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 4.\ndescription = "There is a significant correlation between the fare paid and the likelihood of survival."\ndef test(dataset):\n    from scipy.stats import pointbiserialr\n\n    correlation, p_value = pointbiserialr(dataset[\'Survived\'], dataset[\'Fare\'].fillna(dataset[\'Fare\'].median()))\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 5.\ndescription = "The survival rate is independent of the port of embarkation."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'Embarked\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 6.\ndescription = "The number of siblings/spouses aboard affects the survival rate."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    contingency_table = pd.crosstab(dataset[\'SibSp\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 7.\ndescription = "The number of parents/children aboard affects the survival rate."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    contingency_table = pd.crosstab(dataset[\'Parch\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 8.\ndescription = "Passengers from different Pclass have different mean ages."\ndef test(dataset):\n    from scipy.stats import f_oneway\n    \n    age_pclass_1 = dataset[\'Age\'][dataset[\'Pclass\'] == 1].dropna()\n    age_pclass_2 = dataset[\'Age\'][dataset[\'Pclass\'] == 2].dropna()\n    age_pclass_3 = dataset[\'Age\'][dataset[\'Pclass\'] == 3].dropna()\n    \n    f_stat, p_value = f_oneway(age_pclass_1, age_pclass_2, age_pclass_3)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 9.\ndescription = "The distribution of fares differs significantly among different classes."\ndef test(dataset):\n    from scipy.stats import kruskal\n    \n    fare_pclass_1 = dataset[\'Fare\'][dataset[\'Pclass\'] == 1].dropna()\n    fare_pclass_2 = dataset[\'Fare\'][dataset[\'Pclass\'] == 2].dropna()\n    fare_pclass_3 = dataset[\'Fare\'][dataset[\'Pclass\'] == 3].dropna()\n    \n    stat, p_value = kruskal(fare_pclass_1, fare_pclass_2, fare_pclass_3)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 10.\ndescription = "A higher class and fare are positively correlated."\ndef test(dataset):\n    from scipy.stats import spearmanr\n\n    correlation, p_value = spearmanr(dataset[\'Pclass\'], dataset[\'Fare\'].fillna(dataset[\'Fare\'].median()))\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 11.\ndescription = "Survival varies significantly by combination of gender and class."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    dataset[\'GenderClass\'] = dataset[\'Sex\'] + \'_\' + dataset[\'Pclass\'].astype(str)\n    contingency_table = pd.crosstab(dataset[\'GenderClass\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 12.\ndescription = "Survival likelihood changes with different ranges of ages."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    bins = [0, 12, 18, 30, 50, 80]\n    labels = [\'Child\', \'Teen\', \'Young Adult\', \'Adult\', \'Senior\']\n    dataset[\'AgeGroup\'] = pd.cut(dataset[\'Age\'], bins, labels=labels)\n    contingency_table = pd.crosstab(dataset[\'AgeGroup\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 13.\ndescription = "There is a significant difference in the median fare between passengers who survived and those who did not."\ndef test(dataset):\n    from scipy.stats import mannwhitneyu\n    import numpy as np\n\n    fares_survived = dataset[\'Fare\'][dataset[\'Survived\'] == 1].dropna()\n    fares_non_survived = dataset[\'Fare\'][dataset[\'Survived\'] == 0].dropna()\n    \n    _, p_value = mannwhitneyu(fares_survived, fares_non_survived)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 14.\ndescription = "The distribution of cabin numbers is independent of survival status."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    dataset[\'CabinBool\'] = dataset[\'Cabin\'].apply(lambda x: 0 if pd.isna(x) else 1)\n    contingency_table = pd.crosstab(dataset[\'CabinBool\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 15.\ndescription = "The median age of passengers is the same for different embarkation ports."\ndef test(dataset):\n    from scipy.stats import kruskal\n    import numpy as np\n\n    age_C = dataset[\'Age\'][dataset[\'Embarked\'] == \'C\'].dropna()\n    age_Q = dataset[\'Age\'][dataset[\'Embarked\'] == \'Q\'].dropna()\n    age_S = dataset[\'Age\'][dataset[\'Embarked\'] == \'S\'].dropna()\n    \n    stat, p_value = kruskal(age_C, age_Q, age_S)\n    result = 1 if p_value < 0.05 else 0\n    return result']
+The survival rate is significantly different between males and females.
+1
+#####
+The mean age of survivors is significantly different from that of non-survivors.
+1
+#####
+The proportion of first class passengers who survived is significantly different from second and third class passengers.
+1
+#####
+There is a significant correlation between the fare paid and the likelihood of survival.
+1
+#####
+The survival rate is independent of the port of embarkation.
+1
+#####
+The number of siblings/spouses aboard affects the survival rate.
+1
+#####
+The number of parents/children aboard affects the survival rate.
+1
+#####
+Passengers from different Pclass have different mean ages.
+1
+#####
+The distribution of fares differs significantly among different classes.
+1
+#####
+A higher class and fare are positively correlated.
+1
+#####
+Survival varies significantly by combination of gender and class.
+1
+#####
+Survival likelihood changes with different ranges of ages.
+1
+#####
+There is a significant difference in the median fare between passengers who survived and those who did not.
+1
+#####
+The distribution of cabin numbers is independent of survival status.
+1
+#####
+The median age of passengers is the same for different embarkation ports.
+0
+#####

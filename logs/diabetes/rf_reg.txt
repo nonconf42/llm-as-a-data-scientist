@@ -1,0 +1,92 @@
+Training RandomForestRegressor_VarianceThreshold...
+RandomForestRegressor_VarianceThreshold performance:
+  mse: 2787.0241
+  mae: 42.6725
+  r2: 0.4740
+  rmse: 52.7923
+Training Bagging_RandomForestRegressor_VarianceThreshold...
+Bagging_RandomForestRegressor_VarianceThreshold performance:
+  mse: 2814.5038
+  mae: 43.1242
+  r2: 0.4688
+  rmse: 53.0519
+Training RandomForestRegressor_SelectKBest...
+RandomForestRegressor_SelectKBest performance:
+  mse: 2837.5992
+  mae: 42.9447
+  r2: 0.4644
+  rmse: 53.2691
+Training Bagging_RandomForestRegressor_SelectKBest...
+Bagging_RandomForestRegressor_SelectKBest performance:
+  mse: 2788.7765
+  mae: 42.8460
+  r2: 0.4736
+  rmse: 52.8089
+Training RandomForestRegressor_SelectKBest...
+RandomForestRegressor_SelectKBest performance:
+  mse: 2786.6967
+  mae: 42.3713
+  r2: 0.4740
+  rmse: 52.7892
+Training Bagging_RandomForestRegressor_SelectKBest...
+Bagging_RandomForestRegressor_SelectKBest performance:
+  mse: 2788.7765
+  mae: 42.8460
+  r2: 0.4736
+  rmse: 52.8089
+Training RandomForestRegressor_RFE...
+RandomForestRegressor_RFE performance:
+  mse: 2746.2317
+  mae: 42.4452
+  r2: 0.4817
+  rmse: 52.4045
+Training Bagging_RandomForestRegressor_RFE...
+Bagging_RandomForestRegressor_RFE performance:
+  mse: 2776.2664
+  mae: 42.6778
+  r2: 0.4760
+  rmse: 52.6903
+
+Best Models:
+RandomForestRegressor_RFE performance:
+  mse: 2746.2317
+  mae: 42.4452
+  r2: 0.4817
+  rmse: 52.4045
+Bagging_RandomForestRegressor_RFE performance:
+  mse: 2776.2664
+  mae: 42.6778
+  r2: 0.4760
+  rmse: 52.6903
+RandomForestRegressor_SelectKBest performance:
+  mse: 2786.6967
+  mae: 42.3713
+  r2: 0.4740
+  rmse: 52.7892
+RandomForestRegressor_VarianceThreshold performance:
+  mse: 2787.0241
+  mae: 42.6725
+  r2: 0.4740
+  rmse: 52.7923
+Bagging_RandomForestRegressor_SelectKBest performance:
+  mse: 2788.7765
+  mae: 42.8460
+  r2: 0.4736
+  rmse: 52.8089
+Bagging_RandomForestRegressor_VarianceThreshold performance:
+  mse: 2814.5038
+  mae: 43.1242
+  r2: 0.4688
+  rmse: 53.0519
+
+Voting Regressor performance:
+  mse: 2754.0910
+  mae: 42.1805
+  r2: 0.4802
+  rmse: 52.4794
+
+Stacking Regressor performance:
+  mse: 2795.6242
+  mae: 42.6846
+  r2: 0.4723
+  rmse: 52.8737

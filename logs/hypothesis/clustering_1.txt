@@ -1,0 +1,507 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (# of siblings / spouses aboard the Titanic)
+Parch (# of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.
+Hypothesis Generation Methods:
+Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.
+Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.
+Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.
+Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.
+Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.
+Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 15 hypotheses for the dataset described above. For each hypothesis:
+1.  Write a brief description and save it as a string variable called description.
+2.  Provide Python code to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "{description for hypothesis 1}"
+{test() for hypothesis 1}
+# Hypothesis 2.
+description = "{description for hypothesis 2}"
+{test() for hypothesis 2}
+…
+# Hypothesis 15.
+description = "{description for hypothesis 15}"
+{test() for hypothesis 15}
+
+############
+Creating a list of hypotheses and testing them using a dataset involves formulating meaningful questions about the data and using statistical tests to accept or reject these hypotheses. Below is a sample approach to this task based on the Titanic dataset you described. The hypotheses will explore various aspects of clustering as well as other relevant statistical questions regarding survival. 
+
+```python
+# Hypothesis 1.
+description = "Passengers in different ticket classes have significantly different survival rates."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    contingency_table = pd.crosstab(dataset['Pclass'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    result = int(p_value < 0.05)
+    return result
+
+# Hypothesis 2.
+description = "Gender is a significant factor in survival outcomes."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    contingency_table = pd.crosstab(dataset['Sex'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    result = int(p_value < 0.05)
+    return result
+
+# Hypothesis 3.
+description = "People who embarked from different ports have different survival rates."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Embarked'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    result = int(p_value < 0.05)
+    return result
+
+# Hypothesis 4.
+description = "There is a significant age difference between those who survived and those who did not."
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    survivors = dataset[dataset['Survived'] == 1]['Age'].dropna()
+    non_survivors = dataset[dataset['Survived'] == 0]['Age'].dropna()
+    _, p_value = ttest_ind(survivors, non_survivors, equal_var=False)
+
+    result = int(p_value < 0.05)
+    return result
+
+# Hypothesis 5.
+description = "Families (SibSp and Parch) have a different survival rate compared to solo travelers."
+def test(dataset):
+    import numpy as np
+    from scipy.stats import chi2_contingency
+    import pandas as pd
+
+    dataset['Family'] = dataset['SibSp'] + dataset['Parch']
+    dataset['Family_Survival'] = np.where(dataset['Family'] == 0, 'Solo', 'Family')
+    
+    contingency_table = pd.crosstab(dataset['Family_Survival'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    result = int(p_value < 0.05)
+    return result
+
+# Hypothesis 6.
+description = "The fare paid by passengers is correlated with survival."
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    fare_survived = dataset[dataset['Survived'] == 1]['Fare'].dropna()
+    fare_nonsurvived = dataset[dataset['Survived'] == 0]['Fare'].dropna()
+    _, p_value = ttest_ind(fare_survived, fare_nonsurvived, equal_var=False)
+
+    result = int(p_value < 0.05)
+    return result
+
+# Hypothesis 7.
+description = "Survival rate varies significantly with different cluster analyses groupings."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset_clustering = dataset[['Pclass', 'Age', 'Fare']].dropna()
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    dataset_clustering['Cluster'] = kmeans.fit_predict(dataset_clustering)
+
+    contingency_table = pd.crosstab(dataset['Survived'], dataset_clustering['Cluster'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+
+    result = int(p_value < 0.05)
+    return result
+
+# Hypothesis 8.
+description = "Feature importance within clusters indicates different key survival factors per cluster."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.model_selection import train_test_split
+    import pandas as pd
+    import numpy as np
+
+    dataset_clustering = dataset[['Pclass', 'Age', 'Fare', 'SibSp', 'Parch']].dropna()
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    dataset_clustering['Cluster'] = kmeans.fit_predict(dataset_clustering)
+    
+    def train_decision_tree(cluster_group):
+        X = cluster_group.drop(['Survived', 'Cluster'], axis=1)
+        y = cluster_group['Survived']
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        clf = DecisionTreeClassifier(random_state=42)
+        clf.fit(X_train, y_train)
+        importances = clf.feature_importances_
+        return importances
+
+    cluster_importances = []
+    for cluster in np.unique(dataset_clustering['Cluster']):
+        cluster_data = dataset_clustering[dataset_clustering['Cluster'] == cluster]
+        cluster_importance = train_decision_tree(cluster_data)
+        cluster_importances.append(cluster_importance)
+
+    result = int(any(np.any(ci != 0) for ci in cluster_importances))
+    return result
+
+# Hypothesis 9.
+description = "Cluster stability varies when including or excluding specific features."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    import pandas as pd
+    from sklearn.metrics import pairwise_distances_argmin_min
+    
+    dataset_clustering = dataset[['Pclass', 'Age', 'Fare']].dropna()
+    kmeans1 = KMeans(n_clusters=3, random_state=42).fit(dataset_clustering)
+    dataset_clustering_partial = dataset[['Pclass', 'Fare']].dropna()
+    kmeans2 = KMeans(n_clusters=3, random_state=42).fit(dataset_clustering_partial)
+
+    _, min_distances1 = pairwise_distances_argmin_min(kmeans1.cluster_centers_, dataset_clustering)
+    _, min_distances2 = pairwise_distances_argmin_min(kmeans2.cluster_centers_, dataset_clustering_partial)
+
+    stability_variation = (abs(min_distances1.mean() - min_distances2.mean()) / min_distances1.mean()) > 0.01
+    
+    result = int(stability_variation)
+    return result
+
+# Hypothesis 10.
+description = "Latent groups using PCA show significantly different survival rates."
+def test(dataset):
+    from sklearn.decomposition import PCA
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset_pca = dataset[['Pclass', 'Age', 'Fare']].dropna()
+    
+    pca = PCA(n_components=2)
+    dataset_pca2d = pca.fit_transform(dataset_pca)
+    
+    dataset['PC1'] = dataset_pca2d[:, 0]
+    dataset['PC2'] = dataset_pca2d[:, 1]
+
+    dataset['Latent_Group'] = ['Group1' if x > 0 else 'Group2' for x in dataset['PC1']]
+    
+    contingency_table = pd.crosstab(dataset['Latent_Group'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+
+    result = int(p_value < 0.05)
+    return result
+
+# Hypothesis 11.
+description = "Optimal number of clusters using the Elbow Method aligns with survival groupings."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    import pandas as pd
+    import numpy as np
+
+    dataset_clustering = dataset[['Pclass', 'Age', 'Fare']].dropna()
+    
+    sse = {}
+    for k in range(1, 10):
+        kmeans = KMeans(n_clusters=k, max_iter=1000).fit(dataset_clustering)
+        sse[k] = kmeans.inertia_
+
+    optimal_k = max(sse, key=lambda x: sse[x] - sse.get(x-1, 0))  # crude elbow detection
+
+    result = int(optimal_k in range(2, 4))  # Assuming survival rate should align with 2 or 3
+    return result
+
+# Hypothesis 12.
+description = "Non-linear relationships (Age x Pclass) affect survival differently across clusters."
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from sklearn.model_selection import train_test_split
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.metrics import classification_report
+    from sklearn.preprocessing import StandardScaler
+    
+    dataset = dataset.dropna(subset=['Age', 'Pclass', 'Survived'])
+    X = dataset[['Age', 'Pclass']]
+    y = dataset['Survived']
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+    clf = RandomForestClassifier(random_state=42)
+    clf.fit(X_train, y_train)
+    
+    predictions = clf.predict(X_test)
+    report = classification_report(y_test, predictions, output_dict=True)
+    
+    result = int(report['1']['precision'] > 0.5 and report['0']['precision'] > 0.5)
+    return result
+
+# Hypothesis 13.
+description = "The inclusion of 'Cabin' as a feature significantly impacts cluster stability."
+def test(dataset):
+    import pandas as pd
+    from sklearn.cluster import KMeans
+    import numpy as np
+    
+    dataset.dropna(subset=['Pclass', 'Age', 'Fare'], inplace=True)
+    
+    features_with_cabin = dataset[['Pclass', 'Age', 'Fare', 'Cabin']].fillna(0)
+    features_without_cabin = dataset[['Pclass', 'Age', 'Fare']]
+    
+    kmeans_with_cabin = KMeans(n_clusters=3, random_state=42).fit(features_with_cabin)
+    kmeans_without_cabin = KMeans(n_clusters=3, random_state=42).fit(features_without_cabin)
+    
+    stability = np.mean(kmeans_with_cabin.labels_ == kmeans_without_cabin.labels_)
+    
+    result = int(stability < 0.9)  # Assuming significant change if less than 90% the same
+    return result
+
+# Hypothesis 14.
+description = "The interaction of 'Fare' and 'Pclass' in determining survival is significant within clusters."
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from sklearn.cluster import KMeans
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import roc_auc_score
+    
+    dataset = dataset.dropna(subset=['Fare', 'Pclass', 'Survived'])
+    
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    dataset['Cluster'] = kmeans.fit_predict(dataset[['Fare', 'Pclass']])
+    
+    model = LogisticRegression()
+    X = dataset[['Fare', 'Pclass', 'Cluster']]
+    y = dataset['Survived']
+    
+    model.fit(X, y)
+    y_pred = model.predict_proba(X)[:, 1]
+    
+    auc_score = roc_auc_score(y, y_pred)
+    
+    result = int(auc_score > 0.6)
+    return result
+
+# Hypothesis 15.
+description = "Passengers with missing data form a distinct cluster with different survival rates."
+def test(dataset):
+    import pandas as pd
+    from sklearn.cluster import KMeans
+    from scipy.stats import chi2_contingency
+    
+    dataset['Missing'] = dataset.isnull().sum(axis=1)
+    kmeans = KMeans(n_clusters=2, random_state=42).fit(dataset[['Missing']])
+    dataset['Cluster'] = kmeans.labels_
+    
+    contingency_table = pd.crosstab(dataset['Cluster'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    result = int(p_value < 0.05)
+    return result
+```
+
+Please run these code snippets one by one in your local environment, ensuring each `test()` function receives the correct `DataFrame`. Adjust the dimensionality reduction methods, KMeans parameters, and classification methods as required based on your dataset specifics.
+############
+['# Hypothesis 1.\ndescription = "Passengers in different ticket classes have significantly different survival rates."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    contingency_table = pd.crosstab(dataset[\'Pclass\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    \n    result = int(p_value < 0.05)\n    return result', '# Hypothesis 2.\ndescription = "Gender is a significant factor in survival outcomes."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    contingency_table = pd.crosstab(dataset[\'Sex\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    \n    result = int(p_value < 0.05)\n    return result', '# Hypothesis 3.\ndescription = "People who embarked from different ports have different survival rates."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'Embarked\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    \n    result = int(p_value < 0.05)\n    return result', '# Hypothesis 4.\ndescription = "There is a significant age difference between those who survived and those who did not."\ndef test(dataset):\n    from scipy.stats import ttest_ind\n\n    survivors = dataset[dataset[\'Survived\'] == 1][\'Age\'].dropna()\n    non_survivors = dataset[dataset[\'Survived\'] == 0][\'Age\'].dropna()\n    _, p_value = ttest_ind(survivors, non_survivors, equal_var=False)\n\n    result = int(p_value < 0.05)\n    return result', '# Hypothesis 5.\ndescription = "Families (SibSp and Parch) have a different survival rate compared to solo travelers."\ndef test(dataset):\n    import numpy as np\n    from scipy.stats import chi2_contingency\n    import pandas as pd\n\n    dataset[\'Family\'] = dataset[\'SibSp\'] + dataset[\'Parch\']\n    dataset[\'Family_Survival\'] = np.where(dataset[\'Family\'] == 0, \'Solo\', \'Family\')\n    \n    contingency_table = pd.crosstab(dataset[\'Family_Survival\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    \n    result = int(p_value < 0.05)\n    return result', '# Hypothesis 6.\ndescription = "The fare paid by passengers is correlated with survival."\ndef test(dataset):\n    from scipy.stats import ttest_ind\n\n    fare_survived = dataset[dataset[\'Survived\'] == 1][\'Fare\'].dropna()\n    fare_nonsurvived = dataset[dataset[\'Survived\'] == 0][\'Fare\'].dropna()\n    _, p_value = ttest_ind(fare_survived, fare_nonsurvived, equal_var=False)\n\n    result = int(p_value < 0.05)\n    return result', '# Hypothesis 7.\ndescription = "Survival rate varies significantly with different cluster analyses groupings."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    dataset_clustering = dataset[[\'Pclass\', \'Age\', \'Fare\']].dropna()\n    kmeans = KMeans(n_clusters=3, random_state=42)\n    dataset_clustering[\'Cluster\'] = kmeans.fit_predict(dataset_clustering)\n\n    contingency_table = pd.crosstab(dataset[\'Survived\'], dataset_clustering[\'Cluster\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n\n    result = int(p_value < 0.05)\n    return result', '# Hypothesis 8.\ndescription = "Feature importance within clusters indicates different key survival factors per cluster."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    from sklearn.tree import DecisionTreeClassifier\n    from sklearn.model_selection import train_test_split\n    import pandas as pd\n    import numpy as np\n\n    dataset_clustering = dataset[[\'Pclass\', \'Age\', \'Fare\', \'SibSp\', \'Parch\']].dropna()\n    kmeans = KMeans(n_clusters=3, random_state=42)\n    dataset_clustering[\'Cluster\'] = kmeans.fit_predict(dataset_clustering)\n    \n    def train_decision_tree(cluster_group):\n        X = cluster_group.drop([\'Survived\', \'Cluster\'], axis=1)\n        y = cluster_group[\'Survived\']\n        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\n        clf = DecisionTreeClassifier(random_state=42)\n        clf.fit(X_train, y_train)\n        importances = clf.feature_importances_\n        return importances\n\n    cluster_importances = []\n    for cluster in np.unique(dataset_clustering[\'Cluster\']):\n        cluster_data = dataset_clustering[dataset_clustering[\'Cluster\'] == cluster]\n        cluster_importance = train_decision_tree(cluster_data)\n        cluster_importances.append(cluster_importance)\n\n    result = int(any(np.any(ci != 0) for ci in cluster_importances))\n    return result', '# Hypothesis 9.\ndescription = "Cluster stability varies when including or excluding specific features."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    import pandas as pd\n    from sklearn.metrics import pairwise_distances_argmin_min\n    \n    dataset_clustering = dataset[[\'Pclass\', \'Age\', \'Fare\']].dropna()\n    kmeans1 = KMeans(n_clusters=3, random_state=42).fit(dataset_clustering)\n    dataset_clustering_partial = dataset[[\'Pclass\', \'Fare\']].dropna()\n    kmeans2 = KMeans(n_clusters=3, random_state=42).fit(dataset_clustering_partial)\n\n    _, min_distances1 = pairwise_distances_argmin_min(kmeans1.cluster_centers_, dataset_clustering)\n    _, min_distances2 = pairwise_distances_argmin_min(kmeans2.cluster_centers_, dataset_clustering_partial)\n\n    stability_variation = (abs(min_distances1.mean() - min_distances2.mean()) / min_distances1.mean()) > 0.01\n    \n    result = int(stability_variation)\n    return result', '# Hypothesis 10.\ndescription = "Latent groups using PCA show significantly different survival rates."\ndef test(dataset):\n    from sklearn.decomposition import PCA\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    dataset_pca = dataset[[\'Pclass\', \'Age\', \'Fare\']].dropna()\n    \n    pca = PCA(n_components=2)\n    dataset_pca2d = pca.fit_transform(dataset_pca)\n    \n    dataset[\'PC1\'] = dataset_pca2d[:, 0]\n    dataset[\'PC2\'] = dataset_pca2d[:, 1]\n\n    dataset[\'Latent_Group\'] = [\'Group1\' if x > 0 else \'Group2\' for x in dataset[\'PC1\']]\n    \n    contingency_table = pd.crosstab(dataset[\'Latent_Group\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n\n    result = int(p_value < 0.05)\n    return result', '# Hypothesis 11.\ndescription = "Optimal number of clusters using the Elbow Method aligns with survival groupings."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    import pandas as pd\n    import numpy as np\n\n    dataset_clustering = dataset[[\'Pclass\', \'Age\', \'Fare\']].dropna()\n    \n    sse = {}\n    for k in range(1, 10):\n        kmeans = KMeans(n_clusters=k, max_iter=1000).fit(dataset_clustering)\n        sse[k] = kmeans.inertia_\n\n    optimal_k = max(sse, key=lambda x: sse[x] - sse.get(x-1, 0))  # crude elbow detection\n\n    result = int(optimal_k in range(2, 4))  # Assuming survival rate should align with 2 or 3\n    return result', '# Hypothesis 12.\ndescription = "Non-linear relationships (Age x Pclass) affect survival differently across clusters."\ndef test(dataset):\n    import pandas as pd\n    import numpy as np\n    from sklearn.model_selection import train_test_split\n    from sklearn.ensemble import RandomForestClassifier\n    from sklearn.metrics import classification_report\n    from sklearn.preprocessing import StandardScaler\n    \n    dataset = dataset.dropna(subset=[\'Age\', \'Pclass\', \'Survived\'])\n    X = dataset[[\'Age\', \'Pclass\']]\n    y = dataset[\'Survived\']\n    \n    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\n    clf = RandomForestClassifier(random_state=42)\n    clf.fit(X_train, y_train)\n    \n    predictions = clf.predict(X_test)\n    report = classification_report(y_test, predictions, output_dict=True)\n    \n    result = int(report[\'1\'][\'precision\'] > 0.5 and report[\'0\'][\'precision\'] > 0.5)\n    return result', '# Hypothesis 13.\ndescription = "The inclusion of \'Cabin\' as a feature significantly impacts cluster stability."\ndef test(dataset):\n    import pandas as pd\n    from sklearn.cluster import KMeans\n    import numpy as np\n    \n    dataset.dropna(subset=[\'Pclass\', \'Age\', \'Fare\'], inplace=True)\n    \n    features_with_cabin = dataset[[\'Pclass\', \'Age\', \'Fare\', \'Cabin\']].fillna(0)\n    features_without_cabin = dataset[[\'Pclass\', \'Age\', \'Fare\']]\n    \n    kmeans_with_cabin = KMeans(n_clusters=3, random_state=42).fit(features_with_cabin)\n    kmeans_without_cabin = KMeans(n_clusters=3, random_state=42).fit(features_without_cabin)\n    \n    stability = np.mean(kmeans_with_cabin.labels_ == kmeans_without_cabin.labels_)\n    \n    result = int(stability < 0.9)  # Assuming significant change if less than 90% the same\n    return result', '# Hypothesis 14.\ndescription = "The interaction of \'Fare\' and \'Pclass\' in determining survival is significant within clusters."\ndef test(dataset):\n    import pandas as pd\n    import numpy as np\n    from sklearn.cluster import KMeans\n    from sklearn.linear_model import LogisticRegression\n    from sklearn.metrics import roc_auc_score\n    \n    dataset = dataset.dropna(subset=[\'Fare\', \'Pclass\', \'Survived\'])\n    \n    kmeans = KMeans(n_clusters=3, random_state=42)\n    dataset[\'Cluster\'] = kmeans.fit_predict(dataset[[\'Fare\', \'Pclass\']])\n    \n    model = LogisticRegression()\n    X = dataset[[\'Fare\', \'Pclass\', \'Cluster\']]\n    y = dataset[\'Survived\']\n    \n    model.fit(X, y)\n    y_pred = model.predict_proba(X)[:, 1]\n    \n    auc_score = roc_auc_score(y, y_pred)\n    \n    result = int(auc_score > 0.6)\n    return result', '# Hypothesis 15.\ndescription = "Passengers with missing data form a distinct cluster with different survival rates."\ndef test(dataset):\n    import pandas as pd\n    from sklearn.cluster import KMeans\n    from scipy.stats import chi2_contingency\n    \n    dataset[\'Missing\'] = dataset.isnull().sum(axis=1)\n    kmeans = KMeans(n_clusters=2, random_state=42).fit(dataset[[\'Missing\']])\n    dataset[\'Cluster\'] = kmeans.labels_\n    \n    contingency_table = pd.crosstab(dataset[\'Cluster\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(contingency_table)\n    \n    result = int(p_value < 0.05)\n    return result']
+Passengers in different ticket classes have significantly different survival rates.
+1
+#####
+Gender is a significant factor in survival outcomes.
+1
+#####
+People who embarked from different ports have different survival rates.
+1
+#####
+There is a significant age difference between those who survived and those who did not.
+1
+#####
+Families (SibSp and Parch) have a different survival rate compared to solo travelers.
+1
+#####
+The fare paid by passengers is correlated with survival.
+1
+#####
+Survival rate varies significantly with different cluster analyses groupings.
+1
+#####
+ERROR
+"['Survived'] not found in axis"
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 8.
+description = "Feature importance within clusters indicates different key survival factors per cluster."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.model_selection import train_test_split
+    import pandas as pd
+    import numpy as np
+
+    dataset_clustering = dataset[['Pclass', 'Age', 'Fare', 'SibSp', 'Parch']].dropna()
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    dataset_clustering['Cluster'] = kmeans.fit_predict(dataset_clustering)
+    
+    def train_decision_tree(cluster_group):
+        X = cluster_group.drop(['Survived', 'Cluster'], axis=1)
+        y = cluster_group['Survived']
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+        clf = DecisionTreeClassifier(random_state=42)
+        clf.fit(X_train, y_train)
+        importances = clf.feature_importances_
+        return importances
+
+    cluster_importances = []
+    for cluster in np.unique(dataset_clustering['Cluster']):
+        cluster_data = dataset_clustering[dataset_clustering['Cluster'] == cluster]
+        cluster_importance = train_decision_tree(cluster_data)
+        cluster_importances.append(cluster_importance)
+
+    result = int(any(np.any(ci != 0) for ci in cluster_importances))
+    return result
+#####
+Cluster stability varies when including or excluding specific features.
+1
+#####
+ERROR
+Length of values (714) does not match length of index (891)
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 10.
+description = "Latent groups using PCA show significantly different survival rates."
+def test(dataset):
+    from sklearn.decomposition import PCA
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset_pca = dataset[['Pclass', 'Age', 'Fare']].dropna()
+    
+    pca = PCA(n_components=2)
+    dataset_pca2d = pca.fit_transform(dataset_pca)
+    
+    dataset['PC1'] = dataset_pca2d[:, 0]
+    dataset['PC2'] = dataset_pca2d[:, 1]
+
+    dataset['Latent_Group'] = ['Group1' if x > 0 else 'Group2' for x in dataset['PC1']]
+    
+    contingency_table = pd.crosstab(dataset['Latent_Group'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(contingency_table)
+
+    result = int(p_value < 0.05)
+    return result
+#####
+Optimal number of clusters using the Elbow Method aligns with survival groupings.
+0
+#####
+Non-linear relationships (Age x Pclass) affect survival differently across clusters.
+1
+#####
+ERROR
+could not convert string to float: 'C85'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 13.
+description = "The inclusion of 'Cabin' as a feature significantly impacts cluster stability."
+def test(dataset):
+    import pandas as pd
+    from sklearn.cluster import KMeans
+    import numpy as np
+    
+    dataset.dropna(subset=['Pclass', 'Age', 'Fare'], inplace=True)
+    
+    features_with_cabin = dataset[['Pclass', 'Age', 'Fare', 'Cabin']].fillna(0)
+    features_without_cabin = dataset[['Pclass', 'Age', 'Fare']]
+    
+    kmeans_with_cabin = KMeans(n_clusters=3, random_state=42).fit(features_with_cabin)
+    kmeans_without_cabin = KMeans(n_clusters=3, random_state=42).fit(features_without_cabin)
+    
+    stability = np.mean(kmeans_with_cabin.labels_ == kmeans_without_cabin.labels_)
+    
+    result = int(stability < 0.9)  # Assuming significant change if less than 90% the same
+    return result
+#####
+The interaction of 'Fare' and 'Pclass' in determining survival is significant within clusters.
+1
+#####
+Passengers with missing data form a distinct cluster with different survival rates.
+1
+#####

@@ -9,195 +9,334 @@ from tqdm import tqdm
 from clf_fit_agent import *
 warnings.filterwarnings("ignore")
 
-NUM_OF_GENERATIONS = 1
-NUM_OF_FEATURES = 20
+# NUM_OF_GENERATIONS = 1
+# NUM_OF_FEATURES = 20
 
-#temperature_values = [0.1, 1, 10]
-#num_of_features_to_select = [10, 20, 50]
+# #temperature_values = [0.1, 1, 10]
+# #num_of_features_to_select = [10, 20, 50]
 
-dataset = DataReader('Titanic')
-ml_model = Model('XGB', 'classification')
-llm_model = LLM('llama')
-model_name = "meta-llama/Meta-Llama-3.1-405B-Instruct"
+# dataset = DataReader('Titanic')
+# ml_model = Model('XGB', 'classification')
+# llm_model = LLM('llama')
+# model_name = "meta-llama/Meta-Llama-3.1-405B-Instruct"
 
-parser = argparse.ArgumentParser(description="Control debug mode")
-parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+# parser = argparse.ArgumentParser(description="Control debug mode")
+# parser.add_argument('--debug', action='store_true', help='Enable debug mode')
 
-args = parser.parse_args()
+# args = parser.parse_args()
 
-if args.debug:
-    print(f'Chosen columns: {dataset.chosen_features}\n')
+# if args.debug:
+#     print(f'Chosen columns: {dataset.chosen_features}\n')
 
 
 
-for i in tqdm(range(NUM_OF_GENERATIONS)):
-    print(f'GENERATION {i+1}:')
-    ### PREPROCESSING PART ###
-    if i == 0:
-        prep_1_prompt = generate_prompt(
-            instruction_type='preprocessing',
-            dataset=dataset,
-            transformation_type='Encoding Data'
-        )
-        print(prep_1_prompt)
+# for i in tqdm(range(NUM_OF_GENERATIONS)):
+#     print(f'GENERATION {i+1}:')
+#     ### PREPROCESSING PART ###
+#     if i == 0:
+#         prep_1_prompt = generate_prompt(
+#             instruction_type='preprocessing',
+#             dataset=dataset,
+#             transformation_type='Encoding Data'
+#         )
+#         print(prep_1_prompt)
 
-        prep_2_prompt = generate_prompt(
-            instruction_type='preprocessing',
-            dataset=dataset,
-            transformation_type='String Features Preprocessing'
-        )
+#         prep_2_prompt = generate_prompt(
+#             instruction_type='preprocessing',
+#             dataset=dataset,
+#             transformation_type='String Features Preprocessing'
+#         )
 
-        prep_3_prompt = generate_prompt(
-            instruction_type='preprocessing',
-            dataset=dataset,
-            transformation_type='Datetime Features Preprocessing'
-        )
+#         prep_3_prompt = generate_prompt(
+#             instruction_type='preprocessing',
+#             dataset=dataset,
+#             transformation_type='Datetime Features Preprocessing'
+#         )
 
-        llm_prep_1_output = llm_model.llm_call(prep_1_prompt, model_name)
-        # llm_prep_2_output = llm_model.llm_call(prep_2_prompt, model_name)
-        # llm_prep_3_output = llm_model.llm_call(prep_3_prompt, model_name)
-        print(llm_prep_1_output)
-        llm_prep_1_code = extract_python_code(llm_prep_1_output)
-        # llm_prep_2_code = extract_python_code(llm_prep_2_output)
-        # llm_prep_3_code = extract_python_code(llm_prep_3_output)
+#         llm_prep_1_output = llm_model.llm_call(prep_1_prompt, model_name)
+#         # llm_prep_2_output = llm_model.llm_call(prep_2_prompt, model_name)
+#         # llm_prep_3_output = llm_model.llm_call(prep_3_prompt, model_name)
+#         print(llm_prep_1_output)
+#         llm_prep_1_code = extract_python_code(llm_prep_1_output)
+#         # llm_prep_2_code = extract_python_code(llm_prep_2_output)
+#         # llm_prep_3_code = extract_python_code(llm_prep_3_output)
 
-        print(llm_prep_1_code)
-        # print(llm_prep_2_code)
-        # print(llm_prep_3_code)
+#         print(llm_prep_1_code)
+#         # print(llm_prep_2_code)
+#         # print(llm_prep_3_code)
         
 
-        generate_features(dataset=dataset, code_text=llm_prep_1_code)
-        if args.debug:
-            print(f'After first preprocessing:{dataset.train_input.shape}')
+#         generate_features(dataset=dataset, code_text=llm_prep_1_output)
+#         if args.debug:
+#             print(f'After first preprocessing:{dataset.train_input.shape}')
 
-        # generate_features(dataset=dataset, code_text=llm_prep_2_code)
-        # if args.debug:
-        #     print(f'After second preprocessing:{dataset.train_input.shape}')
+#         generate_features(dataset=dataset, code_text=llm_prep_2_code)
+#         if args.debug:
+#             print(f'After second preprocessing:{dataset.train_input.shape}')
 
-        # generate_features(dataset=dataset, code_text=llm_prep_3_code)
-        # if args.debug:
-        #     print(f'After third preprocessing:{dataset.train_input.shape}')
+#         generate_features(dataset=dataset, code_text=llm_prep_3_code)
+#         if args.debug:
+#             print(f'After third preprocessing:{dataset.train_input.shape}')
 
-    # prep_4_prompt = generate_prompt(
-    #         instruction_type='preprocessing',
-    #         dataset=dataset,
-    #         transformation_type='Data Cleaning'
-    #     )
+#     prep_4_prompt = generate_prompt(
+#             instruction_type='preprocessing',
+#             dataset=dataset,
+#             transformation_type='Data Cleaning'
+#         )
 
-    # prep_5_prompt = generate_prompt(
-    #         instruction_type='preprocessing',
-    #         dataset=dataset,
-    #         transformation_type='Dimensionality Reduction'
-    #     )
+#     prep_5_prompt = generate_prompt(
+#             instruction_type='preprocessing',
+#             dataset=dataset,
+#             transformation_type='Dimensionality Reduction'
+#         )
     
-    # llm_prep_4_output = llm_model.llm_call(prep_4_prompt, model_name)
-    # llm_prep_5_output = llm_model.llm_call(prep_5_prompt, model_name)
-    
-    
-    # llm_prep_4_code = extract_python_code(llm_prep_4_output)
-    # llm_prep_5_code = extract_python_code(llm_prep_5_output)
-
-    # generate_features(dataset=dataset, code_text=llm_prep_4_code)
-    # if args.debug:
-    #     print(f'After forth preprocessing:{dataset.train_input.shape}')
-
-    # generate_features(dataset=dataset, code_text=llm_prep_5_code)
-    # if args.debug:
-    #     print(f'After fifth preprocessing:{dataset.train_input.shape}')
-
+#     llm_prep_4_output = llm_model.llm_call(prep_4_prompt, model_name)
+#     llm_prep_5_output = llm_model.llm_call(prep_5_prompt, model_name)
     
     
-    # prepare_data_for_model(dataset=dataset)
-    # ml_model.fit(data=dataset)
-    # if args.debug:
-    #     print(f'Model score after gen {i} (prep): {ml_model.score}')
+#     llm_prep_4_code = extract_python_code(llm_prep_4_output)
+#     llm_prep_5_code = extract_python_code(llm_prep_5_output)
 
-    # feature_importances = get_feature_importance(ml_model)
-    # # if args.debug:
-    # #     print(f'Feature Importances:\n {feature_importances}')
+#     generate_features(dataset=dataset, code_text=llm_prep_4_code)
+#     if args.debug:
+#         print(f'After forth preprocessing:{dataset.train_input.shape}')
+
+#     generate_features(dataset=dataset, code_text=llm_prep_5_code)
+#     if args.debug:
+#         print(f'After fifth preprocessing:{dataset.train_input.shape}')
+
     
     
-    # select_features(dataset=dataset, feature_importances=feature_importances, num_features=NUM_OF_FEATURES, temp=1)
-    # dataset.chosen_features = list(dataset.train_input_selected.columns)
-    # # if args.debug:
-    # #     print(dataset.train_input_selected.columns)
+#     prepare_data_for_model(dataset=dataset)
+#     ml_model.fit(data=dataset)
+#     if args.debug:
+#         print(f'Model score after gen {i} (prep): {ml_model.score}')
+
+#     feature_importances = get_feature_importance(ml_model)
+#     # if args.debug:
+#     #     print(f'Feature Importances:\n {feature_importances}')
+    
+    
+#     select_features(dataset=dataset, feature_importances=feature_importances, num_features=NUM_OF_FEATURES, temp=1)
+#     dataset.chosen_features = list(dataset.train_input_selected.columns)
+#     # if args.debug:
+#     #     print(dataset.train_input_selected.columns)
     
 
-    # ### ENGINEETING PART ###
+#     ### ENGINEETING PART ###
         
-    # eng_1_prompt = generate_prompt(
-    #     instruction_type='engineering',
-    #     dataset=dataset,
-    #     transformation_type='Feature Scaling'
-    # )
+#     eng_1_prompt = generate_prompt(
+#         instruction_type='engineering',
+#         dataset=dataset,
+#         transformation_type='Feature Scaling'
+#     )
     
 
-    # eng_2_prompt = generate_prompt(
-    #     instruction_type='engineering',
-    #     dataset=dataset,
-    #     transformation_type='Cross Feature Engineering'
-    # )
+#     eng_2_prompt = generate_prompt(
+#         instruction_type='engineering',
+#         dataset=dataset,
+#         transformation_type='Cross Feature Engineering'
+#     )
 
-    # eng_3_prompt = generate_prompt(
-    #     instruction_type='engineering',
-    #     dataset=dataset,
-    #     transformation_type='Dimensionality Reduction'
-    # )
+#     eng_3_prompt = generate_prompt(
+#         instruction_type='engineering',
+#         dataset=dataset,
+#         transformation_type='Dimensionality Reduction'
+#     )
 
-    # llm_eng_1_output = llm_model.llm_call(eng_1_prompt, model_name)
-    # llm_eng_2_output = llm_model.llm_call(eng_2_prompt, model_name)
-    # llm_eng_3_output = llm_model.llm_call(eng_3_prompt, model_name)
+#     llm_eng_1_output = llm_model.llm_call(eng_1_prompt, model_name)
+#     llm_eng_2_output = llm_model.llm_call(eng_2_prompt, model_name)
+#     llm_eng_3_output = llm_model.llm_call(eng_3_prompt, model_name)
 
     
-    # llm_eng_1_code = extract_python_code(llm_eng_1_output)
-    # llm_eng_2_code = extract_python_code(llm_eng_2_output)
-    # llm_eng_3_code = extract_python_code(llm_eng_3_output)
+#     llm_eng_1_code = extract_python_code(llm_eng_1_output)
+#     llm_eng_2_code = extract_python_code(llm_eng_2_output)
+#     llm_eng_3_code = extract_python_code(llm_eng_3_output)
 
-    # generate_features(dataset=dataset, code_text=llm_eng_1_code)
-    # if args.debug:
-    #     print(f'After first engineering:{dataset.train_input.shape}')
+#     generate_features(dataset=dataset, code_text=llm_eng_1_code)
+#     if args.debug:
+#         print(f'After first engineering:{dataset.train_input.shape}')
 
-    # generate_features(dataset=dataset, code_text=llm_eng_2_code)
-    # if args.debug:
-    #     print(f'After second engineering :{dataset.train_input.shape}')
+#     generate_features(dataset=dataset, code_text=llm_eng_2_code)
+#     if args.debug:
+#         print(f'After second engineering :{dataset.train_input.shape}')
 
-    # generate_features(dataset=dataset, code_text=llm_eng_3_code)
-    # if args.debug:
-    #     print(f'After third engineering:{dataset.train_input.shape}')
+#     generate_features(dataset=dataset, code_text=llm_eng_3_code)
+#     if args.debug:
+#         print(f'After third engineering:{dataset.train_input.shape}')
 
-    # prepare_data_for_model(dataset=dataset)
-    # ml_model.fit(data=dataset)
-    # if args.debug:
-    #     print(f'Model score after gen {i} (eng): {ml_model.score}')
+#     prepare_data_for_model(dataset=dataset)
+#     ml_model.fit(data=dataset)
+#     if args.debug:
+#         print(f'Model score after gen {i} (eng): {ml_model.score}')
 
-    # feature_importances = get_feature_importance(ml_model)
-    # # if args.debug:
-    # #     print(f'Feature Importances:\n {feature_importances}')
+#     feature_importances = get_feature_importance(ml_model)
+#     # if args.debug:
+#     #     print(f'Feature Importances:\n {feature_importances}')
     
-    # if i + 1 == NUM_OF_GENERATIONS:
-    #     select_features(dataset=dataset,feature_importances=feature_importances,num_features=NUM_OF_FEATURES,temp=1, method='positive importance')
-    #     dataset.chosen_features = list(dataset.train_input_selected.columns)
-    # else:
-    #     select_features(dataset=dataset, feature_importances=feature_importances,num_features=NUM_OF_FEATURES, temp=1)
-    #     dataset.chosen_features = list(dataset.train_input_selected.columns)
+#     if i + 1 == NUM_OF_GENERATIONS:
+#         select_features(dataset=dataset,feature_importances=feature_importances,num_features=NUM_OF_FEATURES,temp=1, method='positive importance')
+#         dataset.chosen_features = list(dataset.train_input_selected.columns)
+#     else:
+#         select_features(dataset=dataset, feature_importances=feature_importances,num_features=NUM_OF_FEATURES, temp=1)
+#         dataset.chosen_features = list(dataset.train_input_selected.columns)
         
-    # if args.debug:
-    #     print(dataset.train_input_selected.columns)
+#     if args.debug:
+#         print(dataset.train_input_selected.columns)
 
-    # ml_model.fit(data=dataset, subset='top')
-    # if args.debug:
-    #     print(f'Model score with selected features: {ml_model.score}')
+#     ml_model.fit(data=dataset, subset='top')
+#     if args.debug:
+#         print(f'Model score with selected features: {ml_model.score}')
     
-    # df = dataset.train_input_clean.copy()
-    # df['Survived'] = dataset.train_labels
+#     df = dataset.train_input_clean.copy()
+#     df['Survived'] = dataset.train_labels
 
-    # df.to_csv('df_for_experiments_10_gen.csv')
-    # print('RESULTS OF AUTO ML AGENT IN THE END:')
+#     df.to_csv('df_for_experiments_10_gen.csv')
+#     print('RESULTS OF AUTO ML AGENT IN THE END:')
 
     #main_clf(dataset.train_input_clean, dataset.train_labels)
 
+api_key = "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"
+def auto_ml_agent(
+    dataset_name,
+    ml_model_type,
+    llm_model_type,
+    model_name,
+    num_of_generations=1,
+    num_of_features=20,
+    debug=False,
+    output_file='df_for_experiments.csv',
+    hypothesis=None
+):
+  
+    dataset = DataReader(dataset_name)
+    ml_model = Model(ml_model_type, 'classification')
+    llm_model = LLM(llm_model_type)
+
+    if debug:
+        print(f'Chosen columns: {dataset.chosen_features}\n')
+
+    for i in tqdm(range(num_of_generations)):
+        print(f'GENERATION {i + 1}:')
+        
+        # Preprocessing
+        if i == 0:
+            preprocessing_prompts = [
+                ('Encoding Data', 'prep_1_prompt'),
+                ('String Features Preprocessing', 'prep_2_prompt'),
+                ('Datetime Features Preprocessing', 'prep_3_prompt'),
+            ]
+            
+            for transformation, var_name in preprocessing_prompts:
+                prompt = generate_prompt(
+                    instruction_type='preprocessing',
+                    dataset=dataset,
+                    transformation_type=transformation,
+                    hypothesis=hypothesis
+                )
+                output = llm_model.llm_call(prompt, model_name)
+                code = extract_python_code(output)
+                generate_features(dataset=dataset, code_text=code)
+                
+                if debug:
+                    print(f'After {transformation}: {dataset.train_input.shape}')
+
+        additional_preprocessing = [
+            ('Data Cleaning', 'prep_4_prompt'),
+            ('Dimensionality Reduction', 'prep_5_prompt'),
+        ]
+        
+        for transformation, var_name in additional_preprocessing:
+            prompt = generate_prompt(
+                instruction_type='preprocessing',
+                dataset=dataset,
+                transformation_type=transformation,
+                hypothesis=hypothesis
+            )
+            output = llm_model.llm_call(prompt, model_name)
+            code = extract_python_code(output)
+            generate_features(dataset=dataset, code_text=code)
+            
+            if debug:
+                print(f'After {transformation}: {dataset.train_input.shape}')
+
+        prepare_data_for_model(dataset=dataset)
+        ml_model.fit(data=dataset)
+        
+        if debug:
+            print(f'Model score after gen {i} (prep): {ml_model.score}')
+
+        feature_importances = get_feature_importance(ml_model)
+        select_features(dataset=dataset, feature_importances=feature_importances, num_features=num_of_features, temp=1)
+        dataset.chosen_features = list(dataset.train_input_selected.columns)
+
+        # Feature Engineering
+        engineering_prompts = [
+            ('Feature Scaling', 'eng_1_prompt'),
+            ('Cross Feature Engineering', 'eng_2_prompt'),
+            ('Dimensionality Reduction', 'eng_3_prompt'),
+        ]
+        
+        for transformation, var_name in engineering_prompts:
+            prompt = generate_prompt(
+                instruction_type='engineering',
+                dataset=dataset,
+                transformation_type=transformation
+            )
+            output = llm_model.llm_call(prompt, model_name)
+            code = extract_python_code(output)
+            generate_features(dataset=dataset, code_text=code)
+            
+            if debug:
+                print(f'After {transformation}: {dataset.train_input.shape}')
+
+        prepare_data_for_model(dataset=dataset)
+        ml_model.fit(data=dataset)
+        
+        if debug:
+            print(f'Model score after gen {i} (eng): {ml_model.score}')
+
+        feature_importances = get_feature_importance(ml_model)
+        if i + 1 == num_of_generations:
+            select_features(
+                dataset=dataset,
+                feature_importances=feature_importances,
+                num_features=num_of_features,
+                temp=1,
+                method='positive importance'
+            )
+        else:
+            select_features(
+                dataset=dataset,
+                feature_importances=feature_importances,
+                num_features=num_of_features,
+                temp=1
+            )
+
+        dataset.chosen_features = list(dataset.train_input_selected.columns)
+        ml_model.fit(data=dataset, subset='top')
+        
+        if debug:
+            print(f'Model score with selected features: {ml_model.score}')
 
     
+    df = dataset.train_input_clean.copy()
+    df['Survived'] = dataset.train_labels
+    df.to_csv(output_file)
+
+    print('RESULTS OF AUTO ML AGENT IN THE END:')
+
+
+auto_ml_agent(
+    dataset_name='Titanic',
+    ml_model_type='XGB',
+    llm_model_type='gpt',
+    model_name='gpt-4o',
+    num_of_generations=1,
+    num_of_features=20,
+    debug=True,
+    output_file='df_for_experiments_10_gen.csv'
+)
 
 
 # https://www.kaggle.com/code/ldfreeman3/a-data-science-framework-to-achieve-99-accuracy/comments

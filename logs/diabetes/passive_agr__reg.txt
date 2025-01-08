@@ -1,0 +1,92 @@
+Training PassiveAggressiveRegressor_VarianceThreshold...
+PassiveAggressiveRegressor_VarianceThreshold performance:
+  mse: 2979.0721
+  mae: 43.9756
+  r2: 0.4377
+  rmse: 54.5809
+Training Bagging_PassiveAggressiveRegressor_VarianceThreshold...
+Bagging_PassiveAggressiveRegressor_VarianceThreshold performance:
+  mse: 2941.0187
+  mae: 43.4258
+  r2: 0.4449
+  rmse: 54.2312
+Training PassiveAggressiveRegressor_SelectKBest...
+PassiveAggressiveRegressor_SelectKBest performance:
+  mse: 2895.2232
+  mae: 43.0219
+  r2: 0.4535
+  rmse: 53.8073
+Training Bagging_PassiveAggressiveRegressor_SelectKBest...
+Bagging_PassiveAggressiveRegressor_SelectKBest performance:
+  mse: 2945.6064
+  mae: 43.4607
+  r2: 0.4440
+  rmse: 54.2734
+Training PassiveAggressiveRegressor_SelectKBest...
+PassiveAggressiveRegressor_SelectKBest performance:
+  mse: 2885.5264
+  mae: 42.9063
+  r2: 0.4554
+  rmse: 53.7171
+Training Bagging_PassiveAggressiveRegressor_SelectKBest...
+Bagging_PassiveAggressiveRegressor_SelectKBest performance:
+  mse: 2945.6064
+  mae: 43.4607
+  r2: 0.4440
+  rmse: 54.2734
+Training PassiveAggressiveRegressor_RFE...
+PassiveAggressiveRegressor_RFE performance:
+  mse: 2899.6024
+  mae: 43.3680
+  r2: 0.4527
+  rmse: 53.8480
+Training Bagging_PassiveAggressiveRegressor_RFE...
+Bagging_PassiveAggressiveRegressor_RFE performance:
+  mse: 2945.6064
+  mae: 43.4607
+  r2: 0.4440
+  rmse: 54.2734
+
+Best Models:
+PassiveAggressiveRegressor_SelectKBest performance:
+  mse: 2885.5264
+  mae: 42.9063
+  r2: 0.4554
+  rmse: 53.7171
+PassiveAggressiveRegressor_RFE performance:
+  mse: 2899.6024
+  mae: 43.3680
+  r2: 0.4527
+  rmse: 53.8480
+Bagging_PassiveAggressiveRegressor_VarianceThreshold performance:
+  mse: 2941.0187
+  mae: 43.4258
+  r2: 0.4449
+  rmse: 54.2312
+Bagging_PassiveAggressiveRegressor_SelectKBest performance:
+  mse: 2945.6064
+  mae: 43.4607
+  r2: 0.4440
+  rmse: 54.2734
+Bagging_PassiveAggressiveRegressor_RFE performance:
+  mse: 2945.6064
+  mae: 43.4607
+  r2: 0.4440
+  rmse: 54.2734
+PassiveAggressiveRegressor_VarianceThreshold performance:
+  mse: 2979.0721
+  mae: 43.9756
+  r2: 0.4377
+  rmse: 54.5809
+
+Voting Regressor performance:
+  mse: 3012.5638
+  mae: 44.0013
+  r2: 0.4314
+  rmse: 54.8868
+
+Stacking Regressor performance:
+  mse: 2902.2228
+  mae: 43.3405
+  r2: 0.4522
+  rmse: 53.8723

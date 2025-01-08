@@ -1,0 +1,92 @@
+Training Lasso_VarianceThreshold...
+Lasso_VarianceThreshold performance:
+  mse: 2801.6876
+  mae: 42.7767
+  r2: 0.4712
+  rmse: 52.9310
+Training Bagging_Lasso_VarianceThreshold...
+Bagging_Lasso_VarianceThreshold performance:
+  mse: 2863.5548
+  mae: 43.2167
+  r2: 0.4595
+  rmse: 53.5122
+Training Lasso_SelectKBest...
+Lasso_SelectKBest performance:
+  mse: 2799.0241
+  mae: 42.8302
+  r2: 0.4717
+  rmse: 52.9058
+Training Bagging_Lasso_SelectKBest...
+Bagging_Lasso_SelectKBest performance:
+  mse: 2844.5945
+  mae: 43.2121
+  r2: 0.4631
+  rmse: 53.3347
+Training Lasso_SelectKBest...
+Lasso_SelectKBest performance:
+  mse: 2799.0549
+  mae: 42.8307
+  r2: 0.4717
+  rmse: 52.9061
+Training Bagging_Lasso_SelectKBest...
+Bagging_Lasso_SelectKBest performance:
+  mse: 2844.5945
+  mae: 43.2121
+  r2: 0.4631
+  rmse: 53.3347
+Training Lasso_RFE...
+Lasso_RFE performance:
+  mse: 2799.0658
+  mae: 42.8307
+  r2: 0.4717
+  rmse: 52.9062
+Training Bagging_Lasso_RFE...
+Bagging_Lasso_RFE performance:
+  mse: 2863.5565
+  mae: 43.2172
+  r2: 0.4595
+  rmse: 53.5122
+
+Best Models:
+Lasso_SelectKBest performance:
+  mse: 2799.0549
+  mae: 42.8307
+  r2: 0.4717
+  rmse: 52.9061
+Lasso_RFE performance:
+  mse: 2799.0658
+  mae: 42.8307
+  r2: 0.4717
+  rmse: 52.9062
+Lasso_VarianceThreshold performance:
+  mse: 2801.6876
+  mae: 42.7767
+  r2: 0.4712
+  rmse: 52.9310
+Bagging_Lasso_SelectKBest performance:
+  mse: 2844.5945
+  mae: 43.2121
+  r2: 0.4631
+  rmse: 53.3347
+Bagging_Lasso_VarianceThreshold performance:
+  mse: 2863.5548
+  mae: 43.2167
+  r2: 0.4595
+  rmse: 53.5122
+Bagging_Lasso_RFE performance:
+  mse: 2863.5565
+  mae: 43.2172
+  r2: 0.4595
+  rmse: 53.5122
+
+Voting Regressor performance:
+  mse: 2799.7109
+  mae: 42.8127
+  r2: 0.4716
+  rmse: 52.9123
+
+Stacking Regressor performance:
+  mse: 2805.4220
+  mae: 42.7459
+  r2: 0.4705
+  rmse: 52.9662

@@ -1,0 +1,43 @@
+Training CatBoostRegressor_VarianceThreshold...
+CatBoostRegressor_VarianceThreshold performance:
+  mse: 2639.5558
+  mae: 41.3128
+  r2: 0.5018
+  rmse: 51.3766
+Training Bagging_CatBoostRegressor_VarianceThreshold...
+Bagging_CatBoostRegressor_VarianceThreshold performance:
+  mse: 2707.3191
+  mae: 41.8861
+  r2: 0.4890
+  rmse: 52.0319
+Training CatBoostRegressor_SelectKBest...
+CatBoostRegressor_SelectKBest performance:
+  mse: 2623.5289
+  mae: 40.9661
+  r2: 0.5048
+  rmse: 51.2204
+Training Bagging_CatBoostRegressor_SelectKBest...
+Bagging_CatBoostRegressor_SelectKBest performance:
+  mse: 2729.4875
+  mae: 42.3975
+  r2: 0.4848
+  rmse: 52.2445
+Training CatBoostRegressor_SelectKBest...
+CatBoostRegressor_SelectKBest performance:
+  mse: 2623.5289
+  mae: 40.9661
+  r2: 0.5048
+  rmse: 51.2204
+Training Bagging_CatBoostRegressor_SelectKBest...
+Bagging_CatBoostRegressor_SelectKBest performance:
+  mse: 2729.4875
+  mae: 42.3975
+  r2: 0.4848
+  rmse: 52.2445
+Training CatBoostRegressor_RFE...
+CatBoostRegressor_RFE performance:
+  mse: 2647.3565
+  mae: 41.8615
+  r2: 0.5003
+  rmse: 51.4525
+Training Bagging_CatBoostRegressor_RFE...

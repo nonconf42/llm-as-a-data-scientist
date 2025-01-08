@@ -1,0 +1,264 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (# of siblings / spouses aboard the Titanic)
+Parch (# of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 15 hypotheses for the dataset described above. For each hypothesis:
+1.  Write a brief description and save it as a string variable called description.
+2.  Provide Python code to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "{description for hypothesis 1}"
+{test() for hypothesis 1}
+# Hypothesis 2.
+description = "{description for hypothesis 2}"
+{test() for hypothesis 2}
+…
+# Hypothesis 15.
+description = "{description for hypothesis 15}"
+{test() for hypothesis 15}
+
+############
+Certainly! The hypotheses are generated based on the dataset's variables and common anomaly detection techniques. Let's create 15 hypotheses along with the corresponding statistical tests.
+
+```python
+# Hypothesis 1.
+description = "Passengers in 1st class had a significantly higher chance of survival."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Pclass'], dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 2.
+description = "Females had a significantly higher survival rate than males."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Sex'], dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 3.
+description = "Passengers who paid a higher fare had a higher chance of survival."
+def test(dataset):
+    from scipy.stats import ks_2samp
+
+    survived_fares = dataset[dataset['Survived'] == 1]['Fare'].dropna()
+    not_survived_fares = dataset[dataset['Survived'] == 0]['Fare'].dropna()
+    test_statistic, p_value = ks_2samp(survived_fares, not_survived_fares)
+
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 4.
+description = "There are anomalies in age distribution that affect survival."
+def test(dataset):
+    from scipy.stats import ks_2samp
+
+    age_survived = dataset[dataset['Survived'] == 1]['Age'].dropna()
+    age_not_survived = dataset[dataset['Survived'] == 0]['Age'].dropna()
+    test_statistic, p_value = ks_2samp(age_survived, age_not_survived)
+
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 5.
+description = "Embarkation point had a significant effect on survival rate."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Embarked'], dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 6.
+description = "Individuals traveling with family had a different survival rate compared to those traveling alone."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset['Family'] = dataset['SibSp'] + dataset['Parch']
+    contingency_table = pd.crosstab(dataset['Family'] > 0, dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 7.
+description = "There are anomalies in the cabin distribution that affect survival."
+def test(dataset):
+    import pandas as pd
+
+    result = 1 if dataset['Cabin'].isnull().sum() > dataset['Cabin'].notnull().sum() else 0
+    return result
+
+# Hypothesis 8.
+description = "Passengers in lower ticket classes had lower average fares."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import f_oneway
+
+    fares_by_class = [group['Fare'].dropna() for name, group in dataset.groupby('Pclass')]
+    f_statistic, p_value = f_oneway(*fares_by_class)
+
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 9.
+description = "Anomalies exist in the survival rate across different sibsp categories."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['SibSp'], dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 10.
+description = "Anomalies in the survival rate may exist among different parch categories."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Parch'], dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 11.
+description = "Young children had a higher survival rate than adults."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset['IsChild'] = dataset['Age'].apply(lambda age: 1 if age < 18 else 0)
+    contingency_table = pd.crosstab(dataset['IsChild'], dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 12.
+description = "There are anomalies in ticket number distribution that affect survival."
+def test(dataset):
+    import pandas as pd
+
+    dataset['TicketPrefix'] = dataset['Ticket'].apply(lambda ticket: ticket.split()[0] if len(ticket.split()) > 1 else 'None')
+    result = 1 if dataset['TicketPrefix'].nunique() > 50 else 0
+    return result
+
+# Hypothesis 13.
+description = "Ages are not uniformly distributed and may include outliers."
+def test(dataset):
+    from scipy.stats import shapiro
+
+    ages_clean = dataset['Age'].dropna()
+    stat, p_value = shapiro(ages_clean)
+
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 14.
+description = "Passengers with unusual ticket prefixes have a different survival rate."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset['TicketPrefix'] = dataset['Ticket'].apply(lambda ticket: ticket.split()[0] if len(ticket.split()) > 1 else 'None')
+    contingency_table = pd.crosstab(dataset['TicketPrefix'], dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 15.
+description = "Unusual patterns in naming conventions might correlate with survival."
+def test(dataset):
+    import pandas as pd
+
+    result = 1 if dataset['Name'].str.contains('Mr\.', case=False).mean() > 0.5 else 0
+    return result
+```
+
+Each hypothesis is tested using logical or statistical tests appropriate for the hypothesis question, such as chi-square tests for categorical variables and KS tests for continuous variables.
+############
+['# Hypothesis 1.\ndescription = "Passengers in 1st class had a significantly higher chance of survival."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'Pclass\'], dataset[\'Survived\'])\n    chi2, p, dof, expected = chi2_contingency(contingency_table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 2.\ndescription = "Females had a significantly higher survival rate than males."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'Sex\'], dataset[\'Survived\'])\n    chi2, p, dof, expected = chi2_contingency(contingency_table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 3.\ndescription = "Passengers who paid a higher fare had a higher chance of survival."\ndef test(dataset):\n    from scipy.stats import ks_2samp\n\n    survived_fares = dataset[dataset[\'Survived\'] == 1][\'Fare\'].dropna()\n    not_survived_fares = dataset[dataset[\'Survived\'] == 0][\'Fare\'].dropna()\n    test_statistic, p_value = ks_2samp(survived_fares, not_survived_fares)\n\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 4.\ndescription = "There are anomalies in age distribution that affect survival."\ndef test(dataset):\n    from scipy.stats import ks_2samp\n\n    age_survived = dataset[dataset[\'Survived\'] == 1][\'Age\'].dropna()\n    age_not_survived = dataset[dataset[\'Survived\'] == 0][\'Age\'].dropna()\n    test_statistic, p_value = ks_2samp(age_survived, age_not_survived)\n\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 5.\ndescription = "Embarkation point had a significant effect on survival rate."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'Embarked\'], dataset[\'Survived\'])\n    chi2, p, dof, expected = chi2_contingency(contingency_table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 6.\ndescription = "Individuals traveling with family had a different survival rate compared to those traveling alone."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    dataset[\'Family\'] = dataset[\'SibSp\'] + dataset[\'Parch\']\n    contingency_table = pd.crosstab(dataset[\'Family\'] > 0, dataset[\'Survived\'])\n    chi2, p, dof, expected = chi2_contingency(contingency_table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 7.\ndescription = "There are anomalies in the cabin distribution that affect survival."\ndef test(dataset):\n    import pandas as pd\n\n    result = 1 if dataset[\'Cabin\'].isnull().sum() > dataset[\'Cabin\'].notnull().sum() else 0\n    return result', '# Hypothesis 8.\ndescription = "Passengers in lower ticket classes had lower average fares."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import f_oneway\n\n    fares_by_class = [group[\'Fare\'].dropna() for name, group in dataset.groupby(\'Pclass\')]\n    f_statistic, p_value = f_oneway(*fares_by_class)\n\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 9.\ndescription = "Anomalies exist in the survival rate across different sibsp categories."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'SibSp\'], dataset[\'Survived\'])\n    chi2, p, dof, expected = chi2_contingency(contingency_table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 10.\ndescription = "Anomalies in the survival rate may exist among different parch categories."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    contingency_table = pd.crosstab(dataset[\'Parch\'], dataset[\'Survived\'])\n    chi2, p, dof, expected = chi2_contingency(contingency_table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 11.\ndescription = "Young children had a higher survival rate than adults."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    dataset[\'IsChild\'] = dataset[\'Age\'].apply(lambda age: 1 if age < 18 else 0)\n    contingency_table = pd.crosstab(dataset[\'IsChild\'], dataset[\'Survived\'])\n    chi2, p, dof, expected = chi2_contingency(contingency_table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 12.\ndescription = "There are anomalies in ticket number distribution that affect survival."\ndef test(dataset):\n    import pandas as pd\n\n    dataset[\'TicketPrefix\'] = dataset[\'Ticket\'].apply(lambda ticket: ticket.split()[0] if len(ticket.split()) > 1 else \'None\')\n    result = 1 if dataset[\'TicketPrefix\'].nunique() > 50 else 0\n    return result', '# Hypothesis 13.\ndescription = "Ages are not uniformly distributed and may include outliers."\ndef test(dataset):\n    from scipy.stats import shapiro\n\n    ages_clean = dataset[\'Age\'].dropna()\n    stat, p_value = shapiro(ages_clean)\n\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 14.\ndescription = "Passengers with unusual ticket prefixes have a different survival rate."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    dataset[\'TicketPrefix\'] = dataset[\'Ticket\'].apply(lambda ticket: ticket.split()[0] if len(ticket.split()) > 1 else \'None\')\n    contingency_table = pd.crosstab(dataset[\'TicketPrefix\'], dataset[\'Survived\'])\n    chi2, p, dof, expected = chi2_contingency(contingency_table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 15.\ndescription = "Unusual patterns in naming conventions might correlate with survival."\ndef test(dataset):\n    import pandas as pd\n\n    result = 1 if dataset[\'Name\'].str.contains(\'Mr\\.\', case=False).mean() > 0.5 else 0\n    return result']
+Passengers in 1st class had a significantly higher chance of survival.
+1
+#####
+Females had a significantly higher survival rate than males.
+1
+#####
+Passengers who paid a higher fare had a higher chance of survival.
+1
+#####
+There are anomalies in age distribution that affect survival.
+0
+#####
+Embarkation point had a significant effect on survival rate.
+1
+#####
+Individuals traveling with family had a different survival rate compared to those traveling alone.
+1
+#####
+There are anomalies in the cabin distribution that affect survival.
+1
+#####
+Passengers in lower ticket classes had lower average fares.
+1
+#####
+Anomalies exist in the survival rate across different sibsp categories.
+1
+#####
+Anomalies in the survival rate may exist among different parch categories.
+1
+#####
+Young children had a higher survival rate than adults.
+1
+#####
+There are anomalies in ticket number distribution that affect survival.
+0
+#####
+Ages are not uniformly distributed and may include outliers.
+1
+#####
+Passengers with unusual ticket prefixes have a different survival rate.
+1
+#####
+Unusual patterns in naming conventions might correlate with survival.
+1
+#####

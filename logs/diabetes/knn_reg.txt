@@ -1,0 +1,92 @@
+Training KNeighborsRegressor_VarianceThreshold...
+KNeighborsRegressor_VarianceThreshold performance:
+  mse: 3010.3593
+  mae: 45.3359
+  r2: 0.4318
+  rmse: 54.8667
+Training Bagging_KNeighborsRegressor_VarianceThreshold...
+Bagging_KNeighborsRegressor_VarianceThreshold performance:
+  mse: 2896.3164
+  mae: 43.6218
+  r2: 0.4533
+  rmse: 53.8174
+Training KNeighborsRegressor_SelectKBest...
+KNeighborsRegressor_SelectKBest performance:
+  mse: 2854.3802
+  mae: 43.5497
+  r2: 0.4612
+  rmse: 53.4264
+Training Bagging_KNeighborsRegressor_SelectKBest...
+Bagging_KNeighborsRegressor_SelectKBest performance:
+  mse: 2910.5417
+  mae: 44.0322
+  r2: 0.4506
+  rmse: 53.9494
+Training KNeighborsRegressor_SelectKBest...
+KNeighborsRegressor_SelectKBest performance:
+  mse: 3016.2463
+  mae: 44.3355
+  r2: 0.4307
+  rmse: 54.9204
+Training Bagging_KNeighborsRegressor_SelectKBest...
+Bagging_KNeighborsRegressor_SelectKBest performance:
+  mse: 2756.7389
+  mae: 42.3970
+  r2: 0.4797
+  rmse: 52.5047
+Training KNeighborsRegressor_RFE...
+KNeighborsRegressor_RFE performance:
+  mse: 2998.2429
+  mae: 44.9927
+  r2: 0.4341
+  rmse: 54.7562
+Training Bagging_KNeighborsRegressor_RFE...
+Bagging_KNeighborsRegressor_RFE performance:
+  mse: 2910.5417
+  mae: 44.0322
+  r2: 0.4506
+  rmse: 53.9494
+
+Best Models:
+Bagging_KNeighborsRegressor_SelectKBest performance:
+  mse: 2756.7389
+  mae: 42.3970
+  r2: 0.4797
+  rmse: 52.5047
+Bagging_KNeighborsRegressor_VarianceThreshold performance:
+  mse: 2896.3164
+  mae: 43.6218
+  r2: 0.4533
+  rmse: 53.8174
+Bagging_KNeighborsRegressor_RFE performance:
+  mse: 2910.5417
+  mae: 44.0322
+  r2: 0.4506
+  rmse: 53.9494
+KNeighborsRegressor_RFE performance:
+  mse: 2998.2429
+  mae: 44.9927
+  r2: 0.4341
+  rmse: 54.7562
+KNeighborsRegressor_VarianceThreshold performance:
+  mse: 3010.3593
+  mae: 45.3359
+  r2: 0.4318
+  rmse: 54.8667
+KNeighborsRegressor_SelectKBest performance:
+  mse: 3016.2463
+  mae: 44.3355
+  r2: 0.4307
+  rmse: 54.9204
+
+Voting Regressor performance:
+  mse: 2810.1734
+  mae: 43.2195
+  r2: 0.4696
+  rmse: 53.0111
+
+Stacking Regressor performance:
+  mse: 2611.6224
+  mae: 41.5901
+  r2: 0.5071
+  rmse: 51.1040

@@ -1,0 +1,471 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (# of siblings / spouses aboard the Titanic)
+Parch (# of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.
+Hypothesis Generation Methods:
+Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).
+Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.
+Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.
+DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 15 hypotheses for the dataset described above. For each hypothesis:
+1.  Write a brief description and save it as a string variable called description.
+2.  Provide Python code to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "{description for hypothesis 1}"
+{test() for hypothesis 1}
+# Hypothesis 2.
+description = "{description for hypothesis 2}"
+{test() for hypothesis 2}
+…
+# Hypothesis 15.
+description = "{description for hypothesis 15}"
+{test() for hypothesis 15}
+
+############
+Creating hypotheses and testing them on the Titanic dataset can involve many statistical tests and explorations. Below, I'll provide a structured approach to generating and testing 15 hypotheses using statistical methods commonly used in data analysis. Note that for the sake of demonstration, these tests will be hypothetical and may not fully reflect the complexity of real-world statistical analyses. Also, some hypotheses may not be easy to test with a binary result, but for this exercise, we'll pretend that the result can be evaluated in a binary manner (as accept/reject).
+
+```python
+# Hypothesis 1.
+description = "Survival is independent of the ticket class."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(dataset['Pclass'], dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05 (typical significance level)
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 2.
+description = "Gender has no effect on the survivability of passengers."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(dataset['Sex'], dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05 (typical significance level)
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 3.
+description = "Younger passengers were not more likely to survive compared to older passengers."
+def test(dataset):
+    from scipy.stats import ttest_ind
+    import numpy as np
+    
+    # Group age by survival
+    survived = dataset.loc[dataset['Survived'] == 1, 'Age'].dropna()
+    not_survived = dataset.loc[dataset['Survived'] == 0, 'Age'].dropna()
+
+    # Perform t-test
+    t_stat, p = ttest_ind(survived, not_survived, equal_var=False)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 4.
+description = "Number of siblings/spouses aboard does not affect survival chances."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chisquare
+    
+    # Frequency counts of siblings/spouses by survival status
+    sibsp_survived = dataset.groupby('Survived')['SibSp'].value_counts().unstack().fillna(0)
+    
+    # Perform Chi-Square test
+    chi2, p = chisquare(sibsp_survived.T)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 5.
+description = "The number of parents/children aboard does not impact survival rates."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chisquare
+    
+    # Frequency counts of parents/children by survival status
+    parch_survived = dataset.groupby('Survived')['Parch'].value_counts().unstack().fillna(0)
+    
+    # Perform Chi-Square test
+    chi2, p = chisquare(parch_survived.T)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 6.
+description = "The fare paid by passengers has no association with survival probability."
+def test(dataset):
+    from scipy.stats import ttest_ind
+    
+    # Separate the dataset into survived and not survived groups
+    fare_survived = dataset.loc[dataset['Survived'] == 1, 'Fare'].dropna()
+    fare_not_survived = dataset.loc[dataset['Survived'] == 0, 'Fare'].dropna()
+    
+    # Perform independent t-test
+    t_stat, p = ttest_ind(fare_survived, fare_not_survived, equal_var=False)
+    
+    # Decide based on p-value
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 7.
+description = "Embarkation port does not influence survival probability."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(dataset['Embarked'], dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 8.
+description = "Different family sizes (SibSp + Parch) do not affect survival."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Create family size feature
+    dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch']
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(dataset['FamilySize'], dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 9.
+description = "The cabin information does not affect the chances of survival."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Create a new feature cabin presence
+    dataset['HasCabin'] = dataset['Cabin'].apply(lambda x: 0 if pd.isna(x) else 1)
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(dataset['HasCabin'], dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 10.
+description = "The last name of the passengers does not correlate with survival."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Extract last name
+    dataset['LastName'] = dataset['Name'].apply(lambda x: x.split(',')[0])
+
+    # Analyze those with shared last names
+    shared_last_names = dataset.groupby('LastName')['Survived'].agg(lambda x: x.mode()[0] if not x.mode().empty else 0)
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(shared_last_names, dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 11.
+description = "The passenger's age group (child, adult) does not influence survival rates."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define age groups
+    dataset['AgeGroup'] = pd.cut(dataset['Age'], bins=[0, 12, 18, 60, 80], labels=['Child', 'Teen', 'Adult', 'Senior'])
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(dataset['AgeGroup'], dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 12.
+description = "Survival is purely based on random chance and ticket number does not correlate with outcomes."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Convert ticket number to an integer
+    dataset['TicketNumber'] = pd.to_numeric(dataset['Ticket'].apply(lambda x: x.split()[-1] if x.split()[-1].isdigit() else "0"), errors='coerce').fillna(0).astype(int)
+    
+    # Divide into ticket number categories
+    dataset['TicketCategory'] = pd.qcut(dataset['TicketNumber'], 4, labels=False)
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(dataset['TicketCategory'], dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 13.
+description = "Higher fare-paying passengers have a survival advantage (no correlation tested here)."
+def test(dataset):
+    from scipy.stats import kruskal
+
+    # Perform Kruskal-Wallis H-test for independent samples
+    first_class = dataset[dataset['Pclass'] == 1]['Survived']
+    second_class = dataset[dataset['Pclass'] == 2]['Survived']
+    third_class = dataset[dataset['Pclass'] == 3]['Survived']
+    
+    # We can check kruskal for each class but here we assume all are independent
+    stat, p = kruskal(first_class, second_class, third_class)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 14.
+description = "There is a linear correlation between age and fare paid."
+def test(dataset):
+    from scipy.stats import pearsonr
+    
+    # Ignore missing values
+    age = dataset[['Age', 'Fare']].dropna()
+    
+    # Compute Pearson correlation
+    corr, p = pearsonr(age['Age'], age['Fare'])
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+
+# Hypothesis 15.
+description = "The distribution of ages for passengers is not normal."
+def test(dataset):
+    from scipy.stats import shapiro
+    
+    # Test if Age follows a normal distribution using Shapiro-Wilk test
+    age_data = dataset['Age'].dropna()
+    stat, p = shapiro(age_data)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+```
+
+Each of these hypotheses attempts to explore different aspects of the dataset by framing questions that can be statistically tested. Note that in practice, assessing whether we "accept" a hypothesis is complex and requires a deeper understanding of both the context and the data. These examples provide a simplified approach for illustrative purposes.
+############
+['# Hypothesis 1.\ndescription = "Survival is independent of the ticket class."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    # Create a contingency table\n    contingency_table = pd.crosstab(dataset[\'Pclass\'], dataset[\'Survived\'])\n    \n    # Perform Chi-Squared test\n    chi2, p, _, _ = chi2_contingency(contingency_table)\n    \n    # Check if p-value is greater than 0.05 (typical significance level)\n    result = int(p > 0.05)\n    return result', '# Hypothesis 2.\ndescription = "Gender has no effect on the survivability of passengers."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    # Create a contingency table\n    contingency_table = pd.crosstab(dataset[\'Sex\'], dataset[\'Survived\'])\n    \n    # Perform Chi-Squared test\n    chi2, p, _, _ = chi2_contingency(contingency_table)\n    \n    # Check if p-value is greater than 0.05 (typical significance level)\n    result = int(p > 0.05)\n    return result', '# Hypothesis 3.\ndescription = "Younger passengers were not more likely to survive compared to older passengers."\ndef test(dataset):\n    from scipy.stats import ttest_ind\n    import numpy as np\n    \n    # Group age by survival\n    survived = dataset.loc[dataset[\'Survived\'] == 1, \'Age\'].dropna()\n    not_survived = dataset.loc[dataset[\'Survived\'] == 0, \'Age\'].dropna()\n\n    # Perform t-test\n    t_stat, p = ttest_ind(survived, not_survived, equal_var=False)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 4.\ndescription = "Number of siblings/spouses aboard does not affect survival chances."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chisquare\n    \n    # Frequency counts of siblings/spouses by survival status\n    sibsp_survived = dataset.groupby(\'Survived\')[\'SibSp\'].value_counts().unstack().fillna(0)\n    \n    # Perform Chi-Square test\n    chi2, p = chisquare(sibsp_survived.T)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 5.\ndescription = "The number of parents/children aboard does not impact survival rates."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chisquare\n    \n    # Frequency counts of parents/children by survival status\n    parch_survived = dataset.groupby(\'Survived\')[\'Parch\'].value_counts().unstack().fillna(0)\n    \n    # Perform Chi-Square test\n    chi2, p = chisquare(parch_survived.T)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 6.\ndescription = "The fare paid by passengers has no association with survival probability."\ndef test(dataset):\n    from scipy.stats import ttest_ind\n    \n    # Separate the dataset into survived and not survived groups\n    fare_survived = dataset.loc[dataset[\'Survived\'] == 1, \'Fare\'].dropna()\n    fare_not_survived = dataset.loc[dataset[\'Survived\'] == 0, \'Fare\'].dropna()\n    \n    # Perform independent t-test\n    t_stat, p = ttest_ind(fare_survived, fare_not_survived, equal_var=False)\n    \n    # Decide based on p-value\n    result = int(p > 0.05)\n    return result', '# Hypothesis 7.\ndescription = "Embarkation port does not influence survival probability."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    # Create a contingency table\n    contingency_table = pd.crosstab(dataset[\'Embarked\'], dataset[\'Survived\'])\n    \n    # Perform Chi-Squared test\n    chi2, p, _, _ = chi2_contingency(contingency_table)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 8.\ndescription = "Different family sizes (SibSp + Parch) do not affect survival."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Create family size feature\n    dataset[\'FamilySize\'] = dataset[\'SibSp\'] + dataset[\'Parch\']\n    \n    # Create a contingency table\n    contingency_table = pd.crosstab(dataset[\'FamilySize\'], dataset[\'Survived\'])\n    \n    # Perform Chi-Squared test\n    chi2, p, _, _ = chi2_contingency(contingency_table)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 9.\ndescription = "The cabin information does not affect the chances of survival."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    # Create a new feature cabin presence\n    dataset[\'HasCabin\'] = dataset[\'Cabin\'].apply(lambda x: 0 if pd.isna(x) else 1)\n    \n    # Create a contingency table\n    contingency_table = pd.crosstab(dataset[\'HasCabin\'], dataset[\'Survived\'])\n    \n    # Perform Chi-Squared test\n    chi2, p, _, _ = chi2_contingency(contingency_table)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 10.\ndescription = "The last name of the passengers does not correlate with survival."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    # Extract last name\n    dataset[\'LastName\'] = dataset[\'Name\'].apply(lambda x: x.split(\',\')[0])\n\n    # Analyze those with shared last names\n    shared_last_names = dataset.groupby(\'LastName\')[\'Survived\'].agg(lambda x: x.mode()[0] if not x.mode().empty else 0)\n    \n    # Create a contingency table\n    contingency_table = pd.crosstab(shared_last_names, dataset[\'Survived\'])\n    \n    # Perform Chi-Squared test\n    chi2, p, _, _ = chi2_contingency(contingency_table)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 11.\ndescription = "The passenger\'s age group (child, adult) does not influence survival rates."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    # Define age groups\n    dataset[\'AgeGroup\'] = pd.cut(dataset[\'Age\'], bins=[0, 12, 18, 60, 80], labels=[\'Child\', \'Teen\', \'Adult\', \'Senior\'])\n    \n    # Create a contingency table\n    contingency_table = pd.crosstab(dataset[\'AgeGroup\'], dataset[\'Survived\'])\n    \n    # Perform Chi-Squared test\n    chi2, p, _, _ = chi2_contingency(contingency_table)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 12.\ndescription = "Survival is purely based on random chance and ticket number does not correlate with outcomes."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    # Convert ticket number to an integer\n    dataset[\'TicketNumber\'] = pd.to_numeric(dataset[\'Ticket\'].apply(lambda x: x.split()[-1] if x.split()[-1].isdigit() else "0"), errors=\'coerce\').fillna(0).astype(int)\n    \n    # Divide into ticket number categories\n    dataset[\'TicketCategory\'] = pd.qcut(dataset[\'TicketNumber\'], 4, labels=False)\n    \n    # Create a contingency table\n    contingency_table = pd.crosstab(dataset[\'TicketCategory\'], dataset[\'Survived\'])\n    \n    # Perform Chi-Squared test\n    chi2, p, _, _ = chi2_contingency(contingency_table)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 13.\ndescription = "Higher fare-paying passengers have a survival advantage (no correlation tested here)."\ndef test(dataset):\n    from scipy.stats import kruskal\n\n    # Perform Kruskal-Wallis H-test for independent samples\n    first_class = dataset[dataset[\'Pclass\'] == 1][\'Survived\']\n    second_class = dataset[dataset[\'Pclass\'] == 2][\'Survived\']\n    third_class = dataset[dataset[\'Pclass\'] == 3][\'Survived\']\n    \n    # We can check kruskal for each class but here we assume all are independent\n    stat, p = kruskal(first_class, second_class, third_class)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 14.\ndescription = "There is a linear correlation between age and fare paid."\ndef test(dataset):\n    from scipy.stats import pearsonr\n    \n    # Ignore missing values\n    age = dataset[[\'Age\', \'Fare\']].dropna()\n    \n    # Compute Pearson correlation\n    corr, p = pearsonr(age[\'Age\'], age[\'Fare\'])\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result', '# Hypothesis 15.\ndescription = "The distribution of ages for passengers is not normal."\ndef test(dataset):\n    from scipy.stats import shapiro\n    \n    # Test if Age follows a normal distribution using Shapiro-Wilk test\n    age_data = dataset[\'Age\'].dropna()\n    stat, p = shapiro(age_data)\n    \n    # Check if p-value is greater than 0.05\n    result = int(p > 0.05)\n    return result']
+Survival is independent of the ticket class.
+0
+#####
+Gender has no effect on the survivability of passengers.
+0
+#####
+Younger passengers were not more likely to survive compared to older passengers.
+0
+#####
+ERROR
+only length-1 arrays can be converted to Python scalars
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Number of siblings/spouses aboard does not affect survival chances."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chisquare
+    
+    # Frequency counts of siblings/spouses by survival status
+    sibsp_survived = dataset.groupby('Survived')['SibSp'].value_counts().unstack().fillna(0)
+    
+    # Perform Chi-Square test
+    chi2, p = chisquare(sibsp_survived.T)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+#####
+ERROR
+only length-1 arrays can be converted to Python scalars
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The number of parents/children aboard does not impact survival rates."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chisquare
+    
+    # Frequency counts of parents/children by survival status
+    parch_survived = dataset.groupby('Survived')['Parch'].value_counts().unstack().fillna(0)
+    
+    # Perform Chi-Square test
+    chi2, p = chisquare(parch_survived.T)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+#####
+The fare paid by passengers has no association with survival probability.
+0
+#####
+Embarkation port does not influence survival probability.
+0
+#####
+Different family sizes (SibSp + Parch) do not affect survival.
+0
+#####
+The cabin information does not affect the chances of survival.
+0
+#####
+ERROR
+No data; `observed` has size 0.
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 10.
+description = "The last name of the passengers does not correlate with survival."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Extract last name
+    dataset['LastName'] = dataset['Name'].apply(lambda x: x.split(',')[0])
+
+    # Analyze those with shared last names
+    shared_last_names = dataset.groupby('LastName')['Survived'].agg(lambda x: x.mode()[0] if not x.mode().empty else 0)
+    
+    # Create a contingency table
+    contingency_table = pd.crosstab(shared_last_names, dataset['Survived'])
+    
+    # Perform Chi-Squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    # Check if p-value is greater than 0.05
+    result = int(p > 0.05)
+    return result
+#####
+The passenger's age group (child, adult) does not influence survival rates.
+0
+#####
+Survival is purely based on random chance and ticket number does not correlate with outcomes.
+0
+#####
+Higher fare-paying passengers have a survival advantage (no correlation tested here).
+0
+#####
+There is a linear correlation between age and fare paid.
+0
+#####
+The distribution of ages for passengers is not normal.
+0
+#####

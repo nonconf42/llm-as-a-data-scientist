@@ -1,0 +1,92 @@
+Training ElasticNet_VarianceThreshold...
+ElasticNet_VarianceThreshold performance:
+  mse: 2858.5042
+  mae: 42.9820
+  r2: 0.4605
+  rmse: 53.4650
+Training Bagging_ElasticNet_VarianceThreshold...
+Bagging_ElasticNet_VarianceThreshold performance:
+  mse: 2887.6076
+  mae: 43.3911
+  r2: 0.4550
+  rmse: 53.7365
+Training ElasticNet_SelectKBest...
+ElasticNet_SelectKBest performance:
+  mse: 2862.9860
+  mae: 42.9246
+  r2: 0.4596
+  rmse: 53.5069
+Training Bagging_ElasticNet_SelectKBest...
+Bagging_ElasticNet_SelectKBest performance:
+  mse: 2870.4549
+  mae: 43.3260
+  r2: 0.4582
+  rmse: 53.5766
+Training ElasticNet_SelectKBest...
+ElasticNet_SelectKBest performance:
+  mse: 2863.0965
+  mae: 42.9246
+  r2: 0.4596
+  rmse: 53.5079
+Training Bagging_ElasticNet_SelectKBest...
+Bagging_ElasticNet_SelectKBest performance:
+  mse: 2870.4549
+  mae: 43.3260
+  r2: 0.4582
+  rmse: 53.5766
+Training ElasticNet_RFE...
+ElasticNet_RFE performance:
+  mse: 2850.2733
+  mae: 42.9730
+  r2: 0.4620
+  rmse: 53.3880
+Training Bagging_ElasticNet_RFE...
+Bagging_ElasticNet_RFE performance:
+  mse: 2875.9622
+  mae: 43.3592
+  r2: 0.4572
+  rmse: 53.6280
+
+Best Models:
+ElasticNet_RFE performance:
+  mse: 2850.2733
+  mae: 42.9730
+  r2: 0.4620
+  rmse: 53.3880
+ElasticNet_VarianceThreshold performance:
+  mse: 2858.5042
+  mae: 42.9820
+  r2: 0.4605
+  rmse: 53.4650
+ElasticNet_SelectKBest performance:
+  mse: 2863.0965
+  mae: 42.9246
+  r2: 0.4596
+  rmse: 53.5079
+Bagging_ElasticNet_SelectKBest performance:
+  mse: 2870.4549
+  mae: 43.3260
+  r2: 0.4582
+  rmse: 53.5766
+Bagging_ElasticNet_RFE performance:
+  mse: 2875.9622
+  mae: 43.3592
+  r2: 0.4572
+  rmse: 53.6280
+Bagging_ElasticNet_VarianceThreshold performance:
+  mse: 2887.6076
+  mae: 43.3911
+  r2: 0.4550
+  rmse: 53.7365
+
+Voting Regressor performance:
+  mse: 2856.9617
+  mae: 42.9592
+  r2: 0.4608
+  rmse: 53.4506
+
+Stacking Regressor performance:
+  mse: 2891.3203
+  mae: 43.0080
+  r2: 0.4543
+  rmse: 53.7710

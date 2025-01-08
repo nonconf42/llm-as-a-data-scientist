@@ -1,0 +1,41 @@
+Training SVR_VarianceThreshold...
+SVR_VarianceThreshold performance:
+  mse: 2930.4999
+  mae: 43.2214
+  r2: 0.4469
+  rmse: 54.1341
+Training Bagging_SVR_VarianceThreshold...
+Bagging_SVR_VarianceThreshold failed with error: Invalid parameter 'kernel' for estimator BaggingRegressor(base_estimator=SVR(), max_samples=0.8, n_jobs=-1,
+                 random_state=42). Valid parameters are: ['base_estimator', 'bootstrap', 'bootstrap_features', 'estimator', 'max_features', 'max_samples', 'n_estimators', 'n_jobs', 'oob_score', 'random_state', 'verbose', 'warm_start'].
+Training SVR_SelectKBest...
+SVR_SelectKBest failed with error: Invalid parameter 'threshold' for estimator SelectKBest(score_func=<function f_regression at 0x123d10400>). Valid parameters are: ['k', 'score_func'].
+Training Bagging_SVR_SelectKBest...
+Bagging_SVR_SelectKBest failed with error: Invalid parameter 'threshold' for estimator SelectKBest(score_func=<function f_regression at 0x130d04400>). Valid parameters are: ['k', 'score_func'].
+Training SVR_SelectKBest...
+SVR_SelectKBest failed with error: Invalid parameter 'base_estimator' for estimator SVR(). Valid parameters are: ['C', 'cache_size', 'coef0', 'degree', 'epsilon', 'gamma', 'kernel', 'max_iter', 'shrinking', 'tol', 'verbose'].
+Training Bagging_SVR_SelectKBest...
+Bagging_SVR_SelectKBest failed with error: Invalid parameter 'threshold' for estimator SelectKBest(score_func=<function mutual_info_regression at 0x11926a980>). Valid parameters are: ['k', 'score_func'].
+Training SVR_RFE...
+SVR_RFE failed with error: Invalid parameter 'k' for estimator RFE(estimator=LinearRegression()). Valid parameters are: ['estimator', 'importance_getter', 'n_features_to_select', 'step', 'verbose'].
+Training Bagging_SVR_RFE...
+Bagging_SVR_RFE failed with error: Invalid parameter 'kernel' for estimator BaggingRegressor(base_estimator=SVR(), max_samples=0.8, n_jobs=-1,
+                 random_state=42). Valid parameters are: ['base_estimator', 'bootstrap', 'bootstrap_features', 'estimator', 'max_features', 'max_samples', 'n_estimators', 'n_jobs', 'oob_score', 'random_state', 'verbose', 'warm_start'].
+
+Best Models:
+SVR_VarianceThreshold performance:
+  mse: 2930.4999
+  mae: 43.2214
+  r2: 0.4469
+  rmse: 54.1341
+
+Voting Regressor performance:
+  mse: 2930.4999
+  mae: 43.2214
+  r2: 0.4469
+  rmse: 54.1341
+
+Stacking Regressor performance:
+  mse: 2902.5340
+  mae: 43.2408
+  r2: 0.4522
+  rmse: 53.8752

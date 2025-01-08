@@ -66,153 +66,179 @@ def get_regressors(n_features):
 
     # List of base regressors and their parameters
     base_regressors = [
-        ('LinearRegression', LinearRegression(), {}, True),
+        #works on diabetes
+    #     ('LinearRegression', LinearRegression(), {}, True),
 
-        ('Ridge', Ridge(), {
-            'regressor__alpha': np.logspace(-4, 4, 50),
-            'regressor__solver': ['auto', 'svd', 'cholesky', 'lsqr', 'sag', 'saga'],
-        }, True),
+    #     #works on diabetes
+    #     ('Ridge', Ridge(), {
+    #         'regressor__alpha': np.logspace(-4, 4, 50),
+    #         'regressor__solver': ['auto', 'svd', 'cholesky', 'lsqr', 'sag', 'saga'],
+    #     }, True),
 
-        ('Lasso', Lasso(max_iter=10000), {
-            'regressor__alpha': np.logspace(-4, 1, 50),
-            'regressor__selection': ['cyclic', 'random'],
-        }, True),
+    #     #works on diabetes
+    #     ('Lasso', Lasso(max_iter=10000), {
+    #         'regressor__alpha': np.logspace(-4, 1, 50),
+    #         'regressor__selection': ['cyclic', 'random'],
+    #     }, True),
 
-        ('ElasticNet', ElasticNet(max_iter=10000), {
-            'regressor__alpha': np.logspace(-4, 1, 50),
-            'regressor__l1_ratio': np.linspace(0, 1, 20),
-            'regressor__selection': ['cyclic', 'random'],
-        }, True),
+    #     #works on diabetes
+    #     ('ElasticNet', ElasticNet(max_iter=10000), {
+    #         'regressor__alpha': np.logspace(-4, 1, 50),
+    #         'regressor__l1_ratio': np.linspace(0, 1, 20),
+    #         'regressor__selection': ['cyclic', 'random'],
+    #     }, True),
 
-        ('BayesianRidge', BayesianRidge(), {
-            'regressor__alpha_1': np.logspace(-6, -1, 10),
-            'regressor__alpha_2': np.logspace(-6, -1, 10),
-            'regressor__lambda_1': np.logspace(-6, -1, 10),
-            'regressor__lambda_2': np.logspace(-6, -1, 10)
-        }, True),
+    #     #works on diabetes
+    #     ('BayesianRidge', BayesianRidge(), {
+    #         'regressor__alpha_1': np.logspace(-6, -1, 10),
+    #         'regressor__alpha_2': np.logspace(-6, -1, 10),
+    #         'regressor__lambda_1': np.logspace(-6, -1, 10),
+    #         'regressor__lambda_2': np.logspace(-6, -1, 10)
+    #     }, True),
 
-        ('ARDRegression', ARDRegression(), {
-            'regressor__alpha_1': np.logspace(-6, -1, 10),
-            'regressor__alpha_2': np.logspace(-6, -1, 10),
-            'regressor__lambda_1': np.logspace(-6, -1, 10),
-            'regressor__lambda_2': np.logspace(-6, -1, 10)
-        }, True),
+    #     #works on diabetes
+    #     ('ARDRegression', ARDRegression(), {
+    #         'regressor__alpha_1': np.logspace(-6, -1, 10),
+    #         'regressor__alpha_2': np.logspace(-6, -1, 10),
+    #         'regressor__lambda_1': np.logspace(-6, -1, 10),
+    #         'regressor__lambda_2': np.logspace(-6, -1, 10)
+    #     }, True),
 
-        ('SGDRegressor', SGDRegressor(max_iter=1000, tol=1e-3), {
-            'regressor__loss': ['squared_loss', 'huber', 'epsilon_insensitive'],
-            'regressor__penalty': ['l2', 'l1', 'elasticnet'],
-            'regressor__alpha': np.logspace(-6, -1, 10),
-            'regressor__learning_rate': ['constant', 'optimal', 'invscaling', 'adaptive'],
-        }, True),
+    #     #works on diabetes
+    #     ('SGDRegressor', SGDRegressor(max_iter=1000, tol=1e-3), {
+    #         'regressor__loss': ['squared_loss', 'huber', 'epsilon_insensitive'],
+    #         'regressor__penalty': ['l2', 'l1', 'elasticnet'],
+    #         'regressor__alpha': np.logspace(-6, -1, 10),
+    #         'regressor__learning_rate': ['constant', 'optimal', 'invscaling', 'adaptive'],
+    #     }, True),
 
-        ('PassiveAggressiveRegressor', PassiveAggressiveRegressor(max_iter=1000, tol=1e-3), {
-            'regressor__C': np.logspace(-4, 1, 50),
-            'regressor__loss': ['epsilon_insensitive', 'squared_epsilon_insensitive'],
-        }, True),
+    #     #works on diabetes
+    #     ('PassiveAggressiveRegressor', PassiveAggressiveRegressor(max_iter=1000, tol=1e-3), {
+    #         'regressor__C': np.logspace(-4, 1, 50),
+    #         'regressor__loss': ['epsilon_insensitive', 'squared_epsilon_insensitive'],
+    #     }, True),
 
-        ('HuberRegressor', HuberRegressor(max_iter=1000), {
-            'regressor__epsilon': np.linspace(1.1, 2.0, 10),
-            'regressor__alpha': np.logspace(-6, -1, 10),
-        }, True),
+    #     #works on diabetes
+    #     ('HuberRegressor', HuberRegressor(max_iter=1000), {
+    #         'regressor__epsilon': np.linspace(1.1, 2.0, 10),
+    #         'regressor__alpha': np.logspace(-6, -1, 10),
+    #     }, True),
 
-        ('KNeighborsRegressor', KNeighborsRegressor(), {
-            'regressor__n_neighbors': range(1, 31),
-            'regressor__weights': ['uniform', 'distance'],
-            'regressor__metric': ['euclidean', 'manhattan', 'minkowski'],
-        }, True),
+    #     #works on diabetes
+    #     ('KNeighborsRegressor', KNeighborsRegressor(), {
+    #         'regressor__n_neighbors': range(1, 31),
+    #         'regressor__weights': ['uniform', 'distance'],
+    #         'regressor__metric': ['euclidean', 'manhattan', 'minkowski'],
+    #     }, True),
 
-        ('DecisionTreeRegressor', DecisionTreeRegressor(), {
-            'regressor__criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-            'regressor__max_depth': [None] + list(range(2, 20)),
-            'regressor__min_samples_split': range(2, 20),
-            'regressor__min_samples_leaf': range(1, 20)
+    #     #works on diabetes
+    #     ('DecisionTreeRegressor', DecisionTreeRegressor(), {
+    #         'regressor__criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+    #         'regressor__max_depth': [None] + list(range(2, 20)),
+    #         'regressor__min_samples_split': range(2, 20),
+    #         'regressor__min_samples_leaf': range(1, 20)
+    #     }, False),
+
+    #     #works on diabetes
+    #     ('RandomForestRegressor', RandomForestRegressor(), {
+    #         'regressor__n_estimators': [100, 200, 500],
+    #         'regressor__criterion': ['squared_error', 'absolute_error', 'friedman_mse'],
+    #         'regressor__max_depth': [None] + list(range(2, 20)),
+    #         'regressor__min_samples_split': range(2, 20),
+    #         'regressor__min_samples_leaf': range(1, 20)
+    #     }, False),
+
+    #     #works on diabetes
+    #     ('GradientBoostingRegressor', GradientBoostingRegressor(), {
+    #         'regressor__n_estimators': [100, 200, 500],
+    #         'regressor__learning_rate': [0.001, 0.01, 0.1],
+    #         'regressor__loss': ['squared_error', 'absolute_error', 'huber', 'quantile'],
+    #         'regressor__max_depth': range(2, 20),
+    #         'regressor__min_samples_split': range(2, 20),
+    #         'regressor__min_samples_leaf': range(1, 20)
+    #     }, False),
+
+    #    # works on diabetes
+    #     ('AdaBoostRegressor', AdaBoostRegressor(), {
+    #         'regressor__n_estimators': [50, 100, 200],
+    #         'regressor__learning_rate': [0.001, 0.01, 0.1, 1.0],
+    #         'regressor__loss': ['linear', 'square', 'exponential']
+    #     }, False),
+
+        #does not work on diabetes
+        # ('SVR', SVR(), [
+        #     {
+        #         'regressor__kernel': ['linear'],
+        #         'regressor__C': np.logspace(-3, 3, 10),
+        #         'regressor__epsilon': np.logspace(-4, 0, 10),
+        #     },
+        #     {
+        #         'regressor__kernel': ['poly'],
+        #         'regressor__C': np.logspace(-3, 3, 10),
+        #         'regressor__epsilon': np.logspace(-4, 0, 10),
+        #         'regressor__degree': [2, 3, 4],
+        #         'regressor__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
+        #     },
+        #     {
+        #         'regressor__kernel': ['rbf', 'sigmoid'],
+        #         'regressor__C': np.logspace(-3, 3, 10),
+        #         'regressor__epsilon': np.logspace(-4, 0, 10),
+        #         'regressor__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
+        #     },
+        # ], True),
+
+        # ('KernelRidge', KernelRidge(), [
+        #     {
+        #         'regressor__kernel': ['linear'],
+        #         'regressor__alpha': np.logspace(-6, 0, 10),
+        #     },
+        #     {
+        #         'regressor__kernel': ['polynomial'],
+        #         'regressor__alpha': np.logspace(-6, 0, 10),
+        #         'regressor__degree': [2, 3, 4],
+        #         'regressor__gamma': np.logspace(-4, 0, 5),
+        #     },
+        #     {
+        #         'regressor__kernel': ['rbf', 'sigmoid'],
+        #         'regressor__alpha': np.logspace(-6, 0, 10),
+        #         'regressor__gamma': np.logspace(-4, 0, 5),
+        #     },
+        # ], True),
+
+        #works on diabetes
+        # ('XGBRegressor', XGBRegressor(), {
+        #     'regressor__n_estimators': [100, 200, 500],
+        #     'regressor__learning_rate': [0.001, 0.01, 0.1],
+        #     'regressor__max_depth': range(2, 10),
+        #     'regressor__subsample': [0.5, 0.7, 0.9, 1.0],
+        #     'regressor__colsample_bytree': [0.5, 0.7, 0.9, 1.0]
+        # }, False),
+
+        #need to be fixed
+        # ('LGBMRegressor', LGBMRegressor(), {
+        #     'regressor__n_estimators': [100, 200, 500],
+        #     'regressor__learning_rate': [0.001, 0.01, 0.1],
+        #     'regressor__max_depth': range(2, 10),
+        #     'regressor__num_leaves': [31, 50, 70],
+        #     'regressor__subsample': [0.5, 0.7, 0.9, 1.0]
+        # }, False),
+
+        ('LGBMRegressor', LGBMRegressor(n_jobs=-1), {
+            'regressor__n_estimators': [5, 100, 200, 500],
+            'regressor__learning_rate': [0.01, 0.1, 0.2],
+            'regressor__max_depth': [3, 5, 7, 9],
+            'regressor__num_leaves': [1, 2, 5], #31, 50],
+            'regressor__subsample': [0.6, 0.8, 1.0],
+            'regressor__min_child_samples': [5, 10, 20]
         }, False),
 
-        ('RandomForestRegressor', RandomForestRegressor(), {
-            'regressor__n_estimators': [100, 200, 500],
-            'regressor__criterion': ['squared_error', 'absolute_error', 'friedman_mse'],
-            'regressor__max_depth': [None] + list(range(2, 20)),
-            'regressor__min_samples_split': range(2, 20),
-            'regressor__min_samples_leaf': range(1, 20)
-        }, False),
-
-        ('GradientBoostingRegressor', GradientBoostingRegressor(), {
-            'regressor__n_estimators': [100, 200, 500],
-            'regressor__learning_rate': [0.001, 0.01, 0.1],
-            'regressor__loss': ['squared_error', 'absolute_error', 'huber', 'quantile'],
-            'regressor__max_depth': range(2, 20),
-            'regressor__min_samples_split': range(2, 20),
-            'regressor__min_samples_leaf': range(1, 20)
-        }, False),
-
-        ('AdaBoostRegressor', AdaBoostRegressor(), {
-            'regressor__n_estimators': [50, 100, 200],
-            'regressor__learning_rate': [0.001, 0.01, 0.1, 1.0],
-            'regressor__loss': ['linear', 'square', 'exponential']
-        }, False),
-
-        ('SVR', SVR(), [
-            {
-                'regressor__kernel': ['linear'],
-                'regressor__C': np.logspace(-3, 3, 10),
-                'regressor__epsilon': np.logspace(-4, 0, 10),
-            },
-            {
-                'regressor__kernel': ['poly'],
-                'regressor__C': np.logspace(-3, 3, 10),
-                'regressor__epsilon': np.logspace(-4, 0, 10),
-                'regressor__degree': [2, 3, 4],
-                'regressor__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
-            },
-            {
-                'regressor__kernel': ['rbf', 'sigmoid'],
-                'regressor__C': np.logspace(-3, 3, 10),
-                'regressor__epsilon': np.logspace(-4, 0, 10),
-                'regressor__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
-            },
-        ], True),
-
-        ('KernelRidge', KernelRidge(), [
-            {
-                'regressor__kernel': ['linear'],
-                'regressor__alpha': np.logspace(-6, 0, 10),
-            },
-            {
-                'regressor__kernel': ['polynomial'],
-                'regressor__alpha': np.logspace(-6, 0, 10),
-                'regressor__degree': [2, 3, 4],
-                'regressor__gamma': np.logspace(-4, 0, 5),
-            },
-            {
-                'regressor__kernel': ['rbf', 'sigmoid'],
-                'regressor__alpha': np.logspace(-6, 0, 10),
-                'regressor__gamma': np.logspace(-4, 0, 5),
-            },
-        ], True),
-
-        ('XGBRegressor', XGBRegressor(), {
-            'regressor__n_estimators': [100, 200, 500],
-            'regressor__learning_rate': [0.001, 0.01, 0.1],
-            'regressor__max_depth': range(2, 10),
-            'regressor__subsample': [0.5, 0.7, 0.9, 1.0],
-            'regressor__colsample_bytree': [0.5, 0.7, 0.9, 1.0]
-        }, False),
-
-        ('LGBMRegressor', LGBMRegressor(), {
-            'regressor__n_estimators': [100, 200, 500],
-            'regressor__learning_rate': [0.001, 0.01, 0.1],
-            'regressor__max_depth': range(2, 10),
-            'regressor__num_leaves': [31, 50, 70],
-            'regressor__subsample': [0.5, 0.7, 0.9, 1.0]
-        }, False),
-
-        ('CatBoostRegressor', CatBoostRegressor(silent=True), {
-            'regressor__iterations': [100, 200, 500],
-            'regressor__learning_rate': [0.001, 0.01, 0.1],
-            'regressor__depth': range(2, 10),
-            'regressor__l2_leaf_reg': [1, 3, 5, 7, 9],
-            'regressor__bagging_temperature': [0, 1, 2, 5, 10]
-        }, False)
+        # ('CatBoostRegressor', CatBoostRegressor(silent=True), {
+        #     'regressor__iterations': [100, 200, 500],
+        #     'regressor__learning_rate': [0.001, 0.01, 0.1],
+        #     'regressor__depth': range(2, 10),
+        #     'regressor__l2_leaf_reg': [1, 3, 5, 7, 9],
+        #     'regressor__bagging_temperature': [0, 1, 2, 5, 10]
+        # }, False)
     ]
 
     # Define feature selectors and their parameters
@@ -234,22 +260,22 @@ def get_regressors(n_features):
     max_features = n_features
 
     # Adjust n_nonzero_coefs for models that require it
-    n_nonzero_coefs_range = list(range(1, min(max_features, 500)))
+    # n_nonzero_coefs_range = list(range(1, min(max_features, 500)))
 
-    # Regressors that need n_nonzero_coefs adjusted
-    base_regressors_with_n_nonzero_coefs = [
-        ('Lars', Lars(), {
-            'regressor__n_nonzero_coefs': n_nonzero_coefs_range
-        }, True),
-        ('LassoLars', LassoLars(max_iter=1000), {
-            'regressor__alpha': np.logspace(-4, 1, 50)
-        }, True),
-        ('OrthogonalMatchingPursuit', OrthogonalMatchingPursuit(), {
-            'regressor__n_nonzero_coefs': n_nonzero_coefs_range
-        }, True),
-    ]
+    # # Regressors that need n_nonzero_coefs adjusted
+    # base_regressors_with_n_nonzero_coefs = [
+    #     ('Lars', Lars(), {
+    #         'regressor__n_nonzero_coefs': n_nonzero_coefs_range
+    #     }, True),
+    #     ('LassoLars', LassoLars(max_iter=1000), {
+    #         'regressor__alpha': np.logspace(-4, 1, 50)
+    #     }, True),
+    #     ('OrthogonalMatchingPursuit', OrthogonalMatchingPursuit(), {
+    #         'regressor__n_nonzero_coefs': n_nonzero_coefs_range
+    #     }, True),
+    # ]
 
-    base_regressors.extend(base_regressors_with_n_nonzero_coefs)
+    # base_regressors.extend(base_regressors_with_n_nonzero_coefs)
 
     for reg_name, reg, reg_params, needs_scaling in base_regressors:
         for fs_name, fs, fs_params in feature_selector_list:
@@ -299,7 +325,7 @@ def get_regressors(n_features):
 
 def hyperparameter_tuning(reg, params, X_train, y_train):
     """Perform hyperparameter tuning using RandomizedSearchCV."""
-    rand_search = RandomizedSearchCV(reg, param_distributions=params, n_iter=50, cv=5,
+    rand_search = RandomizedSearchCV(reg, param_distributions=params, n_iter=2, cv=5,
                                      scoring='neg_mean_squared_error', n_jobs=-1, random_state=42)
     rand_search.fit(X_train, y_train)
     return rand_search.best_estimator_, rand_search.best_score_
@@ -332,7 +358,7 @@ def calculate_metrics(y_true, y_pred, metrics_list):
 
 def main(metrics=['mse', 'r2']):
     # Set data path and target column
-    data_path = 'data.csv'      # Replace with your data file path
+    data_path = 'diabetes.csv'      # Replace with your data file path
     target_column = 'target'    # Replace with your target column name
 
     # Load data

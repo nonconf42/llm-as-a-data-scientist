@@ -1,0 +1,92 @@
+Training SGDRegressor_VarianceThreshold...
+SGDRegressor_VarianceThreshold performance:
+  mse: 2920.4235
+  mae: 43.6122
+  r2: 0.4488
+  rmse: 54.0409
+Training Bagging_SGDRegressor_VarianceThreshold...
+Bagging_SGDRegressor_VarianceThreshold performance:
+  mse: 2915.2937
+  mae: 43.2521
+  r2: 0.4498
+  rmse: 53.9935
+Training SGDRegressor_SelectKBest...
+SGDRegressor_SelectKBest performance:
+  mse: 2942.8929
+  mae: 43.3428
+  r2: 0.4445
+  rmse: 54.2484
+Training Bagging_SGDRegressor_SelectKBest...
+Bagging_SGDRegressor_SelectKBest performance:
+  mse: 2945.0202
+  mae: 43.3889
+  r2: 0.4441
+  rmse: 54.2680
+Training SGDRegressor_SelectKBest...
+SGDRegressor_SelectKBest performance:
+  mse: 2944.2885
+  mae: 43.2824
+  r2: 0.4443
+  rmse: 54.2613
+Training Bagging_SGDRegressor_SelectKBest...
+Bagging_SGDRegressor_SelectKBest performance:
+  mse: 2945.0202
+  mae: 43.3889
+  r2: 0.4441
+  rmse: 54.2680
+Training SGDRegressor_RFE...
+SGDRegressor_RFE performance:
+  mse: 2914.1706
+  mae: 43.5036
+  r2: 0.4500
+  rmse: 53.9831
+Training Bagging_SGDRegressor_RFE...
+Bagging_SGDRegressor_RFE performance:
+  mse: 2908.9987
+  mae: 43.2251
+  r2: 0.4509
+  rmse: 53.9351
+
+Best Models:
+Bagging_SGDRegressor_RFE performance:
+  mse: 2908.9987
+  mae: 43.2251
+  r2: 0.4509
+  rmse: 53.9351
+SGDRegressor_RFE performance:
+  mse: 2914.1706
+  mae: 43.5036
+  r2: 0.4500
+  rmse: 53.9831
+Bagging_SGDRegressor_VarianceThreshold performance:
+  mse: 2915.2937
+  mae: 43.2521
+  r2: 0.4498
+  rmse: 53.9935
+SGDRegressor_VarianceThreshold performance:
+  mse: 2920.4235
+  mae: 43.6122
+  r2: 0.4488
+  rmse: 54.0409
+SGDRegressor_SelectKBest performance:
+  mse: 2944.2885
+  mae: 43.2824
+  r2: 0.4443
+  rmse: 54.2613
+Bagging_SGDRegressor_SelectKBest performance:
+  mse: 2945.0202
+  mae: 43.3889
+  r2: 0.4441
+  rmse: 54.2680
+
+Voting Regressor performance:
+  mse: 2908.1733
+  mae: 43.2696
+  r2: 0.4511
+  rmse: 53.9275
+
+Stacking Regressor performance:
+  mse: 3015.2905
+  mae: 44.7242
+  r2: 0.4309
+  rmse: 54.9117

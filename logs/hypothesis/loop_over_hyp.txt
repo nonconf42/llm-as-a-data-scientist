@@ -1,0 +1,727 @@
+Test if the proportion of female passengers who survived is significantly higher than that of male passengers.
+INSIGHTS: Women might have had a higher survival rate than men based on historical reports of the Titanic disaster's 'women and children first' policy.
+1
+#####
+COT:First, we determine the survival proportions for both males and females in the dataset. Then, we apply a chi-square test for independence to see if there's a significant difference in survival between the two genders. This test is suitable because we're comparing categorical data for two groups.
+Test if the mean survival rate is significantly higher for 1st class passengers compared to other classes.
+INSIGHTS: First class passengers may have had a higher survival rate due to better access to lifeboats and overall safety resources.
+1
+#####
+COT:We split the dataset into groups based on ticket class and assess the survival rate for each class. Using a two-sample t-test, we compare the survival rate of 1st class passengers against those in other classes. This method is appropriate for comparing the means between two independent groups.
+Test if the mean age of survivors is significantly lower than the mean age of non-survivors.
+INSIGHTS: Younger passengers, such as children, might have had a higher survival rate because of the prioritization of children during evacuation.
+1
+#####
+COT:First, we group the dataset into survivors and non-survivors and calculate the mean age for each group. Then, a two-sample t-test is applied to evaluate if there is a significant difference in the mean ages of these groups.
+Check if there is a significant correlation between the number of siblings/spouses aboard and survival rate.
+INSIGHTS: Passengers with more family members aboard might have had a lower chance of survival due to coordination difficulties or inability to find sufficient lifeboat space.
+0
+#####
+COT:Create a scatter plot to visually assess a potential relationship, then calculate the correlation coefficient between SibSp and Survived. Use Pearson's correlation test to determine the significance of any correlation.
+Determine if there is a significant relationship between port of embarkation and survival.
+INSIGHTS: Embarkation port might influence the survival rate, with passengers from certain ports potentially having higher or lower survival rates.
+1
+#####
+COT:Utilize a chi-square test for independence to evaluate the relationship between embarked port and survival. The test is suitable for this categorical data comparison across multiple groups.
+Check if there's a significant difference in the fares paid by survivors and non-survivors.
+INSIGHTS: The fare paid might be related to survival, with those who paid more potentially having access to better accommodations and safety resources.
+1
+#####
+COT:Calculate means and variances of the fares for survivors and non-survivors. Conduct a two-sample t-test to see if there's a statistically significant difference between the two means.
+Test if there is a significant relationship between family size aboard (sum of SibSp and Parch) and survival rates.
+INSIGHTS: Family units (combining SibSp and Parch) aboard might correlate with survival, indicating whether larger groups had different experiences than individual passengers.
+0
+#####
+COT:Sum up SibSp and Parch to calculate family size aboard for each passenger. Perform a Pearson's correlation test to determine significance of the relationship with survival.
+Compare survival rates between solo passengers and those with family aboard.
+INSIGHTS: Passengers traveling alone might have different survival chances compared to those with family aboard.
+1
+#####
+COT:Define 'alone' as having zero siblings/spouses and parents/children aboard. Perform a chi-square test for independence to compare survival rates between these groups.
+Check if having a cabin number is significantly associated with a higher survival rate.
+INSIGHTS: The presence of a cabin number might be associated with a higher survival rate due to access to better amenities.
+1
+#####
+COT:Create binary variable 'HasCabin' for presence of cabin information. Use chi-square test to check for independent association between 'HasCabin' and survival rate.
+Determine if there's a significant difference in survival rates based on passenger titles extracted from names.
+INSIGHTS: Survival across different name titles may vary, indicating societal roles may have impacted survival chances.
+1
+#####
+COT:Extract titles from names to analyze survival rate differences. Use chi-square test for independence for categorical comparison of titles and survival rates.
+This hypothesis investigates whether clustering passengers by their 'Pclass' along with other features reveals insights into the likelihood of survival, elucidating class-based differences in survival rates.
+INSIGHTS: The survival rate could be associated with different passenger classes. Higher classes might have had better access to lifeboats and other safety measures, making them more likely to survive.
+None
+#####
+COT:1. Our hypothesis suggests class-based differences could affect survival. 2. To assess this, cluster the data based on 'Pclass' along with other relevant features like 'Fare' and 'Embarked'. 3. Implement KMeans for clustering, as it's suitable for observing distinct clusters with categorical differences. 4. Analyze survival rates within each cluster. 5. Return 1 if clear differences in survival rates are found among clusters.
+This hypothesis explores if male and female passengers constitute distinct clusters with varying survival rates, indicating gender-specific survival patterns.
+INSIGHTS: Sex might have contributed significantly to survival chances on the Titanic. Clustering passengers based on their sex and comparing survival rates could reveal gender-based discrepancies.
+None
+#####
+COT:1. Gender may have played a crucial role, possibly due to 'women and children first' policies. 2. Group passengers by sex and add features like age and Pclass in clustering. 3. Use KMeans to form clusters. 4. Examine survival rates per cluster to identify any gender-based patterns. 5. Accept hypothesis if clear gender-based differences exist.
+The hypothesis examines if passengers can be clustered by age to detect differences in survival rates, highlighting age-specific survival trends.
+INSIGHTS: Age might define natural clusters of passengers with different survival chances, possibly due to policies prioritizing children and adults differently during evacuation.
+None
+#####
+COT:1. Age could direct cluster formation due to 'children first' evacuation practices. 2. Select age along with other relevant features like SibSp, Parch. 3. Use KMeans to classify into natural clusters. 4. Analyze survival across age-based clusters. 5. Accept the hypothesis if definite age-related survival trends appear.
+This hypothesis checks if clustering individuals by the combined number of siblings/spouses and parents/children highlights any survival rate variations due to family size.
+INSIGHTS: Family size may influence survival, with smaller families more agile during evacuation. Clustering based on family size could depict survival patterns.
+None
+#####
+COT:1. Family size impacts mobility during crisis. 2. Use 'SibSp'+'Parch' to represent family size. 3. Group according to family size pattern using KMeans. 4. Evaluate varying survival rates within these clusters. 5. Accept hypothesis if family size correlates with survival variance.
+Investigating if grouping passengers by fare reveals significant patterns in survival rates, offering insights into socio-economic disparities in crisis situations.
+INSIGHTS: Fare paid may indicate passenger's social-economic status and access to resources, influencing survival likelihood.
+None
+#####
+COT:1. Higher fares may connote more privileges/access to safety gear. 2. Cluster based on fares and examine the impact. 3. Implement KMeans and analyze fair-based cluster survival. 4. Accept if clear differences linked to fare appear.
+This hypothesis examines if clustering by port of embarkation and other features reveals differences in survival rates, indicating port-based survival trends.
+INSIGHTS: Embarkation point could define clusters due to different passenger demographics and possibly varied access to resources influencing survival.
+None
+#####
+COT:1. Different embarkation ports mean varied demographics/resources. 2. Use 'Embarked' alongside others like Pclass. 3. Implement cluster analysis and examine survival in clusters. 4. Accept if survival differences correlate with embarkation point.
+Evaluating if clustering passengers by the number of siblings/spouses reveals better cooperation and thus higher survival rates in family-oriented clusters.
+INSIGHTS: Marital or sibling relationships might have enabled better coordination and higher survival chances, creating clusters based on these family connections.
+None
+#####
+COT:1. Family support could promote cohesion/help in evacuations. 2. Use 'SibSp', and apply clustering to observe if survival better for such clusters. 3. Analyze survival rates for 'SibSp' based clusters. 4. Accept if there's significant impact.
+This hypothesis seeks to determine if isolated passengers can be clustered and whether they exhibit lower survival rates, indicating isolation as a risk factor.
+INSIGHTS: Passengers traveling alone could have been at a disadvantage compared to those with family members onboard, influencing survival.
+None
+#####
+COT:1. Solitary travelers might lack immediate help during emergencies. 2. Use 'SibSp' and 'Parch' to denote isolation levels. 3. KMeans to cluster based on family presence. 4. Evaluate survival disparity among these clusters. 5. Accept if isolation leads to lower survival rates.
+Investigating if clustering passengers by cabin information reveals specific cabin locations as advantageous or disadvantageous for survival.
+INSIGHTS: Cabin location could influence ease of access to lifeboats, creating survival disparities.
+None
+#####
+COT:1. The proximity of cabins to lifeboats impacts survival. 2. Use 'Cabin', pre-process missing data effectively. 3. Cluster based on cabin features. 4. Observe survival changes across clusters. 5. Accept if significant cabin-related survival differences surface.
+Testing if latent space clusters reveal hidden patterns in survival likelihood, unobservable in primary feature space.
+INSIGHTS: Dimensional reduction tools might expose latent groups with intrinsic survival capabilities not obvious from the raw feature space.
+None
+#####
+COT:1. Check for hidden passenger profiles affecting survival. 2. Use PCA to reduce dimensions, then cluster in latent space. 3. Analyze survival within these hidden clusters. 4. Accept if hidden structures contributed to survival rates.
+Outliers in the Fare feature could indicate potential survival advantages or disadvantages due to socio-economic status.
+INSIGHTS: There might be significant outliers in the Fare feature that could indicate high or low ticket prices correlating strongly with survival rates.
+1
+#####
+COT:Identify the Fare column as a potential indicator of socio-economic status. Use the IQR method to detect outliers in this feature. Implement a test function to compute the IQR and detect any outliers. Interpret the results to understand the socio-economic status' impact on survival.
+Outliers in the Age feature could indicate significantly older or younger passengers and their survival rates, shedding light on age-related survival chances.
+INSIGHTS: Older passengers may have had less chance of survival due to physical limitations, detectable by outlier age values.
+1
+#####
+COT:Recognize that age can influence survival due to physical ability. Use the Z-score method to identify age-related outliers. Implement a test function that calculates Z-scores and identifies extreme values. Draw conclusions about the influence of age on survival.
+Outliers in SibSp could identify passengers with large families, affecting survival due to shared resources or group dynamics.
+INSIGHTS: A high number of siblings/spouses aboard could create outliers in SibSp affecting survival due to family clustering.
+0
+#####
+COT:Consider family groups as a factor in survival probability. Use DBSCAN to identify clusters in the SibSp feature. Construct a test function to apply DBSCAN, identifying outliers as noise points. Evaluate how family size impacts survival.
+Outliers related to unusual ticket classes could highlight socio-economic disparities impact on survival.
+INSIGHTS: Passengers with extremely high or low ticket classes might appear as outliers showing class effects on survival.
+1
+#####
+COT:Ticket class strongly influences survival due to resource allocation. Apply the Mahalanobis distance to detect multivariate outliers considering Pclass and survival. Design a function to calculate the Mahalanobis distance and detect outliers, examining class impact on survival.
+Embarkation port outliers might denote unique demographic or socio-economic profiles affecting survival chances.
+INSIGHTS: Specific Embarkation points might act as outliers, potentially affecting survival chances due to their geographical locations.
+1
+#####
+COT:Embarkation indicates passenger's geographical and economic origins. Identify outliers using IQR on fare within groups of Embarked values. Build a function applying IQR within each group to detect peculiarities and interpret its effect on survival.
+Unusual cabin numbers could denote specific locations that shielded or exposed passengers, altering survival chances.
+INSIGHTS: The Cabin feature may contain outliers that affect survival, indicating specific cabin locations on the ship.
+0
+#####
+COT:Cabin numbers can indicate location safety on the ship. Detect outliers within cabin data using the Z-score method. Prepare a function computing Z-scores to identify anomalous cabins and assess their effect on survival.
+Outliers in Parch can uncover passengers with unusual family sizes, influencing survival dynamics due to dependents.
+INSIGHTS: Large disparities in the number of parents/children aboard could flag outliers affecting survival due to family size.
+0
+#####
+COT:Family size can affect decision-making in emergencies. Apply DBSCAN to the Parch feature to detect unusual large families. Devise a function executing DBSCAN on Parch data, discovering how family dependency influences survival.
+ERROR
+division by zero
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 8.
+insights = "Male passengers might be outliers in survival data due to societal norms prioritizing women and children."
+description = "Outliers in the Sex distribution of survivors could highlight male survival as atypical under societal norms."
+COT = "Gender was a decisive factor for survival in Titanic's context. Compare survival status by gender to identify potential outliers using percentage analysis. Create a function to compare survival statistics by gender to detect deviations and understand its role in survival chances."
+def test(dataset):
+    import pandas as pd
+    def compare_gender_survival(data):
+        survived = data[data['Survived'] == 1]
+        male_survival_rate = survived[survived['Sex'] == 'male'].shape[0] / data[data['Sex'] == 'male'].shape[0]
+        female_survival_rate = survived[survived['Sex'] == 'female'].shape[0] / data[data['Sex'] == 'female'].shape[0]
+        return abs(male_survival_rate - female_survival_rate) > 0.15
+    result = int(compare_gender_survival(dataset))
+    return result
+#####
+Outliers within Ticket numbers may pinpoint passengers with unique access or travel circumstances affecting survival odds.
+INSIGHTS: Ticket numbers might contain outliers indicating passengers with multiple or special access privileges affecting survival.
+1
+#####
+COT:Tickets serve as a unique identifier for passengers with specific privileges. Transform Ticket into numerical form and identify outliers using the IQR method. Write a function to apply IQR to ticket data, uncovering parallels between ticket anomalies and survival.
+ERROR
+name 'data' is not defined
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 10.
+insights = "Names with titles could serve as outliers in the Name feature, suggesting status or influence correlated with survival."
+description = "Outliers in naming prefixes like Dr., Sir, or military titles might uncover social status or skill level-impacting survival."
+COT = "Titles in names can denote societal status or skills useful in crisis. Extract titles from names and identify outliers using frequency analysis. Construct a function to detect unusual titles and assess their deviation from the norm to understand survival influence."
+def test(dataset):
+    import pandas as pd
+    import re
+    def extract_titles(data):
+        titles = data.apply(lambda name: re.search(r",\s(\w+)\.", name).group(1) if re.search(r",\s(\w+)\.", name) else '')
+        return titles
+    def is_outlier_titles(titles):
+        title_counts = titles.value_counts(normalize=True)
+        # Consider an outlier if a title is less frequent than 5%
+        unusual_titles = title_counts[title_counts < 0.05]
+        return len(unusual_titles) > 0
+    titles = extract_titles(data['Name'])
+    result = int(is_outlier_titles(titles))
+    return result
+#####
+Testing if gender significantly affected survival, highlighting females had a higher survival rate.
+INSIGHTS: Female passengers were more likely to survive, suggesting potential social norms or priorities in evacuation procedures.
+1
+#####
+COT:We suspect a strong relation between gender and survival. We use the Chi-Square test to assess independence between 'Sex' and 'Survived'. We calculate expected frequencies and compare them with observed ones, finally assessing if the observed deviations are significant.
+Testing if there is significant association between passenger class and survival rates.
+INSIGHTS: Passengers in first class had higher survival rates, indicating better access to lifeboats or preferential treatment.
+1
+#####
+COT:By examining the relationship between Pclass and Survived, we use the Chi-Square test. We set a contingency table and determine if deviations from expected survival across classes are statistically significant.
+Evaluating if having siblings/spouses aboard influences survival outcome.
+INSIGHTS: Travel groups (SibSp) tend to have similar outcomes in survival, indicating a potential influence of travelling with family.
+1
+#####
+COT:We suspect the presence of siblings/spouses could impact survival. A Chi-Square test helps understand the relationship between SibSp and survival by setting a frequency table and testing if actual data deviates from expected normal distribution.
+Testing if age anomalies exist in the distribution of survivors versus non-survivors.
+INSIGHTS: Age may play a significant role, with younger passengers potentially given priority in rescue efforts.
+0
+#####
+COT:Age is continuous, so the Kolmogorov-Smirnov (K-S) test helps detect distribution differences. We split the dataset by survival and compare age distributions between the two groups.
+Exploring if embarked port correlates with survival likelihood.
+INSIGHTS: Passengers who embarked at different ports may have faced varying survival chances due to boarding order or available resources.
+1
+#####
+COT:Embarked is categorical, so the Chi-Square test suits testing its independence from survival by organizing a contingency table from the dataset.
+Testing for anomalies in fare distribution between survivors and non-survivors.
+INSIGHTS: Higher fare prices could correspond to higher class and thus higher survival chances due to proximity to lifeboats.
+1
+#####
+COT:Fare is continuous; thus, the Kolmogorov-Smirnov (K-S) test is used. We separate passengers by survival status and compare fare distributions.
+Examine if number of parents/children aboard influences survival rates.
+INSIGHTS: Older parents or children (Parch) might have had a different survival probability due to potential responsibilities or vulnerabilities.
+1
+#####
+COT:For Parch, a challenge is similar to SibSp, it's categorical. We apply the Chi-Square test for distribution deviations between Parch and survival.
+Investigate whether cabin number correlates with survival, possibly indicating location effects.
+INSIGHTS: Specific cabins might have had greater chances of survival based on location or egress options.
+1
+#####
+COT:Due to the large number of unique cabins, the variable is categorized. Instead, we use available or missing data for cabins vs survival by checking presence of null values.
+Explore whether ticket number patterns have any relation to survival odds.
+INSIGHTS: The randomness of ticket numbers might correlate to some unpredictable Social Economic Status factors affecting survival.
+1
+#####
+COT:Ticket numbers could indirectly reflect Socioeconomic Status. However, due to the variability and arbitrariness of ticketing systems, we rely on identifying anomalies through number length comparisons, a temporary proxy for categorization.
+Investigate if shared surnames (family groups) display survival rate anomalies.
+INSIGHTS: There might be distinct patterns of large groups with similar names indicating families impacting survival.
+0
+#####
+COT:By assessing the last name occurrence in the name attribute, we set groups assuming family connections and utilize the Chi-Square test on survival distribution between these groups.
+First-class passengers were more likely to survive than those in other classes due to better access to lifeboats and proximity to exit points.
+INSIGHTS: The ticket class of a passenger directly impacts their likelihood of survival, suggesting socioeconomic status played a crucial role during the evacuation.
+1
+#####
+COT:Step 1: Examine the relationship between 'Pclass' and 'Survived' to ascertain if ticket class influences survival. Step 2: Use Chi-Squared Test for independence as we're comparing categorical variables. Step 3: Structure the function to calculate the p-value, define significance threshold. Step 4: Determine if p-value indicates dependency between 'Pclass' and 'Survived'.
+Female passengers had a higher survival rate on the Titanic, reflecting gender-based priority during evacuation.
+INSIGHTS: Gender may have been a critical determinant in survival, reflecting the social norm of 'women and children first' during evacuations.
+1
+#####
+COT:Step 1: Explore if ‘Sex’ correlates with ‘Survived’. Step 2: Utilize Chi-squared test to see the association as both are categorical. Step 3: Calculate the test statistic and p-value. Step 4: If p-value is low, gender likely plays a role in survival.
+Optimization terminated successfully.
+         Current function value: 0.672429
+         Iterations 4
+Children 5 and under may have had a better chance of surviving due to their need for protection.
+INSIGHTS: Age may influence survival, with younger passengers potentially prioritized during evacuation.
+1
+#####
+COT:Step 1: Evaluate whether age correlates with survival rate. Step 2: Choose logistic regression suitable for continuous and binary interaction. Step 3: Implement logistic regression to see influence of 'Age' on 'Survived'. Step 4: Check p-values from regression output to determine statistical significance.
+Optimization terminated successfully.
+         Current function value: 0.665272
+         Iterations 4
+Passengers with family onboard (siblings/spouse) might have higher survival due to mutual aid.
+INSIGHTS: Presence of family onboard (Siblings/Spouse) could indicate stronger survival impulse through support and cooperation.
+0
+#####
+COT:Step 1: Explore relation of 'SibSp' to 'Survived'. Step 2: Use logistic regression to handle continuous and dichotomous data. Step 3: Assess regression outputs, specifically p-values. Determine influence of sibling/spouse count on survival.
+Embarkation point could reflect socio-economic status, possibly affecting survival odds.
+INSIGHTS: Embarkation port may indirectly affect survival, potentially due to demographic or socio-economic variables influencing boarding location.
+1
+#####
+COT:Step 1: Examine if 'Embarked' correlates with survival. Step 2: Perform Chi-squared test to check association between categorical data. Step 3: Compute test statistic, evaluate if embarkment point impacts survival. Step 4: Interpret significance through p-values.
+Optimization terminated successfully.
+         Current function value: 0.627143
+         Iterations 6
+Passengers who paid higher fares were more likely to survive, reflecting economic disparities in survival chances.
+INSIGHTS: Higher fare could be related to better survival odds, potentially granting faster access to lifeboats and proximity privileges.
+1
+#####
+COT:Step 1: Analyze how 'Fare' associates with 'Survived'. Step 2: Use logistic regression appropriate for continuous and binary variables. Step 3: Implement a regression model for fare vs. survival; evaluate through significance threshold. Step 4: Look at regression coefficients and p-values.
+Optimization terminated successfully.
+         Current function value: 0.662650
+         Iterations 4
+Family ties (parents/children) onboard could enhance survival likelihood due to mutual assistance.
+INSIGHTS: Traveling with parents or children (Parch) might influence survival probability, through family support systems.
+1
+#####
+COT:Step 1: Assess impact of 'Parch' on survival. Step 2: Use logistic regression, fitting 'Parch' against 'Survived'. Step 3: Examine regression output paying attention to p-values. Step 4: If p-value is below threshold, parent or child presence is significant.
+ERROR
+Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 8.
+insights = "Survival could be impacted by cabin location/type due to spatial access."
+description = "Assigned cabin location might correlate with survival due to proximity factors during evacuation."
+COT = "Step 1: Investigate if 'Cabin' values affect survival though data often has missing entries. Step 2: Determine if cabin allocation, tends to assist survivors (presence of alphabet). Step 3: Conduct logistic regression on processed cabin data. Step 4: Interpret through p-value significance."
+def test(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+
+    dataset = dataset.dropna(subset=['Cabin'])  # Handle missing data
+    dataset['CabinType'] = dataset['Cabin'].apply(lambda x: x[0])
+    X = pd.get_dummies(dataset['CabinType'], drop_first=True)
+    X = sm.add_constant(X)
+    y = dataset['Survived']
+    log_reg = sm.Logit(y, X).fit()
+
+    p_values = log_reg.pvalues[1:]  # Exclude intercept
+    alpha = 0.05
+    result = 1 if any(p < alpha for p in p_values) else 0
+    return result
+#####
+Optimization terminated successfully.
+         Current function value: 0.604356
+         Iterations 6
+Fare within passenger class may modify survival probabilities, an indicator of wealth impact.
+INSIGHTS: Interactions between travel class and fare may influence survival; high fares in lower classes could reflect paid preferences for safety.
+0
+#####
+COT:Step 1: Explore potential interaction effect between 'Pclass' and 'Fare' on survival using logistic regression. Step 2: Include interaction term 'Pclass*Fare'. Step 3: Compute model; evaluate interaction significance via p-values. Step 4: Validate if interaction is actually influential.
+Name length or title identifies social status, potentially influencing evacuation priority.
+INSIGHTS: Survival rates may differ based on the length of passenger's name or title, reflecting distinction in social stratification.
+1
+#####
+COT:Step 1: Evaluate if 'Name' characteristics correlate with 'Survived'. Step 2: Extract title from 'Name', see if titles imply survival probability differentials. Step 3: Perform chi-squared test for significance of name elements. Step 4: Ascertain significance via p-values.
+ERROR
+Cannot convert non-finite values (NA or inf) to integer
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+insights = "Investigating if there exists a latent variable that influences survival, represented by a combination of socio-economic status indicated by 'Pclass' and gender represented by 'Sex'."
+description = "We test the existence of a latent variable possibly combining class and gender influencing survival, suggesting an underlying socio-economic gender bias."
+COT = "We'll employ factorial analysis or exploratory factor analysis (EFA) to examine if 'Pclass' and 'Sex' load onto a common latent factor impacting the 'Survived' outcome. This will be done by checking loadings on a shared factor."
+def test(dataset):
+    import pandas as pd
+    from sklearn.decomposition import FactorAnalysis
+    import numpy as np
+    
+    def encode_data(df):
+        df['Sex'] = df['Sex'].map({'female': 0, 'male': 1}).astype(int)
+        return df[['Pclass', 'Sex', 'Survived']].dropna()
+    
+    df = encode_data(dataset)
+    X = df[['Pclass', 'Sex']]
+    fa = FactorAnalysis(n_components=1)
+    fa.fit(X)
+    
+    # Checking if the factor loadings suggest a common latent variable
+    factor_loadings = np.abs(fa.components_)
+    result = int(np.all(factor_loadings > 0.3))  # Hypothetical threshold
+    return result
+#####
+We test if different age groups within each ticket class have distinct survival probabilities, suggesting hidden classes.
+INSIGHTS: Evaluating if age interacts with ticket class to reveal hidden classes in survival probabilities.
+0
+#####
+COT:Use k-means clustering to explore if passenger groups emerge based on 'Age' and 'Pclass' indicative of latent survival classes. Validate with survival rates.
+Evaluate if port of embarkation modifies the impact of socio-economic status (Pclass, Fare) on survival.
+INSIGHTS: Testing if embarkation point, as an external variable, affects latent socio-economic factors influencing survival.
+0
+#####
+COT:Conduct an ANOVA to see if 'Embarked' influences the variance in a socio-economic latent factor derived from 'Pclass' and 'Fare' on survival.
+Test for hidden categories in data based on age and SibSp, impacting survival outcomes.
+INSIGHTS: Exploring if age and number of siblings/spouses create a latent class structure impacting survival.
+0
+#####
+COT:Apply latent class analysis (LCA) to assess the existence of underlying classes formed by 'Age' and 'SibSp' predicting survival odds.
+Determine if risk behavior, inferred from 'Cabin' information, leads to latent survival-driving traits.
+INSIGHTS: Identification of latent traits such as risk aversion, developed from cabin location patterns influencing survival.
+0
+#####
+COT:Utilize clustering on cabin locations to decide if there's an underlying latent trait of risk aversion differing among survival results.
+ERROR
+Found array with 0 sample(s) (shape=(0, 4)) while a minimum of 1 is required by PCA.
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 6.
+insights = "Investigating if there are underlying dimensions in socio-demographic variables that explain the variance in survival likelihood."
+description = "Test for underlying dimensions leveraging socio-demographic data to explain survival variance."
+COT = "Execute principal component analysis (PCA) to uncover latent dimensions in socio-demographic features explaining survival variance."
+def test(dataset):
+    import pandas as pd
+    from sklearn.decomposition import PCA
+    import numpy as np
+    
+    def prep_data(df):
+        df['Sex'] = df['Sex'].map({'female': 0, 'male': 1})
+        return df[['Age', 'Pclass', 'Fare', 'Sex', 'Survived']].dropna()
+
+    df = prep_data(dataset)
+    pca = PCA(n_components=2)
+    components = pca.fit_transform(df[['Age', 'Pclass', 'Fare', 'Sex']])
+
+    explained_variance = sum(pca.explained_variance_ratio_)
+    result = int(explained_variance > 0.65)  # Hypothetical threshold
+    return result
+#####
+ERROR
+'OLSResults' object has no attribute 'exog'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 7.
+insights = "Exploration of potential mediating latent factors arising from family structure (Parch, SibSp) influencing survival."
+description = "Investigate if latent variables derived from family size influence the relationship between class and survival."
+COT = "Test latent mediation by using mediation analysis with perceived family size as mediator between 'Pclass' and 'Survived'."
+def test(dataset):
+    import pandas as pd
+    from statsmodels.formula.api import ols
+    from statsmodels.stats.mediation import Mediation
+
+    def calc_family_size(df):
+        df['FamilySize'] = df['SibSp'] + df['Parch']
+        return df[['Pclass', 'FamilySize', 'Survived']]
+    
+    df = calc_family_size(dataset).dropna()
+    
+    # Mediation Model
+    model_mediator = ols("FamilySize ~ Pclass", data=df).fit()
+    model_outcome = ols("Survived ~ Pclass + FamilySize", data=df).fit()
+    
+    med = Mediation(model_outcome, model_mediator, 'FamilySize', 'Pclass')
+    med_res = med.fit()
+    result = int(med_res.pvalue() < 0.05)
+    return result
+#####
+Check if changes over time, inferred from ticket ordering, offer latent growth implications on survival odds.
+INSIGHTS: Examine if latent growth or decay in survival odds exists relative to time spent at sea (based on ticket numbering).
+0
+#####
+COT:Analyze potential latent growth curve by mapping ticket numbers as a proxy for voyage timeline, checking correlation with survival.
+ERROR
+No module named 'ruptures'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 9.
+insights = "Latent impact of fare changes as influenced by external shocks altering survival rates across different Pclass."
+description = "Evaluate fare data to detect latent variables driven by shifts, affecting class-specific survival rates. "
+COT = "Use change-point analysis on 'Fare' data to account for latent structural breaks influencing survival among classes."
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from ruptures import Binseg, rpt
+
+    def prep_fare(df):
+        return df[['Fare', 'Pclass', 'Survived']].dropna()
+    
+    df = prep_fare(dataset)
+    model = Binseg(model="l2").fit(df['Fare'].values)
+    breakpoints = model.predict(n_bkps=1)  # Detecting a single change point
+    
+    # Check if this relates to shifts in survival rate
+    df['FareGroup'] = (df.index > breakpoints[0]).astype(int)
+    survival_variance = df.groupby('FareGroup')['Survived'].mean().var()
+    result = int(survival_variance > 0.05)  # Variance indicates structural breakpoint
+    return result
+#####
+ERROR
+Cannot convert non-finite values (NA or inf) to integer
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 10.
+insights = "Examine if multiple latent variables (e.g. 'Age' and socio-economic factors) can form a structured second-order latent model predicting survival."
+description = "A second-order latent inquiry checks combined effects of 'Age' and socio-economic indices on survival chances."
+COT = "Fit a hierarchical model to assess if latent interaction among socio-economic factors and 'Age' can compound survival prediction."
+def test(dataset):
+    import pandas as pd
+    from sklearn.decomposition import FactorAnalysis
+
+    def hierarchical_data(df):
+        df['Sex'] = df['Sex'].map({'female': 0, 'male': 1}).astype(int)
+        return df[['Age', 'Pclass', 'Fare', 'Sex', 'Survived']].dropna()
+    
+    df = hierarchical_data(dataset)
+    fa = FactorAnalysis(n_components=2)
+    fa.fit(df[['Age', 'Pclass', 'Fare', 'Sex']])
+    
+    np_comb_factor_loadings = np.abs(fa.components_).mean(axis=0)
+    result = int(np_comb_factor_loadings > 0.3).sum() > 1  # Check if more than one factor loading
+    return result
+#####
+$$$$$$$$$$$$$$$$$$
+[('Test if the proportion of female passengers who survived is significantly higher than that of male passengers.', 1), ('Test if the mean survival rate is significantly higher for 1st class passengers compared to other classes.', 1), ('Test if the mean age of survivors is significantly lower than the mean age of non-survivors.', 1), ('Check if there is a significant correlation between the number of siblings/spouses aboard and survival rate.', 0), ('Determine if there is a significant relationship between port of embarkation and survival.', 1), ("Check if there's a significant difference in the fares paid by survivors and non-survivors.", 1), ('Test if there is a significant relationship between family size aboard (sum of SibSp and Parch) and survival rates.', 0), ('Compare survival rates between solo passengers and those with family aboard.', 1), ('Check if having a cabin number is significantly associated with a higher survival rate.', 1), ("Determine if there's a significant difference in survival rates based on passenger titles extracted from names.", 1), ("This hypothesis investigates whether clustering passengers by their 'Pclass' along with other features reveals insights into the likelihood of survival, elucidating class-based differences in survival rates.", None), ('This hypothesis explores if male and female passengers constitute distinct clusters with varying survival rates, indicating gender-specific survival patterns.', None), ('The hypothesis examines if passengers can be clustered by age to detect differences in survival rates, highlighting age-specific survival trends.', None), ('This hypothesis checks if clustering individuals by the combined number of siblings/spouses and parents/children highlights any survival rate variations due to family size.', None), ('Investigating if grouping passengers by fare reveals significant patterns in survival rates, offering insights into socio-economic disparities in crisis situations.', None), ('This hypothesis examines if clustering by port of embarkation and other features reveals differences in survival rates, indicating port-based survival trends.', None), ('Evaluating if clustering passengers by the number of siblings/spouses reveals better cooperation and thus higher survival rates in family-oriented clusters.', None), ('This hypothesis seeks to determine if isolated passengers can be clustered and whether they exhibit lower survival rates, indicating isolation as a risk factor.', None), ('Investigating if clustering passengers by cabin information reveals specific cabin locations as advantageous or disadvantageous for survival.', None), ('Testing if latent space clusters reveal hidden patterns in survival likelihood, unobservable in primary feature space.', None), ('Outliers in the Fare feature could indicate potential survival advantages or disadvantages due to socio-economic status.', 1), ('Outliers in the Age feature could indicate significantly older or younger passengers and their survival rates, shedding light on age-related survival chances.', 1), ('Outliers in SibSp could identify passengers with large families, affecting survival due to shared resources or group dynamics.', 0), ('Outliers related to unusual ticket classes could highlight socio-economic disparities impact on survival.', 1), ('Embarkation port outliers might denote unique demographic or socio-economic profiles affecting survival chances.', 1), ('Unusual cabin numbers could denote specific locations that shielded or exposed passengers, altering survival chances.', 0), ('Outliers in Parch can uncover passengers with unusual family sizes, influencing survival dynamics due to dependents.', 0), ('Outliers within Ticket numbers may pinpoint passengers with unique access or travel circumstances affecting survival odds.', 1), ('Testing if gender significantly affected survival, highlighting females had a higher survival rate.', 1), ('Testing if there is significant association between passenger class and survival rates.', 1), ('Evaluating if having siblings/spouses aboard influences survival outcome.', 1), ('Testing if age anomalies exist in the distribution of survivors versus non-survivors.', 0), ('Exploring if embarked port correlates with survival likelihood.', 1), ('Testing for anomalies in fare distribution between survivors and non-survivors.', 1), ('Examine if number of parents/children aboard influences survival rates.', 1), ('Investigate whether cabin number correlates with survival, possibly indicating location effects.', 1), ('Explore whether ticket number patterns have any relation to survival odds.', 1), ('Investigate if shared surnames (family groups) display survival rate anomalies.', 0), ('First-class passengers were more likely to survive than those in other classes due to better access to lifeboats and proximity to exit points.', 1), ('Female passengers had a higher survival rate on the Titanic, reflecting gender-based priority during evacuation.', 1), ('Children 5 and under may have had a better chance of surviving due to their need for protection.', 1), ('Passengers with family onboard (siblings/spouse) might have higher survival due to mutual aid.', 0), ('Embarkation point could reflect socio-economic status, possibly affecting survival odds.', 1), ('Passengers who paid higher fares were more likely to survive, reflecting economic disparities in survival chances.', 1), ('Family ties (parents/children) onboard could enhance survival likelihood due to mutual assistance.', 1), ('Fare within passenger class may modify survival probabilities, an indicator of wealth impact.', 0), ('Name length or title identifies social status, potentially influencing evacuation priority.', 1), ('We test if different age groups within each ticket class have distinct survival probabilities, suggesting hidden classes.', 0), ('Evaluate if port of embarkation modifies the impact of socio-economic status (Pclass, Fare) on survival.', 0), ('Test for hidden categories in data based on age and SibSp, impacting survival outcomes.', 0), ("Determine if risk behavior, inferred from 'Cabin' information, leads to latent survival-driving traits.", 0), ('Check if changes over time, inferred from ticket ordering, offer latent growth implications on survival odds.', 0)]
+Cleaned hypothesis results:
+[('Test if the proportion of female passengers who survived is significantly higher than that of male passengers.', 1), ('Test if the mean survival rate is significantly higher for 1st class passengers compared to other classes.', 1), ('Test if the mean age of survivors is significantly lower than the mean age of non-survivors.', 1), ('Check if there is a significant correlation between the number of siblings/spouses aboard and survival rate.', 0), ('Determine if there is a significant relationship between port of embarkation and survival.', 1), ("Check if there's a significant difference in the fares paid by survivors and non-survivors.", 1), ('Test if there is a significant relationship between family size aboard (sum of SibSp and Parch) and survival rates.', 0), ('Compare survival rates between solo passengers and those with family aboard.', 1), ('Check if having a cabin number is significantly associated with a higher survival rate.', 1), ("Determine if there's a significant difference in survival rates based on passenger titles extracted from names.", 1), ('Outliers in the Fare feature could indicate potential survival advantages or disadvantages due to socio-economic status.', 1), ('Outliers in the Age feature could indicate significantly older or younger passengers and their survival rates, shedding light on age-related survival chances.', 1), ('Outliers in SibSp could identify passengers with large families, affecting survival due to shared resources or group dynamics.', 0), ('Outliers related to unusual ticket classes could highlight socio-economic disparities impact on survival.', 1), ('Embarkation port outliers might denote unique demographic or socio-economic profiles affecting survival chances.', 1), ('Unusual cabin numbers could denote specific locations that shielded or exposed passengers, altering survival chances.', 0), ('Outliers in Parch can uncover passengers with unusual family sizes, influencing survival dynamics due to dependents.', 0), ('Outliers within Ticket numbers may pinpoint passengers with unique access or travel circumstances affecting survival odds.', 1), ('Testing if gender significantly affected survival, highlighting females had a higher survival rate.', 1), ('Testing if there is significant association between passenger class and survival rates.', 1), ('Evaluating if having siblings/spouses aboard influences survival outcome.', 1), ('Testing if age anomalies exist in the distribution of survivors versus non-survivors.', 0), ('Exploring if embarked port correlates with survival likelihood.', 1), ('Testing for anomalies in fare distribution between survivors and non-survivors.', 1), ('Examine if number of parents/children aboard influences survival rates.', 1), ('Investigate whether cabin number correlates with survival, possibly indicating location effects.', 1), ('Explore whether ticket number patterns have any relation to survival odds.', 1), ('Investigate if shared surnames (family groups) display survival rate anomalies.', 0), ('First-class passengers were more likely to survive than those in other classes due to better access to lifeboats and proximity to exit points.', 1), ('Female passengers had a higher survival rate on the Titanic, reflecting gender-based priority during evacuation.', 1), ('Children 5 and under may have had a better chance of surviving due to their need for protection.', 1), ('Passengers with family onboard (siblings/spouse) might have higher survival due to mutual aid.', 0), ('Embarkation point could reflect socio-economic status, possibly affecting survival odds.', 1), ('Passengers who paid higher fares were more likely to survive, reflecting economic disparities in survival chances.', 1), ('Family ties (parents/children) onboard could enhance survival likelihood due to mutual assistance.', 1), ('Fare within passenger class may modify survival probabilities, an indicator of wealth impact.', 0), ('Name length or title identifies social status, potentially influencing evacuation priority.', 1), ('We test if different age groups within each ticket class have distinct survival probabilities, suggesting hidden classes.', 0), ('Evaluate if port of embarkation modifies the impact of socio-economic status (Pclass, Fare) on survival.', 0), ('Test for hidden categories in data based on age and SibSp, impacting survival outcomes.', 0), ("Determine if risk behavior, inferred from 'Cabin' information, leads to latent survival-driving traits.", 0), ('Check if changes over time, inferred from ticket ordering, offer latent growth implications on survival odds.', 0)]
+Len: 42
+$$$$$$$$$$$$$$$$$$$$$$$$
+1. Test if the proportion of female passengers who survived is significantly higher than that of male passengers.
+
+2. Test if the mean survival rate is significantly higher for 1st class passengers compared to other classes.
+
+3. Test if the mean age of survivors is significantly lower than the mean age of non-survivors.
+
+4. Check if there is a significant correlation between the number of siblings/spouses aboard and survival rate.
+
+5. Determine if there is a significant relationship between port of embarkation and survival.
+
+6. Check if there's a significant difference in the fares paid by survivors and non-survivors.
+
+7. Test if there is a significant relationship between family size aboard (sum of SibSp and Parch) and survival rates.
+
+8. Compare survival rates between solo passengers and those with family aboard.
+
+9. Check if having a cabin number is significantly associated with a higher survival rate.
+
+10. Determine if there's a significant difference in survival rates based on passenger titles extracted from names.
+
+11. Outliers in the Fare feature could indicate potential survival advantages or disadvantages due to socio-economic status.
+
+12. Outliers in the Age feature could indicate significantly older or younger passengers and their survival rates, shedding light on age-related survival chances.
+
+13. Outliers in SibSp could identify passengers with large families, affecting survival due to shared resources or group dynamics.
+
+14. Outliers related to unusual ticket classes could highlight socio-economic disparities impact on survival.
+
+15. Embarkation port outliers might denote unique demographic or socio-economic profiles affecting survival chances.
+
+16. Unusual cabin numbers could denote specific locations that shielded or exposed passengers, altering survival chances.
+
+17. Outliers in Parch can uncover passengers with unusual family sizes, influencing survival dynamics due to dependents.
+
+18. Outliers within Ticket numbers may pinpoint passengers with unique access or travel circumstances affecting survival odds.
+
+19. Testing if gender significantly affected survival, highlighting females had a higher survival rate.
+
+20. Testing if there is significant association between passenger class and survival rates.
+
+21. Evaluating if having siblings/spouses aboard influences survival outcome.
+
+22. Testing if age anomalies exist in the distribution of survivors versus non-survivors.
+
+23. Exploring if embarked port correlates with survival likelihood.
+
+24. Testing for anomalies in fare distribution between survivors and non-survivors.
+
+25. Examine if number of parents/children aboard influences survival rates.
+
+26. Investigate whether cabin number correlates with survival, possibly indicating location effects.
+
+27. Explore whether ticket number patterns have any relation to survival odds.
+
+28. Investigate if shared surnames (family groups) display survival rate anomalies.
+
+29. First-class passengers were more likely to survive than those in other classes due to better access to lifeboats and proximity to exit points.
+
+30. Female passengers had a higher survival rate on the Titanic, reflecting gender-based priority during evacuation.
+
+31. Children 5 and under may have had a better chance of surviving due to their need for protection.
+
+32. Passengers with family onboard (siblings/spouse) might have higher survival due to mutual aid.
+
+33. Embarkation point could reflect socio-economic status, possibly affecting survival odds.
+
+34. Passengers who paid higher fares were more likely to survive, reflecting economic disparities in survival chances.
+
+35. Family ties (parents/children) onboard could enhance survival likelihood due to mutual assistance.
+
+36. Fare within passenger class may modify survival probabilities, an indicator of wealth impact.
+
+37. Name length or title identifies social status, potentially influencing evacuation priority.
+
+38. We test if different age groups within each ticket class have distinct survival probabilities, suggesting hidden classes.
+
+39. Evaluate if port of embarkation modifies the impact of socio-economic status (Pclass, Fare) on survival.
+
+40. Test for hidden categories in data based on age and SibSp, impacting survival outcomes.
+
+41. Determine if risk behavior, inferred from 'Cabin' information, leads to latent survival-driving traits.
+
+42. Check if changes over time, inferred from ticket ordering, offer latent growth implications on survival odds.

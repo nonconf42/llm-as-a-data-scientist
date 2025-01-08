@@ -1,0 +1,272 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (# of siblings / spouses aboard the Titanic)
+Parch (# of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.
+Hypothesis Generation Methods:
+Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).
+Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.
+Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.
+DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 15 hypotheses for the dataset described above. For each hypothesis:
+1.  Write a brief description and save it as a string variable called description.
+2.  Provide Python code to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "{description for hypothesis 1}"
+{test() for hypothesis 1}
+# Hypothesis 2.
+description = "{description for hypothesis 2}"
+{test() for hypothesis 2}
+…
+# Hypothesis 15.
+description = "{description for hypothesis 15}"
+{test() for hypothesis 15}
+
+############
+Below are 15 hypothesis statements with descriptions and tests implemented in Python. The tests use various statistical methods to derive insights from the Titanic dataset.
+
+```python
+# Hypothesis 1.
+description = "Class 1 passengers have a higher survival rate than other classes."
+def test_1(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Pivot table for survival rates by class
+    table = pd.crosstab(dataset["Pclass"], dataset["Survived"])
+    # Chi-squared test
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    # Use a significance level of 0.05
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 2.
+description = "Females were more likely to survive than males."
+def test_2(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Pivot table for survival rates by sex
+    table = pd.crosstab(dataset["Sex"], dataset["Survived"])
+    # Chi-squared test
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    # Use a significance level of 0.05
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 3.
+description = "Younger passengers (under 18) had a higher survival rate."
+def test_3(dataset):
+    from scipy.stats import chi2_contingency
+    import pandas as pd
+
+    # Categorize passengers under and over 18
+    dataset['Age_Group'] = dataset['Age'].apply(lambda x: 'Under 18' if x < 18 else '18 and over')
+    
+    # Pivot table for survival rates by age group
+    table = pd.crosstab(dataset['Age_Group'], dataset['Survived'])
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    # Use a significance level of 0.05
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 4.
+description = "Passengers with families on board (i.e., SibSp + Parch > 0) were more likely to survive."
+def test_4(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Define family indicator
+    dataset['Has_Family'] = (dataset['SibSp'] + dataset['Parch']) > 0
+
+    # Pivot table
+    table = pd.crosstab(dataset['Has_Family'], dataset['Survived'])
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 5.
+description = "Passengers who embarked from Cherbourg had a higher survival rate."
+def test_5(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Pivot table for embarkment survival rates
+    table = pd.crosstab(dataset['Embarked'], dataset['Survived'])
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 6.
+description = "Passengers with higher fare categories had a higher survival rate."
+def test_6(dataset):
+    from scipy.stats import chi2_contingency
+    import pandas as pd
+
+    # Discretize fare
+    dataset['Fare_Category'] = pd.qcut(dataset['Fare'], 4, labels=['Low', 'Medium', 'High', 'Very High'])
+
+    # Pivot table for fare category survival rates
+    table = pd.crosstab(dataset['Fare_Category'], dataset['Survived'])
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 7.
+description = "Passengers with cabins (not missing) were more likely to survive."
+def test_7(dataset):
+    from scipy.stats import chi2_contingency
+    import pandas as pd
+
+    # Cabin availability
+    dataset['Has_Cabin'] = dataset['Cabin'].notnull()
+
+    # Pivot table for cabins
+    table = pd.crosstab(dataset['Has_Cabin'], dataset['Survived'])
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 8.
+description = "Passengers traveling alone (SibSp == 0 and Parch == 0) had different survival rates compared to those not alone."
+def test_8(dataset):
+    import pandas as pd
+    from scipy.stats import wilcoxon
+
+    # Single passenger definition
+    dataset["Is_Alone"] = (dataset["SibSp"] == 0) & (dataset["Parch"] == 0)
+
+    # Pivot table
+    table = pd.crosstab(dataset['Is_Alone'], dataset['Survived'])
+    _, p = wilcoxon(table[0], table[1], alternative="less")
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 9.
+description = "Passengers who embarked from Queenstown had different survival rates compared to other ports."
+def test_9(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Pivot table for embarkment survival rates
+    table = pd.crosstab(dataset['Embarked'], dataset['Survived'])
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 10.
+description = "Ticket class influences the survival rate variance for different sex groups."
+def test_10(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Pivot table for sex and class
+    table = pd.crosstab(index=[dataset['Pclass'], dataset['Sex']], columns=dataset['Survived'])
+
+    chi2, p, dof, ex = chi2_contingency(table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 11.
+description = "Older passengers had a lower survival rate."
+def test_11(dataset):
+    import numpy as np
+    from scipy import stats
+    
+    older_passengers = dataset[dataset['Age'] >= dataset['Age'].median()]['Survived']
+    younger_passengers = dataset[dataset['Age'] < dataset['Age'].median()]['Survived']
+    
+    _, p = stats.ttest_ind(younger_passengers, older_passengers)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 12.
+description = "Fares are significantly different between passengers who survived and those who did not."
+def test_12(dataset):
+    from scipy.stats import ttest_ind
+
+    survived = dataset[dataset['Survived'] == 1]['Fare'].dropna()
+    not_survived = dataset[dataset['Survived'] == 0]['Fare'].dropna()
+
+    _, p = ttest_ind(survived, not_survived)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 13.
+description = "First-class passengers have significantly different age distributions compared to other classes."
+def test_13(dataset):
+    from scipy.stats import kruskal
+
+    first_class = dataset[dataset['Pclass'] == 1]['Age'].dropna()
+    other_classes = dataset[dataset['Pclass'] != 1]['Age'].dropna()
+
+    _, p = kruskal(first_class, other_classes)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 14.
+description = "Ticket number has no effect on survival rate."
+def test_14(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Count unique tickets and survival
+    ticket_survival = dataset.groupby('Ticket')['Survived'].nunique()
+    
+    # Creating a crosstab
+    table = pd.crosstab(ticket_survival.index, ticket_survival)
+
+    _, p, _, _ = chi2_contingency(table)
+
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 15.
+description = "Passenger survival does not depend on the length of their name."
+def test_15(dataset):
+    from scipy.stats import ttest_ind
+   
+    # Calculate name length
+    dataset['Name_Length'] = dataset['Name'].map(len)
+    
+    # Survived and not survived
+    survived = dataset[dataset['Survived'] == 1]['Name_Length']
+    not_survived = dataset[dataset['Survived'] == 0]['Name_Length']
+    
+    _, p = ttest_ind(survived, not_survived)
+
+    result = 1 if p < 0.05 else 0
+    return result
+```
+
+Each of these hypotheses involves exploring a different aspect of the data to understand whether specific features or combinations thereof might influence the likelihood of survival on the Titanic.
+############
+['# Hypothesis 1.\ndescription = "Class 1 passengers have a higher survival rate than other classes."\ndef test_1(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Pivot table for survival rates by class\n    table = pd.crosstab(dataset["Pclass"], dataset["Survived"])\n    # Chi-squared test\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    # Use a significance level of 0.05\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 2.\ndescription = "Females were more likely to survive than males."\ndef test_2(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Pivot table for survival rates by sex\n    table = pd.crosstab(dataset["Sex"], dataset["Survived"])\n    # Chi-squared test\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    # Use a significance level of 0.05\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 3.\ndescription = "Younger passengers (under 18) had a higher survival rate."\ndef test_3(dataset):\n    from scipy.stats import chi2_contingency\n    import pandas as pd\n\n    # Categorize passengers under and over 18\n    dataset[\'Age_Group\'] = dataset[\'Age\'].apply(lambda x: \'Under 18\' if x < 18 else \'18 and over\')\n    \n    # Pivot table for survival rates by age group\n    table = pd.crosstab(dataset[\'Age_Group\'], dataset[\'Survived\'])\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    # Use a significance level of 0.05\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 4.\ndescription = "Passengers with families on board (i.e., SibSp + Parch > 0) were more likely to survive."\ndef test_4(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Define family indicator\n    dataset[\'Has_Family\'] = (dataset[\'SibSp\'] + dataset[\'Parch\']) > 0\n\n    # Pivot table\n    table = pd.crosstab(dataset[\'Has_Family\'], dataset[\'Survived\'])\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 5.\ndescription = "Passengers who embarked from Cherbourg had a higher survival rate."\ndef test_5(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Pivot table for embarkment survival rates\n    table = pd.crosstab(dataset[\'Embarked\'], dataset[\'Survived\'])\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 6.\ndescription = "Passengers with higher fare categories had a higher survival rate."\ndef test_6(dataset):\n    from scipy.stats import chi2_contingency\n    import pandas as pd\n\n    # Discretize fare\n    dataset[\'Fare_Category\'] = pd.qcut(dataset[\'Fare\'], 4, labels=[\'Low\', \'Medium\', \'High\', \'Very High\'])\n\n    # Pivot table for fare category survival rates\n    table = pd.crosstab(dataset[\'Fare_Category\'], dataset[\'Survived\'])\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 7.\ndescription = "Passengers with cabins (not missing) were more likely to survive."\ndef test_7(dataset):\n    from scipy.stats import chi2_contingency\n    import pandas as pd\n\n    # Cabin availability\n    dataset[\'Has_Cabin\'] = dataset[\'Cabin\'].notnull()\n\n    # Pivot table for cabins\n    table = pd.crosstab(dataset[\'Has_Cabin\'], dataset[\'Survived\'])\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 8.\ndescription = "Passengers traveling alone (SibSp == 0 and Parch == 0) had different survival rates compared to those not alone."\ndef test_8(dataset):\n    import pandas as pd\n    from scipy.stats import wilcoxon\n\n    # Single passenger definition\n    dataset["Is_Alone"] = (dataset["SibSp"] == 0) & (dataset["Parch"] == 0)\n\n    # Pivot table\n    table = pd.crosstab(dataset[\'Is_Alone\'], dataset[\'Survived\'])\n    _, p = wilcoxon(table[0], table[1], alternative="less")\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 9.\ndescription = "Passengers who embarked from Queenstown had different survival rates compared to other ports."\ndef test_9(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Pivot table for embarkment survival rates\n    table = pd.crosstab(dataset[\'Embarked\'], dataset[\'Survived\'])\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 10.\ndescription = "Ticket class influences the survival rate variance for different sex groups."\ndef test_10(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Pivot table for sex and class\n    table = pd.crosstab(index=[dataset[\'Pclass\'], dataset[\'Sex\']], columns=dataset[\'Survived\'])\n\n    chi2, p, dof, ex = chi2_contingency(table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 11.\ndescription = "Older passengers had a lower survival rate."\ndef test_11(dataset):\n    import numpy as np\n    from scipy import stats\n    \n    older_passengers = dataset[dataset[\'Age\'] >= dataset[\'Age\'].median()][\'Survived\']\n    younger_passengers = dataset[dataset[\'Age\'] < dataset[\'Age\'].median()][\'Survived\']\n    \n    _, p = stats.ttest_ind(younger_passengers, older_passengers)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 12.\ndescription = "Fares are significantly different between passengers who survived and those who did not."\ndef test_12(dataset):\n    from scipy.stats import ttest_ind\n\n    survived = dataset[dataset[\'Survived\'] == 1][\'Fare\'].dropna()\n    not_survived = dataset[dataset[\'Survived\'] == 0][\'Fare\'].dropna()\n\n    _, p = ttest_ind(survived, not_survived)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 13.\ndescription = "First-class passengers have significantly different age distributions compared to other classes."\ndef test_13(dataset):\n    from scipy.stats import kruskal\n\n    first_class = dataset[dataset[\'Pclass\'] == 1][\'Age\'].dropna()\n    other_classes = dataset[dataset[\'Pclass\'] != 1][\'Age\'].dropna()\n\n    _, p = kruskal(first_class, other_classes)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 14.\ndescription = "Ticket number has no effect on survival rate."\ndef test_14(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Count unique tickets and survival\n    ticket_survival = dataset.groupby(\'Ticket\')[\'Survived\'].nunique()\n    \n    # Creating a crosstab\n    table = pd.crosstab(ticket_survival.index, ticket_survival)\n\n    _, p, _, _ = chi2_contingency(table)\n\n    result = 1 if p < 0.05 else 0\n    return result', '# Hypothesis 15.\ndescription = "Passenger survival does not depend on the length of their name."\ndef test_15(dataset):\n    from scipy.stats import ttest_ind\n   \n    # Calculate name length\n    dataset[\'Name_Length\'] = dataset[\'Name\'].map(len)\n    \n    # Survived and not survived\n    survived = dataset[dataset[\'Survived\'] == 1][\'Name_Length\']\n    not_survived = dataset[dataset[\'Survived\'] == 0][\'Name_Length\']\n    \n    _, p = ttest_ind(survived, not_survived)\n\n    result = 1 if p < 0.05 else 0\n    return result']

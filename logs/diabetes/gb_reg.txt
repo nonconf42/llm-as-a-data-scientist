@@ -1,0 +1,92 @@
+Training GradientBoostingRegressor_VarianceThreshold...
+GradientBoostingRegressor_VarianceThreshold performance:
+  mse: 2741.6423
+  mae: 42.3711
+  r2: 0.4825
+  rmse: 52.3607
+Training Bagging_GradientBoostingRegressor_VarianceThreshold...
+Bagging_GradientBoostingRegressor_VarianceThreshold performance:
+  mse: 2684.4219
+  mae: 41.4546
+  r2: 0.4933
+  rmse: 51.8114
+Training GradientBoostingRegressor_SelectKBest...
+GradientBoostingRegressor_SelectKBest performance:
+  mse: 2827.9499
+  mae: 43.9806
+  r2: 0.4662
+  rmse: 53.1785
+Training Bagging_GradientBoostingRegressor_SelectKBest...
+Bagging_GradientBoostingRegressor_SelectKBest performance:
+  mse: 2720.2899
+  mae: 41.9864
+  r2: 0.4866
+  rmse: 52.1564
+Training GradientBoostingRegressor_SelectKBest...
+GradientBoostingRegressor_SelectKBest performance:
+  mse: 2827.9499
+  mae: 43.9806
+  r2: 0.4662
+  rmse: 53.1785
+Training Bagging_GradientBoostingRegressor_SelectKBest...
+Bagging_GradientBoostingRegressor_SelectKBest performance:
+  mse: 2720.2899
+  mae: 41.9864
+  r2: 0.4866
+  rmse: 52.1564
+Training GradientBoostingRegressor_RFE...
+GradientBoostingRegressor_RFE performance:
+  mse: 2741.6423
+  mae: 42.3711
+  r2: 0.4825
+  rmse: 52.3607
+Training Bagging_GradientBoostingRegressor_RFE...
+Bagging_GradientBoostingRegressor_RFE performance:
+  mse: 2702.7793
+  mae: 41.8417
+  r2: 0.4899
+  rmse: 51.9883
+
+Best Models:
+Bagging_GradientBoostingRegressor_VarianceThreshold performance:
+  mse: 2684.4219
+  mae: 41.4546
+  r2: 0.4933
+  rmse: 51.8114
+Bagging_GradientBoostingRegressor_RFE performance:
+  mse: 2702.7793
+  mae: 41.8417
+  r2: 0.4899
+  rmse: 51.9883
+Bagging_GradientBoostingRegressor_SelectKBest performance:
+  mse: 2720.2899
+  mae: 41.9864
+  r2: 0.4866
+  rmse: 52.1564
+GradientBoostingRegressor_RFE performance:
+  mse: 2741.6423
+  mae: 42.3711
+  r2: 0.4825
+  rmse: 52.3607
+GradientBoostingRegressor_VarianceThreshold performance:
+  mse: 2741.6423
+  mae: 42.3711
+  r2: 0.4825
+  rmse: 52.3607
+GradientBoostingRegressor_SelectKBest performance:
+  mse: 2827.9499
+  mae: 43.9806
+  r2: 0.4662
+  rmse: 53.1785
+
+Voting Regressor performance:
+  mse: 2694.1407
+  mae: 41.7092
+  r2: 0.4915
+  rmse: 51.9051
+
+Stacking Regressor performance:
+  mse: 2703.7381
+  mae: 41.7820
+  r2: 0.4897
+  rmse: 51.9975

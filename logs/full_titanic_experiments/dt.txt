@@ -1,0 +1,52 @@
+Training DecisionTreeClassifier_VarianceThreshold...
+DecisionTreeClassifier_VarianceThreshold performance:
+  accuracy: 0.7263
+  f1: 0.7279
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.8268
+  f1: 0.8242
+Training DecisionTreeClassifier_SelectKBest...
+DecisionTreeClassifier_SelectKBest performance:
+  accuracy: 0.7933
+  f1: 0.7949
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 0.7989
+  f1: 0.7954
+Training DecisionTreeClassifier_RFE...
+DecisionTreeClassifier_RFE performance:
+  accuracy: 0.7877
+  f1: 0.7877
+Training Bagging_str_RFE...
+Bagging_str_RFE performance:
+  accuracy: 0.8045
+  f1: 0.8030
+
+Best Models:
+Bagging_str_VarianceThreshold performance:
+  accuracy: 0.8268
+  f1: 0.8242
+Bagging_str_RFE performance:
+  accuracy: 0.8045
+  f1: 0.8030
+Bagging_str_SelectKBest performance:
+  accuracy: 0.7989
+  f1: 0.7954
+DecisionTreeClassifier_SelectKBest performance:
+  accuracy: 0.7933
+  f1: 0.7949
+DecisionTreeClassifier_RFE performance:
+  accuracy: 0.7877
+  f1: 0.7877
+DecisionTreeClassifier_VarianceThreshold performance:
+  accuracy: 0.7263
+  f1: 0.7279
+
+Voting Classifier performance:
+  accuracy: 0.8380
+  f1: 0.8362
+
+Stacking Classifier performance:
+  accuracy: 0.8268
+  f1: 0.8234

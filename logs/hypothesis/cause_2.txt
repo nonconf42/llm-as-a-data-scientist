@@ -1,0 +1,271 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (# of siblings / spouses aboard the Titanic)
+Parch (# of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 15 hypotheses for the dataset described above. For each hypothesis:
+1.  Write a brief description and save it as a string variable called description.
+2.  Provide Python code to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "{description for hypothesis 1}"
+{test() for hypothesis 1}
+# Hypothesis 2.
+description = "{description for hypothesis 2}"
+{test() for hypothesis 2}
+…
+# Hypothesis 15.
+description = "{description for hypothesis 15}"
+{test() for hypothesis 15}
+
+############
+To effectively test the hypotheses and manipulate the Titanic dataset, we need to ensure that our `test(dataset)` functions run appropriate statistical tests or checks corresponding to each hypothesis. Here is a sample list of hypotheses with their descriptions and the `test()` functions:
+
+```python
+# Hypothesis 1
+description = "Direct Cause-Effect Hypothesis: Being in 1st class (Pclass=1) directly increases the likelihood of survival."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    dataset['Survived'] = dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0)  # Convert to numerical if needed
+    pclass_survival = pd.crosstab(dataset['Pclass'] == 1, dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(pclass_survival)
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 2
+description = "Direct Cause-Effect Hypothesis: Females (Sex=female) have a higher chance of survival compared to males."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    dataset['Survived'] = dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0)
+    gender_survival = pd.crosstab(dataset['Sex'] == 'female', dataset['Survived'])
+    chi2, p, dof, expected = chi2_contingency(gender_survival)
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 3
+description = "Mediation Hypothesis: Age mediates the relationship between Pclass and survival."
+def test(dataset):
+    import pandas as pd
+    from sklearn.linear_model import LogisticRegression
+    from statsmodels.stats.mediation import Mediation
+
+    dataset = dataset.dropna(subset=['Age', 'Pclass'])
+    mediator = dataset['Age']
+    outcome = dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0)
+    predictor = dataset['Pclass']
+
+    med_model = LogisticRegression().fit(mediator.values.reshape(-1, 1), outcome)
+    outcome_model = LogisticRegression().fit(pd.concat([predictor, mediator], axis=1), outcome)
+
+    mediation = Mediation(med_model, outcome_model, mediator)
+    mediation_result = mediation.test_method()
+
+    result = 1 if mediation_result[0].p_value < 0.05 else 0
+    return result
+
+# Hypothesis 4
+description = "Moderation Hypothesis: Gender moderates the effect of age on survival."
+def test(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+    from statsmodels.formula.api import ols
+
+    dataset = dataset.dropna(subset=['Age'])
+    dataset['Survived'] = dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0)
+
+    interaction_term = dataset['Age'] * (dataset['Sex'] == 'female').astype(int)
+    dataset['interaction'] = interaction_term
+
+    model = ols('Survived ~ Age * Sex', data=dataset).fit()
+    p_value = model.pvalues['Age:Sex[T.female]']
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 5
+description = "Indirect Cause-Effect Hypothesis: Pclass affects survival rate indirectly by influencing Fare paid."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset = dataset.dropna(subset=['Fare'])
+    median_fare = dataset['Fare'].median()
+    survival_by_fare = pd.crosstab(dataset['Fare'] > median_fare, dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0))
+    chi2, p, _, _ = chi2_contingency(survival_by_fare)
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 6
+description = "Reciprocal Causation Hypothesis: Survival and Ticket class mutually influence each other."
+def test(dataset):
+    # This is theoretically challenging with given data, but assuming model comparison:
+    import pandas as pd
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import log_loss
+    
+    dataset = dataset.dropna(subset=['Pclass'])
+    dataset['Survived'] = dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0)
+
+    model_survival = LogisticRegression().fit(dataset[['Pclass']], dataset['Survived'])
+    model_pclass = LogisticRegression().fit(dataset[['Survived']], dataset['Pclass'].astype(int))
+
+    # Compute likelihoods
+    surv_preds = model_survival.predict_proba(dataset[['Pclass']])[:, 1]
+    pclass_preds = model_pclass.predict_proba(dataset[['Survived']])[:, 1]
+
+    result = 1 if log_loss(dataset['Survived'], surv_preds) < log_loss(dataset['Pclass'].astype(int), pclass_preds) else 0
+    return result
+
+# Hypothesis 7
+description = "Temporal Causation Hypothesis: Does age influence survival likelihood differently in different age groups."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    age_bins = [0, 10, 20, 30, 40, 50, 60, 70, 80]
+    dataset['Age_bin'] = pd.cut(dataset['Age'].fillna(dataset['Age'].median()), bins=age_bins)
+    age_survival = pd.crosstab(dataset['Age_bin'], dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0))
+    chi2, p, _, _ = chi2_contingency(age_survival)
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 8
+description = "Cause-Effect Interaction Hypothesis: Interaction of Pclass and Gender affects survival outcome."
+def test(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+    from statsmodels.formula.api import glm
+
+    dataset['Survived'] = dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0)
+    model = glm('Survived ~ C(Pclass) * C(Sex)', family=sm.families.Binomial(), data=dataset).fit()
+    p_value = model.pvalues['C(Pclass)[T.2]:C(Sex)[T.female]']
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 9
+description = "Conditioned Cause-Effect Hypothesis: Parish presence affects survival rate conditioned by embarkation port."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset = dataset.dropna(subset=['Embarked', 'Parch'])
+    embark_parch_survival = pd.crosstab((dataset['Parch'] > 0), dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0), dataset['Embarked'])
+    chi2, p, _, _ = chi2_contingency(embark_parch_survival.sum(axis=2))
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 10
+description = "Reverse Causation Hypothesis: Survived passengers of a certain Pclass more likely to have had a cabin."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    dataset['Has_Cabin'] = dataset['Cabin'].apply(lambda x: 0 if pd.isnull(x) else 1)
+    survived_has_cabin = pd.crosstab(dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0), dataset['Has_Cabin'])
+    chi2, p, _, _ = chi2_contingency(survived_has_cabin)
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 11
+description = "Spurious Causation Hypothesis: There is an apparent influence of Embarked on Survival due to Fare price."
+def test(dataset):
+    import pandas as pd
+    from statsmodels.formula.api import ols
+    
+    dataset = dataset.dropna(subset=['Embarked', 'Fare'])
+    model_with_fare = ols('Survived ~ C(Embarked) + Fare', data=dataset).fit()
+    p_value = model_with_fare.pvalues['C(Embarked)[T.Q]']
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 12
+description = "Threshold Effect Hypothesis: A certain age threshold significantly changes survival rates."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    age_threshold = 18
+    dataset['Survived'] = dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0)
+    age_validation = pd.crosstab(dataset['Age'] > age_threshold, dataset['Survived'])
+    chi2, p, _, _ = chi2_contingency(age_validation)
+    result = 1 if p < 0.05 else 0
+    return result
+
+# Hypothesis 13
+description = "Causal Chain Hypothesis: The effect of sibling/spouse presence on survival is influenced by Pclass."
+def test(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+    from statsmodels.formula.api import glm
+
+    dataset = dataset.dropna(subset=['SibSp'])
+    model = glm('Survived ~ C(SibSp) * C(Pclass)', family=sm.families.Binomial(), data=dataset).fit()
+    p_value = model.pvalues['C(SibSp)[T.1]:C(Pclass)[T.2]']
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 14
+description = "Causal Inference with Instrumental Variables Hypothesis: Using SibSp as an instrument for Fare."
+def test(dataset):
+    # Note: Simplified context due to complexity of actual instrumental variable analysis.
+    import pandas as pd
+    from linearmodels.iv import IV2SLS
+
+    dataset = dataset.dropna(subset=['Fare', 'SibSp'])
+    model = IV2SLS.from_formula('Survived ~ 1 + Fare + [SibSp]', data=dataset).fit()
+    p_value = model.pvalues['Fare']
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 15
+description = "Counterfactual Hypothesis: How would survival odds alter if everyone had embarked from Southampton."
+def test(dataset):
+    import pandas as pd
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import log_loss
+
+    dataset = dataset.fillna({'Embarked': 'S'}) 
+    dataset['Binary_Surv'] = dataset['Survived'].apply(lambda x: 1 if x == 'Survived' else 0)
+    model = LogisticRegression().fit(pd.get_dummies(dataset[['Pclass', 'Sex', 'Age']], drop_first=True), dataset['Binary_Surv'])
+    southampton_scenario = dataset.copy()
+    southampton_scenario['Embarked'] = 'S'
+    expected_survival = model.predict_proba(pd.get_dummies(southampton_scenario[['Pclass', 'Sex', 'Age']], drop_first=True))[:,1]
+    actual_survival = dataset['Binary_Surv']
+    result = 1 if log_loss(actual_survival, expected_survival) < 0.693 else 0  # Thresholding at random guessing expectation
+    return result
+
+```
+
+This code lays out plausible hypotheses along with succinct descriptions. Each `test()` function then attempts to carry out the statistical analysis or model that fits the hypothesis on your dataset, making assumptions and configurations according to standard practices of statistical and machine learning methods. Note that this is a synthetic example, actual modeling can get more complex requiring robust validation.
+############
+[]

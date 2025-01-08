@@ -1,0 +1,323 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (# of siblings / spouses aboard the Titanic)
+Parch (# of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.
+Hypothesis Generation Methods:
+Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.
+Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.
+Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.
+Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.
+Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.
+Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 15 hypotheses for the dataset described above. For each hypothesis:
+1.  Write a brief description and save it as a string variable called description.
+2.  Provide Python code to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "{description for hypothesis 1}"
+{test() for hypothesis 1}
+# Hypothesis 2.
+description = "{description for hypothesis 2}"
+{test() for hypothesis 2}
+…
+# Hypothesis 15.
+description = "{description for hypothesis 15}"
+{test() for hypothesis 15}
+
+############
+To create the specified hypotheses and the corresponding Python code for testing them, I will focus on examining potential patterns and groupings within the dataset. Each hypothesis will check different aspects of the data. Let's create some hypotheses based on potential clustering and relationships across different passenger attributes:
+
+```python
+# Hypothesis 1.
+description = "First class passengers are more likely to survive compared to second and third class passengers."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Calculate contingency table
+    survival_by_class = pd.crosstab(dataset['Pclass'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_class)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 2.
+description = "Female passengers survived at a higher rate than male passengers."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Calculate contingency table
+    survival_by_sex = pd.crosstab(dataset['Sex'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_sex)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 3.
+description = "Passengers with families (siblings/spouse aboard) have distinct survival rates than those traveling alone."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Create family presence column
+    dataset['Family'] = dataset['SibSp'] > 0
+    survival_by_family = pd.crosstab(dataset['Family'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_family)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 4.
+description = "Passengers who boarded at Cherbourg survived at different rates than those who boarded at Queenstown or Southampton."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Calculate contingency table
+    survival_by_embarkation = pd.crosstab(dataset['Embarked'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_embarkation)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 5.
+description = "Higher fare is associated with a higher chance of survival."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import mannwhitneyu
+
+    # Separate fares by survival
+    survived_fares = dataset[dataset['Survived'] == 1]['Fare']
+    not_survived_fares = dataset[dataset['Survived'] == 0]['Fare']
+    _, p_value = mannwhitneyu(survived_fares, not_survived_fares)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 6.
+description = "Children (under 18) have different survival rates than adults."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Create children column
+    dataset['Child'] = dataset['Age'] < 18
+    survival_by_age_group = pd.crosstab(dataset['Child'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_age_group)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 7.
+description = "Passengers in a certain cabin area may have had different survival rates."
+def test(dataset):
+    import pandas as pd
+
+    # Fill missing cabin values
+    dataset['Cabin_Filled'] = dataset['Cabin'].fillna('Unknown')
+    dataset['Cabin_Area'] = dataset['Cabin_Filled'].astype(str).str[0]  # First letter as cabin area
+    try:
+        from sklearn.feature_selection import mutual_info_classif
+        X = pd.get_dummies(dataset['Cabin_Area'])
+        y = dataset['Survived']
+        result = mutual_info_classif(X, y, discrete_features=True).max() > 0.01
+    except ImportError:
+        # If sklearn is not present, fall back to contingency test
+        from scipy.stats import chi2_contingency
+        survival_by_cabin = pd.crosstab(dataset['Cabin_Area'], dataset['Survived'])
+        _, p_value, _, _ = chi2_contingency(survival_by_cabin)
+        result = p_value < 0.05
+    
+    return int(result)
+
+# Hypothesis 8.
+description = "Having parents/children aboard affects the likelihood of survival."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    dataset['Has_Parents_Children'] = dataset['Parch'] > 0
+    survival_by_parch = pd.crosstab(dataset['Has_Parents_Children'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_parch)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 9.
+description = "There are distinct clusters of passengers with different survival rates based on age and fare."
+def test(dataset):
+    import numpy as np
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.metrics import silhouette_score
+
+    # Preprocess data
+    df = dataset[['Age', 'Fare']].dropna()
+    X = StandardScaler().fit_transform(df)
+    
+    # Apply KMeans and evaluate silhouette score
+    kmeans = KMeans(n_clusters=3, random_state=42).fit(X)
+    score = silhouette_score(X, kmeans.labels_)
+    return 1 if score > 0.5 else 0
+
+# Hypothesis 10.
+description = "Passengers under 30 years old traveling in higher classes are more likely to survive."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Create a condition for young passengers in higher classes
+    condition = (dataset['Age'] < 30) & (dataset['Pclass'].isin([1, 2]))
+    young_high_class = dataset[condition]
+    survived = young_high_class['Survived'].mean()
+    
+    result = 1 if survived > 0.5 else 0
+    return result
+
+# Hypothesis 11.
+description = "Passengers with certain titles (like 'Miss' or 'Master') survived at different rates."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Extract titles and find association with survival
+    dataset['Title'] = dataset['Name'].apply(lambda name: name.split(',')[1].split('.')[0].strip())
+    survival_by_title = pd.crosstab(dataset['Title'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_title)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 12.
+description = "Certain interactions between age and family status indicate different survival rates."
+def test(dataset):
+    import pandas as pd
+    from sklearn.feature_selection import mutual_info_classif
+    from sklearn.preprocessing import StandardScaler
+    import numpy as np
+    
+    # Encode features and calculate interaction
+    X = dataset[['Age', 'SibSp', 'Parch']].dropna()
+    X_scaled = StandardScaler().fit_transform(X)
+    
+    survival = dataset.loc[X.index, 'Survived']
+    score = mutual_info_classif(X_scaled, survival, discrete_features='auto').sum()
+    return 1 if score > 0.1 else 0
+
+# Hypothesis 13.
+description = "Passengers with larger families on the ship have different survival probabilities."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Create family size
+    dataset['FamilySize'] = dataset['SibSp'] + dataset['Parch']
+    survival_by_family_size = pd.crosstab(dataset['FamilySize'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_family_size)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 14.
+description = "The presence of certain fare categories (like low, medium, high) affects survival outcomes."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Create fare categories
+    dataset['FareCategory'] = pd.qcut(dataset['Fare'], q=4, labels=['low', 'medium', 'high', 'very high'])
+    survival_by_fare_category = pd.crosstab(dataset['FareCategory'], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_fare_category)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Hypothesis 15.
+description = "The number of siblings/spouses affects survival rates differently in different classes."
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    dataset['FamilySizeCategorical'] = pd.cut(dataset['SibSp'], bins=[-1, 0, 2, 8], labels=['zero', 'small', 'large'])
+    survival_by_sibsp_class = pd.crosstab([dataset['FamilySizeCategorical'], dataset['Pclass']], dataset['Survived'])
+    _, p_value, _, _ = chi2_contingency(survival_by_sibsp_class)
+    
+    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    return result
+```
+
+These hypotheses explore different aspects of the dataset, including interactions between various passenger characteristics. Each hypothesis includes a description and a Python `test()` function to determine whether the hypothesis is statistically significant.
+############
+['# Hypothesis 1.\ndescription = "First class passengers are more likely to survive compared to second and third class passengers."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Calculate contingency table\n    survival_by_class = pd.crosstab(dataset[\'Pclass\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_class)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 2.\ndescription = "Female passengers survived at a higher rate than male passengers."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Calculate contingency table\n    survival_by_sex = pd.crosstab(dataset[\'Sex\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_sex)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 3.\ndescription = "Passengers with families (siblings/spouse aboard) have distinct survival rates than those traveling alone."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Create family presence column\n    dataset[\'Family\'] = dataset[\'SibSp\'] > 0\n    survival_by_family = pd.crosstab(dataset[\'Family\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_family)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 4.\ndescription = "Passengers who boarded at Cherbourg survived at different rates than those who boarded at Queenstown or Southampton."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Calculate contingency table\n    survival_by_embarkation = pd.crosstab(dataset[\'Embarked\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_embarkation)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 5.\ndescription = "Higher fare is associated with a higher chance of survival."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import mannwhitneyu\n\n    # Separate fares by survival\n    survived_fares = dataset[dataset[\'Survived\'] == 1][\'Fare\']\n    not_survived_fares = dataset[dataset[\'Survived\'] == 0][\'Fare\']\n    _, p_value = mannwhitneyu(survived_fares, not_survived_fares)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 6.\ndescription = "Children (under 18) have different survival rates than adults."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Create children column\n    dataset[\'Child\'] = dataset[\'Age\'] < 18\n    survival_by_age_group = pd.crosstab(dataset[\'Child\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_age_group)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 7.\ndescription = "Passengers in a certain cabin area may have had different survival rates."\ndef test(dataset):\n    import pandas as pd\n\n    # Fill missing cabin values\n    dataset[\'Cabin_Filled\'] = dataset[\'Cabin\'].fillna(\'Unknown\')\n    dataset[\'Cabin_Area\'] = dataset[\'Cabin_Filled\'].astype(str).str[0]  # First letter as cabin area\n    try:\n        from sklearn.feature_selection import mutual_info_classif\n        X = pd.get_dummies(dataset[\'Cabin_Area\'])\n        y = dataset[\'Survived\']\n        result = mutual_info_classif(X, y, discrete_features=True).max() > 0.01\n    except ImportError:\n        # If sklearn is not present, fall back to contingency test\n        from scipy.stats import chi2_contingency\n        survival_by_cabin = pd.crosstab(dataset[\'Cabin_Area\'], dataset[\'Survived\'])\n        _, p_value, _, _ = chi2_contingency(survival_by_cabin)\n        result = p_value < 0.05\n    \n    return int(result)', '# Hypothesis 8.\ndescription = "Having parents/children aboard affects the likelihood of survival."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    dataset[\'Has_Parents_Children\'] = dataset[\'Parch\'] > 0\n    survival_by_parch = pd.crosstab(dataset[\'Has_Parents_Children\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_parch)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 9.\ndescription = "There are distinct clusters of passengers with different survival rates based on age and fare."\ndef test(dataset):\n    import numpy as np\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n    from sklearn.metrics import silhouette_score\n\n    # Preprocess data\n    df = dataset[[\'Age\', \'Fare\']].dropna()\n    X = StandardScaler().fit_transform(df)\n    \n    # Apply KMeans and evaluate silhouette score\n    kmeans = KMeans(n_clusters=3, random_state=42).fit(X)\n    score = silhouette_score(X, kmeans.labels_)\n    return 1 if score > 0.5 else 0', '# Hypothesis 10.\ndescription = "Passengers under 30 years old traveling in higher classes are more likely to survive."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Create a condition for young passengers in higher classes\n    condition = (dataset[\'Age\'] < 30) & (dataset[\'Pclass\'].isin([1, 2]))\n    young_high_class = dataset[condition]\n    survived = young_high_class[\'Survived\'].mean()\n    \n    result = 1 if survived > 0.5 else 0\n    return result', '# Hypothesis 11.\ndescription = "Passengers with certain titles (like \'Miss\' or \'Master\') survived at different rates."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Extract titles and find association with survival\n    dataset[\'Title\'] = dataset[\'Name\'].apply(lambda name: name.split(\',\')[1].split(\'.\')[0].strip())\n    survival_by_title = pd.crosstab(dataset[\'Title\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_title)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 12.\ndescription = "Certain interactions between age and family status indicate different survival rates."\ndef test(dataset):\n    import pandas as pd\n    from sklearn.feature_selection import mutual_info_classif\n    from sklearn.preprocessing import StandardScaler\n    import numpy as np\n    \n    # Encode features and calculate interaction\n    X = dataset[[\'Age\', \'SibSp\', \'Parch\']].dropna()\n    X_scaled = StandardScaler().fit_transform(X)\n    \n    survival = dataset.loc[X.index, \'Survived\']\n    score = mutual_info_classif(X_scaled, survival, discrete_features=\'auto\').sum()\n    return 1 if score > 0.1 else 0', '# Hypothesis 13.\ndescription = "Passengers with larger families on the ship have different survival probabilities."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Create family size\n    dataset[\'FamilySize\'] = dataset[\'SibSp\'] + dataset[\'Parch\']\n    survival_by_family_size = pd.crosstab(dataset[\'FamilySize\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_family_size)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 14.\ndescription = "The presence of certain fare categories (like low, medium, high) affects survival outcomes."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n\n    # Create fare categories\n    dataset[\'FareCategory\'] = pd.qcut(dataset[\'Fare\'], q=4, labels=[\'low\', \'medium\', \'high\', \'very high\'])\n    survival_by_fare_category = pd.crosstab(dataset[\'FareCategory\'], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_fare_category)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result', '# Hypothesis 15.\ndescription = "The number of siblings/spouses affects survival rates differently in different classes."\ndef test(dataset):\n    import pandas as pd\n    from scipy.stats import chi2_contingency\n    \n    dataset[\'FamilySizeCategorical\'] = pd.cut(dataset[\'SibSp\'], bins=[-1, 0, 2, 8], labels=[\'zero\', \'small\', \'large\'])\n    survival_by_sibsp_class = pd.crosstab([dataset[\'FamilySizeCategorical\'], dataset[\'Pclass\']], dataset[\'Survived\'])\n    _, p_value, _, _ = chi2_contingency(survival_by_sibsp_class)\n    \n    # p-value of less than 0.05 indicates strong evidence to accept the hypothesis\n    result = 1 if p_value < 0.05 else 0\n    return result']
+First class passengers are more likely to survive compared to second and third class passengers.
+1
+#####
+Female passengers survived at a higher rate than male passengers.
+1
+#####
+Passengers with families (siblings/spouse aboard) have distinct survival rates than those traveling alone.
+1
+#####
+Passengers who boarded at Cherbourg survived at different rates than those who boarded at Queenstown or Southampton.
+1
+#####
+Higher fare is associated with a higher chance of survival.
+1
+#####
+Children (under 18) have different survival rates than adults.
+1
+#####
+Passengers in a certain cabin area may have had different survival rates.
+1
+#####
+Having parents/children aboard affects the likelihood of survival.
+1
+#####
+There are distinct clusters of passengers with different survival rates based on age and fare.
+0
+#####
+Passengers under 30 years old traveling in higher classes are more likely to survive.
+1
+#####
+Passengers with certain titles (like 'Miss' or 'Master') survived at different rates.
+1
+#####
+Certain interactions between age and family status indicate different survival rates.
+0
+#####
+Passengers with larger families on the ship have different survival probabilities.
+1
+#####
+The presence of certain fare categories (like low, medium, high) affects survival outcomes.
+1
+#####
+The number of siblings/spouses affects survival rates differently in different classes.
+1
+#####

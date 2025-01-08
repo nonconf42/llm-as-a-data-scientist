@@ -9,7 +9,18 @@ dataset_descriptions = {
     'Cars' : '''This is cars dataset. The goal is to predict the price of used cars based on various attributes.
                 Below is the data description in the format - Variable (definition):
 
-              '''
+             ''',
+    'Diamonds' : """This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+                    clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+        
+                 """,
+
+    'Smoking' : """This is smoking dataset. The goal is to predict an individual's smoking status based on various
+                   health indicators.
+                   This is binary classification task. 
+                   Below is the data description in the format -  Variable (definition):
+        
+                 """,
 }
 class DataReader:
     def __init__(self, dataset_name):
@@ -24,8 +35,8 @@ class DataReader:
                 'Pclass' : 'Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd',
                 'Sex' : 'Sex: male, female',
                 'Age' : 'Age in years',
-                'SibSp' : '# of siblings / spouses aboard the Titanic',
-                'Parch' : '# of parents / children aboard the Titanic',
+                'SibSp' : 'number of siblings / spouses aboard the Titanic',
+                'Parch' : 'number of parents / children aboard the Titanic',
                 'Ticket' : 'Ticket number',
                 'Fare' : 'Passenger fare',
                 'Cabin' : 'Cabin number',
@@ -51,6 +62,53 @@ class DataReader:
                 'clean_title': "Indicates that the car’s title is free of any legal issues such as salvage or rebuild history."
             }
             self.chosen_features = [col for col in self.train_base.columns if col not in ['id', 'price']]
+
+        elif dataset_name == 'Diamonds':
+            self.train_input = self.train_base.drop(['price'], axis=1)
+            self.train_labels = self.train_base['price']
+            self.features_description = {
+                "carat": "The carat value of the Diamond",
+                "cut": "The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair')",
+                "color": "The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D')",
+                "clarity": "The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1')",
+                "depth": "The depth value of the Diamond",
+                "table": "Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above",
+                "x": "Width of the diamond",
+                "y": "Length of the diamond",
+                "z": "Height of the diamond",
+                "price": "The price of the Diamond in USD"
+            }
+            self.chosen_features = [col for col in self.train_base.columns if col not in ['price']]
+
+        elif dataset_name == 'Smoking':
+            self.train_input = self.train_base.drop(['smoking'], axis=1)
+            self.train_labels = self.train_base['smoking']
+            self.features_description = {
+                "age": "Age of the individual, measured in 5-year gaps",
+                "height": "Height of the individual in centimeters",
+                "weight": "Weight of the individual in kilograms",
+                "waist": "Waist circumference length in centimeters",
+                "eyesight(left)": "Eyesight measurement for the left eye",
+                "eyesight(right)": "Eyesight measurement for the right eye",
+                "hearing(left)": "Hearing ability of the left ear",
+                "hearing(right)": "Hearing ability of the right ear",
+                "systolic": "Systolic blood pressure measurement",
+                "relaxation": "Diastolic blood pressure measurement",
+                "fasting blood sugar": "Blood sugar level measured after fasting",
+                "Cholesterol": "Total cholesterol level in the blood",
+                "triglyceride": "Triglyceride level in the blood",
+                "HDL": "High-density lipoprotein cholesterol level",
+                "LDL": "Low-density lipoprotein cholesterol level",
+                "hemoglobin": "Hemoglobin level in the blood",
+                "Urine protein": "Protein level in the urine",
+                "serum creatinine": "Creatinine level in the blood serum",
+                "AST": "Aspartate aminotransferase (glutamic oxaloacetic transaminase) level",
+                "ALT": "Alanine aminotransferase (glutamic pyruvic transaminase) level",
+                "Gtp": "Gamma-glutamyl transpeptidase (γ-GTP) level",
+                "dental caries": "Indicates the presence of dental cavities",
+                "smoking": "Smoking status of the individual"
+            }
+            self.chosen_features = [col for col in self.train_base.columns if col not in ['smoking']]
 
 
             

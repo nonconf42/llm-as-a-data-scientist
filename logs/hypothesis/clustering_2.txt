@@ -1,0 +1,541 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (# of siblings / spouses aboard the Titanic)
+Parch (# of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.
+Hypothesis Generation Methods:
+Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.
+Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.
+Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.
+Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.
+Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.
+Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 15 hypotheses for the dataset described above. For each hypothesis:
+1.  Write a brief description and save it as a string variable called description.
+2.  Provide Python code to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "{description for hypothesis 1}"
+{test() for hypothesis 1}
+# Hypothesis 2.
+description = "{description for hypothesis 2}"
+{test() for hypothesis 2}
+…
+# Hypothesis 15.
+description = "{description for hypothesis 15}"
+{test() for hypothesis 15}
+
+############
+Sure! Below are 15 hypotheses along with their descriptions and example Python code to test each hypothesis using clustering and feature importance methods on the Titanic dataset. Note that these hypotheses are exploratory and might be tested using different criteria and methods. Some require statistical libraries and may use random seeds or parameters settings that may need adjustments based on the specific input dataset:
+
+```python
+?????# Hypothesis 1.
+description = "Identify distinct passenger clusters using a k-means clustering algorithm based on age, fare, and Pclass."
+def test(dataset):
+    import pandas as pd
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+
+    # Ensure no null values in columns used
+    df = dataset[['Age', 'Fare', 'Pclass']].dropna()
+
+    # Standardizing the data
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(df)
+
+    # Using KMeans to cluster the data
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    kmeans.fit(scaled_features)
+
+    # Return 1 if clusters are successfully formed
+    return 1 if kmeans.inertia_ > 0 else 0
+
+?????# Hypothesis 2.
+description = "Check the importance of the 'Sex' feature in survival prediction within clusters."
+def test(dataset):
+    import pandas as pd
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.model_selection import train_test_split
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass', 'Sex', 'Survived']].dropna()
+    df['Sex'] = df['Sex'].map({'male': 0, 'female': 1})
+    
+    # Clustering
+    features = df[['Age', 'Fare', 'Pclass']]
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(features)
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    clusters = kmeans.fit_predict(scaled_features)
+
+    # Feature importance in classification task
+    df['Cluster'] = clusters
+    X = df[['Age', 'Fare', 'Pclass', 'Sex']]
+    y = df['Survived']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+    clf = DecisionTreeClassifier(random_state=42)
+    clf.fit(X_train, y_train)
+
+    # Determine importance of 'Sex'
+    sex_importance = clf.feature_importances_[3]  # corresponding to 'Sex'
+    
+    return 1 if sex_importance > 0.1 else 0
+
+?????# Hypothesis 3.
+description = "Determine if clusters are formed based on the number of siblings/spouses 'SibSp' and parents/children 'Parch'."
+def test(dataset):
+    from sklearn.cluster import DBSCAN
+    import numpy as np
+
+    # Prepare data
+    df = dataset[['SibSp', 'Parch']].dropna()
+
+    # Clustering using DBSCAN
+    dbscan = DBSCAN(eps=1, min_samples=5)
+    clusters = dbscan.fit_predict(df)
+
+    # Check if clusters are formed (clusters should not be same for all elements)
+    return 1 if len(set(clusters)) > 1 else 0
+
+??????? # Hypothesis 4.
+description = "Evaluate if excluding 'Ticket' affects the cluster stability significantly."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass', 'Ticket']].dropna()
+
+    # Standardize features except 'Ticket'
+    features = df[['Age', 'Fare', 'Pclass']]
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(features)
+
+    # Run clustering with and without 'Ticket'
+    kmeans_with_ticket = KMeans(n_clusters=3, random_state=42).fit(scaled_features)
+    df_no_ticket = df.drop(columns='Ticket')
+    scaled_features_no_ticket = scaler.fit_transform(df_no_ticket)
+    kmeans_without_ticket = KMeans(n_clusters=3, random_state=42).fit(scaled_features_no_ticket)
+
+    # Compare inertia values
+    return 1 if abs(kmeans_with_ticket.inertia_ - kmeans_without_ticket.inertia_) < 1e3 else 0
+
+??????# Hypothesis 5.
+description = "Apply PCA to detect latent structures potentially associated with survival."
+def test(dataset):
+    from sklearn.decomposition import PCA
+    import numpy as np
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass']].dropna()
+
+    # Apply PCA
+    pca = PCA(n_components=2)
+    principal_components = pca.fit_transform(df)
+
+    # Capture significant variance
+    return 1 if np.sum(pca.explained_variance_ratio_) > 0.7 else 0
+
+????? need to import need# Hypothesis 6.
+description = "Determine the optimal number of clusters in passenger data using the Elbow Method."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    from kneed import KneeLocator
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass']].dropna()
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(df)
+
+    # Apply KMeans for different cluster sizes
+    inertias = []
+    for n in range(1, 11):
+        kmeans = KMeans(n_clusters=n, random_state=42).fit(scaled_features)
+        inertias.append(kmeans.inertia_)
+
+    # Detect the "elbow"
+    elbow = KneeLocator(range(1, 11), inertias, curve="convex", direction="decreasing").elbow
+
+    return 1 if elbow is not None else 0
+
+# Hypothesis 7.
+description = "Use t-SNE to identify latent groups correlated with port of embarkation."
+def test(dataset):
+    from sklearn.manifold import TSNE
+    import pandas as pd
+    import numpy as np
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass', 'Embarked']].dropna()
+
+    # Encode 'Embarked'
+    df['Embarked'] = df['Embarked'].map({'C': 0, 'Q': 1, 'S': 2})
+
+    # Apply t-SNE
+    features = df[['Age', 'Fare', 'Pclass']]
+    tsne_result = TSNE(n_components=2, random_state=42).fit_transform(features)
+
+    # Check means of the two encoded features against t-SNE components
+    correlation = np.corrcoef(tsne_result[:, 0], df['Embarked'])[0, 1]
+
+    return 1 if abs(correlation) > 0.2 else 0
+
+?????? # Hypothesis 8.
+description = "Check if including 'Cabin' data changes clustering results significantly."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    import pandas as pd
+
+    # Replace null cabin with 'Unknown'
+    df = dataset[['Age', 'Fare', 'Pclass', 'Cabin']].fillna('Unknown')
+    df['Cabin'] = pd.Categorical(df['Cabin']).codes
+
+    # Only non-null rows for initial clustering
+    df_non_null = dataset[['Age', 'Fare', 'Pclass']].dropna()
+
+    # Standardizing
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(df_non_null)
+
+    kmeans_no_cabin = KMeans(n_clusters=3, random_state=42).fit(scaled_features)
+
+    # With 'Cabin'
+    df_with_cabin = dataset[['Age', 'Fare', 'Pclass', 'Cabin']].dropna()
+    scaled_features_with_cabin = scaler.fit_transform(df_with_cabin)
+    kmeans_with_cabin = KMeans(n_clusters=3, random_state=42).fit(scaled_features_with_cabin)
+
+    # Check if clustering is significantly different
+    return 1 if abs(kmeans_no_cabin.inertia_ - kmeans_with_cabin.inertia_) > 1e3 else 0
+
+?????? # Hypothesis 9.
+description = "Check if interaction between 'Age' and 'Fare' creates distinct impact on survival within clusters."
+def test(dataset):
+    import pandas as pd
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.model_selection import train_test_split
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass', 'Survived']].dropna()
+
+    # Clustering
+    features = df[['Age', 'Fare', 'Pclass']]
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(features)
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    df['Cluster'] = kmeans.fit_predict(scaled_features)
+
+    # Create interaction term
+    df['Age_Fare_Interaction'] = df['Age'] * df['Fare']
+
+    # Feature importance in classification task
+    X = df[['Age', 'Fare', 'Pclass', 'Age_Fare_Interaction']]
+    y = df['Survived']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+    clf = DecisionTreeClassifier(random_state=42)
+    clf.fit(X_train, y_train)
+
+    # Determine importance of interaction term
+    interaction_importance = clf.feature_importances_[3]  # corresponding to 'Age_Fare_Interaction'
+    
+    return 1 if interaction_importance > 0.1 else 0
+
+# Hypothesis 10.
+description = "Analyze if familial relationships ('SibSp', 'Parch') influence cluster membership."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    import numpy as np
+
+    # Prepare data
+    df = dataset[['SibSp', 'Parch', 'Age', 'Fare']].dropna()
+
+    # Standardizing
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(df)
+
+    # Clustering
+    kmeans = KMeans(n_clusters=3, random_state=42).fit(scaled_features)
+
+    # Calculate variance of cluster assignments
+    cluster_variance = np.var(kmeans.labels_)
+
+    return 1 if cluster_variance > 0.1 else 0
+
+???????? # Hypothesis 11.
+description = "Identify significant latent groups based solely on ticket fare using PCA."
+def test(dataset):
+    from sklearn.decomposition import PCA
+    import numpy as np
+
+    # Prepare data
+    df = dataset[['Fare']].dropna()
+
+    # Apply PCA
+    pca = PCA(n_components=1)
+    principal_components = pca.fit_transform(df)
+
+    # Analyzing variance
+    return 1 if pca.explained_variance_ratio_[0] > 0.5 else 0
+
+?????? # Hypothesis 12.
+description = "Check impact of the proportional size of different clusters on prediction accuracy."
+def test(dataset):
+    import pandas as pd
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import accuracy_score
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass', 'Survived']].dropna()
+
+    # Clustering
+    features = df[['Age', 'Fare', 'Pclass']]
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(features)
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    df['Cluster'] = kmeans.fit_predict(scaled_features)
+
+    # Size of different clusters
+    cluster_sizes = df['Cluster'].value_counts(normalize=True)
+
+    # Train logistic regression
+    X = df[['Age', 'Fare', 'Pclass', 'Cluster']]
+    y = df['Survived']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+    model = LogisticRegression(random_state=42, max_iter=500)
+    model.fit(X_train, y_train)
+
+    # Check accuracy
+    predictions = model.predict(X_test)
+    accuracy = accuracy_score(y_test, predictions)
+    
+    return 1 if accuracy > 0.7 else 0
+
+??????? # Hypothesis 13.
+description = "Examine if passenger names and ticket numbers are non-trivial in clustering."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    import pandas as pd
+
+    # Simplify by checking the presence of unique mappings
+    df = dataset[['Name', 'Ticket']].dropna()
+    unique_names = df['Name'].nunique()
+    unique_tickets = df['Ticket'].nunique()
+
+    return 1 if unique_names > 100 and unique_tickets > 100 else 0
+
+??????? # Hypothesis 14.
+description = "Consider whether the survival chance interacts distinctly with 'Pclass' within clusters."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    import numpy as np
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass', 'Survived']].dropna()
+
+    # Clustering
+    features = df[['Age', 'Fare', 'Pclass']]
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(features)
+    kmeans = KMeans(n_clusters=3, random_state=42)
+    df['Cluster'] = kmeans.fit_predict(scaled_features)
+
+    # Calculate average survival per cluster
+    survival_rates = df.groupby('Cluster')['Survived'].mean()
+
+    return 1 if survival_rates.std() > 0.1 else 0
+
+??????# Hypothesis 15.
+description = "Explore if iteratively changing cluster count alters feature significance results."
+def test(dataset):
+    from sklearn.decomposition import PCA
+    import numpy as np
+
+    df = dataset[['Age', 'Fare', 'Pclass']].dropna()
+
+    pca = PCA(n_components=1)
+    pca.fit(df)
+    initial_variance_ratio = pca.explained_variance_ratio_
+
+    altered_variance_ratio = []
+    for n in range(1, 4):
+        pca = PCA(n_components=n)
+        pca.fit(df)
+        altered_variance_ratio.append(pca.explained_variance_ratio_)
+
+    variance_change = any(
+        sum(altered) - sum(initial_variance_ratio) > 0.05 for altered in altered_variance_ratio
+    )
+    
+    return 1 if variance_change else 0
+```
+
+These hypotheses explore various aspects of the dataset, including clustering, dimensionality reduction, feature importance, and the impact of different attributes on survival prediction using the Titanic dataset.
+############
+['# Hypothesis 1.\ndescription = "Identify distinct passenger clusters using a k-means clustering algorithm based on age, fare, and Pclass."\ndef test(dataset):\n    import pandas as pd\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n\n    # Ensure no null values in columns used\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\']].dropna()\n\n    # Standardizing the data\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(df)\n\n    # Using KMeans to cluster the data\n    kmeans = KMeans(n_clusters=3, random_state=42)\n    kmeans.fit(scaled_features)\n\n    # Return 1 if clusters are successfully formed\n    return 1 if kmeans.inertia_ > 0 else 0', '# Hypothesis 2.\ndescription = "Check the importance of the \'Sex\' feature in survival prediction within clusters."\ndef test(dataset):\n    import pandas as pd\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n    from sklearn.tree import DecisionTreeClassifier\n    from sklearn.model_selection import train_test_split\n\n    # Prepare data\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\', \'Sex\', \'Survived\']].dropna()\n    df[\'Sex\'] = df[\'Sex\'].map({\'male\': 0, \'female\': 1})\n    \n    # Clustering\n    features = df[[\'Age\', \'Fare\', \'Pclass\']]\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(features)\n    kmeans = KMeans(n_clusters=3, random_state=42)\n    clusters = kmeans.fit_predict(scaled_features)\n\n    # Feature importance in classification task\n    df[\'Cluster\'] = clusters\n    X = df[[\'Age\', \'Fare\', \'Pclass\', \'Sex\']]\n    y = df[\'Survived\']\n    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\n\n    clf = DecisionTreeClassifier(random_state=42)\n    clf.fit(X_train, y_train)\n\n    # Determine importance of \'Sex\'\n    sex_importance = clf.feature_importances_[3]  # corresponding to \'Sex\'\n    \n    return 1 if sex_importance > 0.1 else 0', '# Hypothesis 3.\ndescription = "Determine if clusters are formed based on the number of siblings/spouses \'SibSp\' and parents/children \'Parch\'."\ndef test(dataset):\n    from sklearn.cluster import DBSCAN\n    import numpy as np\n\n    # Prepare data\n    df = dataset[[\'SibSp\', \'Parch\']].dropna()\n\n    # Clustering using DBSCAN\n    dbscan = DBSCAN(eps=1, min_samples=5)\n    clusters = dbscan.fit_predict(df)\n\n    # Check if clusters are formed (clusters should not be same for all elements)\n    return 1 if len(set(clusters)) > 1 else 0', '# Hypothesis 4.\ndescription = "Evaluate if excluding \'Ticket\' affects the cluster stability significantly."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n\n    # Prepare data\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\', \'Ticket\']].dropna()\n\n    # Standardize features except \'Ticket\'\n    features = df[[\'Age\', \'Fare\', \'Pclass\']]\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(features)\n\n    # Run clustering with and without \'Ticket\'\n    kmeans_with_ticket = KMeans(n_clusters=3, random_state=42).fit(scaled_features)\n    df_no_ticket = df.drop(columns=\'Ticket\')\n    scaled_features_no_ticket = scaler.fit_transform(df_no_ticket)\n    kmeans_without_ticket = KMeans(n_clusters=3, random_state=42).fit(scaled_features_no_ticket)\n\n    # Compare inertia values\n    return 1 if abs(kmeans_with_ticket.inertia_ - kmeans_without_ticket.inertia_) < 1e3 else 0', '# Hypothesis 5.\ndescription = "Apply PCA to detect latent structures potentially associated with survival."\ndef test(dataset):\n    from sklearn.decomposition import PCA\n    import numpy as np\n\n    # Prepare data\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\']].dropna()\n\n    # Apply PCA\n    pca = PCA(n_components=2)\n    principal_components = pca.fit_transform(df)\n\n    # Capture significant variance\n    return 1 if np.sum(pca.explained_variance_ratio_) > 0.7 else 0', '# Hypothesis 6.\ndescription = "Determine the optimal number of clusters in passenger data using the Elbow Method."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n    from kneed import KneeLocator\n\n    # Prepare data\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\']].dropna()\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(df)\n\n    # Apply KMeans for different cluster sizes\n    inertias = []\n    for n in range(1, 11):\n        kmeans = KMeans(n_clusters=n, random_state=42).fit(scaled_features)\n        inertias.append(kmeans.inertia_)\n\n    # Detect the "elbow"\n    elbow = KneeLocator(range(1, 11), inertias, curve="convex", direction="decreasing").elbow\n\n    return 1 if elbow is not None else 0', '# Hypothesis 7.\ndescription = "Use t-SNE to identify latent groups correlated with port of embarkation."\ndef test(dataset):\n    from sklearn.manifold import TSNE\n    import pandas as pd\n    import numpy as np\n\n    # Prepare data\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\', \'Embarked\']].dropna()\n\n    # Encode \'Embarked\'\n    df[\'Embarked\'] = df[\'Embarked\'].map({\'C\': 0, \'Q\': 1, \'S\': 2})\n\n    # Apply t-SNE\n    features = df[[\'Age\', \'Fare\', \'Pclass\']]\n    tsne_result = TSNE(n_components=2, random_state=42).fit_transform(features)\n\n    # Check means of the two encoded features against t-SNE components\n    correlation = np.corrcoef(tsne_result[:, 0], df[\'Embarked\'])[0, 1]\n\n    return 1 if abs(correlation) > 0.2 else 0', '# Hypothesis 8.\ndescription = "Check if including \'Cabin\' data changes clustering results significantly."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n    import pandas as pd\n\n    # Replace null cabin with \'Unknown\'\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\', \'Cabin\']].fillna(\'Unknown\')\n    df[\'Cabin\'] = pd.Categorical(df[\'Cabin\']).codes\n\n    # Only non-null rows for initial clustering\n    df_non_null = dataset[[\'Age\', \'Fare\', \'Pclass\']].dropna()\n\n    # Standardizing\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(df_non_null)\n\n    kmeans_no_cabin = KMeans(n_clusters=3, random_state=42).fit(scaled_features)\n\n    # With \'Cabin\'\n    df_with_cabin = dataset[[\'Age\', \'Fare\', \'Pclass\', \'Cabin\']].dropna()\n    scaled_features_with_cabin = scaler.fit_transform(df_with_cabin)\n    kmeans_with_cabin = KMeans(n_clusters=3, random_state=42).fit(scaled_features_with_cabin)\n\n    # Check if clustering is significantly different\n    return 1 if abs(kmeans_no_cabin.inertia_ - kmeans_with_cabin.inertia_) > 1e3 else 0', '# Hypothesis 9.\ndescription = "Check if interaction between \'Age\' and \'Fare\' creates distinct impact on survival within clusters."\ndef test(dataset):\n    import pandas as pd\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n    from sklearn.tree import DecisionTreeClassifier\n    from sklearn.model_selection import train_test_split\n\n    # Prepare data\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\', \'Survived\']].dropna()\n\n    # Clustering\n    features = df[[\'Age\', \'Fare\', \'Pclass\']]\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(features)\n    kmeans = KMeans(n_clusters=3, random_state=42)\n    df[\'Cluster\'] = kmeans.fit_predict(scaled_features)\n\n    # Create interaction term\n    df[\'Age_Fare_Interaction\'] = df[\'Age\'] * df[\'Fare\']\n\n    # Feature importance in classification task\n    X = df[[\'Age\', \'Fare\', \'Pclass\', \'Age_Fare_Interaction\']]\n    y = df[\'Survived\']\n    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\n\n    clf = DecisionTreeClassifier(random_state=42)\n    clf.fit(X_train, y_train)\n\n    # Determine importance of interaction term\n    interaction_importance = clf.feature_importances_[3]  # corresponding to \'Age_Fare_Interaction\'\n    \n    return 1 if interaction_importance > 0.1 else 0', '# Hypothesis 10.\ndescription = "Analyze if familial relationships (\'SibSp\', \'Parch\') influence cluster membership."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n    import numpy as np\n\n    # Prepare data\n    df = dataset[[\'SibSp\', \'Parch\', \'Age\', \'Fare\']].dropna()\n\n    # Standardizing\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(df)\n\n    # Clustering\n    kmeans = KMeans(n_clusters=3, random_state=42).fit(scaled_features)\n\n    # Calculate variance of cluster assignments\n    cluster_variance = np.var(kmeans.labels_)\n\n    return 1 if cluster_variance > 0.1 else 0', '# Hypothesis 11.\ndescription = "Identify significant latent groups based solely on ticket fare using PCA."\ndef test(dataset):\n    from sklearn.decomposition import PCA\n    import numpy as np\n\n    # Prepare data\n    df = dataset[[\'Fare\']].dropna()\n\n    # Apply PCA\n    pca = PCA(n_components=1)\n    principal_components = pca.fit_transform(df)\n\n    # Analyzing variance\n    return 1 if pca.explained_variance_ratio_[0] > 0.5 else 0', '# Hypothesis 12.\ndescription = "Check impact of the proportional size of different clusters on prediction accuracy."\ndef test(dataset):\n    import pandas as pd\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n    from sklearn.linear_model import LogisticRegression\n    from sklearn.model_selection import train_test_split\n    from sklearn.metrics import accuracy_score\n\n    # Prepare data\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\', \'Survived\']].dropna()\n\n    # Clustering\n    features = df[[\'Age\', \'Fare\', \'Pclass\']]\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(features)\n    kmeans = KMeans(n_clusters=3, random_state=42)\n    df[\'Cluster\'] = kmeans.fit_predict(scaled_features)\n\n    # Size of different clusters\n    cluster_sizes = df[\'Cluster\'].value_counts(normalize=True)\n\n    # Train logistic regression\n    X = df[[\'Age\', \'Fare\', \'Pclass\', \'Cluster\']]\n    y = df[\'Survived\']\n    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)\n\n    model = LogisticRegression(random_state=42, max_iter=500)\n    model.fit(X_train, y_train)\n\n    # Check accuracy\n    predictions = model.predict(X_test)\n    accuracy = accuracy_score(y_test, predictions)\n    \n    return 1 if accuracy > 0.7 else 0', '# Hypothesis 13.\ndescription = "Examine if passenger names and ticket numbers are non-trivial in clustering."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    import pandas as pd\n\n    # Simplify by checking the presence of unique mappings\n    df = dataset[[\'Name\', \'Ticket\']].dropna()\n    unique_names = df[\'Name\'].nunique()\n    unique_tickets = df[\'Ticket\'].nunique()\n\n    return 1 if unique_names > 100 and unique_tickets > 100 else 0', '# Hypothesis 14.\ndescription = "Consider whether the survival chance interacts distinctly with \'Pclass\' within clusters."\ndef test(dataset):\n    from sklearn.cluster import KMeans\n    from sklearn.preprocessing import StandardScaler\n    import numpy as np\n\n    # Prepare data\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\', \'Survived\']].dropna()\n\n    # Clustering\n    features = df[[\'Age\', \'Fare\', \'Pclass\']]\n    scaler = StandardScaler()\n    scaled_features = scaler.fit_transform(features)\n    kmeans = KMeans(n_clusters=3, random_state=42)\n    df[\'Cluster\'] = kmeans.fit_predict(scaled_features)\n\n    # Calculate average survival per cluster\n    survival_rates = df.groupby(\'Cluster\')[\'Survived\'].mean()\n\n    return 1 if survival_rates.std() > 0.1 else 0', '# Hypothesis 15.\ndescription = "Explore if iteratively changing cluster count alters feature significance results."\ndef test(dataset):\n    from sklearn.decomposition import PCA\n    import numpy as np\n\n    df = dataset[[\'Age\', \'Fare\', \'Pclass\']].dropna()\n\n    pca = PCA(n_components=1)\n    pca.fit(df)\n    initial_variance_ratio = pca.explained_variance_ratio_\n\n    altered_variance_ratio = []\n    for n in range(1, 4):\n        pca = PCA(n_components=n)\n        pca.fit(df)\n        altered_variance_ratio.append(pca.explained_variance_ratio_)\n\n    variance_change = any(\n        sum(altered) - sum(initial_variance_ratio) > 0.05 for altered in altered_variance_ratio\n    )\n    \n    return 1 if variance_change else 0']
+Identify distinct passenger clusters using a k-means clustering algorithm based on age, fare, and Pclass.
+1
+#####
+Check the importance of the 'Sex' feature in survival prediction within clusters.
+1
+#####
+Determine if clusters are formed based on the number of siblings/spouses 'SibSp' and parents/children 'Parch'.
+1
+#####
+Evaluate if excluding 'Ticket' affects the cluster stability significantly.
+1
+#####
+Apply PCA to detect latent structures potentially associated with survival.
+1
+#####
+ERROR
+No module named 'kneed'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 6.
+description = "Determine the optimal number of clusters in passenger data using the Elbow Method."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    from kneed import KneeLocator
+
+    # Prepare data
+    df = dataset[['Age', 'Fare', 'Pclass']].dropna()
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(df)
+
+    # Apply KMeans for different cluster sizes
+    inertias = []
+    for n in range(1, 11):
+        kmeans = KMeans(n_clusters=n, random_state=42).fit(scaled_features)
+        inertias.append(kmeans.inertia_)
+
+    # Detect the "elbow"
+    elbow = KneeLocator(range(1, 11), inertias, curve="convex", direction="decreasing").elbow
+
+    return 1 if elbow is not None else 0
+#####
+Use t-SNE to identify latent groups correlated with port of embarkation.
+1
+#####
+ERROR
+could not convert string to float: 'C85'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 8.
+description = "Check if including 'Cabin' data changes clustering results significantly."
+def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+    import pandas as pd
+
+    # Replace null cabin with 'Unknown'
+    df = dataset[['Age', 'Fare', 'Pclass', 'Cabin']].fillna('Unknown')
+    df['Cabin'] = pd.Categorical(df['Cabin']).codes
+
+    # Only non-null rows for initial clustering
+    df_non_null = dataset[['Age', 'Fare', 'Pclass']].dropna()
+
+    # Standardizing
+    scaler = StandardScaler()
+    scaled_features = scaler.fit_transform(df_non_null)
+
+    kmeans_no_cabin = KMeans(n_clusters=3, random_state=42).fit(scaled_features)
+
+    # With 'Cabin'
+    df_with_cabin = dataset[['Age', 'Fare', 'Pclass', 'Cabin']].dropna()
+    scaled_features_with_cabin = scaler.fit_transform(df_with_cabin)
+    kmeans_with_cabin = KMeans(n_clusters=3, random_state=42).fit(scaled_features_with_cabin)
+
+    # Check if clustering is significantly different
+    return 1 if abs(kmeans_no_cabin.inertia_ - kmeans_with_cabin.inertia_) > 1e3 else 0
+#####
+Check if interaction between 'Age' and 'Fare' creates distinct impact on survival within clusters.
+1
+#####
+Analyze if familial relationships ('SibSp', 'Parch') influence cluster membership.
+1
+#####
+Identify significant latent groups based solely on ticket fare using PCA.
+1
+#####
+Check impact of the proportional size of different clusters on prediction accuracy.
+1
+#####
+Examine if passenger names and ticket numbers are non-trivial in clustering.
+1
+#####
+Consider whether the survival chance interacts distinctly with 'Pclass' within clusters.
+1
+#####
+Explore if iteratively changing cluster count alters feature significance results.
+1
+#####

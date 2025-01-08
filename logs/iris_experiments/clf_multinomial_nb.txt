@@ -1,0 +1,92 @@
+Training MultinomialNB_VarianceThreshold...
+MultinomialNB_VarianceThreshold performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Training Bagging_str_VarianceThreshold...
+Bagging_str_VarianceThreshold performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Training MultinomialNB_SelectKBest...
+MultinomialNB_SelectKBest performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Training MultinomialNB_SelectKBest...
+MultinomialNB_SelectKBest performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Training Bagging_str_SelectKBest...
+Bagging_str_SelectKBest performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Training MultinomialNB_RFE...
+MultinomialNB_RFE performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Training Bagging_str_RFE...
+Bagging_str_RFE performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+
+Best Models:
+MultinomialNB_VarianceThreshold performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Bagging_str_VarianceThreshold performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+MultinomialNB_SelectKBest performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Bagging_str_SelectKBest performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+MultinomialNB_RFE performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+Bagging_str_RFE performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+
+Voting Classifier performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
+
+Stacking Classifier performance:
+  accuracy: 1.0000
+  precision: 1.0000
+  recall: 1.0000
+  f1: 1.0000
