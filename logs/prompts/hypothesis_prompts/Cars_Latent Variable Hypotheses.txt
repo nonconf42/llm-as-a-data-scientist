@@ -1,0 +1,59 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Latent variable hypotheses explore relationships involving unobserved or hidden variables that help explain observed data structure. These hypotheses assist in understanding complex constructs, revealing deeper relationships that may not be directly measurable.
+Hypothesis Generation Methods:
+Existence of Latent Variable Hypothesis: Test for the presence of unobserved variables that influence observed patterns, suggesting an underlying factor.
+Latent Variable-Observable Variable Association Hypothesis: Assess if latent variables associate with specific observable variables, clarifying hidden structure.
+Factorial Structure Hypothesis: Test if observed variables load onto a smaller number of latent factors, suggesting a factorial structure.
+Dimensionality Hypothesis: Explore if the dataset’s variance can be explained by a limited number of latent dimensions, indicating reduced complexity.
+Latent Class or Group Hypothesis: Investigate if hidden classes or groups exist within the data, revealing categorical latent structures.
+Measurement Invariance Hypothesis: Test if latent variables maintain consistent relationships across different groups, ensuring validity in comparisons.
+Predictive Power of Latent Variable Hypothesis: Assess if latent variables can predict specific outcomes, indicating their impact on observed data.
+Latent Growth Hypothesis: Analyze if changes in latent variables over time explain longitudinal data trends.
+Construct Validity Hypothesis: Test if observed variables accurately measure the latent constructs they are meant to represent.
+Latent Variable Mediation Hypothesis: Investigate if latent variables mediate relationships between observed variables, clarifying indirect pathways.
+Residualized Latent Variable Hypothesis: Assess if latent variables, after controlling for observable variables, still impact outcomes.
+Interaction of Latent Variables Hypothesis: Test if interactions among latent variables affect observed outcomes, indicating interdependent hidden factors.
+Latent Trait Distribution Hypothesis: Explore the distribution of latent traits within the population, identifying variance in unobserved characteristics.
+Latent Structure Instability Hypothesis: Test if the structure of latent variables shifts over time or across samples, suggesting structural variability.
+Effect of External Variable on Latent Structure Hypothesis: Investigate if external variables affect the structure or interpretation of latent variables.
+Higher-Order Latent Variable Hypothesis: Test if multiple latent variables combine into a second-order latent structure, adding hierarchical layers.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the Latent Variable Hypotheses.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''

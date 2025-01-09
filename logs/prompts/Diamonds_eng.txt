@@ -1,0 +1,43 @@
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+#############################################################
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+
+#############################################################
+Please generate 50 new features based on the given features.
+Your response should follow the format below, where transformation function is some operation you do over existing features.
+Do not use for loop. Do not use lambda functions. Do not use features other than given above.
+Do not name features like 'feature_1'. Give meaningfull name that describes transformation.
+Do not use target feature. Do not create/read 'data' and 'features_description' objects.
+Use feature names exactly as they are given above. New features must be of numerical datatype.
+Important note: generate not less than 50 features, strictly follow the format. Instead of loops use comprehensions on both data and feature description.Focus only on Feature Scaling transformations, such as: Normalization,Clipping,Logarithmic Transformation,Binning/Discretization,Aggregations,Fourier Transforms,Polynomial Features.
+Format:One sentence description description of the common idea of the new features.
+Python code:
+#1. Feature 1.
+features_description['new_feature_1'] = 'description of new_feature_1'
+data['new_feature_1'] = transformation(data['old_feature_1'])
+
+#2. Feature 2.
+features_description['new_feature_2'] = 'description of new_feature_2'
+data['new_feature_2'] = transformation(data['old_feature_2'])
+
+.............
+
+#49.Feature 49.
+features_description['new_feature_49'] = 'description of new_feature_49'
+data['new_feature_49'] = transformation(data['old_feature_49'])
+
+#50.Feature 50.
+features_description['new_feature_50'] = 'description of new_feature_50'
+data['new_feature_50'] = transformation(data['old_feature_50'])
+
+

@@ -1,6 +1,5 @@
 import pandas as pd
 from datasets.data import DataReader
-# from models.model import Model
 from llms.llm import LLM
 from models.utils import *
 import openai
@@ -17,6 +16,7 @@ import argparse
 import warnings
 from tqdm import tqdm
 from clf_fit_agent import *
+
 warnings.filterwarnings("ignore")
 
 def extract_python_code(gpt_response):
@@ -61,7 +61,7 @@ import inspect
 def hyp_results_to_text(hypthosis_results, llm_model):
 
     prompt = f""" 
-                I fave the following list:
+                I have the following list:
                 {hypthosis_results}
                 Where first element of tuple is  a hypothesis and second element is truthness of hypothesis. 
                 1 - if hypothesis is true, 0 - otherwise.
@@ -238,27 +238,6 @@ print(cleaned_hypothesis_results)
 print(f'Len: {len(cleaned_hypothesis_results)}')
 print('$$$$$$$$$$$$$$$$$$$$$$$$')
 bag_of_hyp = hyp_results_to_text(cleaned_hypothesis_results, llm_model=llm_model)
-
-
-
-
-dataset_with_hypothesis = DataReader('Titanic')
-dataset_without_hypothesis = DataReader('Titanic')
-ml_model = Model('XGB', 'classification')
-datasets = [dataset_with_hypothesis, dataset_without_hypothesis]
-parser = argparse.ArgumentParser(description="Control debug mode")
-parser.add_argument('--debug', action='store_true', help='Enable debug mode')
-
-
-
-
-
-        
-
-
-
-
-
 #TODO: usage case when hypothesis is accepted or rejected
 #TODO: after description describe COT of the test function as a string
 #TODO: choose hyperparameters based on dataset statistics

@@ -1,0 +1,127 @@
+Test if the mean price of Toyota cars is significantly different from Ford cars.
+INSIGHTS: Toyota cars may have a different average price than Ford cars, possibly due to differences in brand perception and reliability.
+1
+####################
+COT:To test this hypothesis, we need to conduct a mean comparison test between two groups—Toyota and Ford. Firstly, we will subset the dataset to include only Toyota and Ford cars. Then, we will use an independent t-test to compare the means of these two groups. This test assumes normally distributed data, which we may need to check and possibly transform. Finally, we will interpret the p-value to determine if there is a significant difference between the two means.Test if the proportion of low-value cars is higher for cars with an accident history.
+INSIGHTS: Accident history affects the price of used cars. Cars with accident history may be priced lower.
+0
+####################
+COT:For this hypothesis, we will conduct a proportion comparison. First, we will classify cars into 'low-value' based on an assumed or predefined price threshold. Next, we will calculate the proportion of low-value cars in both 'accident' and 'no accident' groups. We then use a proportions z-test to compare these two proportions. The resulting p-value will help determine whether accident history significantly affects low-value car proportions.ERROR
+'mileage'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+insights = "Mileage may influence car price, as higher mileage typically leads to lower prices."
+description = "Test if there is a negative correlation between mileage and price."
+COT = (
+    "We need to assess the correlation strength and direction between mileage and price. "
+    "First, calculate the Pearson correlation coefficient between these two continuous variables. "
+    "A negative coefficient will suggest an inverse relationship. "
+    "We will check whether this correlation is significantly different from zero by evaluating the p-value."
+)
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+
+    # Assuming 'price' and 'mileage' (correct variable name) columns exist
+    rho, p_value = pearsonr(dataset['mileage'], dataset['price'])
+    
+    # Check if correlation is significantly different from zero
+    result = 1 if p_value < 0.05 and rho < 0 else 0
+    
+    return result
+#####
+Test if there is a positive correlation between model_year and price.
+INSIGHTS: The model year may affect car prices, with newer models possibly priced higher due to less wear and updated features.
+1
+####################
+COT:We will calculate the Pearson correlation coefficient to identify the correlation strength and direction between model_year and price. Positive rho value indicates direct correlation. The p-value is then used to determine statistical significance.Test if there's a significant difference in mean price between manual and automatic cars.
+INSIGHTS: The choice of transmission can impact car prices due to varying consumer preferences.
+0
+####################
+COT:To test this, we perform a mean comparison between cars with manual and automatic transmissions. Implement a t-test to compare the mean prices between these two transmission types. Significance is determined based on the p-value obtained from the test.Test if there's an association between car brand and accident history.
+INSIGHTS: The brand of a car might influence accident history, as some brands could be associated with safer designs.
+1
+####################
+COT:To test if there's an association, we'll use a Chi-square test of independence. First, create a contingency table of brand against accident history. Apply the Chi-square test on this table to see if brand distribution differs significantly according to accident history.ERROR
+unsupported operand type(s) for +: 'float' and 'str'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 7.
+insights = "Higher engine power or size might lead to higher car prices due to perceived performance benefits."
+description = "Test if there is a positive correlation between engine power and price."
+COT = (
+    "Calculate the Pearson correlation coefficient between engine size/power and price. "
+    "A positive coefficient suggests that larger engine corresponds to higher price, and the p-value confirms significance."
+)
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+
+    # Assuming 'engine' and 'price' columns exist
+    rho, p_value = pearsonr(dataset['engine'], dataset['price'])
+    
+    # Check if correlation is significantly different from zero
+    result = 1 if p_value < 0.05 and rho > 0 else 0
+    
+    return result
+#####
+Test if there's a significant price difference between gasoline and diesel cars.
+INSIGHTS: Fuel type could influence car price, with some fuel types being perceived as more economical or sustainable.
+0
+####################
+COT:Perform a mean price comparison using a t-test between gasoline and diesel-fueled cars. Significance is assessed using the resulting p-value from the test.Test if cars with a clean title have a significantly higher mean price than those without.
+INSIGHTS: A clean title should increase a car's value due to assured legal and repair status.
+0
+####################
+COT:Compare mean prices using a t-test between cars with and without clean titles. Evaluating the p-value will reveal whether a significant price difference exists based on title status.Evaluate whether model influences car prices among the same brand across different models.
+INSIGHTS: Model variation can lead to price differences even within the same brand.
+1
+####################
+COT:Conduct an ANOVA test to compare mean car prices among different models within a single brand. ANOVA helps determine if there are statistically significant differences in means across the groups. Presence of diverse models may depict variability in offerings such as tech upgrades or drivetrain options.Cluster cars by brand and assess if they naturally form groups with different pricing strategies.
+INSIGHTS: Certain car brands may show distinct depreciation patterns, forming distinct clusters based on their current prices.
+1
+####################
+COT:First, apply clustering techniques like k-means on the dataset using 'brand' as a feature to identify if distinct groups form. Use the Elbow Method to determine the optimal number of clusters. If distinct clusters are identified, it suggests pricing strategies differ significantly across brands.

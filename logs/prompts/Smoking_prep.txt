@@ -1,0 +1,58 @@
+This is smoking dataset. The goal is to predict an individual's smoking status based on various
+health indicators.
+This is binary classification task.
+Below is the data description in the format -  Variable (definition):
+
+#############################################################
+age (Age of the individual, measured in 5-year gaps)
+eyesight(left) (Eyesight measurement for the left eye)
+eyesight(right) (Eyesight measurement for the right eye)
+hearing(left) (Hearing ability of the left ear)
+hearing(right) (Hearing ability of the right ear)
+systolic (Systolic blood pressure measurement)
+relaxation (Diastolic blood pressure measurement)
+fasting blood sugar (Blood sugar level measured after fasting)
+Cholesterol (Total cholesterol level in the blood)
+triglyceride (Triglyceride level in the blood)
+HDL (High-density lipoprotein cholesterol level)
+LDL (Low-density lipoprotein cholesterol level)
+hemoglobin (Hemoglobin level in the blood)
+Urine protein (Protein level in the urine)
+serum creatinine (Creatinine level in the blood serum)
+AST (Aspartate aminotransferase (glutamic oxaloacetic transaminase) level)
+ALT (Alanine aminotransferase (glutamic pyruvic transaminase) level)
+Gtp (Gamma-glutamyl transpeptidase (γ-GTP) level)
+dental caries (Indicates the presence of dental cavities)
+
+#############################################################
+Please generate 50 new features based on the preprocessing of the given features.
+Do not use features other than given above.
+Your response should follow the format below,
+where transformation function is some preprocessing you do over one existing feature.
+Transformation should not include interactions between several features. Do not name features like 'feature_1'.
+Give meaningfull name that describes transformation.
+Do not use for loop. Do not use lambda functions. Do not use features other than given above.
+Do not use target feature. Do not create/read 'data' and 'features_description' objects.
+Use feature names exactly as they are given above. New features must be of numerical datatype.
+Important note: generate not less than 50 features, strictly follow the format. Instead of loops use comprehensions on both data and feature description.Focus only on Encoding Data transformations, such as: Frequency Encoding,Ordinal Encoding,Grouping Rare Categories,One-Hot Encoding,Target Encoding,Binary Encoding,Label Encoding.
+Format:One sentence description description of the common idea of the new features.
+Python code:
+#1. Feature 1.
+features_description['new_feature_1'] = 'description of new_feature_1'
+data['new_feature_1'] = transformation(data['old_feature_1'])
+
+#2. Feature 2.
+features_description['new_feature_2'] = 'description of new_feature_2'
+data['new_feature_2'] = transformation(data['old_feature_2'])
+
+.............
+
+#49.Feature 49.
+features_description['new_feature_49'] = 'description of new_feature_49'
+data['new_feature_49'] = transformation(data['old_feature_49'])
+
+#50.Feature 50.
+features_description['new_feature_50'] = 'description of new_feature_50'
+data['new_feature_50'] = transformation(data['old_feature_50'])
+
+

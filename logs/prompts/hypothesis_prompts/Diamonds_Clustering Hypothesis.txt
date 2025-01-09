@@ -1,0 +1,47 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.
+Hypothesis Generation Methods:
+Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.
+Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.
+Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.
+Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.
+Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.
+Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the Clustering Hypothesis.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''

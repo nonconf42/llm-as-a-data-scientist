@@ -1,20 +1,21 @@
-
-import pandas as pd
-import textwrap
+import argparse
 import re
-import eli5
-# from scipy.special import softmax
-from sklearn.preprocessing import StandardScaler
+import textwrap
+import warnings
+
 import numpy as np
 import pandas as pd
-from datasets.data import DataReader
-from models.model import Model
-from llms.llm import LLM
-from models.utils import *
-import argparse
-import warnings
+from sklearn.preprocessing import StandardScaler
 from tqdm import tqdm
+
+import eli5
+
 from clf_fit_agent import *
+from datasets.data import DataReader
+from llms.llm import LLM
+from models.model import Model
+from models.utils import *
+
 warnings.filterwarnings("ignore")
 
 
@@ -320,10 +321,6 @@ def prepare_data_for_model(dataset):
     dataset.train_input_clean = dataset.train_input_clean.T.drop_duplicates().T
     print("after feature clean", dataset.train_input_clean.shape)
 
-def combine_datasets(dataset):
-    # dataset.train_input_new_features ONLY new features from llm
-    # dataset.train_input = dataset.train_input + dataset.train_input_new_features
-    pass
 
 def select_features(dataset, feature_importances, num_features, temp, method='random'):
     
@@ -530,7 +527,7 @@ def generate_prompt(instruction_type, dataset, transformation_type=None, hypothe
                  f'List of hypothesis already tested for this dataset:\n{hypothesis}' + '\n' +
                 
                 '#############################################################' + '\n' + #cols_stats 
-                strip_multiline_string(instructions[instruction_type]) +
+                strip_multiline_string(instructions[instruction_type]) + '\n' +
                 strip_multiline_string(transformation_prompt) +
                 strip_multiline_string(format_prompt) + function_scheme
         )

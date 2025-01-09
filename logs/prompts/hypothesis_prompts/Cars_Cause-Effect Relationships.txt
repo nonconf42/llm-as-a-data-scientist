@@ -1,0 +1,57 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the Cause-Effect Relationships.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''

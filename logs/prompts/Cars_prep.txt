@@ -1,0 +1,48 @@
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+#############################################################
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+
+#############################################################
+Please generate 50 new features based on the preprocessing of the given features.
+Do not use features other than given above.
+Your response should follow the format below,
+where transformation function is some preprocessing you do over one existing feature.
+Transformation should not include interactions between several features. Do not name features like 'feature_1'.
+Give meaningfull name that describes transformation.
+Do not use for loop. Do not use lambda functions. Do not use features other than given above.
+Do not use target feature. Do not create/read 'data' and 'features_description' objects.
+Use feature names exactly as they are given above. New features must be of numerical datatype.
+Important note: generate not less than 50 features, strictly follow the format. Instead of loops use comprehensions on both data and feature description.Focus only on Encoding Data transformations, such as: Frequency Encoding,Ordinal Encoding,Grouping Rare Categories,One-Hot Encoding,Target Encoding,Binary Encoding,Label Encoding.
+Format:One sentence description description of the common idea of the new features.
+Python code:
+#1. Feature 1.
+features_description['new_feature_1'] = 'description of new_feature_1'
+data['new_feature_1'] = transformation(data['old_feature_1'])
+
+#2. Feature 2.
+features_description['new_feature_2'] = 'description of new_feature_2'
+data['new_feature_2'] = transformation(data['old_feature_2'])
+
+.............
+
+#49.Feature 49.
+features_description['new_feature_49'] = 'description of new_feature_49'
+data['new_feature_49'] = transformation(data['old_feature_49'])
+
+#50.Feature 50.
+features_description['new_feature_50'] = 'description of new_feature_50'
+data['new_feature_50'] = transformation(data['old_feature_50'])
+
+

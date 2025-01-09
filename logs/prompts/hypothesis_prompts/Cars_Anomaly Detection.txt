@@ -1,0 +1,48 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the Anomaly Detection.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''

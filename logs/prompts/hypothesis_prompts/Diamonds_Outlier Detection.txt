@@ -1,0 +1,45 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.
+Hypothesis Generation Methods:
+Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).
+Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.
+Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.
+DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the Outlier Detection.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
