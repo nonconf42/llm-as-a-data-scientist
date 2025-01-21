@@ -1,0 +1,58 @@
+The dataset offers a comprehensive view of consumer shopping trends, aiming to uncover patterns and behaviors in retail purchasing. It contains detailed transactional data
+across various product categories, customer demographics, and purchase channels. Key features may include:
+Transaction Details: Purchase date, transaction value, product category, and payment method.
+Customer Information: Age group, gender, location, and loyalty status.
+Shopping Behavior: Frequency of purchases, average spend per transaction, and seasonal trends.
+#############################################################
+Customer ID (Unique identifier for each customer.)
+Age (Age of the customer (numerical).)
+Gender (Gender of the customer (e.g., Male, Female).)
+Item Purchased (Name of the item purchased.)
+Category (Product category (Clothing, Footwear, Outerwear, Accessories).)
+Purchase Amount (USD) (Total amount spent on the purchase.)
+Location (Geographic location of the customer (city))
+Size (Size of the item purchased (if applicable; e.g., S, M, L, XL).)
+Color (Color of the item purchased)
+Season (Season of the purchase (e.g., Winter, Summer, Spring, Fall).)
+Review Rating (Customer's review rating for the purchase (e.g., 1-5 stars).)
+Subscription Status (Indicates whether the customer is a subscriber (e.g., Active, Inactive, None).)
+Payment Method (Method used for the payment (e.g., Credit Card, PayPal, Cash, Venmo, Debit Card, Bank Transfer).)
+Shipping Type (Type of shipping chosen (Express, Free Shipping, Next Day Air, Standard, 2-Day Shipping,Store Pickup)
+Discount Applied (Indicates if a discount was applied (e.g., Yes/No ).)
+Promo Code Used (Specifies if a promo code was used during the purchase (e.g., Yes/No).)
+Previous Purchases (Total number of previous purchases made by the customer.)
+Preferred Payment Method (The payment method most frequently used by the customer.)
+Frequency of Purchases (How often the customer makes purchases )
+
+#############################################################
+Please generate 50 new features based on the preprocessing of the given features.
+Do not use features other than given above.
+Your response should follow the format below,
+where transformation function is some preprocessing you do over one existing feature.
+Transformation should not include interactions between several features. Do not name features like 'feature_1'.
+Give meaningfull name that describes transformation.
+Do not use for loop. Do not use lambda functions. Do not use features other than given above.
+Do not use target feature. Do not create/read 'data' and 'features_description' objects.
+Use feature names exactly as they are given above. New features must be of numerical datatype.
+Important note: generate not less than 50 features, strictly follow the format. Instead of loops use comprehensions on both data and feature description.Focus only on Encoding Data transformations, such as: Frequency Encoding,Ordinal Encoding,Grouping Rare Categories,One-Hot Encoding,Target Encoding,Binary Encoding,Label Encoding.
+Format:One sentence description description of the common idea of the new features.
+Python code:
+#1. Feature 1.
+features_description['new_feature_1'] = 'description of new_feature_1'
+data['new_feature_1'] = transformation(data['old_feature_1'])
+
+#2. Feature 2.
+features_description['new_feature_2'] = 'description of new_feature_2'
+data['new_feature_2'] = transformation(data['old_feature_2'])
+
+.............
+
+#49.Feature 49.
+features_description['new_feature_49'] = 'description of new_feature_49'
+data['new_feature_49'] = transformation(data['old_feature_49'])
+
+#50.Feature 50.
+features_description['new_feature_50'] = 'description of new_feature_50'
+data['new_feature_50'] = transformation(data['old_feature_50'])
+
+

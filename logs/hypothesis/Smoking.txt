@@ -24,17 +24,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 1.
-insights = "Smokers might have higher systolic blood pressure compared to non-smokers, indicating potential higher cardiovascular risks."
-description = "Test if the mean systolic blood pressure is significantly different between smokers and non-smokers."
-COT = "To test if smokers have different systolic BP compared to non-smokers, we should compare the means of systolic blood pressure for smokers vs non-smokers. An appropriate test is an independent t-test which examines if two means are statistically different. First, we need to check that the assumptions of the t-test, such as normality and homogeneous variance, are satisfied or use alternative statistical methods if not."
+insights = "There may be significant differences in systolic blood pressure between smokers and non-smokers, which could provide insights into the cardiovascular health impacts of smoking."
+description = "Assess whether there is a significant difference in systolic blood pressure between smokers and non-smokers."
+COT = "First, identify that we want to compare the means of a continuous variable (systolic blood pressure) across two groups (smokers vs. non-smokers). This calls for a t-test. We assume that smoking status is a binary variable and systolic blood pressure is normally distributed with equal variances between groups."
 def test(dataset):
-    import numpy as np
+    import pandas as pd
     from scipy.stats import ttest_ind
-    non_smokers = dataset[dataset['smoking_status'] == 0]['systolic']
-    smokers = dataset[dataset['smoking_status'] == 1]['systolic']
 
-    t_stat, p_value = ttest_ind(non_smokers, smokers, equal_var=False)
-    return int(p_value < 0.05)
+    smokers = dataset[dataset['smoking_status'] == 1]['systolic'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['systolic'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -62,17 +63,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 2.
-insights = "Higher triglyceride levels may be associated with smokers due to altered lipid metabolism influenced by smoking."
-description = "Test if the mean triglyceride level is significantly different between smokers and non-smokers."
-COT = "To identify differences in triglyceride levels, we need to compare it across smoking status. Similar to Hypothesis 1, a t-test will determine if triglyceride means differ. We again ensure assumptions like normality hold or switch to non-parametric tests if needed."
+insights = "Hearing ability might degrade more in smokers compared to non-smokers due to lifestyle factors associated with smoking."
+description = "Evaluate if there is a statistically significant difference in hearing ability (left ear) between smokers and non-smokers."
+COT = "The aim is to compare the mean hearing ability of the left ear between two groups, categorizing hearing as a continuous variable. Again, a t-test for independent samples is suitable."
 def test(dataset):
-    import numpy as np
+    import pandas as pd
     from scipy.stats import ttest_ind
-    non_smokers_triglyceride = dataset[dataset['smoking_status'] == 0]['triglyceride']
-    smokers_triglyceride = dataset[dataset['smoking_status'] == 1]['triglyceride']
 
-    t_stat, p_value = ttest_ind(non_smokers_triglyceride, smokers_triglyceride, equal_var=False)
-    return int(p_value < 0.05)
+    smokers = dataset[dataset['smoking_status'] == 1]['hearing(left)'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['hearing(left)'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -100,17 +102,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 3.
-insights = "Smokers might have higher serum creatinine values, suggesting impacted kidney function or muscle mass."
-description = "Test if the mean serum creatinine level is significantly different between smokers and non-smokers."
-COT = "Check if serum creatinine levels differ by smoking status through a t-test for mean comparison. Ensure normality using tests like Shapiro-Wilk, or consider log transformations to stabilize variance."
+insights = "Cholesterol levels could be higher among smokers, potentially indicating increased risk for heart disease."
+description = "Investigate whether smokers have higher cholesterol levels compared to non-smokers."
+COT = "Use a t-test to compare the mean cholesterol levels between smokers and non-smokers. Cholesterol is continuous, smoking status is binary."
 def test(dataset):
-    import numpy as np
+    import pandas as pd
     from scipy.stats import ttest_ind
-    non_smokers_creatinine = dataset[dataset['smoking_status'] == 0]['serum creatinine']
-    smokers_creatinine = dataset[dataset['smoking_status'] == 1]['serum creatinine']
 
-    t_stat, p_value = ttest_ind(non_smokers_creatinine, smokers_creatinine, equal_var=False)
-    return int(p_value < 0.05)
+    smokers = dataset[dataset['smoking_status'] == 1]['Cholesterol'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['Cholesterol'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -138,17 +141,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 4.
-insights = "Smoking can decrease HDL levels (good cholesterol), potentially boosting cardiovascular risks."
-description = "Test if the mean HDL level is significantly different between smokers and non-smokers."
-COT = "Use t-test for HDL level comparison by smoking status. First, assess whether distributions meet normality and equal variance for t-test validity or resort to non-parametric tests when required."
+insights = "HDL, or 'good cholesterol', may vary significantly between smokers and non-smokers, influencing cardiovascular risk profiles."
+description = "Determine if HDL levels differ between smokers and non-smokers."
+COT = "To evaluate the difference in means of HDL levels between two groups, apply a t-test for independent samples."
 def test(dataset):
-    import numpy as np
+    import pandas as pd
     from scipy.stats import ttest_ind
-    non_smokers_hdl = dataset[dataset['smoking_status'] == 0]['HDL']
-    smokers_hdl = dataset[dataset['smoking_status'] == 1]['HDL']
 
-    t_stat, p_value = ttest_ind(non_smokers_hdl, smokers_hdl, equal_var=False)
-    return int(p_value < 0.05)
+    smokers = dataset[dataset['smoking_status'] == 1]['HDL'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['HDL'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -176,14 +180,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 5.
-insights = "Smokers may have more instances of dental caries due to the effects of smoking on oral health."
-description = "Test if smokers have a higher proportion of dental caries compared to non-smokers."
-COT = "To see if smoking correlates with dental caries, compare proportions between groups. Use a chi-square test for independence to evaluate categorical frequency differences."
+insights = "LDL, or 'bad cholesterol', levels could provide insights into cardiovascular risks associated with smoking."
+description = "Assess whether there is a significant difference in LDL levels between smokers and non-smokers."
+COT = "Perform a t-test to compare means of LDL levels between two binary groups: smokers and non-smokers, with LDL being a continuous variable."
 def test(dataset):
-    from scipy.stats import chi2_contingency
-    table = pd.crosstab(dataset['smoking_status'], dataset['dental caries'])
-    chi2, p, dof, ex = chi2_contingency(table)
-    return int(p < 0.05)
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    smokers = dataset[dataset['smoking_status'] == 1]['LDL'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['LDL'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -211,17 +219,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 6.
-insights = "Alleviated AST levels in smokers might indicate liver stress or damage, a hypothesis to evaluate for liver function insight."
-description = "Test if the mean AST level is significantly different between smokers and non-smokers."
-COT = "AST levels between smoker and non-smokers are hypothesized to differ. Conduct a t-test, ensuring assumptions like normality and homogeneity of variance are satisfied or utilize an alternative if not met."
+insights = "Higher serum creatinine levels in smokers may indicate renal function impairment due to smoking."
+description = "Evaluate if there is a correlation in serum creatinine levels between smokers and non-smokers."
+COT = "Employ a t-test to check for differences in mean serum creatinine levels, assuming smoking status creates binary group categories."
 def test(dataset):
-    import numpy as np
+    import pandas as pd
     from scipy.stats import ttest_ind
-    non_smokers_ast = dataset[dataset['smoking_status'] == 0]['AST']
-    smokers_ast = dataset[dataset['smoking_status'] == 1]['AST']
 
-    t_stat, p_value = ttest_ind(non_smokers_ast, smokers_ast, equal_var=False)
-    return int(p_value < 0.05)
+    smokers = dataset[dataset['smoking_status'] == 1]['serum creatinine'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['serum creatinine'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -249,17 +258,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 7.
-insights = "Individuals who smoke might have higher LDL levels, raising potential cholesterol-related health concerns."
-description = "Test if the mean LDL level is significantly different between smokers and non-smokers."
-COT = "To assess if LDL cholesterol varies by smoking status, perform t-test comparisons for smokers vs non-smoker means. Validate assumptions or employ different methods if original assumptions, such as normality, are broken."
+insights = "Differences in eyesight (left) could reflect the adverse health impacts of smoking on visual acuity."
+description = "Test if smoking affects eyesight by comparing left eyesight between smokers and non-smokers."
+COT = "The focus is on assessing differing means in left eyesight using a t-test across binary groups distinguished by smoking status."
 def test(dataset):
-    import numpy as np
+    import pandas as pd
     from scipy.stats import ttest_ind
-    non_smokers_ldl = dataset[dataset['smoking_status'] == 0]['LDL']
-    smokers_ldl = dataset[dataset['smoking_status'] == 1]['LDL']
 
-    t_stat, p_value = ttest_ind(non_smokers_ldl, smokers_ldl, equal_var=False)
-    return int(p_value < 0.05)
+    smokers = dataset[dataset['smoking_status'] == 1]['eyesight(left)'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['eyesight(left)'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -287,17 +297,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 8.
-insights = "Comparing fasting blood sugar values across smoking status may reveal potential differences in glycemic control linked to lifestyle."
-description = "Evaluate if fasting blood sugar levels differ significantly between smokers and non-smokers."
-COT = "Fasting blood sugar levels are suspected to vary by smoking habit. Assess these via a t-test. Check standard distribution and variance prerequisites or adjust for violations accordingly, employing transformations or non-parametric mehods."
+insights = "Fast blood sugar might be affected by smoking, indicating potential impacts on metabolic health."
+description = "Analyze the differences in fasting blood sugar levels between smokers and non-smokers."
+COT = "Apply a t-test to the differences in fasting blood sugar levels across the smoking status binary variable, treating fasting sugar as continuous."
 def test(dataset):
-    import numpy as np
+    import pandas as pd
     from scipy.stats import ttest_ind
-    non_smokers_fbs = dataset[dataset['smoking_status'] == 0]['fasting blood sugar']
-    smokers_fbs = dataset[dataset['smoking_status'] == 1]['fasting blood sugar']
 
-    t_stat, p_value = ttest_ind(non_smokers_fbs, smokers_fbs, equal_var=False)
-    return int(p_value < 0.05)
+    smokers = dataset[dataset['smoking_status'] == 1]['fasting blood sugar'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['fasting blood sugar'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -325,16 +336,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 9.
-insights = "Smoking could alter systolic and diastolic pressures, which may necessitate further analysis of blood pressure variability."
-description = "Assess the variance in blood pressure measurements between smokers and non-smokers."
-COT = "Use tests like Levene's or Bartlett’s to check blood pressure variability across smoking status, only moving to assumption-friendly alternatives if variances appear significantly different."
+insights = "Differences in hemoglobin levels can shed light on the health impact of smoking on blood health and oxygen transport."
+description = "Determine if smoking influences hemoglobin levels by comparing between smokers and non-smokers."
+COT = "Choose a t-test to compare the means of hemoglobin levels, focusing on differences between two groups classification as per smoking status."
 def test(dataset):
-    from scipy.stats import levene
-    non_smokers_systolic = dataset[dataset['smoking_status'] == 0]['systolic']
-    smokers_systolic = dataset[dataset['smoking_status'] == 1]['systolic']
+    import pandas as pd
+    from scipy.stats import ttest_ind
 
-    stat, p_value = levene(non_smokers_systolic, smokers_systolic)
-    return int(p_value < 0.05)
+    smokers = dataset[dataset['smoking_status'] == 1]['hemoglobin'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['hemoglobin'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 'smoking_status'
@@ -362,23 +375,18 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 10.
-insights = "Exploring eyesight variations by smoking status can uncover visual impacts, possibly modified through smoking."
-description = "Test if eyesight (left and right) measurement differs significantly between smokers and non-smokers."
-COT = "Eyesight differences between smoker status can reveal health impact; therefore, apply t-tests per eye to discern potential alterations. Examine normality, execute transformations, or opt for non-parametric testing upon detecting distributional deviance."
+insights = "The Gamma-glutamyl transpeptidase (Gtp) is an enzyme that could have different levels in smokers, possibly reflecting liver function variations."
+description = "Evaluate if Gtp levels vary significantly between smokers and non-smokers."
+COT = "Conduct a t-test on Gtp levels to understand potential mean differences influenced by smoking status."
 def test(dataset):
-    import numpy as np
+    import pandas as pd
     from scipy.stats import ttest_ind
 
-    left_eye_non_smokers = dataset[dataset['smoking_status'] == 0]['eyesight(left)']
-    left_eye_smokers = dataset[dataset['smoking_status'] == 1]['eyesight(left)']
-
-    right_eye_non_smokers = dataset[dataset['smoking_status'] == 0]['eyesight(right)']
-    right_eye_smokers = dataset[dataset['smoking_status'] == 1]['eyesight(right)']
-
-    t_stat_left, p_value_left = ttest_ind(left_eye_non_smokers, left_eye_smokers, equal_var=False)
-    t_stat_right, p_value_right = ttest_ind(right_eye_non_smokers, right_eye_smokers, equal_var=False)
-
-    return int((p_value_left < 0.05) or (p_value_right < 0.05))
+    smokers = dataset[dataset['smoking_status'] == 1]['Gtp'].dropna()
+    non_smokers = dataset[dataset['smoking_status'] == 0]['Gtp'].dropna()
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=True)
+    result = 1 if p_value < 0.05 else 0
+    return result
 #####
 ERROR
 "['smoking_status'] not found in axis"
@@ -406,37 +414,26 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 1.
-insights = "Identifying natural health indicator groupings could discover common profiles that either correlate with a higher or lower likelihood of smoking."
-description = "Cluster Formation Hypothesis: Use k-means clustering to identify natural groupings within the dataset of health indicators and correlate them with the smoking status."
-COT = "1. Select k-means clustering as the algorithm to use for cluster formation. 2. Determine the optimal number of clusters using the Elbow Method. 3. Apply k-means clustering on the dataset. 4. Analyze clusters' correspondence to smoking status using statistical methods like chi-square to see if a significant relationship exists."
+insights = "Identifying natural groupings within the dataset may help categorize individuals based on smoking status, leading to personalized health interventions for each group."
+description = "Cluster formation hypothesis proposes using clustering algorithms to identify distinct groups in the dataset that delineate smoking status."
+COT = "Step-by-step: 1) Identify appropriate clustering methods like k-means, hierarchical clustering, or DBSCAN. 2) Implement the chosen algorithm to identify clusters. 3) Evaluate cluster relevance to smoking status."
 def test(dataset):
     from sklearn.cluster import KMeans
     from sklearn.preprocessing import StandardScaler
-    from sklearn.metrics import silhouette_score
-    import numpy as np
-    from scipy.stats import chi2_contingency
-
-    # Standardizing data
+    
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
+    scaled_features = scaler.fit_transform(features)
 
-    # Determine the optimal number of clusters using the Elbow Method
-    inertia = []
-    range_n_clusters = range(2, 10)
-    for n_clusters in range_n_clusters:
-        kmeans = KMeans(n_clusters=n_clusters, random_state=42).fit(data_scaled)
-        inertia.append(kmeans.inertia_)
-
-    optimal_clusters = np.argmin(inertia) + 2  # Based on Elbow, assume optimal at min inertia
-    kmeans = KMeans(n_clusters=optimal_clusters, random_state=42)
-    dataset['Cluster'] = kmeans.fit_predict(data_scaled)
-
-    # Analyze correspondence of clusters with smoking status using chi-square test
-    contingency_table = pd.crosstab(dataset['Cluster'], dataset['smoking_status'])
-    chi2, p, _, _ = chi2_contingency(contingency_table)
-
-    result = 1 if p < 0.05 else 0
-    return result
+    # Applying k-means clustering
+    kmeans = KMeans(n_clusters=2, random_state=42)
+    labels = kmeans.fit_predict(scaled_features)
+    
+    # Assessing if clusters are relevant to smoking status
+    cluster_labels = dataset['smoking_status']
+    result = (labels == cluster_labels).sum() / len(cluster_labels) > 0.5
+    return int(result)
 #####
 ERROR
 "['smoking_status'] not found in axis"
@@ -464,49 +461,35 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 2.
-insights = "Analyzing feature importance within each cluster could identify critical health indicators strongly associated with smoking behaviors."
-description = "Feature Importance within Clusters Hypothesis: Evaluate the feature importance within each cluster to identify key health indicators that influence smoking."
-COT = "1. Run k-means clustering to form clusters. 2. For each cluster, train a classifier to predict smoking status. 3. Use feature importance scores of the classifier to determine which health indicators are key within each specific cluster."
+insights = "Feature importance analysis within clusters can highlight which health metrics most influence smoking behaviors, guiding targeted interventions."
+description = "Feature importance within clusters examines the impact of different health indicators on smoking status within identified clusters."
+COT = "Step-by-step: 1) Use features within identified clusters to determine their relative importance. 2) Apply a model like random forests to determine feature significance. 3) Analyze which features are most predictive of smoking within clusters."
 def test(dataset):
-    from sklearn.cluster import KMeans
-    from sklearn.preprocessing import StandardScaler
     from sklearn.ensemble import RandomForestClassifier
-    from sklearn.model_selection import train_test_split
-    from sklearn.metrics import roc_auc_score
-    import numpy as np
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.cluster import KMeans
 
-    # Standardizing data
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
+    scaled_features = scaler.fit_transform(features)
 
-    # Use k-means to form clusters
-    kmeans = KMeans(n_clusters=3, random_state=42)  # Assume 3 optimal clusters
-    dataset['Cluster'] = kmeans.fit_predict(data_scaled)
+    # Clustering
+    kmeans = KMeans(n_clusters=2, random_state=42)
+    cluster_labels = kmeans.fit_predict(scaled_features)
 
-    # Evaluate feature importance within clusters
-    important_features = {}
-    for cluster in dataset['Cluster'].unique():
-        cluster_data = dataset[dataset['Cluster'] == cluster]
-        X = cluster_data.drop(['smoking_status', 'Cluster'], axis=1)
-        y = cluster_data['smoking_status']
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+    # Investigating feature importance
+    model = RandomForestClassifier(random_state=42)
+    model.fit(features, dataset['smoking_status'])
+    importances = model.feature_importances_
 
-        clf = RandomForestClassifier(random_state=42)
-        clf.fit(X_train, y_train)
-        
-        feature_importances = clf.feature_importances_
-        # under the assumption that some features will stand out
-
-        if np.max(feature_importances) > 0.15:  # Assume significant if feature importance > 0.15
-            important_features[cluster] = 1
-        else:
-            important_features[cluster] = 0
-
-    result = 1 if np.mean(list(important_features.values())) > 0 else 0
-    return result
+    # Consider hypothesis accepted if significant features are found
+    threshold = 0.1  
+    result = (importances > threshold).sum() > 0
+    return int(result)
 #####
 ERROR
-list.remove(x): x not in list
+"['smoking_status'] not found in axis"
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -531,37 +514,31 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 3.
-insights = "Checking the cluster stability by including/excluding key features can help prioritize important health indicators for predicting smoking status."
-description = "Cluster Stability Hypothesis: Assess the stability of clusters by alternating the inclusion of specific features."
-COT = "1. Perform clustering with all features included. 2. Re-perform clustering excluding one feature at a time. 3. Use silhouette scores to evaluate changes and assess which features significantly alter cluster stability."
+insights = "Evaluating cluster stability highlights the robustness of group formations and ensures their validity across varying conditions or datasets."
+description = "Cluster stability hypothesis tests how stable group formations are by altering the dataset's features and checking the consistency of clusters."
+COT = "Step-by-step: 1) Form clusters using a subset of features. 2) Form clusters using different feature sets or excluding some features. 3) Compare cluster results for stability."
 def test(dataset):
     from sklearn.cluster import KMeans
     from sklearn.preprocessing import StandardScaler
-    from sklearn.metrics import silhouette_score
-    import numpy as np
+    from sklearn.metrics import adjusted_rand_score
 
-    features = dataset.columns.tolist()
-    features.remove('smoking_status')
-    
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
-    
-    # Clustering with all features
-    kmeans = KMeans(n_clusters=3, random_state=42)
-    full_clustering = kmeans.fit_predict(data_scaled)
-    full_silhouette = silhouette_score(data_scaled, full_clustering)
-    
-    drop_impact = []
-    
-    for feature in features:
-        reduced_data = dataset.drop(['smoking_status', feature], axis=1)
-        reduced_scaled = scaler.fit_transform(reduced_data)
-        cluster_labels = kmeans.fit_predict(reduced_scaled)
-        silhouette_avg = silhouette_score(reduced_scaled, cluster_labels)
-        drop_impact.append(abs(silhouette_avg - full_silhouette))
-    
-    result = 1 if max(drop_impact) > 0.1 else 0  # Assume threshold for stability impact
-    return result
+    scaled_features = scaler.fit_transform(features)
+
+    # Clustering using all features
+    kmeans_all = KMeans(n_clusters=2, random_state=42)
+    labels_all = kmeans_all.fit_predict(scaled_features)
+
+    # Clustering without some features
+    kmeans_reduced = KMeans(n_clusters=2, random_state=42)
+    labels_reduced = kmeans_reduced.fit_predict(scaled_features[:, :-2])
+
+    # Compute stability
+    stability = adjusted_rand_score(labels_all, labels_reduced)
+    result = stability > 0.5
+    return int(result)
 #####
 ERROR
 "['smoking_status'] not found in axis"
@@ -589,37 +566,33 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 4.
-insights = "Latent variables discovered through dimensionality reduction can reveal hidden groups that may correspond to specific smoking risk segments."
-description = "Latent Group Hypothesis Using Dimensionality Reduction: Use PCA to detect latent group structures related to smoking patterns."
-COT = "1. Apply PCA for dimensionality reduction and visualize latent variable groups. 2. Check if these groups correspond to variations in smoking status. 3. Perform statistical testing to validate distinct groupings related to smoking."
+insights = "Dimensionality reduction can reveal latent patterns in the health indicators that correlate with smoking status, aiding in risk stratification in healthcare."
+description = "Latent group hypothesis uses dimensionality reduction (PCA/t-SNE) to uncover hidden patterns differentiating smoking status."
+COT = "Step-by-step: 1) Apply PCA/t-SNE to reduce dimensions while maintaining variance. 2) Visualize clusters to uncover confluent patterns. 3) Determine if latent groups relate to smoking status."
 def test(dataset):
     from sklearn.decomposition import PCA
     from sklearn.preprocessing import StandardScaler
-    from sklearn.metrics import silhouette_score
-    from scipy.stats import chi2_contingency
-    import pandas as pd
     import numpy as np
+    from sklearn.metrics import silhouette_score
 
-    # Standardize the data
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
+    scaled_features = scaler.fit_transform(features)
 
-    # Apply PCA
+    # Dimensionality reduction
     pca = PCA(n_components=2)
-    pca_result = pca.fit_transform(data_scaled)
-    
-    # Check for clustering
-    kmeans = KMeans(n_clusters=2, random_state=42)
-    clusters = kmeans.fit_predict(pca_result)
-    
-    silhouette_avg = silhouette_score(pca_result, clusters)
-    
-    dataset['Cluster'] = clusters
-    contingency_table = pd.crosstab(dataset['Cluster'], dataset['smoking_status'])
-    chi2, p, _, _ = chi2_contingency(contingency_table)
+    reduced_data = pca.fit_transform(scaled_features)
 
-    result = 1 if silhouette_avg > 0.1 and p < 0.05 else 0
-    return result
+    # Clustering on reduced data
+    from sklearn.cluster import KMeans
+    kmeans = KMeans(n_clusters=2, random_state=42)
+    labels = kmeans.fit_predict(reduced_data)
+
+    # Evaluate clustering quality
+    silhouette_avg = silhouette_score(reduced_data, labels)
+    result = silhouette_avg > 0.1
+    return int(result)
 #####
 ERROR
 "['smoking_status'] not found in axis"
@@ -647,33 +620,30 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 5.
-insights = "Determining the optimal number of natural clusters can aid in understanding critical segmentation for targeted anti-smoking interventions."
-description = "Optimal Number of Clusters Hypothesis: Use the Elbow Method to find the most representative number of clusters for stratified smoking intervention analysis."
-COT = "1. Implement the Elbow Method to determine optimal cluster number by assessing where the within-cluster variance starts to diminish. 2. Apply clusters potentially linked to patterns in smoking status for targeted interventions."
+insights = "Determining the optimal number of clusters helps ensure that group delineations are both meaningful and useful for smoking status prediction."
+description = "Optimal number of clusters hypothesis uses methods like Elbow and Silhouette Analysis to ensure meaningful group delineation in the dataset."
+COT = "Step-by-step: 1) Use Elbow Method to find the 'knee' in within-cluster variance plot. 2) Use Silhouette Analysis to validate cluster separation. 3) Determine the ideal cluster count."
 def test(dataset):
     from sklearn.cluster import KMeans
     from sklearn.preprocessing import StandardScaler
-    from sklearn.metrics import silhouette_score
     import numpy as np
 
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
+    scaled_features = scaler.fit_transform(features)
 
-    # Elbow Method for optimal clusters
+    # Elbow Method
     inertia = []
-    for n_clusters in range(2, 10):
-        kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-        kmeans.fit(data_scaled)
+    for k in range(1, 10):
+        kmeans = KMeans(n_clusters=k, random_state=42)
+        kmeans.fit(scaled_features)
         inertia.append(kmeans.inertia_)
 
-    # Considering the "elbow point" where isn't specified, use silhouette score for validation
-    optimal_clusters = np.argmin(np.diff(inertia)) + 2
-    kmeans = KMeans(n_clusters=optimal_clusters, random_state=42)
-    clusters = kmeans.fit_predict(data_scaled)
-    
-    silhouette_avg = silhouette_score(data_scaled, clusters)
-    result = 1 if silhouette_avg > 0.2 else 0  # Assume threshold for reasonable clustering
-    return result
+    # Checking for the elbow
+    optimal_k = np.diff(inertia).argmin() + 1
+    result = optimal_k > 1
+    return int(result)
 #####
 ERROR
 "['smoking_status'] not found in axis"
@@ -701,40 +671,29 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 6.
-insights = "Understanding specific feature interactions which behave differently across clusters may help in personalized smoking prevention strategies."
-description = "Cluster-Feature Interaction Hypothesis: Investigate if feature interactions differ significantly by clusters affecting smoking probabilities."
-COT = "1. Identify clusters using k-means clustering. 2. Use statistical tests or models to identify if and which feature interactions are substantially different across clusters. 3. Analyze these interactions in context to smoking status."
+insights = "Cluster-feature interactions can uncover distinct health indicator effects within each group, assisting in personalized smoking cessation programs."
+description = "Cluster-feature interaction hypothesis assesses if feature effects differ across clusters relative to smoking outcomes."
+COT = "Step-by-step: 1) Form clusters from feature data. 2) Use interaction plots or statistical tests to check if feature effects significantly vary by cluster. 3) Determine feature-cluster interactions."
 def test(dataset):
     from sklearn.cluster import KMeans
     from sklearn.preprocessing import StandardScaler
-    from sklearn.linear_model import LogisticRegression
-    from sklearn.metrics import roc_auc_score
-    import numpy as np
+    from statsmodels.formula.api import ols
+    import pandas as pd
 
-    # Standardizing data
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
+    scaled_features = scaler.fit_transform(features)
 
-    # Find clusters
-    kmeans = KMeans(n_clusters=3, random_state=42)
-    clusters = kmeans.fit_predict(data_scaled)
-    dataset['Cluster'] = clusters
+    # Forming clusters
+    kmeans = KMeans(n_clusters=2, random_state=42)
+    dataset['cluster'] = kmeans.fit_predict(scaled_features)
 
-    interaction_effects = []
-    for cluster in dataset['Cluster'].unique():
-        cluster_data = dataset[dataset['Cluster'] == cluster]
-        X = cluster_data.drop(['smoking_status', 'Cluster'], axis=1)
-        y = cluster_data['smoking_status']
-
-        # Logistic regression to identify interactions
-        clf = LogisticRegression()
-        clf.fit(X, y)
-
-        # A simple interaction check for some features
-        interaction_score = roc_auc_score(y, clf.predict(X))
-        interaction_effects.append(interaction_score)
-
-    result = 1 if np.max(interaction_effects) > 0.7 else 0
+    # Assessing feature interaction
+    model = ols('smoking_status ~ C(cluster) + age + eyesight(left) + eyesight(right)', data=dataset).fit()
+    anova_table = sm.stats.anova_lm(model, typ=2)
+    significant_interaction = anova_table['PR(>F)'].iloc[1] < 0.05
+    result = int(significant_interaction)
     return result
 #####
 ERROR
@@ -763,33 +722,32 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 7.
-insights = "Utilizing hierarchical clustering can uncover potential natural hierarchies in health characteristics associated with smoking."
-description = "Hierarchical Clustering Hypothesis: Perform hierarchical clustering to explore potential naturally ordered health characteristic groups related to smoking."
-COT = "1. Implement hierarchical clustering to find potential nested clusters. 2. Use dendrograms to visualize and decide optimal cut-off levels. 3. Validate clusters' association with smoking status."
+insights = "Health indicators may naturally bifurcate individuals into risk categories for smoking through latent group analysis, offering strategic public health measures."
+description = "Latent group hypothesis identifies whether certain combinations of health indicators predict smoking categories."
+COT = "Step-by-step: 1) Apply t-SNE to visualize lower-dimensional space in clusters. 2) Identify predictive patterns. 3) Validate results against actual smoking categories."
 def test(dataset):
+    from sklearn.manifold import TSNE
     from sklearn.preprocessing import StandardScaler
-    from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
     from sklearn.metrics import silhouette_score
-    import pandas as pd
-    import matplotlib.pyplot as plt
 
-    # Standardizing data
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
+    scaled_features = scaler.fit_transform(features)
 
-    # Hierarchical clustering
-    linkage_matrix = linkage(data_scaled, method='ward')
-    max_d = 7  # distance criteria
-    clusters = fcluster(linkage_matrix, max_d, criterion='distance')
+    # Dimensionality reduction
+    tsne = TSNE(n_components=2, random_state=42)
+    tsne_results = tsne.fit_transform(scaled_features)
 
-    silhouette_avg = silhouette_score(data_scaled, clusters)
+    # Clustering on tsne data
+    from sklearn.cluster import KMeans
+    kmeans = KMeans(n_clusters=2, random_state=42)
+    labels = kmeans.fit_predict(tsne_results)
 
-    dataset['Cluster'] = clusters
-    contingency_table = pd.crosstab(dataset['Cluster'], dataset['smoking_status'])
-    chi2, p, _, _ = chi2_contingency(contingency_table)
-
-    result = 1 if silhouette_avg > 0.2 and p < 0.05 else 0
-    return result
+    # Evaluate clustering quality
+    silhouette_avg = silhouette_score(tsne_results, labels)
+    result = silhouette_avg > 0.1
+    return int(result)
 #####
 ERROR
 "['smoking_status'] not found in axis"
@@ -817,32 +775,34 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 8.
-insights = "Comparing the high-density points across space using DBSCAN can identify dense groupings potentially linked to high smoking prevalence."
-description = "DBSCAN Hypothesis: Apply DBSCAN to identify dense groupings of health characteristics focusing on high-density areas potentially associated with smokers."
-COT = "1. Use DBSCAN to form clusters based on high-density points. 2. Identify high-density clusters corresponding to areas potentially linked to higher smoking prevalence. 3. Validate the clusters against smoking status."
+insights = "By understanding feature influence within each cluster, medical professionals can identify pivotal health variables affecting smoking habits, leading to better-targeted treatments."
+description = "This hypothesis investigates feature importance per cluster to reveal which health indicators are pivotal for smoking habits."
+COT = "Step-by-step: 1) Group data by clusters formed. 2) Use feature importance from models to rank health indicators within clusters. 3) Identify the most influential features per group."
 def test(dataset):
+    from sklearn.cluster import KMeans
+    from sklearn.ensemble import RandomForestClassifier
     from sklearn.preprocessing import StandardScaler
-    from sklearn.cluster import DBSCAN
-    from sklearn.metrics import silhouette_score
     import numpy as np
-    import pandas as pd
 
-    # Standardizing data
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
+    scaled_features = scaler.fit_transform(features)
 
-    # DBSCAN clustering
-    db = DBSCAN(eps=0.5, min_samples=5).fit(data_scaled)
-    labels = db.labels_
+    # Form clusters
+    kmeans = KMeans(n_clusters=2, random_state=42)
+    clusters = kmeans.fit_predict(scaled_features)
 
-    dataset['Cluster'] = labels
-    silhouette_avg = silhouette_score(data_scaled, labels) if len(set(labels)) > 1 else -1
+    # Feature importance in clusters
+    importances = []
+    for cluster in np.unique(clusters):
+        cluster_features = features[clusters == cluster]
+        model = RandomForestClassifier(random_state=42)
+        model.fit(cluster_features, dataset['smoking_status'][clusters == cluster])
+        importances.append(np.mean(model.feature_importances_))
 
-    contingency_table = pd.crosstab(dataset['Cluster'], dataset['smoking_status'])
-    chi2, p, _, _ = chi2_contingency(contingency_table)
-
-    result = 1 if silhouette_avg > 0.1 and p < 0.05 else 0
-    return result
+    result = np.any(np.array(importances) > 0.1)
+    return int(result)
 #####
 ERROR
 "['smoking_status'] not found in axis"
@@ -870,50 +830,39 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 9.
-insights = "Pairing core indicators using clustering with prediction models could enhance targeted smoking status prediction."
-description = "Cluster-based Prediction Hypothesis: Leverage identified clusters in combination with conventional models to enhance smoking status prediction."
-COT = "1. Apply k-means to identify health-related clusters. 2. Train prediction models incorporating these clusters as features. 3. Evaluate improvements in prediction metrics (e.g., accuracy, precision) compared to baseline models."
+insights = "Determining different feature interactions for individuals offers insight into personalized smoking cessation strategies, catering to each cluster's health profile."
+description = "By analyzing how features interact differently in identified clusters, one can personalize smoking cessation strategies for each health profile."
+COT = "Step-by-step: 1) Identify clusters. 2) Apply interaction models to determine if and how feature relationships differ per cluster. 3) Examine variability of interactions within clusters."
 def test(dataset):
-    from sklearn.preprocessing import StandardScaler
     from sklearn.cluster import KMeans
-    from sklearn.model_selection import train_test_split
-    from sklearn.ensemble import RandomForestClassifier
-    from sklearn.metrics import accuracy_score
+    from sklearn.preprocessing import StandardScaler
+    from statsmodels.formula.api import ols
+    import pandas as pd
+    import statsmodels.api as sm
 
-    # Standardizing data
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset.drop('smoking_status', axis=1))
+    scaled_features = scaler.fit_transform(features)
 
-    # K-Means Clustering
-    kmeans = KMeans(n_clusters=3, random_state=42)
-    cluster_labels = kmeans.fit_predict(data_scaled)
-    dataset['Cluster'] = cluster_labels
+    # Forming clusters
+    kmeans = KMeans(n_clusters=2, random_state=42)
+    dataset['cluster'] = kmeans.fit_predict(scaled_features)
 
-    # Split the data
-    features = dataset.columns.tolist()
-    features.remove('smoking_status')
-    X = dataset[features]
-    y = dataset['smoking_status']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
-
-    # Train a prediction model
-    clf = RandomForestClassifier(random_state=42)
-    clf.fit(X_train, y_train)
-    predictions = clf.predict(X_test)
-    accuracy_with_clusters = accuracy_score(y_test, predictions)
-
-    # Baseline model without cluster labels
-    X_train_base, X_test_base = X_train.drop('Cluster', axis=1), X_test.drop('Cluster', axis=1)
-    clf_base = RandomForestClassifier(random_state=42)
-    clf_base.fit(X_train_base, y_train)
-    base_predictions = clf_base.predict(X_test_base)
-    base_accuracy = accuracy_score(y_test, base_predictions)
-
-    result = 1 if accuracy_with_clusters > base_accuracy else 0
+    # Feature interaction in clusters
+    interaction_effect = False
+    for cluster in dataset['cluster'].unique():
+        cluster_data = dataset[dataset['cluster'] == cluster]
+        model = ols('smoking_status ~ age * eyesight(left)', data=cluster_data).fit()
+        interaction = model.pvalues['age:eyesight(left)'] < 0.05
+        if interaction:
+            interaction_effect = True
+    
+    result = int(interaction_effect)
     return result
 #####
 ERROR
-'smoking_status'
+"['smoking_status'] not found in axis"
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -938,44 +887,53 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 10.
-insights = "Exploring high-cholesterol, high-blood pressure groupings through clustering deterministically helps in identifying high-risk smoker groups."
-description = "Risk Group Clustering Hypothesis: Identify high-risk groups with features like high cholesterol and blood pressure that correlate significantly with smoking."
-COT = "1. Select relevant features (cholesterol, blood pressure) for clustering identification of potential high-risk groups. 2. Use clustering to identify subgroups that correlate highly with smoking status. 3. Validate these subgroups against known risk factors."
+insights = "Utilizing clustering and feature importance insights can help identify smoking risk levels within different health indicators, refining preventative healthcare strategies."
+description = "Cluster analysis coupled with feature importance reveals distinct smoking risk levels tied to health indicators and aids in combating smoking in targeted ways."
+COT = "Step-by-step: 1) Perform clustering to group similar health profiles. 2) Use feature importance to correlate indicators with smoking risk levels. 3) Assign risk categories based on analysis."
 def test(dataset):
-    from sklearn.preprocessing import StandardScaler
     from sklearn.cluster import KMeans
-    import pandas as pd
-    from scipy.stats import chi2_contingency
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.preprocessing import StandardScaler
+    import numpy as np
 
-    # Selecting high risk features for clustering
-    features = ['Cholesterol', 'systolic', 'relaxation']
+    # Standardizing the data
+    features = dataset.drop(['smoking_status'], axis=1)
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(dataset[features])
+    scaled_features = scaler.fit_transform(features)
 
-    # K-means for clustering high-risk groups
-    kmeans = KMeans(n_clusters=3, random_state=42)
-    risk_clusters = kmeans.fit_predict(data_scaled)
-    dataset['RiskCluster'] = risk_clusters
+    # Form clusters
+    kmeans = KMeans(n_clusters=3, random_state=42)  # Assuming 3 clusters for more nuanced categorization
+    clusters = kmeans.fit_predict(scaled_features)
 
-    contingency_table = pd.crosstab(dataset['RiskCluster'], dataset['smoking_status'])
-    chi2, p, _, _ = chi2_contingency(contingency_table)
-
-    result = 1 if p < 0.05 else 0
-    return result
+    # Feature importance in clusters
+    category_risks = []
+    for cluster in np.unique(clusters):
+        cluster_data = features[clusters == cluster]
+        model = RandomForestClassifier(random_state=42)
+        model.fit(cluster_data, dataset['smoking_status'][clusters == cluster])
+        imp_sum = np.sum(model.feature_importances_ > 0.1)  # Looking for at least one significant feature
+        category_risks.append(imp_sum > 0)
+    
+    result = int(any(category_risks))
+    return int(result)
 #####
-This hypothesis tests whether there are any significant outliers in the age variable of the dataset.
-INSIGHTS: Outliers in age might indicate data entry errors or unusual age distribution, affecting the prediction of smoking status.
+Outlier analysis on systolic blood pressure to identify those with abnormal levels that may influence health risk profiles associated with smoking.
+INSIGHTS: Outliers in systolic blood pressure may indicate individuals with extreme blood pressure levels who could have higher health risks. These individuals might have different smoking status group patterns.
 1
 ####################
-COT:First, we determine that the age variable is a quantitative variable. To identify outliers, we will use the IQR method, which is suitable for univariate outlier detection in continuous data. We will calculate Q1 and Q3 of the age, then determine the IQR. Outliers are identified if age is below Q1 - 1.5 * IQR or above Q3 + 1.5 * IQR.This hypothesis investigates whether there are outliers in the eyesight(left) and eyesight(right) variables.
-INSIGHTS: Outliers in eyesight measurements may indicate potential errors in data collection or extremely rare cases, which might impact the analysis.
+COT:To test this hypothesis, use the Z-Score Test to identify outliers in the systolic blood pressure measurement. A Z-score above 3 or below -3 denotes an outlier, potentially linked to higher health risks and different smoking status trends.Determine if extreme fasting blood sugar levels correlate with unique smoking status indicators due to associated health conditions.
+INSIGHTS: Outliers in fasting blood sugar levels might indicate uncontrolled diabetes, potentially affecting smoking habits or reporting.
 1
 ####################
-COT:The eyesight variables are continuous and could have measurement errors or rare extreme values. We use the Z-Score method to detect outliers here to normalize the effect of scale. We compute the Z-Score for both the left and right eyesight measurements and identify outliers where |z| > 3.This hypothesis examines if there are significant outliers in hearing(left) and hearing(right) measurements.
-INSIGHTS: Hearing ability outliers might signify exceptional cases, potentially caused by environmental or occupational factors influencing smoking behavior.
+COT:Apply the IQR method to fasting blood sugar levels to highlight outliers likely experiencing abnormal health conditions influencing their smoking status.Detect multivariate outliers in blood lipid profiles and examine their impact on smoking status, applying Mahalanobis Distance.
+INSIGHTS: Multivariate outliers across blood lipids (Cholesterol, HDL, LDL) may uncover individuals with unique cardiovascular profiles, possibly influencing smoking status.
 1
 ####################
-COT:We hypothesize that exceptional hearing measurements could be rare events. We'll use the IQR method to determine outliers. We calculate the IQR for both left and right hearing and flag any measurements that fall outside the acceptable range.ERROR
+COT:Use Mahalanobis distance on lipid profiles, which considers all variables' covariance, to spotlight individuals with distinct cardiovascular risk factors possibly altering smoking habits.Investigate how extreme triglyceride values may relate to metabolic profiles that could impact smoking habits, leveraging the IQR method.
+INSIGHTS: Outliers in triglyceride levels can highlight individuals with unique metabolic profiles that may influence their smoking behaviors.
+1
+####################
+COT:Employ the IQR method for triglyceride levels to focus on individuals possibly exhibiting abnormal metabolic signs, possibly outlining distinct smoking status patterns.ERROR
 name 'zscore' is not defined
 
 # Data manipulation and analysis
@@ -1000,21 +958,17 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # Dimensionality reduction
 from sklearn.decomposition import PCA
 
-# Hypothesis 4.
-insights = "Blood pressure outliers may indicate patients with extreme cardiovascular risk, possibly influencing smoking-related health assessments."
-description = "This hypothesis checks for outliers in systolic and diastolic blood pressure measurements."
-COT = "We focus on potential outliers in blood pressure, which could skew health risk assessments. For systolic and diastolic pressures, we use the Z-Score method because it allows us to compare standardized deviations from the mean, which is effective for such health measures. We look for |z| > 3."
+# Hypothesis 5.
+insights = "Unusual hemoglobin levels indicate potential anemia or polycythemia, which may be linked to a person's smoking status."
+description = "Examine outliers in hemoglobin levels for possible connections to smoking habits by uncovering unusual hematological conditions."
+COT = "Utilize the Z-score method for hemoglobin levels to isolate individuals exhibiting hematological abnormalities potentially affecting their smoking behavior."
 def test(dataset):
-    systolic_z = np.abs(zscore(dataset['systolic']))
-    diastolic_z = np.abs(zscore(dataset['relaxation']))
-    outlier_condition = (systolic_z > 3) | (diastolic_z > 3)
-    return 1 if outlier_condition.any() else 0
+    hemoglobin_z_scores = zscore(dataset['hemoglobin'])
+    outliers = np.abs(hemoglobin_z_scores) > 3
+    result = 1 if np.any(outliers) else 0
+    return result
 #####
-This hypothesis evaluates whether there are outliers in fasting blood sugar levels.
-INSIGHTS: Outliers in fasting blood sugar may unveil hidden diabetes cases, which are critical for assessing smoking impact on health.
-1
-####################
-COT:Fasting blood sugar is a critical variable associated with diabetes risk. Outliers here could distort this important health metric. We'll identify outliers using the IQR method to manage skewed distributions typical in health data: values outside Q1 - 1.5*IQR to Q3 + 1.5*IQR.ERROR
+ERROR
 name 'zscore' is not defined
 
 # Data manipulation and analysis
@@ -1040,32 +994,21 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 6.
-insights = "Cholesterol outliers may suggest cases of hyperlipidemia, warranting further investigation into potential links with smoking."
-description = "This hypothesis identifies outliers in cholesterol levels, which are vital for understanding cardiovascular risk."
-COT = "Total cholesterol levels could have extreme values due to measurement errors or rare conditions. We apply the Z-Score test to capture significant deviations from the mean, ideal for normally-distributed data where we want to detect outliers beyond |z| > 3."
+insights = "Outliers in ALT levels may indicate liver conditions, potentially correlated with increased risk behaviors like smoking."
+description = "Identify individuals with extreme ALT levels and explore potential associations with liver health impacting smoking behaviors."
+COT = "Apply the Z-score method to ALT levels to single out individuals with extraordinary liver enzyme levels, possibly impacting their smoking status."
 def test(dataset):
-    cholesterol_z = np.abs(zscore(dataset['Cholesterol']))
-    outlier_condition = cholesterol_z > 3
-    return 1 if outlier_condition.any() else 0
+    ALT_z_scores = zscore(dataset['ALT'])
+    outliers = np.abs(ALT_z_scores) > 3
+    result = 1 if np.any(outliers) else 0
+    return result
 #####
-This hypothesis looks for outliers in triglyceride levels.
-INSIGHTS: Identifying outliers in triglycerides could highlight lipid metabolism disorders affecting smoking-related health impacts.
+Explore the role of unusual gamma-GTP values among outliers in the context of liver function and smoking tendencies.
+INSIGHTS: Evaluating abnormal gamma-GTP levels might reflect liver dysfunctions or alcohol use, potentially affecting smoking status.
 1
 ####################
-COT:Triglycerides, another blood lipid measure, can significantly impact cardiovascular health. Outliers may indicate substantial health risks. The IQR method is used here to balance the effects of skew in biological data: we seek values outside Q1 - 1.5*IQR to Q3 + 1.5*IQR.This hypothesis scrutinizes HDL levels for possible outliers.
-INSIGHTS: High-density lipoprotein (HDL) outliers might signal unexpected cholesterol profiles, necessitating further examination in a smoking context.
-1
-####################
-COT:As HDL is part of cholesterol risk profiles and can be skewed, the IQR method effectively surfaces outliers, potentially altering risk evaluation. Check for values beyond Q1 - 1.5*IQR to Q3 + 1.5*IQR.This hypothesis tests for outliers in LDL cholesterol levels.
-INSIGHTS: Outliers in LDL cholesterol levels could indicate severe lipid disorders impacting evaluations of smoking status.
-1
-####################
-COT:LDL often forms part of cardiovascular assessments and might show skew. Use the IQR method to detect outliers, which identifies variability beyond Q1 - 1.5*IQR and Q3 + 1.5*IQR.This hypothesis pinpoints outliers in the GTP levels that might have implications on liver health.
-INSIGHTS: Outliers in gamma-glutamyl transpeptidase (GTP) levels could reflect liver functionality issues, significant in the context of smoking impacts.
-1
-####################
-COT:GTP levels might have diverse ranges due to liver conditions, often important for smoking studies. Apply the IQR method, appropriate for skewed liver enzyme data, assessing beyond Q1 - 1.5*IQR to Q3 + 1.5*IQR.ERROR
-'smoking_status'
+COT:Utilize the IQR method for Gamma-GTP to discern anomalies that may reveal alcohol use or liver disorders influencing smoking status.ERROR
+name 'zscore' is not defined
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -1089,25 +1032,60 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # Dimensionality reduction
 from sklearn.decomposition import PCA
 
-# Hypothesis 1.
-insights = "Individuals with significantly high or low fasting blood sugar levels compared to the norm are more likely to have their smoking status deviate significantly from the expected pattern."
-description = "Examine if unusually high or low fasting blood sugar levels are linked to anomalous smoking statuses."
-COT = "First, identify the dataset variable of interest: fasting blood sugar. To find deviations, use the Kolmogorov-Smirnov (K-S) test to compare the distribution of fasting blood sugar levels in smokers vs. non-smokers. Ensure statistical significance to confirm or reject the hypothesis."
+# Hypothesis 8.
+insights = "Proteins found in urine could be indicative of kidney issues, influencing individual's tendencies or abilities to smoke."
+description = "Investigate outliers in urine protein levels to understand their possible connection with kidney health and smoking behaviors."
+COT = "Apply the Z-score method to detect anomalies in urine protein levels highlighting individuals with potential kidney issues impacting smoking status."
 def test(dataset):
-    import numpy as np
-    from scipy.stats import ks_2samp
-    
-    # Segregate the dataset into smokers and non-smokers
-    smokers = dataset[dataset['smoking_status'] == 1]['fasting blood sugar']
-    non_smokers = dataset[dataset['smoking_status'] == 0]['fasting blood sugar']
-    
-    # Perform the K-S test
-    ks_statistic, p_value = ks_2samp(smokers, non_smokers)
-    
-    # Return 1 if significant deviation exists
-    return 1 if p_value < 0.05 else 0
+    urine_protein_z_scores = zscore(dataset['Urine protein'])
+    outliers = np.abs(urine_protein_z_scores) > 3
+    result = 1 if np.any(outliers) else 0
+    return result
 #####
-ERROR
+Identify deviations in serum creatinine values as potential markers of kidney issues impacting smoking activities.
+INSIGHTS: Outlying creatinine levels may signal kidney dysfunction potentially associated with distinct smoking behavior.
+1
+####################
+COT:Use the IQR method on creatinine levels to pinpoint individuals with kidney-related health concerns that could influence smoking.ERROR
+name 'zscore' is not defined
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 10.
+insights = "Individuals with extreme ages may show different trends in smoking habits than the regular population."
+description = "Examine the presence and impact of age outliers on smoking status, understanding disparities based on age extremes."
+COT = "Utilize the Z-score method for age capturing older or younger individuals potentially exhibiting distinct smoking trends."
+def test(dataset):
+    age_z_scores = zscore(dataset['age'])
+    outliers = np.abs(age_z_scores) > 3
+    result = 1 if np.any(outliers) else 0
+    return result
+#####
+Isolation Forest can identify anomalies in health indicators that suggest atypical cases in the dataset, potentially indicating misreported smoking statuses or unusual health conditions related to smoking.
+INSIGHTS: Applying Isolation Forest to the dataset may help in identifying individuals whose health indicators significantly deviate from the population norm. These deviations might suggest underlying health issues linked to smoking, such as potential misreporting or extreme cases that don't fit typical health trends.
+0
+####################
+COT:Step 1: The goal is to identify outliers among health indicators using Isolation Forest. Step 2: Recognize that unusual health metrics may indicate misreporting of smoking status. Step 3: Set up the Isolation Forest model to detect outliers, understanding that significant deviations could be linked to smoking habits. Step 4: Implement the test function to return 1 if a significant number of anomalies are detected.ERROR
 'smoking_status'
 
 # Data manipulation and analysis
@@ -1133,370 +1111,26 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 2.
-insights = "Significant anomalies in eyesight may correlate with unusual smoking patterns, possibly due to lifestyle factors."
-description = "Test if abnormal eyesight measurements are associated with smokers differently than non-smokers."
-COT = "Select indicators: eyesight(left) and eyesight(right). To examine distribution differences between smokers and non-smokers, apply the Chi-Square test. Consider variables as categorical (e.g., normal/abnormal) and proceed to identify anomaly."
+insights = "Employing the Kolmogorov-Smirnov Test can reveal how different the distribution of cholesterol levels is between smokers and nonsmokers, potentially highlighting the impact of smoking on cholesterol."
+description = "The K-S Test can identify whether the cholesterol levels of smokers and non-smokers have statistically significant differences, suggesting an impact of smoking."
+COT = "Step 1: Use the K-S Test to compare cholesterol level distributions between smokers and nonsmokers. Step 2: Filter the dataset based on smoking status. Step 3: Perform the K-S Test on cholesterol levels. Step 4: Set significance criteria and return 1 if distributions are significantly different."
 def test(dataset):
-    import numpy as np
-    from scipy.stats import chi2_contingency
-    
-    # Create a categorical normal/abnormal column based on eyesight
-    dataset['eyesight_status'] = np.where((dataset['eyesight(left)'] < 0.7) | (dataset['eyesight(right)'] < 0.7), 'abnormal', 'normal')
-    
-    # Create a contingency table
-    contingency_table = pd.crosstab(dataset['smoking_status'], dataset['eyesight_status'])
-    
-    # Perform Chi-Square test
-    chi2_stat, p, dof, expected = chi2_contingency(contingency_table)
-    
-    # Return 1 if significant association exists
-    return 1 if p < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 3.
-insights = "High levels of AST could be an indicator of liver stress, which might be more prevalent in smokers due to lifestyle factors affecting liver health."
-description = "Investigate if elevated AST levels are more prevalent in smokers indicating lifestyle impacts on liver."
-COT = "To ascertain if AST levels differ by smoking status, employ the K-S test. This allows distributional anomalies detection between smokers and non-smokers based on AST levels. Verify statistical significance to conclude."
-def test(dataset):
-    import numpy as np
     from scipy.stats import ks_2samp
     
-    # Segregate the dataset into smokers and non-smokers
-    smokers = dataset[dataset['smoking_status'] == 1]['AST']
-    non_smokers = dataset[dataset['smoking_status'] == 0]['AST']
-    
-    # Perform the K-S test
-    ks_statistic, p_value = ks_2samp(smokers, non_smokers)
-    
-    # Return 1 if significant deviation exists
-    return 1 if p_value < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 4.
-insights = "Abnormal LDL cholesterol levels, as a risk factor for cardiovascular disease, could be atypically distributed among smokers."
-description = "Determine if LDL cholesterol distribution deviates significantly among smokers versus non-smokers."
-COT = "Apply K-S test to compare LDL levels among smokers and non-smokers. Aim to determine statistically significant distribution differences, which could indicate anomalies."
-def test(dataset):
-    import numpy as np
-    from scipy.stats import ks_2samp
-    
-    # Segregate the dataset into smokers and non-smokers
-    smokers = dataset[dataset['smoking_status'] == 1]['LDL']
-    non_smokers = dataset[dataset['smoking_status'] == 0]['LDL']
-    
-    # Perform the K-S test
-    ks_statistic, p_value = ks_2samp(smokers, non_smokers)
-    
-    # Return 1 if significant deviation exists
-    return 1 if p_value < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 5.
-insights = "Smoking may be correlated with abnormal hemoglobin levels, impacting oxygen transport in the blood."
-description = "Check if there is an abnormal distribution of hemoglobin levels between smokers and non-smokers."
-COT = "Using the K-S test, compare smoker and non-smoker distributions of hemoglobin levels. Identify potential anomalies by assessing statistical significance."
-def test(dataset):
-    import numpy as np
-    from scipy.stats import ks_2samp
-    
-    # Segregate the dataset into smokers and non-smokers
-    smokers = dataset[dataset['smoking_status'] == 1]['hemoglobin']
-    non_smokers = dataset[dataset['smoking_status'] == 0]['hemoglobin']
-    
-    # Perform the K-S test
-    ks_statistic, p_value = ks_2samp(smokers, non_smokers)
-    
-    # Return 1 if significant deviation exists
-    return 1 if p_value < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 6.
-insights = "Anomalous fluctuations in systolic blood pressure may be linked with smoking habits due to cardiovascular stress."
-description = "Explore if there are systematic deviations in systolic blood pressure between smokers and non-smokers."
-COT = "Utilize the K-S test to analyze systolic blood pressure distribution differences between smokers and non-smokers for anomaly identification."
-def test(dataset):
-    import numpy as np
-    from scipy.stats import ks_2samp
-    
-    # Segregate the dataset into smokers and non-smokers
-    smokers = dataset[dataset['smoking_status'] == 1]['systolic']
-    non_smokers = dataset[dataset['smoking_status'] == 0]['systolic']
-    
-    # Perform the K-S test
-    ks_statistic, p_value = ks_2samp(smokers, non_smokers)
-    
-    # Return 1 if significant deviation exists
-    return 1 if p_value < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 7.
-insights = "Smokers may exhibit unusual Gtp levels, potentially indicative of liver enzyme anomalies."
-description = "Assess whether Gtp level distributions are significantly different for smokers, pointing to liver impact."
-COT = "Implement the K-S test to unravel distribution anomalies of Gtp levels between smokers and non-smokers. Statistical significance underpins anomaly detection."
-def test(dataset):
-    import numpy as np
-    from scipy.stats import ks_2samp
-    
-    # Segregate the dataset into smokers and non-smokers
-    smokers = dataset[dataset['smoking_status'] == 1]['Gtp']
-    non_smokers = dataset[dataset['smoking_status'] == 0]['Gtp']
-    
-    # Perform the K-S test
-    ks_statistic, p_value = ks_2samp(smokers, non_smokers)
-    
-    # Return 1 if significant deviation exists
-    return 1 if p_value < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 8.
-insights = "Smoking habits could correlate with dental health issues, manifesting as anomalies in dental caries occurrence."
-description = "Determine if dental caries presence is an anomalous indicator in smokers compared to non-smokers."
-COT = "Explore categorical variable 'dental caries' using Chi-Square test to square-off differences in caries presence between smokers and non-smokers for anomaly identification."
-def test(dataset):
-    import numpy as np
-    from scipy.stats import chi2_contingency
-    
-    # Create a contingency table
-    contingency_table = pd.crosstab(dataset['smoking_status'], dataset['dental caries'])
-    
-    # Perform Chi-Square test
-    chi2_stat, p, dof, expected = chi2_contingency(contingency_table)
-    
-    # Return 1 if significant association exists
-    return 1 if p < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 9.
-insights = "Serum creatinine levels, indicative of kidney function, may show atypical distribution among smokers due to potential nephrotoxicity from smoking."
-description = "Investigate distribution discrepancies in serum creatinine levels between smokers and non-smokers."
-COT = "To discover anomalies, employ K-S test comparing serum creatinine distributions in smoker and non-smoker populations, reliant on statistical significance."
-def test(dataset):
-    import numpy as np
-    from scipy.stats import ks_2samp
-    
-    # Segregate the dataset into smokers and non-smokers
-    smokers = dataset[dataset['smoking_status'] == 1]['serum creatinine']
-    non_smokers = dataset[dataset['smoking_status'] == 0]['serum creatinine']
-    
-    # Perform the K-S test
-    ks_statistic, p_value = ks_2samp(smokers, non_smokers)
-    
-    # Return 1 if significant deviation exists
-    return 1 if p_value < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 10.
-insights = "Cholesterol level anomalies might indicate lifestyle issues, potentially affected by smoking habits."
-description = "Ascertain whether smoking status results in anomalous cholesterol level distribution."
-COT = "Utilize K-S test on cholesterol level distribution between smokers and non-smokers, aiming for significant differences to identify anomalies due to smoking."
-def test(dataset):
-    import numpy as np
-    from scipy.stats import ks_2samp
-    
-    # Segregate the dataset into smokers and non-smokers
+    # Step 2: Separate cholesterol levels
     smokers = dataset[dataset['smoking_status'] == 1]['Cholesterol']
     non_smokers = dataset[dataset['smoking_status'] == 0]['Cholesterol']
     
-    # Perform the K-S test
-    ks_statistic, p_value = ks_2samp(smokers, non_smokers)
+    # Step 3: Apply K-S Test
+    ks_stat, p_value = ks_2samp(smokers, non_smokers)
     
-    # Return 1 if significant deviation exists
-    return 1 if p_value < 0.05 else 0
+    # Step 4: Check for significant difference
+    significance_level = 0.05
+    result = 1 if p_value < significance_level else 0
+    return result
 #####
 ERROR
-'smoking_status'
+'smoking status'
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -1521,31 +1155,22 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 1.
-insights = "Smoking status might be directly influenced by cholesterol levels, as high cholesterol is a risk factor that can contribute to the development of heart diseases, potentially motivating smoking cessation."
-description = "Investigating the direct cause-effect relationship between cholesterol levels and smoking status."
-COT = "Step 1: Decide if cholesterol (continuous variable) can predict smoking status (binary variable). Step 2: Use logistic regression to model the relationship. Step 3: Interpret the logistic coefficient to check for significance. Step 4: Hypothesis is accepted if cholesterol significantly predicts smoking status."
+insights = "Higher systolic blood pressure might directly influence the smoking status of an individual."
+description = "Systolic blood pressure has a direct effect on smoking status."
+COT = "Identify that systolic blood pressure (SBP) could directly affect smoking status. To test this, divide the dataset into smokers and non-smokers and perform a t-test to see if there's a significant difference in SBP between the two groups. Test assumptions of normality and equality of variances for validity."
 def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-    
-    y = dataset['smoking_status']
-    X = dataset['Cholesterol']
-    X = sm.add_constant(X)  # Add an intercept to the model
-    
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    
-    # Extract p-value for Cholesterol coefficient
-    p_value = result.pvalues['Cholesterol']
-    significance_level = 0.05
-    result = int(p_value < significance_level)
-    
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    smokers = dataset[dataset['smoking status'] == 1]['systolic']
+    non_smokers = dataset[dataset['smoking status'] == 0]['systolic']
+    t_stat, p_value = ttest_ind(smokers, non_smokers, equal_var=False)
+    result = 1 if p_value < 0.05 else 0
     return result
 #####
 ERROR
-Error evaluating factor: NameError: name 'smoking_status' is not defined
-    smoking_status ~ age
-    ^^^^^^^^^^^^^^
+Error evaluating factor: NameError: no data named 'smoking status' found
+    Q("smoking status") ~ Q("fasting blood sugar") + Cholesterol
+    ^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -1570,32 +1195,27 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 2.
-insights = "Blood pressure may have a mediating effect on the relationship between age and smoking status, where older individuals tend to have higher blood pressure, which might influence their likelihood of smoking."
-description = "Explore whether blood pressure mediates the effect of age on smoking status."
-COT = "Step 1: Use mediation analysis. Step 2: Fit three regression models: age vs smoking, age vs blood pressure, and blood pressure vs smoking. Step 3: Calculate mediation effect. Step 4: Accept hypothesis if significant mediation is found."
+insights = "The relationship between fasting blood sugar and smoking status could be mediated by cholesterol levels."
+description = "Cholesterol levels mediate the relationship between fasting blood sugar and smoking status."
+COT = "To assess if cholesterol mediates the relationship between fasting blood sugar and smoking status: First, check fasting blood sugar's direct effect on smoking. Then, use a mediation analysis: 1) Check effect of fasting blood sugar on cholesterol, 2) Check effect of cholesterol on smoking status while controlling for fasting blood sugar."
 def test(dataset):
-    from statsmodels.formula.api import ols, logit
-    from statsmodels.stats.mediation import Mediation
     import pandas as pd
+    from statsmodels.stats.mediation import Mediation
+    from statsmodels.formula.api import ols
     
-    # Define endogenous and mediator variables
-    outcome_model = logit('smoking_status ~ age', data=dataset).fit(disp=0)
-    mediator_model = ols('systolic ~ age', data=dataset).fit(disp=0)
-    mediation = Mediation(outcome_model, mediator_model, 'age', 'systolic').fit()
+    model_y = ols('Q("smoking status") ~ Q("fasting blood sugar") + Cholesterol', data=dataset).fit()
+    model_m = ols('Cholesterol ~ Q("fasting blood sugar")', data=dataset).fit()
     
-    direct_effect = mediation.direct_effect('age')
-    indirect_effect = mediation.indirect_effect('age')
+    mediation = Mediation(model_y, model_m, exposure='Q("fasting blood sugar")', mediator='Cholesterol')
+    med_results = mediation.fit()
     
-    significance_level = 0.05
-    
-    result = int(max(direct_effect.pvalue, indirect_effect.pvalue) < significance_level)
-    
+    result = 1 if med_results.pvalue < 0.05 else 0
     return result
 #####
 ERROR
-Error evaluating factor: NameError: name 'smoking_status' is not defined
-    smoking_status ~ age * hearing(left)
-    ^^^^^^^^^^^^^^
+Error evaluating factor: NameError: no data named 'smoking status' found
+    Q("smoking status") ~ age + Q("serum creatinine") + interaction
+    ^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -1620,419 +1240,23 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 3.
-insights = "Hearing ability might moderate the relationship between age and smoking status. As people age, hearing ability may decrease, potentially influencing their smoking habits or cessation probability."
-description = "Assess whether hearing ability moderates the age-smoking relationship."
-COT = "Step 1: Fit interaction term model with age and hearing ability predicting smoking status. Step 2: Check significance of interaction. Step 3: Accept hypothesis if interaction is significant."
+insights = "The impact of age on smoking status changes at different levels of serum creatinine."
+description = "Serum creatinine moderates the relationship between age and smoking status."
+COT = "To determine if serum creatinine moderates the effect of age on smoking status, perform a moderated regression analysis. Create interaction terms between age and serum creatinine and check if it's statistically significant."
 def test(dataset):
-    import statsmodels.formula.api as smf
-    
-    formula = 'smoking_status ~ age * hearing(left)'
-    model = smf.logit(formula, data=dataset).fit(disp=0)
-    
-    interaction_pvalue = model.pvalues['age:hearing(left)']
-    significance_level = 0.05
-    
-    result = int(interaction_pvalue < significance_level)
-    
-    return result
-#####
-ERROR
-Error evaluating factor: NameError: name 'smoking_status' is not defined
-    smoking_status ~ triglyceride
-    ^^^^^^^^^^^^^^
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 4.
-insights = "High levels of triglyceride might indirectly cause higher smoking status through increased LDL cholesterol."
-description = "Evaluate if the effect of triglyceride on smoking status is mediated by LDL levels."
-COT = "Step 1: Model relationship between triglyceride and smoking, triglyceride and LDL, and LDL and smoking. Step 2: Evaluate indirect effect through LDL. Step 3: Accept hypothesis if indirect effect significant."
-def test(dataset):
-    from statsmodels.stats.mediation import Mediation
-    import statsmodels.formula.api as smf
-    
-    outcome_model = smf.logit('smoking_status ~ triglyceride', data=dataset).fit(disp=0)
-    mediator_model = smf.ols('LDL ~ triglyceride', data=dataset).fit(disp=0)
-    mediation_analysis = Mediation(outcome_model, mediator_model, 'triglyceride', 'LDL').fit()
-    
-    significance_level = 0.05
-    indirect_effect_p = mediation_analysis.indirect_effect('triglyceride').pvalue
-    
-    result = int(indirect_effect_p < significance_level)
-    
-    return result
-#####
-ERROR
-invalid syntax (<unknown>, line 1)
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 5.
-insights = "Age-related changes in serum creatinine might have effects on smoking status."
-description = "Investigate if age-related effects on smoking status are moderated by serum creatinine levels."
-COT = "Step 1: Fit logistic regression model with interaction between age and serum creatinine. Step 2: Test interaction significance. Step 3: Accept if interaction significantly affects smoking prediction."
-def test(dataset):
-    import statsmodels.formula.api as smf
-    
-    formula = 'smoking_status ~ age * serum creatinine'
-    model = smf.logit(formula, data=dataset).fit(disp=0)
-    
-    p_value = model.pvalues['age:serum creatinine']
-    significance_level = 0.05
-    
-    result = int(p_value < significance_level)
-    
-    return result
-#####
-ERROR
-Error evaluating factor: NameError: name 'smoking_status' is not defined
-    smoking_status ~ fasting_blood_sugar * dental_caries
-    ^^^^^^^^^^^^^^
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 6.
-insights = "The combined effect of fasting blood sugar and dental caries might affect smoking status disproportionately than the additive effects of each alone."
-description = "Test if there is an interaction effect of fasting blood sugar and dental caries on smoking status."
-COT = "Step 1: Include interaction of fasting blood sugar and dental caries in logistic regression. Step 2: Check if interaction term is significant. Step 3: Accept if significant interaction is found."
-def test(dataset):
-    import statsmodels.formula.api as smf
-    
-    formula = 'smoking_status ~ fasting_blood_sugar * dental_caries'
-    model = smf.logit(formula, data=dataset).fit(disp=0)
-    
-    interaction_pvalue = model.pvalues['fasting_blood_sugar:dental_caries']
-    significance_level = 0.05
-    
-    result = int(interaction_pvalue < significance_level)
-    
-    return result
-#####
-ERROR
-Error evaluating factor: NameError: name 'smoking_status' is not defined
-    hemoglobin ~ smoking_status
-                 ^^^^^^^^^^^^^^
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 7.
-insights = "Hemoglobin levels might have a reverse causation effect on smoking status, i.e., smoking could directly affect hemoglobin levels."
-description = "Evaluate the possibility that smoking status affects hemoglobin levels instead of the reverse."
-COT = "Step 1: Use linear regression to model hemoglobin as a function of smoking status. Step 2: Test significance of smoking status coefficient. Step 3: Accept if significant effect of smoking on hemoglobin is observed."
-def test(dataset):
-    import statsmodels.formula.api as smf
-    
-    formula = 'hemoglobin ~ smoking_status'
-    model = smf.ols(formula, data=dataset).fit(disp=0)
-    
-    p_value = model.pvalues['smoking_status']
-    significance_level = 0.05
-    
-    result = int(p_value < significance_level)
-    
-    return result
-#####
-Investigate a temporal causation effect where cholesterol predicts future triglyceride levels, impacting smoking status.
-INSIGHTS: Cholesterol levels may predict triglyceride levels over time, influencing smoking status as a result.
-1
-####################
-COT:Step 1: Time series or panel data required for precise time-lagged modeling. Step 2: Use linear regression to predict triglyceride levels from cholesterol. Step 3: Accept if cholesterol significantly predicts triglyceride levels.ERROR
-Error evaluating factor: NameError: name 'urine_protein' is not defined
-    smoking_status ~ urine_protein + Gtp + systolic + Cholesterol
-                     ^^^^^^^^^^^^^
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 9.
-insights = "Urine protein and GTP levels might be confounded by an external cause, affecting smoking status interpretation."
-description = "Assess if a third variable, acting as a confounder, impacts the relationship between urine protein and GTP levels and their effects on smoking status."
-COT = "Step 1: Identify potential confounder. Step 2: Adjust confounder in regression analysis of smoking status concerning urine protein and GTP. Step 3: Accept if confounder presence significantly alters the effects."
-def test(dataset):
-    import statsmodels.formula.api as smf
-    # Simplified approach without precise confounder identification
-    formula = 'smoking_status ~ urine_protein + Gtp + systolic + Cholesterol'
-    model = smf.logit(formula, data=dataset).fit(disp=0)
-    
-    p_values = model.pvalues[['urine_protein', 'Gtp']]
-    significance_level = 0.05
-    
-    result = int(all(p < significance_level for p in p_values))
-    
-    return result
-#####
-ERROR
-'fasting_blood_sugar'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 10.
-insights = "High fasting blood sugar levels exert significant effects on smoking status only when above a certain threshold."
-description = "Explore threshold effect of fasting blood sugar affecting smoking status."
-COT = "Step 1: Identify fasting blood sugar threshold using visual methods or split-sample. Step 2: Logit regression for subsets around threshold. Step 3: Accept hypothesis if threshold significantly changes effect."
-def test(dataset):
-    import numpy as np
     import pandas as pd
-    import statsmodels.api as sm
+    from statsmodels.formula.api import ols
     
-    # Define threshold
-    threshold = np.percentile(dataset['fasting_blood_sugar'], 75)
+    dataset['interaction'] = dataset['age'] * dataset['serum creatinine']
+    model = ols('Q("smoking status") ~ age + Q("serum creatinine") + interaction', data=dataset).fit()
     
-    # High vs Low FBS groups
-    dataset['high_fbs'] = (dataset['fasting_blood_sugar'] > threshold).astype(int)
-    
-    y = dataset['smoking_status']
-    X = dataset['high_fbs']
-    X = sm.add_constant(X)
-    
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    
-    p_value = result.pvalues['high_fbs']
-    significance_level = 0.05
-    
-    result = int(p_value < significance_level)
-    
+    result = 1 if model.pvalues['interaction'] < 0.05 else 0
     return result
 #####
 ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 1.
-insights = "Individuals with high blood pressure might have latent cardiovascular risk factors affecting their smoking status."
-description = "This hypothesis explores whether latent cardiovascular risk factors, such as overall heart health, influence an individual's smoking status based on their blood pressure readings."
-COT = "To test the hypothesis that a latent variable (cardiovascular risk) affects smoking status based on blood pressure readings, we should check if there's a significant correlation between blood pressure metrics and smoking status. We'll use regression analysis to determine if there's a relationship. If the regression is significant, it suggests that cardiovascular risk factors influence smoking habits."
-def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['systolic', 'relaxation']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 2.
-insights = "Visual health might be influenced by latent lifestyle-related risk factors that also affect smoking status."
-description = "This hypothesis assesses whether latent lifestyle-related factors, possibly including diet or exercise habits, are connected to both eyesight and smoking status."
-COT = "Investigate the relationship between eyesight metrics and smoking status, proposing that latent lifestyle factors simultaneously impact both. We'll use correlation analysis between eyesight metrics and smoking status to see if these are related significantly. A significant outcome would indicate shared lifestyle influences."
-def test(dataset):
-    from scipy.stats import pearsonr
-    corr_left, p_left = pearsonr(dataset['eyesight(left)'], dataset['smoking_status'])
-    corr_right, p_right = pearsonr(dataset['eyesight(right)'], dataset['smoking_status'])
-    return 1 if p_left < 0.05 and p_right < 0.05 else 0
-#####
-ERROR
-'smoking_status'
-
-# Data manipulation and analysis
-from scipy.stats import chi2_contingency
-import scipy.stats
-import numpy as np
-import pandas as pd
-# Machine learning models and preprocessing
-from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-from sklearn.pipeline import Pipeline
-# Commonly used machine learning algorithms
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-from sklearn.svm import SVC, SVR
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from sklearn.naive_bayes import GaussianNB
-from sklearn.cluster import KMeans
-# Model evaluation metrics
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-# Dimensionality reduction
-from sklearn.decomposition import PCA
-
-# Hypothesis 3.
-insights = "Hearing impairment might be a reflection of latent health issues influencing smoking habits."
-description = "This hypothesis explores whether latent health issues that could cause both hearing impairment and influence smoking status exist."
-COT = "Analyze the association between hearing impairment and smoking habits, suggesting that underlying health issues might influence both. Use logistic regression to see if hearing metrics significantly predict smoking status. A significant regression indicates shared latent health factors affecting both."
-def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['hearing(left)', 'hearing(right)']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
-#####
-ERROR
-'smoking_status'
+Error evaluating factor: NameError: no data named 'smoking status' found
+    Q("smoking status") ~ hemoglobin + triglyceride
+    ^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -2057,23 +1281,27 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 4.
-insights = "There might be latent metabolic factors affecting both cholesterol/triglyceride levels and smoking status."
-description = "This hypothesis examines whether latent metabolic factors are influencing both cholesterol/triglyceride levels and an individual's smoking status."
-COT = "Evaluate the correlation between cholesterol levels and smoking status, suggesting latent metabolic factors. We'll use logistic regression to test if cholesterol metrics predict smoking habits. A significant prediction indicates shared metabolic influences."
+insights = "Higher triglyceride levels might influence smoking status indirectly through changes in hemoglobin levels."
+description = "The effect of triglycerides on smoking status is mediated through hemoglobin levels."
+COT = "Check the causal path: 1) Triglycerides impact on hemoglobin, 2) Hemoglobin impact on smoking status, apply mediation analysis."
 def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['Cholesterol', 'triglyceride', 'HDL', 'LDL']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
+    import pandas as pd
+    from statsmodels.stats.mediation import Mediation
+    from statsmodels.formula.api import ols
+    
+    model_y = ols('Q("smoking status") ~ hemoglobin + triglyceride', data=dataset).fit()
+    model_m = ols('hemoglobin ~ triglyceride', data=dataset).fit()
+    
+    mediation = Mediation(model_y, model_m, exposure='triglyceride', mediator='hemoglobin')
+    med_results = mediation.fit()
+    
+    result = 1 if med_results.pvalue < 0.05 else 0
+    return result
 #####
 ERROR
-'smoking_status'
+Error evaluating factor: NameError: no data named 'smoking status' found
+    Q("smoking status") ~ Cholesterol
+    ^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -2098,23 +1326,23 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 5.
-insights = "Protein levels in urine might be indicative of latent renal function issues influencing smoking behavior."
-description = "This hypothesis investigates if latent renal function issues, indicated by protein levels in urine, could influence an individual's smoking status."
-COT = "Investigate the potential link between protein levels in urine and smoking status as a reflection of renal health. Use logistic regression to assess if urine protein significantly predicts smoking status, indicating shared renal health influences."
+insights = "There is a potential cause-effect chain where high LDL causes high cholesterol levels, which may lead to smoking."
+description = "LDL leads to higher cholesterol, both of which influence smoking."
+COT = "Evaluate stepwise: 1) LDL's effect on cholesterol via regression, 2) Cholesterol's effect on smoking. Expect each link significant to accept the hypothesis."
 def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['Urine protein']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
+    import pandas as pd
+    from statsmodels.formula.api import ols
+    
+    model_cholesterol = ols('Cholesterol ~ LDL', data=dataset).fit()
+    model_smoking = ols('Q("smoking status") ~ Cholesterol', data=dataset).fit()
+    
+    result = 1 if model_cholesterol.pvalues['LDL'] < 0.05 and model_smoking.pvalues['Cholesterol'] < 0.05 else 0
+    return result
 #####
 ERROR
-'smoking_status'
+Error evaluating factor: NameError: no data named 'smoking status' found
+    Q("smoking status") ~ Q("eyesight(left)") + Q("eyesight(right)")
+    ^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -2139,23 +1367,23 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 6.
-insights = "The balance between specific liver enzymes might reflect latent hepatic health issues impacting smoking habits."
-description = "This hypothesis considers whether latent liver health issues, as represented by certain enzymes, may impact smoking status."
-COT = "Focus on liver enzyme levels' relationship with smoking habits as indicators of hepatic health. Use regression analysis to assess if enzyme levels (AST, ALT, Gtp) are significant predictors of smoking status, supporting latent hepatic health effects."
+insights = "Smoking status and eyesight problems could have reciprocal causation, where eyesight issues influence smoking and vice versa."
+description = "Reciprocal relationship between smoking and eyesight issues."
+COT = "Check if eyesight predicts smoking and smoking predicts eyesight. Use regression analysis each way and test for significance in both directions."
 def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['AST', 'ALT', 'Gtp']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
+    import pandas as pd
+    from statsmodels.formula.api import ols
+    
+    model_smoking_eyesight = ols('Q("smoking status") ~ Q("eyesight(left)") + Q("eyesight(right)")', data=dataset).fit()
+    model_eyesight_smoking = ols('Q("eyesight(left)") + Q("eyesight(right)") ~ Q("smoking status")', data=dataset).fit()
+    
+    result = 1 if model_smoking_eyesight.pvalues.min() < 0.05 and model_eyesight_smoking.pvalues.min() < 0.05 else 0
+    return result
 #####
 ERROR
-'smoking_status'
+Error evaluating factor: NameError: no data named 'smoking status' found
+    Q("smoking status") ~ LDL + HDL + interaction
+    ^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -2180,23 +1408,23 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 7.
-insights = "Blood sugar levels in conjunction with age may indicate a latent diabetic condition impacting smoking habits."
-description = "This hypothesis explores the idea that latent diabetic conditions, as suggested by blood sugar levels and age, influence smoking status."
-COT = "We can analyze fasting blood sugar and age in predicting smoking status to explore the latent diabetic condition. A regression approach will show if these factors jointly predict smoking status, suggesting latent diabetic influences."
+insights = "The interaction of LDL and HDL cholesterol levels might affect smoking status, where the effect is amplified when both are low."
+description = "Interaction of LDL and HDL influences smoking status."
+COT = "Create an interaction between LDL and HDL. Model smoking on LDL, HDL, and their interaction. If interaction term is significant, it validates the hypothesis."
 def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['fasting blood sugar', 'age']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
+    import pandas as pd
+    from statsmodels.formula.api import ols
+    
+    dataset['interaction'] = dataset['LDL'] * dataset['HDL']
+    model = ols('Q("smoking status") ~ LDL + HDL + interaction', data=dataset).fit()
+    
+    result = 1 if model.pvalues['interaction'] < 0.05 else 0
+    return result
 #####
 ERROR
-'smoking_status'
+Error evaluating factor: NameError: no data named 'smoking status' found
+    Q("smoking status") ~ Q("dental caries")
+    ^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -2221,23 +1449,22 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 8.
-insights = "Dental health, as indicated by caries, might be affected by latent factors that also promote smoking."
-description = "This hypothesis investigates whether latent factors influencing dental health, like caries, are associated with smoking status."
-COT = "To test if smoking and dental caries show a linked latent factor, we examine the correlation and causation aspects. Use regression to test if dental caries predict smoking status. Significance would indicate shared influences impacting both."
+insights = "High dental caries preceding smoking could predict future smoking status due to stress habits."
+description = "Dental caries predict future smoking status via stress."
+COT = "Establish predictive causation using past occurrence of dental caries to predict smoking initiation. Use logistic regression to check caries' predictive power, considering temporal separation if applicable."
 def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['dental caries']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
+    import pandas as pd
+    from statsmodels.formula.api import logit
+    
+    model = logit('Q("smoking status") ~ Q("dental caries")', data=dataset).fit()
+    
+    result = 1 if model.pvalues['Q("dental caries")'] < 0.05 else 0
+    return result
 #####
 ERROR
-'smoking_status'
+Error evaluating factor: NameError: no data named 'smoking status' found
+    Q("smoking status") ~ high_systolic
+    ^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -2262,23 +1489,25 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 9.
-insights = "Levels of hemoglobin can be affected by latent factors affecting an individual's smoking behavior."
-description = "This hypothesis considers if variations in hemoglobin levels, potentially due to latent physiological conditions, correlate with smoking status."
-COT = "Test the effect of hemoglobin levels on smoking status to uncover potential physiological latent factors. Conduct regression analysis between hemoglobin and smoking status. A significant relationship could indicate latent health factors affecting both."
+insights = "Systolic blood pressure affects smoking status only above a certain threshold."
+description = "Threshold effect of systolic blood pressure on smoking status."
+COT = "Evaluate if there's a non-linear relationship or threshold where SBP only affects smoking above a specific value. Use a segmented regression allowing for change at a hypothesized threshold."
 def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['hemoglobin']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
+    import pandas as pd
+    import statsmodels.formula.api as smf
+    
+    threshold = dataset['systolic'].mean()
+    dataset['high_systolic'] = (dataset['systolic'] > threshold).astype(int)
+    
+    model = smf.ols('Q("smoking status") ~ high_systolic', data=dataset).fit()
+    
+    result = 1 if model.pvalues['high_systolic'] < 0.05 else 0
+    return result
 #####
 ERROR
-'smoking_status'
+Error evaluating factor: NameError: no data named 'stress_indicator' found
+    Q("smoking status") ~ Q("urine protein") + Q(possible_confounder)
+                                               ^^^^^^^^^^^^^^^^^^^^^^
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -2303,44 +1532,76 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 10.
-insights = "Serum creatinine levels might indicate latent renal health factors also influencing smoking choices."
-description = "This hypothesis explores whether serum creatinine levels, reflecting latent renal health issues, have a connection with smoking status."
-COT = "To determine if smoking behaviors link to latent renal health issues via creatinine levels, use regression analysis. By examining this relationship statistically, we can reveal potential latent renal factors."
+insights = "Urine protein levels might not affect smoking status directly but through a shared factor like stress reflected in certain biological measures."
+description = "Spurious relationship between urine protein and smoking status due to a confounding variable."
+COT = "Look for correlations between urine protein and potential confounders, then check if the correlation with smoking disappears when controlling for the confounder using multiple regression."
 def test(dataset):
-    import statsmodels.api as sm
-    import numpy as np
-
-    X = dataset[['serum creatinine']].values
-    y = dataset['smoking_status'].values
-    X = sm.add_constant(X)
-    model = sm.Logit(y, X)
-    result = model.fit(disp=0)
-    p_values = result.pvalues
-    return 1 if np.all(p_values < 0.05) else 0
+    import pandas as pd
+    from statsmodels.formula.api import ols
+    
+    possible_confounder = 'stress_indicator' # assuming a column
+    model = ols('Q("smoking status") ~ Q("urine protein") + Q(possible_confounder)', data=dataset).fit()
+    
+    urine_model = ols('Q("smoking status") ~ Q("urine protein")', data=dataset).fit()
+    
+    result = 1 if urine_model.pvalues['Q("urine protein")'] < 0.05 and model.pvalues['Q("urine protein")'] > 0.05 else 0
+    return result
 #####
+We hypothesize that a latent cardiovascular health variable influences both observable health markers and smoking status.
+INSIGHTS: There might be a latent variable representing general cardiovascular health, which influences eyesight, blood pressure, and cholesterol levels, ultimately impacting smoking status.
+0
 ####################
+COT:To test the existence of a latent cardiovascular health variable, I will use factor analysis to identify common loading factors among variables like systolic blood pressure, eyesight, and cholesterol levels. The hypothesis is supported if these variables cluster together significantly.We suggest a latent variable related to metabolism affects fasting blood sugar, triglyceride levels, and smoking status.
+INSIGHTS: Blood sugar and triglyceride levels might be affected by an underlying latent metabolic factor, influencing both these markers and smoking status.
+0
+####################
+COT:Investigating a latent metabolic factor involves examining correlations between fasting blood sugar and triglycerides, using factor analysis to detect a common factor. Significant clustering would support this hypothesis.We propose that a latent sensory health variable influences hearing ability and smoking status.
+INSIGHTS: Hearing ability might be part of a latent sensory health factor that affects smoking status.
+0
+####################
+COT:To test sensory health as a latent factor, I'll check loading of hearing and eyesight capabilities in a factor analysis. High loading would suggest this latent factor.There is a potential latent variable related to liver health, impacting enzyme levels and smoking status.
+INSIGHTS: A latent liver function health factor could relate to enzymes like ALT, AST, GTP, impacting smoking status.
+0
+####################
+COT:Testing a latent liver function involves factor analysis on enzyme levels (ALT, AST, GTP). Consistent loading on a factor demonstrates a potential hidden relationship influencing smoking status.A latent kidney health variable could influence proteinuria and smoking status, indicating a health risk associated with smoking.
+INSIGHTS: Proteinuria (protein levels in urine) might be related to a latent kidney health factor affecting smoking.
+0
+####################
+COT:To test the latent variable involving kidney health, examine if protein levels show patterns suggesting underlying health factors—noting statistical significance in their variance patterns via other health markers.We hypothesize latent age-dependent health groups exist, impacting health markers and smoking status.
+INSIGHTS: Latent groupings by age might exist which influence health and smoking variability due to generational habits.
+1
+####################
+COT:Testing latent age group effects uses latent class analysis to examine variance in health factors and smoking patterns by age groups, supporting the hypothesis if distinct patterns emerge.Dental health, such as the presence of cavities, could reflect a latent health factor influencing smoking likelihood, suggesting more preventative care schemes.
+INSIGHTS: A latent protection factor related to dental health might protect against the likelihood of being a smoker.
+1
+####################
+COT:Using latent variable analysis on dental health, particularly focusing on dental caries, can disclose links between dental care practices and smoking probability.We expect a latent factor affecting hemoglobin and positively related indicators like overall vitality to impact smoking status.
+INSIGHTS: Hemoglobin levels may be influenced by an underlying latent oxygen-carrying capacity variable, related to smoking.
+1
+####################
+COT:Testing if hemoglobin signals a latent factor affecting smoking involves evaluating its correlation and clustering with other blood health variables using factor analysis.Heart health indicators like blood pressure and cholesterol might interact as latent variables affecting smoking habits, revealing pressure points for health interventions.
+INSIGHTS: Latent variable interactions between heart health variables may impact smoking status decision, revealing indirect health implications.
+1
+####################
+COT:Testing interactions in heart health latent effects involves multi-dimensional factor analysis. Identifying significant combined loading across BP and cholesterol validates this hypothesis.An unobserved socio-environmental factor could alter the latent variable structures influencing health markers and smoking status over different periods.
+INSIGHTS: External socio-environmental variables, though not directly observed, might influence latent structures affecting health data consistency over time.
+0
+####################
+COT:Testing for socio-environmental latent influences involves time series or cross-sectional invariance checks, identifying shifts in factor loadings across periods or sub-groups.####################
 HYPOTHESIS RESULTS:
-[('This hypothesis tests whether there are any significant outliers in the age variable of the dataset.', 1), ('This hypothesis investigates whether there are outliers in the eyesight(left) and eyesight(right) variables.', 1), ('This hypothesis examines if there are significant outliers in hearing(left) and hearing(right) measurements.', 1), ('This hypothesis evaluates whether there are outliers in fasting blood sugar levels.', 1), ('This hypothesis looks for outliers in triglyceride levels.', 1), ('This hypothesis scrutinizes HDL levels for possible outliers.', 1), ('This hypothesis tests for outliers in LDL cholesterol levels.', 1), ('This hypothesis pinpoints outliers in the GTP levels that might have implications on liver health.', 1), ('Investigate a temporal causation effect where cholesterol predicts future triglyceride levels, impacting smoking status.', 1)]
+[('Outliers in systolic blood pressure may indicate individuals with extreme blood pressure levels who could have higher health risks. These individuals might have different smoking status group patterns.', 1), ('Outliers in fasting blood sugar levels might indicate uncontrolled diabetes, potentially affecting smoking habits or reporting.', 1), ('Multivariate outliers across blood lipids (Cholesterol, HDL, LDL) may uncover individuals with unique cardiovascular profiles, possibly influencing smoking status.', 1), ('Outliers in triglyceride levels can highlight individuals with unique metabolic profiles that may influence their smoking behaviors.', 1), ('Evaluating abnormal gamma-GTP levels might reflect liver dysfunctions or alcohol use, potentially affecting smoking status.', 1), ('Outlying creatinine levels may signal kidney dysfunction potentially associated with distinct smoking behavior.', 1), ("Applying Isolation Forest to the dataset may help in identifying individuals whose health indicators significantly deviate from the population norm. These deviations might suggest underlying health issues linked to smoking, such as potential misreporting or extreme cases that don't fit typical health trends.", 0), ('There might be a latent variable representing general cardiovascular health, which influences eyesight, blood pressure, and cholesterol levels, ultimately impacting smoking status.', 0), ('Blood sugar and triglyceride levels might be affected by an underlying latent metabolic factor, influencing both these markers and smoking status.', 0), ('Hearing ability might be part of a latent sensory health factor that affects smoking status.', 0), ('A latent liver function health factor could relate to enzymes like ALT, AST, GTP, impacting smoking status.', 0), ('Proteinuria (protein levels in urine) might be related to a latent kidney health factor affecting smoking.', 0), ('Latent groupings by age might exist which influence health and smoking variability due to generational habits.', 1), ('A latent protection factor related to dental health might protect against the likelihood of being a smoker.', 1), ('Hemoglobin levels may be influenced by an underlying latent oxygen-carrying capacity variable, related to smoking.', 1), ('Latent variable interactions between heart health variables may impact smoking status decision, revealing indirect health implications.', 1), ('External socio-environmental variables, though not directly observed, might influence latent structures affecting health data consistency over time.', 0)]
 
 
 
 ####################
 CLEANED HYPOTHESIS RESULTS:
-[('This hypothesis tests whether there are any significant outliers in the age variable of the dataset.', 1), ('This hypothesis investigates whether there are outliers in the eyesight(left) and eyesight(right) variables.', 1), ('This hypothesis examines if there are significant outliers in hearing(left) and hearing(right) measurements.', 1), ('This hypothesis evaluates whether there are outliers in fasting blood sugar levels.', 1), ('This hypothesis looks for outliers in triglyceride levels.', 1), ('This hypothesis scrutinizes HDL levels for possible outliers.', 1), ('This hypothesis tests for outliers in LDL cholesterol levels.', 1), ('This hypothesis pinpoints outliers in the GTP levels that might have implications on liver health.', 1), ('Investigate a temporal causation effect where cholesterol predicts future triglyceride levels, impacting smoking status.', 1)]
-Len: 9
+[('Outliers in systolic blood pressure may indicate individuals with extreme blood pressure levels who could have higher health risks. These individuals might have different smoking status group patterns.', 1), ('Outliers in fasting blood sugar levels might indicate uncontrolled diabetes, potentially affecting smoking habits or reporting.', 1), ('Multivariate outliers across blood lipids (Cholesterol, HDL, LDL) may uncover individuals with unique cardiovascular profiles, possibly influencing smoking status.', 1), ('Outliers in triglyceride levels can highlight individuals with unique metabolic profiles that may influence their smoking behaviors.', 1), ('Evaluating abnormal gamma-GTP levels might reflect liver dysfunctions or alcohol use, potentially affecting smoking status.', 1), ('Outlying creatinine levels may signal kidney dysfunction potentially associated with distinct smoking behavior.', 1), ("Applying Isolation Forest to the dataset may help in identifying individuals whose health indicators significantly deviate from the population norm. These deviations might suggest underlying health issues linked to smoking, such as potential misreporting or extreme cases that don't fit typical health trends.", 0), ('There might be a latent variable representing general cardiovascular health, which influences eyesight, blood pressure, and cholesterol levels, ultimately impacting smoking status.', 0), ('Blood sugar and triglyceride levels might be affected by an underlying latent metabolic factor, influencing both these markers and smoking status.', 0), ('Hearing ability might be part of a latent sensory health factor that affects smoking status.', 0), ('A latent liver function health factor could relate to enzymes like ALT, AST, GTP, impacting smoking status.', 0), ('Proteinuria (protein levels in urine) might be related to a latent kidney health factor affecting smoking.', 0), ('Latent groupings by age might exist which influence health and smoking variability due to generational habits.', 1), ('A latent protection factor related to dental health might protect against the likelihood of being a smoker.', 1), ('Hemoglobin levels may be influenced by an underlying latent oxygen-carrying capacity variable, related to smoking.', 1), ('Latent variable interactions between heart health variables may impact smoking status decision, revealing indirect health implications.', 1), ('External socio-environmental variables, though not directly observed, might influence latent structures affecting health data consistency over time.', 0)]
+Len: 17
 
 
 
 ####################
-HYPOTHESIS TEXT:
-Here are the rewritten hypotheses as text:
-
-1. The hypothesis tests whether there are any significant outliers in the age variable of the dataset.
-2. The hypothesis investigates whether outliers exist in the eyesight measurements of both the left and right eyes.
-3. The hypothesis examines if there are significant outliers in the measurements of hearing for both the left and right ears.
-4. The hypothesis evaluates whether there are outliers in fasting blood sugar levels.
-5. The hypothesis looks for outliers in triglyceride levels.
-6. The hypothesis scrutinizes HDL levels for possible outliers.
-7. The hypothesis tests for outliers in LDL cholesterol levels.
-8. The hypothesis identifies outliers in GTP levels that might have implications for liver health.
-9. The hypothesis investigates a temporal causation effect where cholesterol levels predict future triglyceride levels, impacting smoking status.
+HYPOTHESIS DICTIONARY:
+{'General Hypothesis': ['Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.', 'Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.', 'Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.', 'Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.', 'Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.', 'Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.', 'Chi-Square Test for Independence: Test if two categorical variables are independent.', 'ANOVA (Analysis of Variance): Compare the means across multiple groups.', 'Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.', 'Normality Tests: Test if the distribution of a variable follows a normal distribution.', 'Homogeneity Tests: Determine if different samples come from populations with the same distribution.', 'Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.', 'Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.', 'Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.', 'Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.', 'Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.'], 'Clustering Hypothesis': ['Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.', 'Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.', 'Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.', 'Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.', 'Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.', 'Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.', 'Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.'], 'Outlier Detection': ['Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.', 'Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).', 'Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.', 'Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.', 'DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.'], 'Anomaly Detection': ['Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.', 'Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.', 'Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.', 'Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.', 'Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.', 'Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.'], 'Cause-Effect Relationships': ['Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.', 'Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.', 'Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.', 'Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.', 'Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.', 'Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.', 'Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.', 'Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.', 'Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.', 'Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.', 'Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.', 'Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.', 'Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.', 'Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.', 'Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.'], 'Latent Variable Hypotheses': ['Latent variable hypotheses explore relationships involving unobserved or hidden variables that help explain observed data structure. These hypotheses assist in understanding complex constructs, revealing deeper relationships that may not be directly measurable.', 'Existence of Latent Variable Hypothesis: Test for the presence of unobserved variables that influence observed patterns, suggesting an underlying factor.', 'Latent Variable-Observable Variable Association Hypothesis: Assess if latent variables associate with specific observable variables, clarifying hidden structure.', 'Factorial Structure Hypothesis: Test if observed variables load onto a smaller number of latent factors, suggesting a factorial structure.', 'Dimensionality Hypothesis: Explore if the dataset’s variance can be explained by a limited number of latent dimensions, indicating reduced complexity.', 'Latent Class or Group Hypothesis: Investigate if hidden classes or groups exist within the data, revealing categorical latent structures.', 'Measurement Invariance Hypothesis: Test if latent variables maintain consistent relationships across different groups, ensuring validity in comparisons.', 'Predictive Power of Latent Variable Hypothesis: Assess if latent variables can predict specific outcomes, indicating their impact on observed data.', 'Latent Growth Hypothesis: Analyze if changes in latent variables over time explain longitudinal data trends.', 'Construct Validity Hypothesis: Test if observed variables accurately measure the latent constructs they are meant to represent.', 'Latent Variable Mediation Hypothesis: Investigate if latent variables mediate relationships between observed variables, clarifying indirect pathways.', 'Residualized Latent Variable Hypothesis: Assess if latent variables, after controlling for observable variables, still impact outcomes.', 'Interaction of Latent Variables Hypothesis: Test if interactions among latent variables affect observed outcomes, indicating interdependent hidden factors.', 'Latent Trait Distribution Hypothesis: Explore the distribution of latent traits within the population, identifying variance in unobserved characteristics.', 'Latent Structure Instability Hypothesis: Test if the structure of latent variables shifts over time or across samples, suggesting structural variability.', 'Effect of External Variable on Latent Structure Hypothesis: Investigate if external variables affect the structure or interpretation of latent variables.', 'Higher-Order Latent Variable Hypothesis: Test if multiple latent variables combine into a second-order latent structure, adding hierarchical layers.']}
+HYPOTHESIS RESULTS:
+[('Outliers in systolic blood pressure may indicate individuals with extreme blood pressure levels who could have higher health risks. These individuals might have different smoking status group patterns.', 1), ('Outliers in fasting blood sugar levels might indicate uncontrolled diabetes, potentially affecting smoking habits or reporting.', 1), ('Multivariate outliers across blood lipids (Cholesterol, HDL, LDL) may uncover individuals with unique cardiovascular profiles, possibly influencing smoking status.', 1), ('Outliers in triglyceride levels can highlight individuals with unique metabolic profiles that may influence their smoking behaviors.', 1), ('Evaluating abnormal gamma-GTP levels might reflect liver dysfunctions or alcohol use, potentially affecting smoking status.', 1), ('Outlying creatinine levels may signal kidney dysfunction potentially associated with distinct smoking behavior.', 1), ("Applying Isolation Forest to the dataset may help in identifying individuals whose health indicators significantly deviate from the population norm. These deviations might suggest underlying health issues linked to smoking, such as potential misreporting or extreme cases that don't fit typical health trends.", 0), ('There might be a latent variable representing general cardiovascular health, which influences eyesight, blood pressure, and cholesterol levels, ultimately impacting smoking status.', 0), ('Blood sugar and triglyceride levels might be affected by an underlying latent metabolic factor, influencing both these markers and smoking status.', 0), ('Hearing ability might be part of a latent sensory health factor that affects smoking status.', 0), ('A latent liver function health factor could relate to enzymes like ALT, AST, GTP, impacting smoking status.', 0), ('Proteinuria (protein levels in urine) might be related to a latent kidney health factor affecting smoking.', 0), ('Latent groupings by age might exist which influence health and smoking variability due to generational habits.', 1), ('A latent protection factor related to dental health might protect against the likelihood of being a smoker.', 1), ('Hemoglobin levels may be influenced by an underlying latent oxygen-carrying capacity variable, related to smoking.', 1), ('Latent variable interactions between heart health variables may impact smoking status decision, revealing indirect health implications.', 1), ('External socio-environmental variables, though not directly observed, might influence latent structures affecting health data consistency over time.', 0)]

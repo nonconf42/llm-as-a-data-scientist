@@ -65,3 +65,806 @@ description = "[description for hypothesis 10]"
 COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
 [test() for hypothesis 10]
 '''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is smoking dataset. The goal is to predict an individual's smoking status based on various
+health indicators.
+This is binary classification task.
+Below is the data description in the format -  Variable (definition):
+
+age (Age of the individual, measured in 5-year gaps)
+eyesight(left) (Eyesight measurement for the left eye)
+eyesight(right) (Eyesight measurement for the right eye)
+hearing(left) (Hearing ability of the left ear)
+hearing(right) (Hearing ability of the right ear)
+systolic (Systolic blood pressure measurement)
+relaxation (Diastolic blood pressure measurement)
+fasting blood sugar (Blood sugar level measured after fasting)
+Cholesterol (Total cholesterol level in the blood)
+triglyceride (Triglyceride level in the blood)
+HDL (High-density lipoprotein cholesterol level)
+LDL (Low-density lipoprotein cholesterol level)
+hemoglobin (Hemoglobin level in the blood)
+Urine protein (Protein level in the urine)
+serum creatinine (Creatinine level in the blood serum)
+AST (Aspartate aminotransferase (glutamic oxaloacetic transaminase) level)
+ALT (Alanine aminotransferase (glutamic pyruvic transaminase) level)
+Gtp (Gamma-glutamyl transpeptidase (γ-GTP) level)
+dental caries (Indicates the presence of dental cavities)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the Cause-Effect Relationships.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is smoking dataset. The goal is to predict an individual's smoking status based on various
+health indicators.
+This is binary classification task.
+Below is the data description in the format -  Variable (definition):
+
+age (Age of the individual, measured in 5-year gaps)
+eyesight(left) (Eyesight measurement for the left eye)
+eyesight(right) (Eyesight measurement for the right eye)
+hearing(left) (Hearing ability of the left ear)
+hearing(right) (Hearing ability of the right ear)
+systolic (Systolic blood pressure measurement)
+relaxation (Diastolic blood pressure measurement)
+fasting blood sugar (Blood sugar level measured after fasting)
+Cholesterol (Total cholesterol level in the blood)
+triglyceride (Triglyceride level in the blood)
+HDL (High-density lipoprotein cholesterol level)
+LDL (Low-density lipoprotein cholesterol level)
+hemoglobin (Hemoglobin level in the blood)
+Urine protein (Protein level in the urine)
+serum creatinine (Creatinine level in the blood serum)
+AST (Aspartate aminotransferase (glutamic oxaloacetic transaminase) level)
+ALT (Alanine aminotransferase (glutamic pyruvic transaminase) level)
+Gtp (Gamma-glutamyl transpeptidase (γ-GTP) level)
+dental caries (Indicates the presence of dental cavities)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Cause-Effect Relationships, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is smoking dataset. The goal is to predict an individual's smoking status based on various
+health indicators.
+This is binary classification task.
+Below is the data description in the format -  Variable (definition):
+
+age (Age of the individual, measured in 5-year gaps)
+eyesight(left) (Eyesight measurement for the left eye)
+eyesight(right) (Eyesight measurement for the right eye)
+hearing(left) (Hearing ability of the left ear)
+hearing(right) (Hearing ability of the right ear)
+systolic (Systolic blood pressure measurement)
+relaxation (Diastolic blood pressure measurement)
+fasting blood sugar (Blood sugar level measured after fasting)
+Cholesterol (Total cholesterol level in the blood)
+triglyceride (Triglyceride level in the blood)
+HDL (High-density lipoprotein cholesterol level)
+LDL (Low-density lipoprotein cholesterol level)
+hemoglobin (Hemoglobin level in the blood)
+Urine protein (Protein level in the urine)
+serum creatinine (Creatinine level in the blood serum)
+AST (Aspartate aminotransferase (glutamic oxaloacetic transaminase) level)
+ALT (Alanine aminotransferase (glutamic pyruvic transaminase) level)
+Gtp (Gamma-glutamyl transpeptidase (γ-GTP) level)
+dental caries (Indicates the presence of dental cavities)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Cause-Effect Relationships, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is smoking dataset. The goal is to predict an individual's smoking status based on various
+health indicators.
+This is binary classification task.
+Below is the data description in the format -  Variable (definition):
+
+age (Age of the individual, measured in 5-year gaps)
+eyesight(left) (Eyesight measurement for the left eye)
+eyesight(right) (Eyesight measurement for the right eye)
+hearing(left) (Hearing ability of the left ear)
+hearing(right) (Hearing ability of the right ear)
+systolic (Systolic blood pressure measurement)
+relaxation (Diastolic blood pressure measurement)
+fasting blood sugar (Blood sugar level measured after fasting)
+Cholesterol (Total cholesterol level in the blood)
+triglyceride (Triglyceride level in the blood)
+HDL (High-density lipoprotein cholesterol level)
+LDL (Low-density lipoprotein cholesterol level)
+hemoglobin (Hemoglobin level in the blood)
+Urine protein (Protein level in the urine)
+serum creatinine (Creatinine level in the blood serum)
+AST (Aspartate aminotransferase (glutamic oxaloacetic transaminase) level)
+ALT (Alanine aminotransferase (glutamic pyruvic transaminase) level)
+Gtp (Gamma-glutamyl transpeptidase (γ-GTP) level)
+dental caries (Indicates the presence of dental cavities)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Cause-Effect Relationships, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is smoking dataset. The goal is to predict an individual's smoking status based on various
+health indicators.
+This is binary classification task.
+Below is the data description in the format -  Variable (definition):
+
+age (Age of the individual, measured in 5-year gaps)
+eyesight(left) (Eyesight measurement for the left eye)
+eyesight(right) (Eyesight measurement for the right eye)
+hearing(left) (Hearing ability of the left ear)
+hearing(right) (Hearing ability of the right ear)
+systolic (Systolic blood pressure measurement)
+relaxation (Diastolic blood pressure measurement)
+fasting blood sugar (Blood sugar level measured after fasting)
+Cholesterol (Total cholesterol level in the blood)
+triglyceride (Triglyceride level in the blood)
+HDL (High-density lipoprotein cholesterol level)
+LDL (Low-density lipoprotein cholesterol level)
+hemoglobin (Hemoglobin level in the blood)
+Urine protein (Protein level in the urine)
+serum creatinine (Creatinine level in the blood serum)
+AST (Aspartate aminotransferase (glutamic oxaloacetic transaminase) level)
+ALT (Alanine aminotransferase (glutamic pyruvic transaminase) level)
+Gtp (Gamma-glutamyl transpeptidase (γ-GTP) level)
+dental caries (Indicates the presence of dental cavities)
+Feature id:
+Count of NaN values: 0
+Datatype: int64
+max: 159255.0
+min: 0.0
+mean: 79627.5
+std: 45973.39157237224
+Examples: [149952, 116209, 143167, 50915, 63910]
+Feature age:
+Count of NaN values: 0
+Datatype: int64
+max: 85.0
+min: 20.0
+mean: 44.30662581001658
+std: 11.84228584625943
+Examples: [35, 30, 75, 60, 20]
+Feature height(cm):
+Count of NaN values: 0
+Datatype: int64
+max: 190.0
+min: 135.0
+mean: 165.2669287185412
+std: 8.818969845198085
+Examples: [170, 155, 155, 170, 170]
+Feature weight(kg):
+Count of NaN values: 0
+Datatype: int64
+max: 130.0
+min: 30.0
+mean: 67.14366177726428
+std: 12.586198142214874
+Examples: [75, 85, 55, 80, 50]
+Feature waist(cm):
+Count of NaN values: 0
+Datatype: float64
+max: 127.0
+min: 51.0
+mean: 83.00198987793239
+std: 8.957937261232914
+Examples: [75.0, 99.1, 87.0, 87.0, 74.0]
+Feature eyesight(left):
+Count of NaN values: 0
+Datatype: float64
+max: 9.9
+min: 0.1
+mean: 1.005798211684332
+std: 0.40211261150340305
+Examples: [1.0, 1.0, 1.0, 1.2, 0.8]
+Feature eyesight(right):
+Count of NaN values: 0
+Datatype: float64
+max: 9.9
+min: 0.1
+mean: 1.0009889737278344
+std: 0.39229858190863276
+Examples: [1.0, 0.8, 1.0, 0.5, 0.6]
+Feature hearing(left):
+Count of NaN values: 0
+Datatype: int64
+max: 2.0
+min: 1.0
+mean: 1.023973979002361
+std: 0.15296854010725683
+Examples: [1, 1, 1, 1, 1]
+Feature hearing(right):
+Count of NaN values: 0
+Datatype: int64
+max: 2.0
+min: 1.0
+mean: 1.023421409554428
+std: 0.15123819211101103
+Examples: [1, 1, 1, 1, 1]
+Feature systolic:
+Count of NaN values: 0
+Datatype: int64
+max: 213.0
+min: 77.0
+mean: 122.503648214196
+std: 12.72931515767791
+Examples: [140, 131, 110, 143, 90]
+Feature relaxation:
+Count of NaN values: 0
+Datatype: int64
+max: 133.0
+min: 44.0
+mean: 76.87407067865576
+std: 8.99464168751358
+Examples: [70, 78, 70, 81, 84]
+Feature fasting blood sugar:
+Count of NaN values: 0
+Datatype: int64
+max: 375.0
+min: 46.0
+mean: 98.35255186617772
+std: 15.329740155614578
+Examples: [103, 102, 87, 89, 86]
+Feature Cholesterol:
+Count of NaN values: 0
+Datatype: int64
+max: 393.0
+min: 77.0
+mean: 195.79616466569547
+std: 28.39695908288616
+Examples: [156, 235, 158, 200, 171]
+Feature triglyceride:
+Count of NaN values: 0
+Datatype: int64
+max: 766.0
+min: 8.0
+mean: 127.61604586326418
+std: 66.18898913134846
+Examples: [116, 42, 48, 128, 171]
+Feature HDL:
+Count of NaN values: 0
+Datatype: int64
+max: 136.0
+min: 9.0
+mean: 55.852683729341436
+std: 13.964141074947538
+Examples: [50, 72, 33, 72, 96]
+Feature LDL:
+Count of NaN values: 0
+Datatype: int64
+max: 1860.0
+min: 1.0
+mean: 114.60768197116592
+std: 28.158931398170278
+Examples: [99, 93, 114, 74, 125]
+Feature hemoglobin:
+Count of NaN values: 0
+Datatype: float64
+max: 21.0
+min: 4.9
+mean: 14.796965263475157
+std: 1.4312130772787717
+Examples: [14.2, 12.0, 15.2, 16.0, 17.2]
+Feature Urine protein:
+Count of NaN values: 0
+Datatype: int64
+max: 6.0
+min: 1.0
+mean: 1.0742326819711658
+std: 0.3478556532764267
+Examples: [1, 1, 1, 1, 1]
+Feature serum creatinine:
+Count of NaN values: 0
+Datatype: float64
+max: 9.9
+min: 0.1
+mean: 0.8927644798312152
+std: 0.179345954333926
+Examples: [0.9, 1.0, 0.8, 1.1, 0.8]
+Feature AST:
+Count of NaN values: 0
+Datatype: int64
+max: 778.0
+min: 6.0
+mean: 25.516853368161954
+std: 9.464882078028905
+Examples: [19, 25, 29, 36, 36]
+Feature ALT:
+Count of NaN values: 0
+Datatype: int64
+max: 2914.0
+min: 1.0
+mean: 26.550296378158436
+std: 17.75307013818495
+Examples: [16, 13, 15, 36, 11]
+Feature Gtp:
+Count of NaN values: 0
+Datatype: int64
+max: 999.0
+min: 2.0
+mean: 36.216004420555585
+std: 31.204642692782265
+Examples: [38, 55, 16, 26, 151]
+Feature dental caries:
+Count of NaN values: 0
+Datatype: int64
+max: 1.0
+min: 0.0
+mean: 0.1979956799115889
+std: 0.3984901350710495
+Examples: [0, 0, 1, 1, 0]
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Cause-Effect Relationships, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is smoking dataset. The goal is to predict an individual's smoking status based on various
+health indicators.
+This is binary classification task.
+Below is the data description in the format -  Variable (definition):
+
+age (Age of the individual, measured in 5-year gaps)
+eyesight(left) (Eyesight measurement for the left eye)
+eyesight(right) (Eyesight measurement for the right eye)
+hearing(left) (Hearing ability of the left ear)
+hearing(right) (Hearing ability of the right ear)
+systolic (Systolic blood pressure measurement)
+relaxation (Diastolic blood pressure measurement)
+fasting blood sugar (Blood sugar level measured after fasting)
+Cholesterol (Total cholesterol level in the blood)
+triglyceride (Triglyceride level in the blood)
+HDL (High-density lipoprotein cholesterol level)
+LDL (Low-density lipoprotein cholesterol level)
+hemoglobin (Hemoglobin level in the blood)
+Urine protein (Protein level in the urine)
+serum creatinine (Creatinine level in the blood serum)
+AST (Aspartate aminotransferase (glutamic oxaloacetic transaminase) level)
+ALT (Alanine aminotransferase (glutamic pyruvic transaminase) level)
+Gtp (Gamma-glutamyl transpeptidase (γ-GTP) level)
+dental caries (Indicates the presence of dental cavities)
+Feature id:
+Count of NaN values: 0
+Datatype: int64
+max: 159255.0
+min: 0.0
+mean: 79627.5
+std: 45973.39157237224
+Examples: [96684, 38707, 8590, 22368, 28201]
+Feature age:
+Count of NaN values: 0
+Datatype: int64
+max: 85.0
+min: 20.0
+mean: 44.30662581001658
+std: 11.84228584625943
+Examples: [30, 50, 50, 60, 30]
+Feature height(cm):
+Count of NaN values: 0
+Datatype: int64
+max: 190.0
+min: 135.0
+mean: 165.2669287185412
+std: 8.818969845198085
+Examples: [175, 180, 155, 165, 165]
+Feature weight(kg):
+Count of NaN values: 0
+Datatype: int64
+max: 130.0
+min: 30.0
+mean: 67.14366177726428
+std: 12.586198142214874
+Examples: [80, 65, 55, 75, 75]
+Feature waist(cm):
+Count of NaN values: 0
+Datatype: float64
+max: 127.0
+min: 51.0
+mean: 83.00198987793239
+std: 8.957937261232914
+Examples: [87.5, 98.0, 84.0, 65.0, 93.0]
+Feature eyesight(left):
+Count of NaN values: 0
+Datatype: float64
+max: 9.9
+min: 0.1
+mean: 1.005798211684332
+std: 0.40211261150340305
+Examples: [1.0, 1.0, 1.2, 0.7, 1.2]
+Feature eyesight(right):
+Count of NaN values: 0
+Datatype: float64
+max: 9.9
+min: 0.1
+mean: 1.0009889737278344
+std: 0.39229858190863276
+Examples: [1.0, 0.9, 1.2, 1.5, 0.9]
+Feature hearing(left):
+Count of NaN values: 0
+Datatype: int64
+max: 2.0
+min: 1.0
+mean: 1.023973979002361
+std: 0.15296854010725683
+Examples: [1, 1, 1, 1, 1]
+Feature hearing(right):
+Count of NaN values: 0
+Datatype: int64
+max: 2.0
+min: 1.0
+mean: 1.023421409554428
+std: 0.15123819211101103
+Examples: [1, 1, 2, 1, 1]
+Feature systolic:
+Count of NaN values: 0
+Datatype: int64
+max: 213.0
+min: 77.0
+mean: 122.503648214196
+std: 12.72931515767791
+Examples: [136, 130, 130, 160, 120]
+Feature relaxation:
+Count of NaN values: 0
+Datatype: int64
+max: 133.0
+min: 44.0
+mean: 76.87407067865576
+std: 8.99464168751358
+Examples: [70, 73, 80, 66, 80]
+Feature fasting blood sugar:
+Count of NaN values: 0
+Datatype: int64
+max: 375.0
+min: 46.0
+mean: 98.35255186617772
+std: 15.329740155614578
+Examples: [91, 79, 90, 97, 121]
+Feature Cholesterol:
+Count of NaN values: 0
+Datatype: int64
+max: 393.0
+min: 77.0
+mean: 195.79616466569547
+std: 28.39695908288616
+Examples: [231, 145, 219, 180, 157]
+Feature triglyceride:
+Count of NaN values: 0
+Datatype: int64
+max: 766.0
+min: 8.0
+mean: 127.61604586326418
+std: 66.18898913134846
+Examples: [159, 145, 128, 52, 56]
+Feature HDL:
+Count of NaN values: 0
+Datatype: int64
+max: 136.0
+min: 9.0
+mean: 55.852683729341436
+std: 13.964141074947538
+Examples: [38, 37, 91, 67, 50]
+Feature LDL:
+Count of NaN values: 0
+Datatype: int64
+max: 1860.0
+min: 1.0
+mean: 114.60768197116592
+std: 28.158931398170278
+Examples: [77, 136, 143, 78, 108]
+Feature hemoglobin:
+Count of NaN values: 0
+Datatype: float64
+max: 21.0
+min: 4.9
+mean: 14.796965263475157
+std: 1.4312130772787717
+Examples: [15.7, 16.2, 15.8, 14.8, 14.8]
+Feature Urine protein:
+Count of NaN values: 0
+Datatype: int64
+max: 6.0
+min: 1.0
+mean: 1.0742326819711658
+std: 0.3478556532764267
+Examples: [1, 1, 1, 1, 1]
+Feature serum creatinine:
+Count of NaN values: 0
+Datatype: float64
+max: 9.9
+min: 0.1
+mean: 0.8927644798312152
+std: 0.179345954333926
+Examples: [0.8, 0.9, 1.1, 0.7, 1.1]
+Feature AST:
+Count of NaN values: 0
+Datatype: int64
+max: 778.0
+min: 6.0
+mean: 25.516853368161954
+std: 9.464882078028905
+Examples: [21, 21, 18, 26, 39]
+Feature ALT:
+Count of NaN values: 0
+Datatype: int64
+max: 2914.0
+min: 1.0
+mean: 26.550296378158436
+std: 17.75307013818495
+Examples: [53, 27, 15, 23, 45]
+Feature Gtp:
+Count of NaN values: 0
+Datatype: int64
+max: 999.0
+min: 2.0
+mean: 36.216004420555585
+std: 31.204642692782265
+Examples: [16, 35, 41, 56, 25]
+Feature dental caries:
+Count of NaN values: 0
+Datatype: int64
+max: 1.0
+min: 0.0
+mean: 0.1979956799115889
+std: 0.3984901350710495
+Examples: [1, 1, 0, 0, 1]
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a Python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Write a brief description that is **specific, detailed, and actionable**, supported by numerical evidence and real-world insights relevant to decision-makers, and save it as a string variable called description.
+2. Provide a detailed step-by-step chain-of-thought (COT) that identifies the hypothesis requirements, selects the correct statistical test, and explains the reasoning behind the method, saving it to a variable called COT.
+3. Provide Python code based on the COT variable to test the hypothesis using the dataset DataFrame. The code should define a function `test(dataset)` to implement the appropriate statistical test and return a binary variable called `result`, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside the `test()` function. For any hyperparameters, choose values based on dataset statistics (e.g., variance, dataset shape). Do not rename the test function or the description variable.
+4. Generate detailed **business insights** for each hypothesis based on Cause-Effect Relationships, incorporating specific metrics, trends, or thresholds derived from the dataset to provide meaningful, practical recommendations.
+
+**Example Hypotheses from Different Domains:**
+
+1. **Financial Markets (Stocks):**
+description = "Stocks ranked in the top 20% by 6-month cumulative returns tend to outperform over the next 6 months, while stocks in the bottom 20% underperform, creating a momentum spread of 20.5%."
+COT = '''
+1. Identify the metric of interest: 6-month cumulative returns for stocks.
+2. Define the ranking groups: Top 20% (winners) and bottom 20% (losers).
+3. Calculate the average returns for winners and losers in the subsequent 6 months.
+4. Compute the momentum spread: difference in average returns between winners and losers.
+5. Use statistical tests (e.g., t-test) to determine if the momentum spread is significant.
+6. Structure the function to ingest stock returns and perform the analysis dynamically for any dataset.
+'''
+insights = "Stocks in the top 20% of 6-month cumulative returns (e.g., +15% and +25%) yield an average 6-month return of +10%, while bottom 20% stocks (e.g., -5% and -20%) average -10.5%. This results in a momentum spread of +20.5%. This insight suggests implementing a long-short momentum strategy to capitalize on these trends, with annualized gains of approximately 15.2% and a Sharpe ratio of 1.25 over the 2015–2020 period."
+
+2. **E-commerce (Customer Behavior):**
+description = "Customers who make their first purchase during discount periods have a 35% higher probability of making a second purchase within 30 days compared to those who buy at regular prices."
+COT = '''
+1. Segment customers into groups: those whose first purchase was during a discount period (>20% discount) and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a second purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+'''
+insights = "Customers making their first purchase during periods of significant discounts (e.g., >20%) have a 35% higher chance of a second purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns for new customers to enhance lifetime value."
+
+3. **Healthcare (Patient Outcomes):**
+description = "Patients aged 60+ receiving regular physical therapy (3 sessions per week) after hip surgery have a 25% shorter recovery time compared to those receiving fewer sessions."
+COT = '''
+1. Define the groups: patients aged 60+ receiving ≥3 physical therapy sessions per week and those receiving fewer.
+2. Measure recovery times (e.g., time to regain full mobility) for both groups.
+3. Perform a statistical test (e.g., ANOVA) to compare recovery times between the groups.
+4. Interpret the results and quantify the effect size of increased therapy sessions.
+5. Use the findings to inform healthcare policies for optimizing post-surgical recovery plans.
+'''
+insights = "Regular physical therapy significantly accelerates recovery in older patients, with those receiving 3+ sessions per week recovering in 45 days on average, compared to 60 days for others. This 25% reduction highlights the value of structured therapy programs in reducing healthcare costs and improving patient outcomes."
+
+**Key Requirements for Each Hypothesis:**
+- Hypotheses must be **specific, actionable, and detailed**, similar to the provided examples.
+- Each hypothesis must include explicit metrics, comparisons, or thresholds relevant to the dataset.
+- Insights must clearly explain their relevance and practical implications for decision-making.
+- Avoid abstract or generic statements; provide real-world scenarios backed by numerical evidence.
+
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "[specific, actionable description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+insights = "[specific business insights for hypothesis 1, including actionable recommendations supported by metrics and trends.]"
+# Hypothesis 2.
+description = "[specific, actionable description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+insights = "[specific business insights for hypothesis 2, including actionable recommendations supported by metrics and trends.]"
+…
+# Hypothesis 10.
+description = "[specific, actionable description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+insights = "[specific business insights for hypothesis 10, including actionable recommendations supported by metrics and trends.]"
+'''

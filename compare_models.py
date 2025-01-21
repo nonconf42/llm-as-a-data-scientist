@@ -146,136 +146,41 @@ def run_classification_pipeline(df_list, target_column):
 
 
 
+titanic = pd.read_csv('datasets/Titanic/train.csv')
+titanic_features = pd.read_csv('Titanic.csv')
+titanic_with_hyp = pd.read_csv('Titanic_hypothesis.csv')
 
+cars = pd.read_csv('datasets/Cars/train.csv')
+cars_features = pd.read_csv('Cars.csv')
+cars_with_hyp = pd.read_csv('Cars_hypothesis.csv')
 
+diamonds = pd.read_csv('datasets/Diamonds/train.csv')
+diamonds_features = pd.read_csv('Diamonds.csv')
+diamonds_with_hyp = pd.read_csv('Diamonds_hypothesis.csv')
 
+smoking = pd.read_csv('datasets/Smoking/train.csv')
+#smoking_features = pd.read_csv('Smoking.csv')
+smoking_with_hyp = pd.read_csv('Smoking_hypothesis.csv')
 
-
-
-
-ml_model = Model('XGB', 'classification')
-
-api_key = "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"  # Replace with your actual API key
-llm_model = LLM('gpt')
-model_name = "gpt-4o"
-
-hypothesis_results = []
-
-df = DataReader('Titanic')
-
-h_list = [
-    "General Hypothesis",
-    "Clustering Hypothesis",
-    "Outlier Detection",
-    "Anomaly Detection",
-    "Cause-Effect Relationships",
-    "Latent Variable Hypotheses"
-]
-
-for hyp_type in h_list:
-    prompt = generate_hypothesis_prompt(hypothesis_type=hyp_type, dataset=df,num_hypothesis=10)
-    print('Below is hypothesis list:::::::::')
-    print(prompt)
-    llm_output = llm_model.llm_call(prompt)
-    python_code = extract_python_code_hyp(llm_output)
-    hypothesis_list = extract_hypotheses_text(python_code)
-    dataset = df.train_base
-    imports = ''' 
-                    # Data manipulation and analysis
-                    from scipy.stats import chi2_contingency
-                    import scipy.stats
-                    import numpy as np
-                    import pandas as pd
-                    # Machine learning models and preprocessing
-                    from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
-                    from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
-                    from sklearn.pipeline import Pipeline
-                    # Commonly used machine learning algorithms
-                    from sklearn.linear_model import LogisticRegression, LinearRegression
-                    from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
-                    from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
-                    from sklearn.svm import SVC, SVR
-                    from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
-                    from sklearn.naive_bayes import GaussianNB
-                    from sklearn.cluster import KMeans
-                    # Model evaluation metrics
-                    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
-                    # Dimensionality reduction
-                    from sklearn.decomposition import PCA
-                '''
-    imports = strip_multiline_string(imports)
-    for code in hypothesis_list:
-        code = imports + '\n' + code 
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.py') as temp_module:
-            temp_module_name = os.path.basename(temp_module.name).split('.')[0]
-            temp_module.write(code.encode('utf-8'))
-            temp_module_path = temp_module.name
-        try:
-            # Import the module
-            import importlib.util
-            spec = importlib.util.spec_from_file_location(temp_module_name, temp_module_path)
-            module = importlib.util.module_from_spec(spec)
-            module.dataset = dataset
-            spec.loader.exec_module(module)
-            #print(f'##########\n {dir(module)}')
-            if hasattr(module, 'test'):
-                result = module.test(dataset)
-                description = module.description
-                insights = module.insights
-                hypothesis_results.append((insights, result))
-                print(module.description)
-                print(f'INSIGHTS: {module.insights}')
-                print(result)
-                print('#####')
-                print(f'COT:{module.COT}')
-        except Exception as e:
-            print('ERROR')
-            print(e)
-            print(code)
-            print('#####')
-        finally:
-            # Clean up the temporary file
-            os.remove(temp_module_path)
-print('$$$$$$$$$$$$$$$$$$')
-print(hypothesis_results)
-
-print('Cleaned hypothesis results:')
-cleaned_hypothesis_results = [hyp for hyp in hypothesis_results if hyp[1] != None]
-print(cleaned_hypothesis_results)
-print(f'Len: {len(cleaned_hypothesis_results)}')
-print('$$$$$$$$$$$$$$$$$$$$$$$$')
-#bag_of_hyp = hyp_results_to_text(cleaned_hypothesis_results, llm_model=llm_model)
-bag_of_hyp = hyp_res_to_text(cleaned_hypothesis_results)
-print('HYPOTHESIS TEXT:')
-print(bag_of_hyp)
-
-
-
-auto_ml_agent(
-    dataset_name='Titanic',
-    ml_model_type='XGB',
-    llm_model_type='gpt',
-    model_name='gpt-4o',
-    num_of_generations=1,
-    num_of_features=20,
-    debug=True,
-    output_file='df_without_hypothesis.csv'
+titanic_comparison = run_classification_pipeline(
+    df_list=[titanic_features, titanic_with_hyp],
+    target_column='Survived'
+)
+# cars_comparison = run_regression_pipeline(
+#     df_list=[ cars_features, cars_with_hyp],
+#     target_column='price'
+# )
+diamonds_comparison = run_regression_pipeline(
+    df_list=[diamonds_features, diamonds_with_hyp],
+    target_column='price'
 )
 
-auto_ml_agent(
-    dataset_name='Titanic',
-    ml_model_type='XGB',
-    llm_model_type='gpt',
-    model_name='gpt-4o',
-    num_of_generations=1,
-    num_of_features=20,
-    debug=True,
-    output_file='df_with_hypothesis.csv',
-    hypothesis=bag_of_hyp
-)
+# smoking_comparison = run_classification_pipeline(
+#     df_list=[smoking_with_hyp],
+#     target_column='smoking'
+# )
 
-df_to_test = pd.read_csv('df_without_hypothesis.csv')
-df_to_test_hyp = pd.read_csv('df_with_hypothesis.csv')
-print(f'# of NAN without hyp:{df_to_test.isna().sum()}')
-print(f'# of NAN wit hyp:{df_to_test_hyp.isna().sum()}')
-comparison = run_classification_pipeline(df_to_test=df_to_test, df_to_test_hyp=df_to_test_hyp,target_column='Survived')
+titanic_comparison.to_csv('titanic_comparison.csv')
+#cars_comparison.to_csv('cars_comparison.csv')
+diamonds_comparison.to_csv('diamonds_comparison.csv')
+#smoking_comparison.to_csv('smoking_comparison.csv')

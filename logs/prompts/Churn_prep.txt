@@ -1,0 +1,49 @@
+This data set contains details of a bank's customers and the target variable is a binary variable reflecting the fact whether the customer left the bank (closed his account) or he continues to be a customer.
+#############################################################
+RowNumber (Row numbers from 1 to 10000)
+CustomerId (Unique IDs for bank customer identification)
+Surname (Customer's last name)
+CreditScore (Credit score of the customer)
+Geography (The country from which the customer belongs)
+Gender (Male or Female)
+Age (Age of the customer)
+Tenure (Number of years for which the customer has been with the bank)
+Balance (Bank balance of the customer)
+NumOfProducts (Number of bank products the customer is utilising)
+HasCrCard (Binary flag for whether the customer holds a credit card with the bank or not)
+IsActiveMember (Binary flag for whether the customer is an active member with the bank or not)
+EstimatedSalary (Estimated salary of the customer in dollars)
+Exited (Binary flag (1 if the customer closed account with the bank, 0 if the customer is retained))
+
+#############################################################
+Please generate 50 new features based on the preprocessing of the given features.
+Do not use features other than given above.
+Your response should follow the format below,
+where transformation function is some preprocessing you do over one existing feature.
+Transformation should not include interactions between several features. Do not name features like 'feature_1'.
+Give meaningfull name that describes transformation.
+Do not use for loop. Do not use lambda functions. Do not use features other than given above.
+Do not use target feature. Do not create/read 'data' and 'features_description' objects.
+Use feature names exactly as they are given above. New features must be of numerical datatype.
+Important note: generate not less than 50 features, strictly follow the format. Instead of loops use comprehensions on both data and feature description.Focus only on Encoding Data transformations, such as: Frequency Encoding,Ordinal Encoding,Grouping Rare Categories,One-Hot Encoding,Target Encoding,Binary Encoding,Label Encoding.
+Format:One sentence description description of the common idea of the new features.
+Python code:
+#1. Feature 1.
+features_description['new_feature_1'] = 'description of new_feature_1'
+data['new_feature_1'] = transformation(data['old_feature_1'])
+
+#2. Feature 2.
+features_description['new_feature_2'] = 'description of new_feature_2'
+data['new_feature_2'] = transformation(data['old_feature_2'])
+
+.............
+
+#49.Feature 49.
+features_description['new_feature_49'] = 'description of new_feature_49'
+data['new_feature_49'] = transformation(data['old_feature_49'])
+
+#50.Feature 50.
+features_description['new_feature_50'] = 'description of new_feature_50'
+data['new_feature_50'] = transformation(data['old_feature_50'])
+
+

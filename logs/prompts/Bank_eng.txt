@@ -1,0 +1,48 @@
+This dataset presents the financial performance of Deutsche Bank,
+including key metrics like operating income, net income, and balance sheet indicators. It spans 800 records over time.
+#############################################################
+Date (The date corresponding to each financial record (from January 2015 onwards).)
+Operating_Income (The income generated from the bank's core business operations.)
+Expenses (Total costs incurred during operations.)
+Net_Income (Profit after subtracting expenses from operating income.)
+Assets (Total assets owned by the bank (e.g., cash, investments).)
+Liabilities (The total debts and obligations owed.)
+Equity (Shareholders' equity, representing the net value of assets minus liabilities.)
+Debt_to_Equity (A financial ratio showing the proportion of debt compared to equity.)
+ROA (A profitability metric calculated as net income divided by total assets.)
+Revenue (Total income from all operations and activities.)
+Cash_Flow (The net cash generated or used in operations.)
+Profit_Margin (A ratio showing the percentage of revenue that remains as profit.)
+Interest_Expense (Costs associated with the bank's borrowings or debts.)
+Tax_Expense (The amount paid as taxes on profits.)
+Dividend_Payout (The portion of earnings distributed to shareholders as dividends.)
+
+#############################################################
+Please generate 50 new features based on the given features.
+Your response should follow the format below, where transformation function is some operation you do over existing features.
+Do not use for loop. Do not use lambda functions. Do not use features other than given above.
+Do not name features like 'feature_1'. Give meaningfull name that describes transformation.
+Do not use target feature. Do not create/read 'data' and 'features_description' objects.
+Use feature names exactly as they are given above. New features must be of numerical datatype.
+Important note: generate not less than 50 features, strictly follow the format. Instead of loops use comprehensions on both data and feature description.Focus only on Feature Scaling transformations, such as: Normalization,Clipping,Logarithmic Transformation,Binning/Discretization,Aggregations,Fourier Transforms,Polynomial Features.
+Format:One sentence description description of the common idea of the new features.
+Python code:
+#1. Feature 1.
+features_description['new_feature_1'] = 'description of new_feature_1'
+data['new_feature_1'] = transformation(data['old_feature_1'])
+
+#2. Feature 2.
+features_description['new_feature_2'] = 'description of new_feature_2'
+data['new_feature_2'] = transformation(data['old_feature_2'])
+
+.............
+
+#49.Feature 49.
+features_description['new_feature_49'] = 'description of new_feature_49'
+data['new_feature_49'] = transformation(data['old_feature_49'])
+
+#50.Feature 50.
+features_description['new_feature_50'] = 'description of new_feature_50'
+data['new_feature_50'] = transformation(data['old_feature_50'])
+
+

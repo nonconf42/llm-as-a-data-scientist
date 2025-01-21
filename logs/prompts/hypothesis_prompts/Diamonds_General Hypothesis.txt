@@ -54,3 +54,525 @@ description = "[description for hypothesis 10]"
 COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
 [test() for hypothesis 10]
 '''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.
+Hypothesis Generation Methods:
+Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.
+Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.
+Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.
+Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.
+Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.
+Chi-Square Test for Independence: Test if two categorical variables are independent.
+ANOVA (Analysis of Variance): Compare the means across multiple groups.
+Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.
+Normality Tests: Test if the distribution of a variable follows a normal distribution.
+Homogeneity Tests: Determine if different samples come from populations with the same distribution.
+Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.
+Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.
+Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.
+Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.
+Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the General Hypothesis.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.
+Hypothesis Generation Methods:
+Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.
+Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.
+Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.
+Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.
+Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.
+Chi-Square Test for Independence: Test if two categorical variables are independent.
+ANOVA (Analysis of Variance): Compare the means across multiple groups.
+Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.
+Normality Tests: Test if the distribution of a variable follows a normal distribution.
+Homogeneity Tests: Determine if different samples come from populations with the same distribution.
+Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.
+Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.
+Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.
+Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.
+Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on General Hypothesis, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.
+Hypothesis Generation Methods:
+Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.
+Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.
+Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.
+Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.
+Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.
+Chi-Square Test for Independence: Test if two categorical variables are independent.
+ANOVA (Analysis of Variance): Compare the means across multiple groups.
+Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.
+Normality Tests: Test if the distribution of a variable follows a normal distribution.
+Homogeneity Tests: Determine if different samples come from populations with the same distribution.
+Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.
+Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.
+Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.
+Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.
+Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on General Hypothesis, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.
+Hypothesis Generation Methods:
+Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.
+Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.
+Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.
+Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.
+Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.
+Chi-Square Test for Independence: Test if two categorical variables are independent.
+ANOVA (Analysis of Variance): Compare the means across multiple groups.
+Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.
+Normality Tests: Test if the distribution of a variable follows a normal distribution.
+Homogeneity Tests: Determine if different samples come from populations with the same distribution.
+Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.
+Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.
+Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.
+Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.
+Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on General Hypothesis, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+Feature Unnamed: 0:
+Count of NaN values: 0
+Datatype: int64
+max: 53939.0
+min: 0.0
+mean: 27008.121292176493
+std: 15566.99268567687
+Examples: [36626, 36358, 38144, 27327, 18327]
+Feature carat:
+Count of NaN values: 0
+Datatype: float64
+max: 5.01
+min: 0.2
+mean: 0.7982332220986281
+std: 0.473341516415469
+Examples: [0.7, 0.93, 0.7, 0.34, 0.3]
+Feature cut:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 5
+the most frequent value: Ideal
+frequency of mode: 17259
+Examples: ['Premium', 'Good', 'Ideal', 'Very Good', 'Good']
+Feature color:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 7
+the most frequent value: G
+frequency of mode: 9015
+Examples: ['F', 'G', 'F', 'D', 'G']
+Feature clarity:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 8
+the most frequent value: SI1
+frequency of mode: 10520
+Examples: ['VS1', 'SI2', 'SI2', 'VS1', 'SI2']
+Feature depth:
+Count of NaN values: 0
+Datatype: float64
+max: 79.0
+min: 43.0
+mean: 61.74304551353355
+std: 1.4282431175349546
+Examples: [67.1, 61.5, 62.3, 62.6, 59.5]
+Feature table:
+Count of NaN values: 0
+Datatype: float64
+max: 95.0
+min: 43.0
+mean: 57.45954764553207
+std: 2.229324817536393
+Examples: [57.0, 57.0, 57.0, 57.0, 59.0]
+Feature x:
+Count of NaN values: 0
+Datatype: float64
+max: 10.74
+min: 0.0
+mean: 5.732607063403781
+std: 1.1201962961736596
+Examples: [6.08, 4.47, 3.99, 5.19, 5.65]
+Feature y:
+Count of NaN values: 0
+Datatype: float64
+max: 58.9
+min: 0.0
+mean: 5.736434000741565
+std: 1.1474997285741813
+Examples: [5.72, 6.27, 4.76, 7.46, 5.76]
+Feature z:
+Count of NaN values: 0
+Datatype: float64
+max: 31.8
+min: 0.0
+mean: 3.539255886169819
+std: 0.7080621483302191
+Examples: [3.98, 4.18, 3.16, 3.86, 2.5]
+Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.
+Hypothesis Generation Methods:
+Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.
+Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.
+Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.
+Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.
+Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.
+Chi-Square Test for Independence: Test if two categorical variables are independent.
+ANOVA (Analysis of Variance): Compare the means across multiple groups.
+Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.
+Normality Tests: Test if the distribution of a variable follows a normal distribution.
+Homogeneity Tests: Determine if different samples come from populations with the same distribution.
+Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.
+Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.
+Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.
+Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.
+Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on General Hypothesis, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is diamonds dataset. The goal is to predict price of diamonds based on carat, cut, color,
+clarity, depth, table, x, y ,z. Below is the data description in the format -  Variable (definition):
+
+carat (The carat value of the Diamond)
+cut (The cut type of the Diamond, it determines the shine ('Ideal', 'Premium', 'Good', 'Very Good', 'Fair'))
+color (The color value of the Diamond ('E', 'I', 'J', 'H', 'F', 'G', 'D'))
+clarity (The clarity type of the Diamond ('SI2', 'SI1', 'VS1', 'VS2', 'VVS2', 'VVS1', 'I1'))
+depth (The depth value of the Diamond)
+table (Flat facet on its surface — the large, flat surface facet that you can see when you look at the diamond from above)
+x (Width of the diamond)
+y (Length of the diamond)
+z (Height of the diamond)
+Feature Unnamed: 0:
+Count of NaN values: 0
+Datatype: int64
+max: 53939.0
+min: 0.0
+mean: 27008.121292176493
+std: 15566.99268567687
+Examples: [13198, 17236, 43343, 22793, 17565]
+Feature carat:
+Count of NaN values: 0
+Datatype: float64
+max: 5.01
+min: 0.2
+mean: 0.7982332220986281
+std: 0.473341516415469
+Examples: [0.53, 0.43, 2.18, 1.0, 0.91]
+Feature cut:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 5
+the most frequent value: Ideal
+frequency of mode: 17259
+Examples: ['Ideal', 'Ideal', 'Very Good', 'Ideal', 'Ideal']
+Feature color:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 7
+the most frequent value: G
+frequency of mode: 9015
+Examples: ['G', 'E', 'H', 'F', 'E']
+Feature clarity:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 8
+the most frequent value: SI1
+frequency of mode: 10520
+Examples: ['VS2', 'VS2', 'VS1', 'VS2', 'VS2']
+Feature depth:
+Count of NaN values: 0
+Datatype: float64
+max: 79.0
+min: 43.0
+mean: 61.74304551353355
+std: 1.4282431175349546
+Examples: [60.7, 61.1, 61.6, 61.1, 60.5]
+Feature table:
+Count of NaN values: 0
+Datatype: float64
+max: 95.0
+min: 43.0
+mean: 57.45954764553207
+std: 2.229324817536393
+Examples: [57.0, 62.0, 54.0, 56.0, 56.0]
+Feature x:
+Count of NaN values: 0
+Datatype: float64
+max: 10.74
+min: 0.0
+mean: 5.732607063403781
+std: 1.1201962961736596
+Examples: [5.26, 4.51, 5.98, 5.73, 4.26]
+Feature y:
+Count of NaN values: 0
+Datatype: float64
+max: 58.9
+min: 0.0
+mean: 5.736434000741565
+std: 1.1474997285741813
+Examples: [6.14, 4.78, 6.07, 5.66, 7.26]
+Feature z:
+Count of NaN values: 0
+Datatype: float64
+max: 31.8
+min: 0.0
+mean: 3.539255886169819
+std: 0.7080621483302191
+Examples: [4.68, 2.84, 2.68, 3.99, 5.08]
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a Python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Write a brief description that is **specific, detailed, and actionable**, supported by numerical evidence and real-world insights relevant to decision-makers, and save it as a string variable called description.
+2. Provide a detailed step-by-step chain-of-thought (COT) that identifies the hypothesis requirements, selects the correct statistical test, and explains the reasoning behind the method, saving it to a variable called COT.
+3. Provide Python code based on the COT variable to test the hypothesis using the dataset DataFrame. The code should define a function `test(dataset)` to implement the appropriate statistical test and return a binary variable called `result`, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside the `test()` function. For any hyperparameters, choose values based on dataset statistics (e.g., variance, dataset shape). Do not rename the test function or the description variable.
+4. Generate detailed **business insights** for each hypothesis based on General Hypothesis, incorporating specific metrics, trends, or thresholds derived from the dataset to provide meaningful, practical recommendations.
+
+**Example Hypotheses from Different Domains:**
+
+1. **Financial Markets (Stocks):**
+description = "Stocks ranked in the top 20% by 6-month cumulative returns tend to outperform over the next 6 months, while stocks in the bottom 20% underperform, creating a momentum spread of 20.5%."
+COT = '''
+1. Identify the metric of interest: 6-month cumulative returns for stocks.
+2. Define the ranking groups: Top 20% (winners) and bottom 20% (losers).
+3. Calculate the average returns for winners and losers in the subsequent 6 months.
+4. Compute the momentum spread: difference in average returns between winners and losers.
+5. Use statistical tests (e.g., t-test) to determine if the momentum spread is significant.
+6. Structure the function to ingest stock returns and perform the analysis dynamically for any dataset.
+'''
+insights = "Stocks in the top 20% of 6-month cumulative returns (e.g., +15% and +25%) yield an average 6-month return of +10%, while bottom 20% stocks (e.g., -5% and -20%) average -10.5%. This results in a momentum spread of +20.5%. This insight suggests implementing a long-short momentum strategy to capitalize on these trends, with annualized gains of approximately 15.2% and a Sharpe ratio of 1.25 over the 2015–2020 period."
+
+2. **E-commerce (Customer Behavior):**
+description = "Customers who make their first purchase during discount periods have a 35% higher probability of making a second purchase within 30 days compared to those who buy at regular prices."
+COT = '''
+1. Segment customers into groups: those whose first purchase was during a discount period (>20% discount) and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a second purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+'''
+insights = "Customers making their first purchase during periods of significant discounts (e.g., >20%) have a 35% higher chance of a second purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns for new customers to enhance lifetime value."
+
+3. **Healthcare (Patient Outcomes):**
+description = "Patients aged 60+ receiving regular physical therapy (3 sessions per week) after hip surgery have a 25% shorter recovery time compared to those receiving fewer sessions."
+COT = '''
+1. Define the groups: patients aged 60+ receiving ≥3 physical therapy sessions per week and those receiving fewer.
+2. Measure recovery times (e.g., time to regain full mobility) for both groups.
+3. Perform a statistical test (e.g., ANOVA) to compare recovery times between the groups.
+4. Interpret the results and quantify the effect size of increased therapy sessions.
+5. Use the findings to inform healthcare policies for optimizing post-surgical recovery plans.
+'''
+insights = "Regular physical therapy significantly accelerates recovery in older patients, with those receiving 3+ sessions per week recovering in 45 days on average, compared to 60 days for others. This 25% reduction highlights the value of structured therapy programs in reducing healthcare costs and improving patient outcomes."
+
+**Key Requirements for Each Hypothesis:**
+- Hypotheses must be **specific, actionable, and detailed**, similar to the provided examples.
+- Each hypothesis must include explicit metrics, comparisons, or thresholds relevant to the dataset.
+- Insights must clearly explain their relevance and practical implications for decision-making.
+- Avoid abstract or generic statements; provide real-world scenarios backed by numerical evidence.
+
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "[specific, actionable description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+insights = "[specific business insights for hypothesis 1, including actionable recommendations supported by metrics and trends.]"
+# Hypothesis 2.
+description = "[specific, actionable description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+insights = "[specific business insights for hypothesis 2, including actionable recommendations supported by metrics and trends.]"
+…
+# Hypothesis 10.
+description = "[specific, actionable description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+insights = "[specific business insights for hypothesis 10, including actionable recommendations supported by metrics and trends.]"
+'''

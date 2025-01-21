@@ -1,0 +1,19 @@
+Below there is a list of accepted hypothesis:
+Outliers in systolic blood pressure may indicate individuals with extreme blood pressure levels who could have higher health risks. These individuals might have different smoking status group patterns.
+Outliers in fasting blood sugar levels might indicate uncontrolled diabetes, potentially affecting smoking habits or reporting.
+Multivariate outliers across blood lipids (Cholesterol, HDL, LDL) may uncover individuals with unique cardiovascular profiles, possibly influencing smoking status.
+Outliers in triglyceride levels can highlight individuals with unique metabolic profiles that may influence their smoking behaviors.
+Evaluating abnormal gamma-GTP levels might reflect liver dysfunctions or alcohol use, potentially affecting smoking status.
+Outlying creatinine levels may signal kidney dysfunction potentially associated with distinct smoking behavior.
+Latent groupings by age might exist which influence health and smoking variability due to generational habits.
+A latent protection factor related to dental health might protect against the likelihood of being a smoker.
+Hemoglobin levels may be influenced by an underlying latent oxygen-carrying capacity variable, related to smoking.
+Latent variable interactions between heart health variables may impact smoking status decision, revealing indirect health implications.
+Below there is a list of rejected hypothesis:
+Applying Isolation Forest to the dataset may help in identifying individuals whose health indicators significantly deviate from the population norm. These deviations might suggest underlying health issues linked to smoking, such as potential misreporting or extreme cases that don't fit typical health trends.
+There might be a latent variable representing general cardiovascular health, which influences eyesight, blood pressure, and cholesterol levels, ultimately impacting smoking status.
+Blood sugar and triglyceride levels might be affected by an underlying latent metabolic factor, influencing both these markers and smoking status.
+Hearing ability might be part of a latent sensory health factor that affects smoking status.
+A latent liver function health factor could relate to enzymes like ALT, AST, GTP, impacting smoking status.
+Proteinuria (protein levels in urine) might be related to a latent kidney health factor affecting smoking.
+External socio-environmental variables, though not directly observed, might influence latent structures affecting health data consistency over time.

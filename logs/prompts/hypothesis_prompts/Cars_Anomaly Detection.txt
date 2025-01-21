@@ -46,3 +46,491 @@ description = "[description for hypothesis 10]"
 COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
 [test() for hypothesis 10]
 '''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the Anomaly Detection.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Anomaly Detection, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Anomaly Detection, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Anomaly Detection, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Feature brand:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 57
+the most frequent value: Ford
+frequency of mode: 23088
+Examples: ['Ford', 'Nissan', 'Lexus', 'Chevrolet', 'Mercedes-Benz']
+Feature model:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 1897
+the most frequent value: F-150 XLT
+frequency of mode: 2945
+Examples: ['Model S 100D', 'Expedition Max Limited', 'CTS Premium', 'CLA-Class CLA 250', 'Rover Range Rover 5.0L V8 Supercharged']
+Feature model_year:
+Count of NaN values: 0
+Datatype: int64
+max: 2024.0
+min: 1974.0
+mean: 2015.8299979313965
+std: 5.660967278269093
+Examples: [2014, 2015, 2017, 2018, 2017]
+Feature milage:
+Count of NaN values: 0
+Datatype: int64
+max: 405000.0
+min: 100.0
+mean: 65705.2951737892
+std: 49798.15807575425
+Examples: [39000, 125575, 120000, 25548, 10000]
+Feature fuel_type:
+Count of NaN values: 5083
+Datatype: object
+count of unique values: 7
+the most frequent value: Gasoline
+frequency of mode: 165940
+Examples: ['Gasoline', 'Gasoline', 'Gasoline', 'Gasoline', 'Gasoline']
+Feature engine:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 1117
+the most frequent value: 355.0HP 5.3L 8 Cylinder Engine Gasoline Fuel
+frequency of mode: 3462
+Examples: ['383.0HP 5.7L 8 Cylinder Engine Gasoline Fuel', '143.0HP 1.8L 4 Cylinder Engine Gasoline Fuel', '395.0HP 5.7L 8 Cylinder Engine Gasoline Fuel', '310.0HP 3.6L V6 Cylinder Engine Gasoline Fuel', '152.0HP 2.0L 4 Cylinder Engine Gasoline Fuel']
+Feature transmission:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 52
+the most frequent value: A/T
+frequency of mode: 49904
+Examples: ['Transmission w/Dual Shift Mode', 'A/T', 'A/T', 'A/T', 'CVT Transmission']
+Feature ext_col:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 319
+the most frequent value: Black
+frequency of mode: 48658
+Examples: ['Black', 'White', 'Silver', 'White', 'Black']
+Feature int_col:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 156
+the most frequent value: Black
+frequency of mode: 107674
+Examples: ['Black', 'Black', 'Black', 'Beige', 'Black']
+Feature accident:
+Count of NaN values: 2452
+Datatype: object
+count of unique values: 2
+the most frequent value: None reported
+frequency of mode: 144514
+Examples: ['At least 1 accident or damage reported', 'None reported', 'None reported', 'At least 1 accident or damage reported', nan]
+Feature clean_title:
+Count of NaN values: 21419
+Datatype: object
+count of unique values: 1
+the most frequent value: Yes
+frequency of mode: 167114
+Examples: ['Yes', 'Yes', 'Yes', 'Yes', 'Yes']
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Anomaly Detection, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is cars dataset. The goal is to predict the price of used cars based on various attributes.
+Below is the data description in the format - Variable (definition):
+
+brand (The manufacturer or company that produces the vehicle. Crucial for assessing depreciation and technology advancements)
+model (The specific name or version of a car produced by a brand.)
+model_year (The year in which the vehicle was manufactured or introduced.)
+milage (The total distance the car has traveled, usually measured in miles. A key indicator of wear and tear and potential maintenance requirements. )
+fuel_type (The type of fuel the car uses, such as gasoline, diesel, hybrid or electric.)
+engine (The mechanical component that powers the car, often described by its size and power output.)
+transmission (The system that transmits power from the engine to the wheels, either manual, automatic, or another variant.)
+ext_col (The color of the vehicle’s exterior.)
+int_col (The color of the vehicle’s interior, including seats and trim.)
+accident (Indicates whether the car has been involved in any accidents.)
+clean_title (Indicates that the car’s title is free of any legal issues such as salvage or rebuild history.)
+Feature brand:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 57
+the most frequent value: Ford
+frequency of mode: 23088
+Examples: ['Land', 'Mercedes-Benz', 'Audi', 'Tesla', 'Lexus']
+Feature model:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 1897
+the most frequent value: F-150 XLT
+frequency of mode: 2945
+Examples: ['AMG GT 53 Base', 'F-150 Lariat', 'Metris Base', 'M3 Base', 'Transit-350 Base']
+Feature model_year:
+Count of NaN values: 0
+Datatype: int64
+max: 2024.0
+min: 1974.0
+mean: 2015.8299979313965
+std: 5.660967278269093
+Examples: [2013, 2022, 2020, 2022, 2016]
+Feature milage:
+Count of NaN values: 0
+Datatype: int64
+max: 405000.0
+min: 100.0
+mean: 65705.2951737892
+std: 49798.15807575425
+Examples: [62310, 132600, 103500, 70579, 4457]
+Feature fuel_type:
+Count of NaN values: 5083
+Datatype: object
+count of unique values: 7
+the most frequent value: Gasoline
+frequency of mode: 165940
+Examples: ['Gasoline', 'Gasoline', 'Gasoline', 'Gasoline', 'Gasoline']
+Feature engine:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 1117
+the most frequent value: 355.0HP 5.3L 8 Cylinder Engine Gasoline Fuel
+frequency of mode: 3462
+Examples: ['215.0HP 3.2L V6 Cylinder Engine Gasoline Fuel', '255.0HP 3.6L V6 Cylinder Engine Gasoline Fuel', '3.6L V6 24V MPFI DOHC Flexible Fuel', '290.0HP 3.5L V6 Cylinder Engine Gasoline Fuel', '2.0 Liter']
+Feature transmission:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 52
+the most frequent value: A/T
+frequency of mode: 49904
+Examples: ['6-Speed M/T', 'A/T', '6-Speed A/T', '8-Speed A/T', '7-Speed A/T']
+Feature ext_col:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 319
+the most frequent value: Black
+frequency of mode: 48658
+Examples: ['Red', 'Silver', 'Silver', 'Black', 'Black']
+Feature int_col:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 156
+the most frequent value: Black
+frequency of mode: 107674
+Examples: ['Gray', 'Red', 'Black', 'Black', 'Black']
+Feature accident:
+Count of NaN values: 2452
+Datatype: object
+count of unique values: 2
+the most frequent value: None reported
+frequency of mode: 144514
+Examples: ['At least 1 accident or damage reported', 'None reported', 'At least 1 accident or damage reported', 'None reported', 'At least 1 accident or damage reported']
+Feature clean_title:
+Count of NaN values: 21419
+Datatype: object
+count of unique values: 1
+the most frequent value: Yes
+frequency of mode: 167114
+Examples: ['Yes', 'Yes', 'Yes', 'Yes', 'Yes']
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a Python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Write a brief description that is **specific, detailed, and actionable**, supported by numerical evidence and real-world insights relevant to decision-makers, and save it as a string variable called description.
+2. Provide a detailed step-by-step chain-of-thought (COT) that identifies the hypothesis requirements, selects the correct statistical test, and explains the reasoning behind the method, saving it to a variable called COT.
+3. Provide Python code based on the COT variable to test the hypothesis using the dataset DataFrame. The code should define a function `test(dataset)` to implement the appropriate statistical test and return a binary variable called `result`, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside the `test()` function. For any hyperparameters, choose values based on dataset statistics (e.g., variance, dataset shape). Do not rename the test function or the description variable.
+4. Generate detailed **business insights** for each hypothesis based on Anomaly Detection, incorporating specific metrics, trends, or thresholds derived from the dataset to provide meaningful, practical recommendations.
+
+**Example Hypotheses from Different Domains:**
+
+1. **Financial Markets (Stocks):**
+description = "Stocks ranked in the top 20% by 6-month cumulative returns tend to outperform over the next 6 months, while stocks in the bottom 20% underperform, creating a momentum spread of 20.5%."
+COT = '''
+1. Identify the metric of interest: 6-month cumulative returns for stocks.
+2. Define the ranking groups: Top 20% (winners) and bottom 20% (losers).
+3. Calculate the average returns for winners and losers in the subsequent 6 months.
+4. Compute the momentum spread: difference in average returns between winners and losers.
+5. Use statistical tests (e.g., t-test) to determine if the momentum spread is significant.
+6. Structure the function to ingest stock returns and perform the analysis dynamically for any dataset.
+'''
+insights = "Stocks in the top 20% of 6-month cumulative returns (e.g., +15% and +25%) yield an average 6-month return of +10%, while bottom 20% stocks (e.g., -5% and -20%) average -10.5%. This results in a momentum spread of +20.5%. This insight suggests implementing a long-short momentum strategy to capitalize on these trends, with annualized gains of approximately 15.2% and a Sharpe ratio of 1.25 over the 2015–2020 period."
+
+2. **E-commerce (Customer Behavior):**
+description = "Customers who make their first purchase during discount periods have a 35% higher probability of making a second purchase within 30 days compared to those who buy at regular prices."
+COT = '''
+1. Segment customers into groups: those whose first purchase was during a discount period (>20% discount) and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a second purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+'''
+insights = "Customers making their first purchase during periods of significant discounts (e.g., >20%) have a 35% higher chance of a second purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns for new customers to enhance lifetime value."
+
+3. **Healthcare (Patient Outcomes):**
+description = "Patients aged 60+ receiving regular physical therapy (3 sessions per week) after hip surgery have a 25% shorter recovery time compared to those receiving fewer sessions."
+COT = '''
+1. Define the groups: patients aged 60+ receiving ≥3 physical therapy sessions per week and those receiving fewer.
+2. Measure recovery times (e.g., time to regain full mobility) for both groups.
+3. Perform a statistical test (e.g., ANOVA) to compare recovery times between the groups.
+4. Interpret the results and quantify the effect size of increased therapy sessions.
+5. Use the findings to inform healthcare policies for optimizing post-surgical recovery plans.
+'''
+insights = "Regular physical therapy significantly accelerates recovery in older patients, with those receiving 3+ sessions per week recovering in 45 days on average, compared to 60 days for others. This 25% reduction highlights the value of structured therapy programs in reducing healthcare costs and improving patient outcomes."
+
+**Key Requirements for Each Hypothesis:**
+- Hypotheses must be **specific, actionable, and detailed**, similar to the provided examples.
+- Each hypothesis must include explicit metrics, comparisons, or thresholds relevant to the dataset.
+- Insights must clearly explain their relevance and practical implications for decision-making.
+- Avoid abstract or generic statements; provide real-world scenarios backed by numerical evidence.
+
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "[specific, actionable description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+insights = "[specific business insights for hypothesis 1, including actionable recommendations supported by metrics and trends.]"
+# Hypothesis 2.
+description = "[specific, actionable description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+insights = "[specific business insights for hypothesis 2, including actionable recommendations supported by metrics and trends.]"
+…
+# Hypothesis 10.
+description = "[specific, actionable description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+insights = "[specific business insights for hypothesis 10, including actionable recommendations supported by metrics and trends.]"
+'''

@@ -1,0 +1,27 @@
+Below there is a list of accepted hypothesis:
+The car's brand significantly affects its depreciation, with some brands maintaining value better than others.
+The total mileage of a used car impacts the selling price, with higher mileage typically reducing the price.
+Cars with automatic transmission tend to have differing prices compared to those with manual transmission, reflecting consumer preferences.
+Cars in certain model years may have different demand, impacting overall pricing trends.
+Variations in external color may have psychological effects or align with fashion trends, affecting car prices.
+Economic and market conditions affecting car prices might differ between time frames, visible in price variance over time.
+Different brands might naturally cluster due to shared brand features that impact depreciation rates.
+Fuel type might define natural clusters, telling us about fuel efficiency and environmental impact preferences.
+Transmission type could form its own cluster, signifying driver preferences or technologically advanced regions.
+We expect interior colors to form clusters representing aesthetic preferences influencing purchasing behavior.
+Inspecting clusters based on car model year might depict market demand for specific car ages.
+Assessing clusters on clean title status might reveal patterns of resale value stability.
+Identifying color trends for pricing outliers could reflect symbolic perceptions and popularity among buyers affecting used prices.
+Mileage often significantly influences car price. Outliers related to mileage may suggest faulty odometer readings or data errors.
+Market value differences could be linked to historical models' perceived enduring status or manufacturing quality, revealed by outliers.
+An unusual color combination in the exterior and interior could affect the price and may indicate anomalies if certain combinations are overpriced or underpriced against market commonality.
+Below there is a list of rejected hypothesis:
+Used cars with a clean title likely have a higher price due to buyer confidence in its history.
+The presence of an accident history may lower car prices due to perceived risk by buyers.
+Car prices across different fuel types differ due to varying demand and operational costs.
+Cars with accident history might have skewed prices due to hidden repair costs or potential damages. Detecting outliers in accident-prone cars could reveal unusual pricing trends or data errors.
+Fuel type variations might show pricing outliers due to market trends in eco-friendly technologies. Highlighting such outliers could help evaluate demand shifts.
+Discrepancies in manual vs automatic transmission car prices, indicated by outliers, may suggest market preference changes or data irregularities.
+Legal issues (as shown by title status) may lead to drastic car price undercuts that deviate from normal, detected as outliers.
+Prices for top brand might exhibit outliers if tied to luxury status perception or market shifts.
+Vehicles with higher mileage that have not been in accidents should depreciate more than similar vehicles with lower mileage, but anomalies in pricing could indicate data collection errors or unreliable market trends.

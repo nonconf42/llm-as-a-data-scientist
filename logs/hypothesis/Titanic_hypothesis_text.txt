@@ -1,0 +1,43 @@
+Below there is a list of accepted hypothesis:
+First-class passengers might have had better access to lifeboats and were more likely prioritized for survival.
+Females likely had a higher survival rate, possibly due to societal norms of women-first during rescue operations.
+Higher ticket prices might imply better cabin locations or services, influencing survival chances.
+Embarkation port might reflect underlying socio-economic factors that could have impacted survival probabilities.
+Older passengers might have had a lower survival rate due to physical vulnerabilities in emergencies.
+Passengers traveling with children (Parch) might have faced different challenges, affecting survival rates.
+Passenger names might reflect titles that disclose gender or other social influences on survival chances.
+Using k-means clustering, we hypothesize that passenger demographics and ticket information will naturally group into clusters that correlate with survival.
+Passenger fare might have variations in its impact on survival within different clusters. By examining feature importance, we can identify key drivers for specific groups.
+Embarkation port combined with ticket class forms distinct latent groups that might correlate strongly with survival.
+Passengers with a ticket class of 1st have a distribution of fare prices that significantly differ from those in lower classes. Noticing any anomaly might help identify specific groups who were unfairly charged or refund cases.
+The survival rate might significantly differ based on port of embarkation, suggesting that passengers from certain ports had different access to life-saving measures.
+The sibling/spouse count might show an anomalous pattern in survival, suggesting survival might have been affected by traveling with family.
+Gender-based survival rates are likely to show significant deviations, indicative of women and children first evacuation protocol.
+Anomaly trends in survival tied to fare price could indicate premium services or bribes for survival.
+Identification anomalies in Ticket numbers might uncover irregularities in reservations or evacuation assignments.
+Cabin occupancy anomalies might indicate last moment upgrades or self-promoted survivors who gained access to better facilities.
+Anomalies in the number of parents/children (Parch) related to survival could reflect a skewed rescue priority for family units.
+Passenger names might show anomaly patterns in survival, highlighting potential disparities in survival based on known identities.
+We suspect passengers in higher classes (1st class) had better survival rates compared to lower classes due to preferential access to lifeboats.
+Male passengers were likely to have a lower survival rate than females due to women and children first policy.
+Younger passengers, especially children, might have had better survival chances due to priority boarding on lifeboats.
+Passengers who paid a higher fare might have been more likely to survive, as fare is related to class.
+The port of embarkation might correlate with passenger survival due to socio-economic factors affecting their location.
+Having parents or children on board might improve survival odds due to collective assistance.
+There could be a threshold effect in survival rate concerning fare; maybe those paying above a certain threshold have a significantly better chance to survive.
+Possession of a cabin might correlate with higher survival rates, possibly hinting at wealth or location advantages.
+Lower class male passengers might have the lowest survival rate due to both gender and class status.
+The measurement of latent factors may vary across different groups, possibly impacting data comparisons.
+Hidden variables that predict survival could reveal unrecognized pathways affecting passenger outcomes.
+Observed passenger attributes may insufficiently capture underlying latent constructs affecting survival assessment
+External factors like location or embarkment ports might alter latent structure configurations.
+Below there is a list of rejected hypothesis:
+Passengers with family onboard might have had better support networks, impacting their survival chances.
+Availability and access to cabins may have directly influenced survival, with closer proximity to exits aiding escape.
+Presence of multiple family members aboard ('SibSp' + 'Parch') could indicate larger groups, potentially impacting survival odds.
+An unusual age distribution among survivors could highlight notable survival for specific age groups, implying possible prioritized lifeboat access.
+Passengers traveling with family members might have had better survival due to mutual aid.
+There may be hidden factors, such as leadership traits, that contribute to survival among passengers.
+Latent factors' change over different phases may have shaped survival patterns at various time points.
+Indirect relationships mediated by hidden variables may impact survival outcomes.
+Interdependent latent variables might collectively influence survival outcomes.

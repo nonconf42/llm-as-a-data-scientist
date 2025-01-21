@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from tqdm import tqdm
+from textwrap import dedent
 
 import eli5
 
@@ -196,7 +197,29 @@ hypotheses_dict = {
     ]
 }
 
+def get_llms_list():
+    llms_list = [
+        ('openai', 'gpt-4o'),
+        ('deepinfra', 'microsoft/phi-4'),
+        ('deepinfra', 'meta-llama/Meta-Llama-3.1-70B-Instruct'),
+        ('deepinfra', 'meta-llama/Meta-Llama-3.1-405B-Instruct'),
+        ('deepinfra', 'Qwen/Qwen2.5-72B-Instruct'),
+        #('deepinfra', 'microsoft/WizardLM-2-8x22B')
+    ]
 
+    return llms_list
+
+def get_dataset_names():
+    datasets = [
+        'Cars', 
+        'Titanic', 
+        'Diamonds', 
+        'Smoking', 
+        'Shopping', 
+        'Bank', 
+        'Churn'
+    ]
+    return datasets
 
 def softmax(logits, temperature=1.0):
     """
@@ -375,8 +398,9 @@ def get_cols_stats_prompt(dataset):
 
 def generate_hypothesis_prompt(hypothesis_type, dataset, num_hypothesis = 10):
     dataset_description = textwrap.dedent(dataset.description)
-    hypothesis_description = hypotheses_dict[hypothesis_type][0]
-    hypothesis_type_prompt = 'Hypothesis Generation Methods:\n' + '\n'.join(hypotheses_dict[hypothesis_type][1:])
+    cols_stats = get_cols_stats_prompt(dataset)
+    #hypothesis_description = hypotheses_dict[hypothesis_type][0]
+    #hypothesis_type_prompt = 'Hypothesis Generation Methods:\n' + '\n'.join(hypotheses_dict[hypothesis_type][1:])
     beginning = 'Firstly, I will provide you with some information and then ask you to complete a task based on this information.'
     # instruction_prompt = f"""  
     #                         Dataframe 'dataset' is given. No need to generate the data. 
@@ -402,37 +426,81 @@ def generate_hypothesis_prompt(hypothesis_type, dataset, num_hypothesis = 10):
     #                     """
     instruction_prompt = f"""  
                                 Dataframe 'dataset' is given. No need to generate the data. 
-                                Please provide a python code with a list of {num_hypothesis} hypotheses for the dataset described above. For each hypothesis:
-                                1. Give me business insights based on the {hypothesis_type}. 
-                                2. Write a brief description based on the previous insights and save it as a string variable called description.
-                                3. Provide detailed step by step chain-of-thought and save it to variable COT.
-                                4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable. 
+                                Please provide a Python code with a list of {num_hypothesis} hypotheses for the dataset described above. For each hypothesis:
+                                1. Write a brief description that is **specific, detailed, and actionable**, supported by numerical evidence and real-world insights relevant to decision-makers, and save it as a string variable called description.
+                                2. Provide a detailed step-by-step chain-of-thought (COT) that identifies the hypothesis requirements, selects the correct statistical test, and explains the reasoning behind the method, saving it to a variable called COT.
+                                3. Provide Python code based on the COT variable to test the hypothesis using the dataset DataFrame. The code should define a function `test(dataset)` to implement the appropriate statistical test and return a binary variable called `result`, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside the `test()` function. For any hyperparameters, choose values based on dataset statistics (e.g., variance, dataset shape). Do not rename the test function or the description variable. 
+                                4. Generate detailed **business insights** for each hypothesis based on {hypothesis_type}, incorporating specific metrics, trends, or thresholds derived from the dataset to provide meaningful, practical recommendations.
+
+                                **Example Hypotheses from Different Domains:**
+
+                                1. **Financial Markets (Stocks):**
+                                description = "Stocks ranked in the top 20% by 6-month cumulative returns tend to outperform over the next 6 months, while stocks in the bottom 20% underperform, creating a momentum spread of 20.5%."
+                                COT = '''
+                                1. Identify the metric of interest: 6-month cumulative returns for stocks.
+                                2. Define the ranking groups: Top 20% (winners) and bottom 20% (losers).
+                                3. Calculate the average returns for winners and losers in the subsequent 6 months.
+                                4. Compute the momentum spread: difference in average returns between winners and losers.
+                                5. Use statistical tests (e.g., t-test) to determine if the momentum spread is significant.
+                                6. Structure the function to ingest stock returns and perform the analysis dynamically for any dataset.
+                                '''
+                                insights = "Stocks in the top 20% of 6-month cumulative returns (e.g., +15% and +25%) yield an average 6-month return of +10%, while bottom 20% stocks (e.g., -5% and -20%) average -10.5%. This results in a momentum spread of +20.5%. This insight suggests implementing a long-short momentum strategy to capitalize on these trends, with annualized gains of approximately 15.2% and a Sharpe ratio of 1.25 over the 2015–2020 period."
+
+                                2. **E-commerce (Customer Behavior):**
+                                description = "Customers who make their first purchase during discount periods have a 35% higher probability of making a second purchase within 30 days compared to those who buy at regular prices."
+                                COT = '''
+                                1. Segment customers into groups: those whose first purchase was during a discount period (>20% discount) and those who bought at regular prices.
+                                2. Calculate the percentage of customers in each group who made a second purchase within 30 days.
+                                3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+                                4. Assess the significance of the observed difference to confirm the hypothesis.
+                                5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+                                '''
+                                insights = "Customers making their first purchase during periods of significant discounts (e.g., >20%) have a 35% higher chance of a second purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns for new customers to enhance lifetime value."
+
+                                3. **Healthcare (Patient Outcomes):**
+                                description = "Patients aged 60+ receiving regular physical therapy (3 sessions per week) after hip surgery have a 25% shorter recovery time compared to those receiving fewer sessions."
+                                COT = '''
+                                1. Define the groups: patients aged 60+ receiving ≥3 physical therapy sessions per week and those receiving fewer.
+                                2. Measure recovery times (e.g., time to regain full mobility) for both groups.
+                                3. Perform a statistical test (e.g., ANOVA) to compare recovery times between the groups.
+                                4. Interpret the results and quantify the effect size of increased therapy sessions.
+                                5. Use the findings to inform healthcare policies for optimizing post-surgical recovery plans.
+                                '''
+                                insights = "Regular physical therapy significantly accelerates recovery in older patients, with those receiving 3+ sessions per week recovering in 45 days on average, compared to 60 days for others. This 25% reduction highlights the value of structured therapy programs in reducing healthcare costs and improving patient outcomes."
+
+                                **Key Requirements for Each Hypothesis:**
+                                - Hypotheses must be **specific, actionable, and detailed**, similar to the provided examples.
+                                - Each hypothesis must include explicit metrics, comparisons, or thresholds relevant to the dataset.
+                                - Insights must clearly explain their relevance and practical implications for decision-making.
+                                - Avoid abstract or generic statements; provide real-world scenarios backed by numerical evidence.
+
                                 Return the response using the following format: 
                                 '''python
                                 # Hypothesis 1. 
-                                insights = "[specific business insights for hypothesis 1]"
-                                description = "[description for hypothesis 1]" 
+                                description = "[specific, actionable description for hypothesis 1]" 
                                 COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
                                 [test() for hypothesis 1]
+                                insights = "[specific business insights for hypothesis 1, including actionable recommendations supported by metrics and trends.]"
                                 # Hypothesis 2.
-                                insights = "[specific business insights for hypothesis 2]"
-                                description = "[description for hypothesis 2]" 
+                                description = "[specific, actionable description for hypothesis 2]" 
                                 COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
                                 [test() for hypothesis 2]
+                                insights = "[specific business insights for hypothesis 2, including actionable recommendations supported by metrics and trends.]"
                                 …
                                 # Hypothesis {num_hypothesis}.
-                                insights = "[specific business insights for hypothesis {num_hypothesis}]"
-                                description = "[description for hypothesis {num_hypothesis}]" 
+                                description = "[specific, actionable description for hypothesis {num_hypothesis}]" 
                                 COT = "[Detailed chain-of-thought for hypothesis {num_hypothesis}: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
                                 [test() for hypothesis {num_hypothesis}]
+                                insights = "[specific business insights for hypothesis {num_hypothesis}, including actionable recommendations supported by metrics and trends.]"
                                 '''
                             """
 
     cols_info = get_cols_info_prompt(dataset)
     final_prompt = (beginning + '\n' + strip_multiline_string(dataset_description) + '\n' + 
                     strip_multiline_string(cols_info) + '\n' + 
-                    strip_multiline_string(hypothesis_description) + '\n' + 
-                    strip_multiline_string(hypothesis_type_prompt) + '\n' + 
+                    strip_multiline_string(cols_stats) + '\n' + 
+                    #strip_multiline_string(hypothesis_description) + '\n' + 
+                    #strip_multiline_string(hypothesis_type_prompt) + '\n' + 
                     strip_multiline_string(instruction_prompt))
     return final_prompt 
 
@@ -609,12 +677,18 @@ def auto_ml_agent(
     num_of_generations=1,
     num_of_features=20,
     debug=False,
-    output_file='df_for_experiments.csv',
-    hypothesis=None
+    hypothesis=None,
+    preprocessing=True,
+    engineering=True,
 ):
-  
+    if engineering and preprocessing:
+        print('Start of feature preprocessing and engineering....')
+    elif engineering:
+        print('Start of feature engineering....')
+    elif preprocessing:
+        print('Start of preprocessing....')
     dataset = DataReader(dataset_name)
-    ml_model = Model(ml_model_type, 'classification')
+    ml_model = Model(ml_model_type, dataset.task)
     llm_model = LLM(llm_model_type)
 
     if debug:
@@ -624,7 +698,8 @@ def auto_ml_agent(
         print(f'GENERATION {i + 1}:')
         
         # Preprocessing
-        if i == 0:
+        if i == 0 and preprocessing:
+            print('Started preprocessing of features.....')
             preprocessing_prompts = [
                 ('Encoding Data', 'prep_1_prompt'),
                 ('String Features Preprocessing', 'prep_2_prompt'),
@@ -638,7 +713,6 @@ def auto_ml_agent(
                     transformation_type=transformation,
                     hypothesis=hypothesis
                 )
-                print(prompt)
                 output = llm_model.llm_call(prompt, model_name)
                 code = extract_python_code(output)
                 generate_features(dataset=dataset, code_text=code)
@@ -646,88 +720,161 @@ def auto_ml_agent(
                 if debug:
                     print(f'After {transformation}: {dataset.train_input.shape}')
 
-        additional_preprocessing = [
-            ('Data Cleaning', 'prep_4_prompt'),
-            ('Dimensionality Reduction', 'prep_5_prompt'),
-        ]
-        
-        for transformation, var_name in additional_preprocessing:
-            prompt = generate_prompt(
-                instruction_type='preprocessing',
-                dataset=dataset,
-                transformation_type=transformation,
-                hypothesis=hypothesis
-            )
-            print(prompt)
-            output = llm_model.llm_call(prompt, model_name)
-            code = extract_python_code(output)
-            generate_features(dataset=dataset, code_text=code)
+        if preprocessing:
+            additional_preprocessing = [
+                ('Data Cleaning', 'prep_4_prompt'),
+                ('Dimensionality Reduction', 'prep_5_prompt'),
+            ]
+            
+            for transformation, var_name in additional_preprocessing:
+                prompt = generate_prompt(
+                    instruction_type='preprocessing',
+                    dataset=dataset,
+                    transformation_type=transformation,
+                    hypothesis=hypothesis
+                )
+                output = llm_model.llm_call(prompt, model_name)
+                code = extract_python_code(output)
+                generate_features(dataset=dataset, code_text=code)
+                
+                if debug:
+                    print(f'After {transformation}: {dataset.train_input.shape}')
+
+            prepare_data_for_model(dataset=dataset)
+            ml_model.fit(data=dataset)
             
             if debug:
-                print(f'After {transformation}: {dataset.train_input.shape}')
+                print(f'Model score after gen {i} (prep): {ml_model.score}')
 
-        prepare_data_for_model(dataset=dataset)
-        ml_model.fit(data=dataset)
-        
-        if debug:
-            print(f'Model score after gen {i} (prep): {ml_model.score}')
-
-        feature_importances = get_feature_importance(ml_model)
-        select_features(dataset=dataset, feature_importances=feature_importances, num_features=num_of_features, temp=1)
-        dataset.chosen_features = list(dataset.train_input_selected.columns)
+            feature_importances = get_feature_importance(ml_model)
+            select_features(dataset=dataset, feature_importances=feature_importances, num_features=num_of_features, temp=1)
+            dataset.chosen_features = list(dataset.train_input_selected.columns)
 
         # Feature Engineering
-        engineering_prompts = [
-            ('Feature Scaling', 'eng_1_prompt'),
-            ('Cross Feature Engineering', 'eng_2_prompt'),
-            ('Dimensionality Reduction', 'eng_3_prompt'),
-        ]
-        
-        for transformation, var_name in engineering_prompts:
-            prompt = generate_prompt(
-                instruction_type='engineering',
-                dataset=dataset,
-                transformation_type=transformation
-            )
-            output = llm_model.llm_call(prompt, model_name)
-            code = extract_python_code(output)
-            generate_features(dataset=dataset, code_text=code)
+        if engineering:
+            engineering_prompts = [
+                ('Feature Scaling', 'eng_1_prompt'),
+                ('Cross Feature Engineering', 'eng_2_prompt'),
+                ('Dimensionality Reduction', 'eng_3_prompt'),
+            ]
+            print('Start feature engineering.....')
+            for transformation, var_name in engineering_prompts:
+                prompt = generate_prompt(
+                    instruction_type='engineering',
+                    dataset=dataset,
+                    transformation_type=transformation
+                )
+                output = llm_model.llm_call(prompt, model_name)
+                code = extract_python_code(output)
+                generate_features(dataset=dataset, code_text=code)
+                
+                if debug:
+                    print(f'After {transformation}: {dataset.train_input.shape}')
+
+            prepare_data_for_model(dataset=dataset)
+            ml_model.fit(data=dataset)
             
             if debug:
-                print(f'After {transformation}: {dataset.train_input.shape}')
+                print(f'Model score after gen {i} (eng): {ml_model.score}')
 
-        prepare_data_for_model(dataset=dataset)
-        ml_model.fit(data=dataset)
-        
-        if debug:
-            print(f'Model score after gen {i} (eng): {ml_model.score}')
+            feature_importances = get_feature_importance(ml_model)
+            if i + 1 == num_of_generations:
+                select_features(
+                    dataset=dataset,
+                    feature_importances=feature_importances,
+                    num_features=num_of_features,
+                    temp=1,
+                    method='positive importance'
+                )
+            else:
+                select_features(
+                    dataset=dataset,
+                    feature_importances=feature_importances,
+                    num_features=num_of_features,
+                    temp=1
+                )
 
-        feature_importances = get_feature_importance(ml_model)
-        if i + 1 == num_of_generations:
-            select_features(
-                dataset=dataset,
-                feature_importances=feature_importances,
-                num_features=num_of_features,
-                temp=1,
-                method='positive importance'
-            )
-        else:
-            select_features(
-                dataset=dataset,
-                feature_importances=feature_importances,
-                num_features=num_of_features,
-                temp=1
-            )
-
-        dataset.chosen_features = list(dataset.train_input_selected.columns)
-        ml_model.fit(data=dataset, subset='top')
-        
-        if debug:
-            print(f'Model score with selected features: {ml_model.score}')
+            dataset.chosen_features = list(dataset.train_input_selected.columns)
+            ml_model.fit(data=dataset, subset='top')
+            
+            if debug:
+                print(f'Model score with selected features: {ml_model.score}')
 
     
     df = dataset.train_input_clean.copy()
-    df['Survived'] = dataset.train_labels
-    df.to_csv(output_file)
+    df[dataset.label_name] = dataset.train_labels
+    output_file_name = dataset_name + f'{i}th iterations' + '_hypothesis.csv' if hypothesis else dataset_name + f'{i}th iterations' + '.csv'
+    df.to_csv(f'iterations/{output_file_name}')
 
     print('RESULTS OF AUTO ML AGENT IN THE END:')
+
+
+def hypothesis_tuple_to_text(tup, file_name):
+    accepted = ['Below there is a list of accepted hypothesis:']
+    rejected = ['Below there is a list of rejected hypothesis:']
+    for hyp, res in tup:
+        if res == 1:
+            accepted.append(hyp)
+        else:
+            rejected.append(hyp)
+    hypothesis_text = '\n'.join(accepted) + '\n' + '\n'.join(rejected)
+    with open(file_name, 'w') as file:
+        file.write(hypothesis_text)
+    return 
+
+def call_to_action(dataset_name, llm_model_type='gpt', model_name='gpt-4o'):
+    dataset = DataReader(dataset_name=dataset_name)
+    llm_model = LLM('gpt')
+
+    description =  strip_multiline_string(dedent(dataset.description))
+    instruction_prompt = """
+    Using the dataset description and the outcomes of the hypotheses (approved or rejected), follow these steps to create a thorough analysis and actionable plan:
+    1. Interpret the Results for Practical Applications:
+        Clearly explain the significance of the findings in practical terms for stakeholders, users, or the dataset domain.
+        Discuss both short-term effects (e.g., immediate impacts on performance, behavior, or outcomes) and long-term effects (e.g., potential scalability, sustainability, or strategic shifts).
+    2. Provide Evidence-Based Recommendations:
+        Deliver detailed, numerical recommendations for actions to be taken, directly supported by the results of the approved/rejected hypotheses.
+        Include concrete steps tailored to the specific target audience, ensuring clarity and alignment with organizational goals.
+        For rejected hypotheses, suggest alternative directions or adjustments based on the findings to refine the strategy or approach.
+    3. Present a Detailed and Data-Driven Call to Action:
+        Summarize the key takeaways and their implications for decision-makers.
+        Include a structured action plan with clearly defined goals, numerical thresholds, and a timeline for execution.
+        Justify the recommendations with concrete evidence and statistical validation to build confidence in the proposed actions.
+        Conclude with a motivational yet data-backed statement encouraging immediate action, emphasizing measurable benefits and opportunities for growth or improvement.
+
+    Example of Call to Action with Recommendations:
+    1. Establish a Ranking Framework:
+        Rank stocks by 6-month cumulative returns monthly and segment them into quintiles.
+        Focus on the top 20% (winners) with returns between +15% and +25% and the bottom 20% (losers) with returns between -5% and -20%.
+        Why: Data analysis shows a significant 20.5% momentum spread between winners and losers, confirmed by statistical tests (95% confidence level).
+    2. Allocate Pilot Portfolio:
+        Assign 5% of your total portfolio for a test strategy: 2.5% to long positions in winners and 2.5% to short positions in losers.
+        Rebalance this portfolio every 6 months based on updated rankings.
+        Why: Historical validation of the hypothesis shows an annualized gain of 15.2% with a Sharpe ratio of 1.25, ensuring risk-adjusted returns.
+    3. Automate the Process:
+        Develop algorithms to calculate rankings, execute trades, and rebalance portfolios dynamically. Automation reduces manual bias and operational errors by 80%.
+        Why: Consistent execution of the strategy across various market conditions ensures hypothesis replication over time.
+    4. Expand if Pilot Meets KPIs:
+        Scale portfolio allocation to 20% if the momentum spread exceeds 18% and Sharpe ratio remains ≥1.
+        Test sector-specific or global market indices to identify broader applicability.
+        Why: Scaling ensures maximization of returns while maintaining evidence-based risk management.
+    """
+
+    with open(f'logs/hypothesis/{dataset_name}_hypothesis_text.txt', 'r') as file:
+        hypotheses = file.read()
+    
+    cols_info = get_cols_info_prompt(dataset)
+    
+    prompt = (
+        description + '\n' + '#'*40 + '\n' + 
+        'Below are the column descriptions in the format: column_name (column description):' + '\n' +
+        cols_info + '\n' + '#'*40 + '\n' + 
+        hypotheses + '\n' + '#'*40 + '\n' + 
+        instruction_prompt
+    )
+    actions = llm_model.llm_call(prompt)
+    with open(f'logs/actions/{dataset_name}_actions.txt', 'w') as file:
+        file.write(f'PROMPT:\n {prompt}')
+        file.write('\n')
+        file.write(actions)
+    return 

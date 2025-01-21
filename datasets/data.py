@@ -21,6 +21,17 @@ dataset_descriptions = {
                    Below is the data description in the format -  Variable (definition):
         
                  """,
+    'Shopping' : """The dataset offers a comprehensive view of consumer shopping trends, aiming to uncover patterns and behaviors in retail purchasing. It contains detailed transactional data 
+                    across various product categories, customer demographics, and purchase channels. Key features may include:
+                    Transaction Details: Purchase date, transaction value, product category, and payment method.
+                    Customer Information: Age group, gender, location, and loyalty status.
+                    Shopping Behavior: Frequency of purchases, average spend per transaction, and seasonal trends.
+                """,
+    'Bank' : """ This dataset presents the financial performance of Deutsche Bank, 
+                 including key metrics like operating income, net income, and balance sheet indicators. It spans 800 records over time.
+             """,
+
+    'Churn' : """ This data set contains details of a bank's customers and the target variable is a binary variable reflecting the fact whether the customer left the bank (closed his account) or he continues to be a customer."""
 }
 class DataReader:
     def __init__(self, dataset_name):
@@ -44,7 +55,9 @@ class DataReader:
                 'Name' : 'Name of passenger'
             }
             self.chosen_features = [col for col in self.train_base.columns if col not in ['Survived', 'PassengerId']]
-            
+            self.label_name = 'Survived'
+            self.task = 'classification'
+
         elif dataset_name == 'Cars':
             self.train_input = self.train_base.drop(['id', 'price'], axis=1)
             self.train_labels = self.train_base['price']
@@ -62,6 +75,8 @@ class DataReader:
                 'clean_title': "Indicates that the car’s title is free of any legal issues such as salvage or rebuild history."
             }
             self.chosen_features = [col for col in self.train_base.columns if col not in ['id', 'price']]
+            self.label_name = 'price'
+            self.task = 'regression'
 
         elif dataset_name == 'Diamonds':
             self.train_input = self.train_base.drop(['price'], axis=1)
@@ -79,6 +94,8 @@ class DataReader:
                 "price": "The price of the Diamond in USD"
             }
             self.chosen_features = [col for col in self.train_base.columns if col not in ['price']]
+            self.label_name = 'price'
+            self.task = 'regression'
 
         elif dataset_name == 'Smoking':
             self.train_input = self.train_base.drop(['smoking'], axis=1)
@@ -109,6 +126,79 @@ class DataReader:
                 "smoking": "Smoking status of the individual"
             }
             self.chosen_features = [col for col in self.train_base.columns if col not in ['smoking']]
+            self.label_name = 'smoking'
+            self.task = 'classification'
+
+        elif dataset_name == 'Shopping':
+            self.train_input = self.train_base
+            self.chosen_features = self.train_base.columns
+            self.features_description = {
+                "Customer ID": "Unique identifier for each customer.",
+                "Age": "Age of the customer (numerical).",
+                "Gender": "Gender of the customer (e.g., Male, Female).",
+                "Item Purchased": "Name of the item purchased.",
+                "Category": "Product category (Clothing, Footwear, Outerwear, Accessories).",
+                "Purchase Amount (USD)": "Total amount spent on the purchase.",
+                "Location": "Geographic location of the customer (city)",
+                "Size": "Size of the item purchased (if applicable; e.g., S, M, L, XL).",
+                "Color": "Color of the item purchased",
+                "Season": "Season of the purchase (e.g., Winter, Summer, Spring, Fall).",
+                "Review Rating": "Customer's review rating for the purchase (e.g., 1-5 stars).",
+                "Subscription Status": "Indicates whether the customer is a subscriber (e.g., Active, Inactive, None).",
+                "Payment Method": "Method used for the payment (e.g., Credit Card, PayPal, Cash, Venmo, Debit Card, Bank Transfer).",
+                "Shipping Type": "Type of shipping chosen (Express, Free Shipping, Next Day Air, Standard, 2-Day Shipping,Store Pickup",
+                "Discount Applied": "Indicates if a discount was applied (e.g., Yes/No ).",
+                "Promo Code Used": "Specifies if a promo code was used during the purchase (e.g., Yes/No).",
+                "Previous Purchases": "Total number of previous purchases made by the customer.",
+                "Preferred Payment Method": "The payment method most frequently used by the customer.",
+                "Frequency of Purchases": "How often the customer makes purchases "
+            }
+            self.task = 'call to action'
+        
+        elif dataset_name == 'Bank':
+            self.train_input = self.train_base
+            self.chosen_features = self.train_base.columns
+            self.features_description = {
+                "Date": "The date corresponding to each financial record (from January 2015 onwards).",
+                "Operating_Income": "The income generated from the bank's core business operations.",
+                "Expenses": "Total costs incurred during operations.",
+                "Net_Income": "Profit after subtracting expenses from operating income.",
+                "Assets": "Total assets owned by the bank (e.g., cash, investments).",
+                "Liabilities": "The total debts and obligations owed.",
+                "Equity": "Shareholders' equity, representing the net value of assets minus liabilities.",
+                "Debt_to_Equity": "A financial ratio showing the proportion of debt compared to equity.",
+                "ROA": "A profitability metric calculated as net income divided by total assets.",
+                "Revenue": "Total income from all operations and activities.",
+                "Cash_Flow": "The net cash generated or used in operations.",
+                "Profit_Margin": "A ratio showing the percentage of revenue that remains as profit.",
+                "Interest_Expense": "Costs associated with the bank's borrowings or debts.",
+                "Tax_Expense": "The amount paid as taxes on profits.",
+                "Dividend_Payout": "The portion of earnings distributed to shareholders as dividends."
+            }
+            self.task = 'call to action'
+
+        elif dataset_name == 'Churn':
+            self.train_input = self.train_base
+            self.chosen_features = self.train_base.columns
+            self.features_description = bank_data_dict = {
+                "RowNumber": "Row numbers from 1 to 10000",
+                "CustomerId": "Unique IDs for bank customer identification",
+                "Surname": "Customer's last name",
+                "CreditScore": "Credit score of the customer",
+                "Geography": "The country from which the customer belongs",
+                "Gender": "Male or Female",
+                "Age": "Age of the customer",
+                "Tenure": "Number of years for which the customer has been with the bank",
+                "Balance": "Bank balance of the customer",
+                "NumOfProducts": "Number of bank products the customer is utilising",
+                "HasCrCard": "Binary flag for whether the customer holds a credit card with the bank or not",
+                "IsActiveMember": "Binary flag for whether the customer is an active member with the bank or not",
+                "EstimatedSalary": "Estimated salary of the customer in dollars",
+                "Exited": "Binary flag (1 if the customer closed account with the bank, 0 if the customer is retained)"
+            }
+
+            self.task = 'classification'
+
 
 
             

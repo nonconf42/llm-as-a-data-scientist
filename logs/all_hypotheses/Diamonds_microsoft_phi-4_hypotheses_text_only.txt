@@ -1,0 +1,3 @@
+Below there is a list of accepted hypothesis:
+Diamonds with carat values above 1.0 experience a price variance three times greater than those under 1.0, indicating that larger diamonds exhibit more volatile pricing. Jewelers should craft tailored pricing strategies to manage expectations and maximize profit margins for high-carat diamonds.
+Below there is a list of rejected hypothesis:

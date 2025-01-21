@@ -1,0 +1,624 @@
+DESCRIPTION: Customers who use a promo code during their purchases have a higher average purchase amount compared to those who don't.
+INSIGHTS: Promo code users tend to have higher purchase amounts, suggesting that promo code strategies can effectively increase average spend. Tailoring promo code offers could enhance revenue by encouraging higher-value purchases.
+0
+####################
+COT:
+1. Identify two groups: customers who used a promo code and those who didn't.
+2. Extract purchase amounts for both groups.
+3. Use an independent t-test to compare the mean purchase amounts between the two groups.
+4. Set a significance level of 0.05 to determine if the difference is statistically significant.
+5. If the p-value is less than 0.05, accept the hypothesis that promo code users have higher purchase amounts.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers who use a promo code during their purchases have a higher average purchase amount compared to those who don't."
+COT = """
+1. Identify two groups: customers who used a promo code and those who didn't.
+2. Extract purchase amounts for both groups.
+3. Use an independent t-test to compare the mean purchase amounts between the two groups.
+4. Set a significance level of 0.05 to determine if the difference is statistically significant.
+5. If the p-value is less than 0.05, accept the hypothesis that promo code users have higher purchase amounts.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    code_users = dataset[dataset['Promo Code Used'] == 'Yes']
+    no_code_users = dataset[dataset['Promo Code Used'] == 'No']
+    t_stat, p_val = ttest_ind(code_users['Purchase Amount (USD)'], no_code_users['Purchase Amount (USD)'])
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Promo code users tend to have higher purchase amounts, suggesting that promo code strategies can effectively increase average spend. Tailoring promo code offers could enhance revenue by encouraging higher-value purchases."
+END:
+DESCRIPTION: Subscribers have a higher frequency of purchases compared to non-subscribers.
+INSIGHTS: Subscribers are more engaged with the brand, purchasing more frequently than non-subscribers. Thus, subscription models could enhance customer loyalty and sales frequency, advising further development of subscriber benefits.
+0
+####################
+COT:
+1. Segment the dataset into subscribers and non-subscribers.
+2. Calculate the average frequency of purchases for each group.
+3. Use an independent t-test to compare the frequencies between the two groups.
+4. Use a significance level of 0.05 to test the hypothesis.
+5. Conclude if subscribers indeed purchase more frequently than non-subscribers based on p-value.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Subscribers have a higher frequency of purchases compared to non-subscribers."
+COT = """
+1. Segment the dataset into subscribers and non-subscribers.
+2. Calculate the average frequency of purchases for each group.
+3. Use an independent t-test to compare the frequencies between the two groups.
+4. Use a significance level of 0.05 to test the hypothesis.
+5. Conclude if subscribers indeed purchase more frequently than non-subscribers based on p-value.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    subscribers = dataset[dataset['Subscription Status'] == 'Yes']
+    non_subscribers = dataset[dataset['Subscription Status'] == 'No']
+    t_stat, p_val = ttest_ind(subscribers['Frequency of Purchases'].map({'Weekly': 4, 'Monthly': 1, 'Annually': 0.083, 'Every 3 Months': 0.33}),
+                              non_subscribers['Frequency of Purchases'].map({'Weekly': 4, 'Monthly': 1, 'Annually': 0.083, 'Every 3 Months': 0.33}))
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Subscribers are more engaged with the brand, purchasing more frequently than non-subscribers. Thus, subscription models could enhance customer loyalty and sales frequency, advising further development of subscriber benefits."
+END:
+DESCRIPTION: Customers who received a discount are more likely to give higher review ratings compared to those who didn’t.
+INSIGHTS: Applying discounts can enhance customer satisfaction, evident through improved review ratings. This suggests that periodic discounts can positively impact customer reviews and potentially increase brand reputation.
+0
+####################
+COT:
+1. Identify customers who received a discount versus those who did not.
+2. Extract the review ratings associated with each group.
+3. Perform an independent t-test to compare average review ratings between the two groups.
+4. Use a significance level of 0.05 to determine statistical significance.
+5. Based on p-value, determine if discounts correlate with higher review ratings.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Customers who received a discount are more likely to give higher review ratings compared to those who didn’t."
+COT = """
+1. Identify customers who received a discount versus those who did not.
+2. Extract the review ratings associated with each group.
+3. Perform an independent t-test to compare average review ratings between the two groups.
+4. Use a significance level of 0.05 to determine statistical significance.
+5. Based on p-value, determine if discounts correlate with higher review ratings.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    discount_users = dataset[dataset['Discount Applied'] == 'Yes']
+    no_discount_users = dataset[dataset['Discount Applied'] == 'No']
+    t_stat, p_val = ttest_ind(discount_users['Review Rating'], no_discount_users['Review Rating'])
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Applying discounts can enhance customer satisfaction, evident through improved review ratings. This suggests that periodic discounts can positively impact customer reviews and potentially increase brand reputation."
+END:
+DESCRIPTION: Customers preferring express shipping have higher review ratings, suggesting rapid delivery influences satisfaction.
+INSIGHTS: Express shipping significantly influences customer satisfaction. Enhancing rapid delivery services and prioritizing express options may improve overall customer perceptions and feedback.
+0
+####################
+COT:
+1. Segregate customers based on shipping type: express versus others.
+2. Assess the average review ratings for express shipping users and those using other shipping methods.
+3. Use an independent t-test to compare review ratings.
+4. Set the significance level at 0.05 to test statistical significance.
+5. A significant result would indicate express shipping correlates with higher customer satisfaction.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers preferring express shipping have higher review ratings, suggesting rapid delivery influences satisfaction."
+COT = """
+1. Segregate customers based on shipping type: express versus others.
+2. Assess the average review ratings for express shipping users and those using other shipping methods.
+3. Use an independent t-test to compare review ratings.
+4. Set the significance level at 0.05 to test statistical significance.
+5. A significant result would indicate express shipping correlates with higher customer satisfaction.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    express_users = dataset[dataset['Shipping Type'] == 'Express']
+    other_users = dataset[dataset['Shipping Type'] != 'Express']
+    t_stat, p_val = ttest_ind(express_users['Review Rating'], other_users['Review Rating'])
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Express shipping significantly influences customer satisfaction. Enhancing rapid delivery services and prioritizing express options may improve overall customer perceptions and feedback."
+END:
+ERROR
+'Loyalty Status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Customers who frequently purchase (monthly) have higher loyalty status compared to those who purchase less often."
+COT = """
+1. Categorize customers based on purchase frequency: frequent purchasers and less frequent purchasers.
+2. Analyze the loyalty status distribution among both groups.
+3. Use a chi-squared test to evaluate the association between purchase frequency and loyalty status.
+4. Determine significance at the 0.05 level.
+5. Confirm if frequent purchase habit positively correlates with higher loyalty status.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    freq_map = {'Weekly': 4, 'Monthly': 1, 'Annually': 0.083, 'Every 3 Months': 0.33}
+    dataset['Freq_num'] = dataset['Frequency of Purchases'].map(freq_map)
+    frequent_purchasers = dataset.query("Freq_num >= 1")
+    less_frequent_purchasers = dataset.query("Freq_num < 1")
+    contingency_table = pd.crosstab(dataset['Loyalty Status'], [dataset['Freq_num'] >= 1])
+    chi2, p_val, dof, expected = chi2_contingency(contingency_table)
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Purchase frequency aligns with increased loyalty status. Encouraging regular purchases through subscription plans or rewards may enhance loyalty and retention."
+#####
+DESCRIPTION: Customers purchasing in Winter have different category preferences compared to those purchasing in Summer.
+INSIGHTS: Analyzing seasonal shopping preferences reveals distinct trends: heavier clothing and outerwear purchases in winter; lighter attire in summer. Marketing seasonal promotions helps target specific consumer needs effectively.
+0
+####################
+COT:
+1. Segment transactions by season: Winter and Summer.
+2. Analyze the distribution of product categories purchased in each season.
+3. Perform a chi-squared test for independence on the distribution.
+4. Assess significance with a 0.05 level.
+5. A significant test suggests differences in category preferences between Winter and Summer shoppers.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 6.
+description = "Customers purchasing in Winter have different category preferences compared to those purchasing in Summer."
+COT = """
+1. Segment transactions by season: Winter and Summer.
+2. Analyze the distribution of product categories purchased in each season.
+3. Perform a chi-squared test for independence on the distribution.
+4. Assess significance with a 0.05 level.
+5. A significant test suggests differences in category preferences between Winter and Summer shoppers.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    winter_purchases = dataset[dataset['Season'] == 'Winter']
+    summer_purchases = dataset[dataset['Season'] == 'Summer']
+    winter_counts = winter_purchases['Category'].value_counts()
+    summer_counts = summer_purchases['Category'].value_counts()
+    category_counts = pd.concat([winter_counts, summer_counts], axis=1, keys=['Winter', 'Summer']).fillna(0)
+    chi2, p_val, dof, expected = chi2_contingency(category_counts)
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Analyzing seasonal shopping preferences reveals distinct trends: heavier clothing and outerwear purchases in winter; lighter attire in summer. Marketing seasonal promotions helps target specific consumer needs effectively."
+END:
+DESCRIPTION: Customers with active subscription status tend to apply promo codes more frequently than non-subscribers.
+INSIGHTS: Active subscribers show a greater tendency to use promo codes. By increasing promo code accessibility for subscribed users, businesses can drive engagement and increase cumulative sales.
+1
+####################
+COT:
+1. Differentiate between active subscribers and non-subscribers.
+2. Calculate the frequency of promo code usage within each group.
+3. Conduct a chi-squared test to check for independence between subscription status and promo code usage.
+4. Use a 0.05 significance level to confirm statistical relevance.
+5. Establish whether subscribers engage more with promotions, indicating a strategy for boosting engagement.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 7.
+description = "Customers with active subscription status tend to apply promo codes more frequently than non-subscribers."
+COT = """
+1. Differentiate between active subscribers and non-subscribers.
+2. Calculate the frequency of promo code usage within each group.
+3. Conduct a chi-squared test to check for independence between subscription status and promo code usage.
+4. Use a 0.05 significance level to confirm statistical relevance.
+5. Establish whether subscribers engage more with promotions, indicating a strategy for boosting engagement.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    contingency_table = pd.crosstab(dataset['Subscription Status'] == 'Yes', dataset['Promo Code Used'] == 'Yes')
+    chi2, p_val, dof, expected = chi2_contingency(contingency_table)
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Active subscribers show a greater tendency to use promo codes. By increasing promo code accessibility for subscribed users, businesses can drive engagement and increase cumulative sales."
+END:
+DESCRIPTION: Credit Card users tend to have a higher average transaction value than PayPal users.
+INSIGHTS: Credit card transactions usually have higher values than PayPal transactions, suggesting credit card-focused promotions might yield greater revenue increases and should be emphasized in marketing strategies.
+0
+####################
+COT:
+1. Categorize transactions by payment method: Credit Card and PayPal.
+2. Compute the average transaction value for each payment method.
+3. Utilize an independent t-test to compare the transaction values.
+4. Apply a significance level of 0.05 to ascertain if the means differ significantly.
+5. Significant finding suggests payment method influences average transaction value.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 8.
+description = "Credit Card users tend to have a higher average transaction value than PayPal users."
+COT = """
+1. Categorize transactions by payment method: Credit Card and PayPal.
+2. Compute the average transaction value for each payment method.
+3. Utilize an independent t-test to compare the transaction values.
+4. Apply a significance level of 0.05 to ascertain if the means differ significantly.
+5. Significant finding suggests payment method influences average transaction value.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    credit_card_users = dataset[dataset['Payment Method'] == 'Credit Card']
+    paypal_users = dataset[dataset['Payment Method'] == 'PayPal']
+    t_stat, p_val = ttest_ind(credit_card_users['Purchase Amount (USD)'], paypal_users['Purchase Amount (USD)'])
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Credit card transactions usually have higher values than PayPal transactions, suggesting credit card-focused promotions might yield greater revenue increases and should be emphasized in marketing strategies."
+END:
+DESCRIPTION: Footwear purchases are more likely to include a discount compared to other categories.
+INSIGHTS: Footwear is frequently discounted compared to other categories. Recognizing this trend can guide tactical decisions in pricing strategies and sales promotions, optimizing margins and sales performances.
+0
+####################
+COT:
+1. Divide purchases by category: Footwear and others.
+2. Calculate the proportion of discounted transactions within each category.
+3. Utilize a chi-squared test for independence to evaluate the relationship between category and discount application.
+4. Use a significance level of 0.05 to ascertain if Footwear transactions are indeed more frequently discounted.
+5. Significant finding highlights potential discount strategies for inventory management or upselling.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 9.
+description = "Footwear purchases are more likely to include a discount compared to other categories."
+COT = """
+1. Divide purchases by category: Footwear and others.
+2. Calculate the proportion of discounted transactions within each category.
+3. Utilize a chi-squared test for independence to evaluate the relationship between category and discount application.
+4. Use a significance level of 0.05 to ascertain if Footwear transactions are indeed more frequently discounted.
+5. Significant finding highlights potential discount strategies for inventory management or upselling.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    is_footwear = dataset['Category'] == 'Footwear'
+    discount_applied = dataset['Discount Applied'] == 'Yes'
+    contingency_table = pd.crosstab(is_footwear, discount_applied)
+    chi2, p_val, dof, expected = chi2_contingency(contingency_table)
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Footwear is frequently discounted compared to other categories. Recognizing this trend can guide tactical decisions in pricing strategies and sales promotions, optimizing margins and sales performances."
+END:
+DESCRIPTION: Young adults (18-25) provide lower review ratings compared to older age groups.
+INSIGHTS: Young adults tend to provide lower ratings than older age groups, indicating potential dissonance in product or service satisfaction. Focusing feedback initiatives and enhancements on this demographic could improve overall satisfaction.
+1
+####################
+COT:
+1. Segment customers by age group (18-25 vs. other age groups).
+2. Calculate average review ratings for each segment.
+3. Use an independent t-test to compare the review ratings.
+4. Set significance at a 0.05 level to establish validity.
+5. Confirm if there is a notable difference in satisfaction based on age group, suggesting targeted customer service improvements.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 10.
+description = "Young adults (18-25) provide lower review ratings compared to older age groups."
+COT = """
+1. Segment customers by age group (18-25 vs. other age groups).
+2. Calculate average review ratings for each segment.
+3. Use an independent t-test to compare the review ratings.
+4. Set significance at a 0.05 level to establish validity.
+5. Confirm if there is a notable difference in satisfaction based on age group, suggesting targeted customer service improvements.
+"""
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    young_adults = dataset[dataset['Age'] <= 25]
+    older_adults = dataset[dataset['Age'] > 25]
+    t_stat, p_val = ttest_ind(young_adults['Review Rating'], older_adults['Review Rating'])
+    alpha = 0.05
+    result = 1 if p_val < alpha else 0
+    return result
+
+insights = "Young adults tend to provide lower ratings than older age groups, indicating potential dissonance in product or service satisfaction. Focusing feedback initiatives and enhancements on this demographic could improve overall satisfaction."
+END:
+ERROR
+unterminated string literal (detected at line 45) (tmpd0a8r6ac.py, line 45)
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Accessories purchased with 'Express' shipping receive higher review ratings (average 4.2) compared to standard shipments (average 3.7)."
+COT = '''
+1. Isolate transactions involving accessories and segment by shipping type, particularly 'Express.'
+2. Measure average review ratings for express vs standard shipments.
+3. Conduct an ANOVA test to detect significant review rating differences between shipping options.
+4. Choose a significance level of 0.05.
+5. Script the function to perform data manipulation and execute the ANOVA test accurately.
+'''
+def test5(dataset):
+    import pandas as pd
+    from scipy.stats import f_oneway
+
+    express_ratings = dataset[(dataset['Category'] == 'Accessories') & (dataset['Shipping Type'] == 'Express')]['Review Rating']
+    standard_ratings = dataset[(dataset['Category'] == 'Accessories') & (dataset['Shipping Type'] == 'Standard')]['Review Rating']
+    
+    f_stat, p_value = f_oneway(express_ratings, standard_ratings)
+    alpha = 0.05
+    result = 1 if p_value < alpha else 0
+    return result
+
+insights = "Higher ratings for express-shipped accessories reveal that expedited delivery boosts customer satisfaction. Businesses could channel efforts into enhancing express logistics for improved customer service satisfaction.
+#####
+####################
+HYPOTHESIS RESULTS:
+[('Promo code users tend to have higher purchase amounts, suggesting that promo code strategies can effectively increase average spend. Tailoring promo code offers could enhance revenue by encouraging higher-value purchases.', 0), ('Subscribers are more engaged with the brand, purchasing more frequently than non-subscribers. Thus, subscription models could enhance customer loyalty and sales frequency, advising further development of subscriber benefits.', 0), ('Applying discounts can enhance customer satisfaction, evident through improved review ratings. This suggests that periodic discounts can positively impact customer reviews and potentially increase brand reputation.', 0), ('Express shipping significantly influences customer satisfaction. Enhancing rapid delivery services and prioritizing express options may improve overall customer perceptions and feedback.', 0), ('Analyzing seasonal shopping preferences reveals distinct trends: heavier clothing and outerwear purchases in winter; lighter attire in summer. Marketing seasonal promotions helps target specific consumer needs effectively.', 0), ('Active subscribers show a greater tendency to use promo codes. By increasing promo code accessibility for subscribed users, businesses can drive engagement and increase cumulative sales.', 1), ('Credit card transactions usually have higher values than PayPal transactions, suggesting credit card-focused promotions might yield greater revenue increases and should be emphasized in marketing strategies.', 0), ('Footwear is frequently discounted compared to other categories. Recognizing this trend can guide tactical decisions in pricing strategies and sales promotions, optimizing margins and sales performances.', 0), ('Young adults tend to provide lower ratings than older age groups, indicating potential dissonance in product or service satisfaction. Focusing feedback initiatives and enhancements on this demographic could improve overall satisfaction.', 1)]
+
+
+
+####################
+CLEANED HYPOTHESIS RESULTS:
+[('Promo code users tend to have higher purchase amounts, suggesting that promo code strategies can effectively increase average spend. Tailoring promo code offers could enhance revenue by encouraging higher-value purchases.', 0), ('Subscribers are more engaged with the brand, purchasing more frequently than non-subscribers. Thus, subscription models could enhance customer loyalty and sales frequency, advising further development of subscriber benefits.', 0), ('Applying discounts can enhance customer satisfaction, evident through improved review ratings. This suggests that periodic discounts can positively impact customer reviews and potentially increase brand reputation.', 0), ('Express shipping significantly influences customer satisfaction. Enhancing rapid delivery services and prioritizing express options may improve overall customer perceptions and feedback.', 0), ('Analyzing seasonal shopping preferences reveals distinct trends: heavier clothing and outerwear purchases in winter; lighter attire in summer. Marketing seasonal promotions helps target specific consumer needs effectively.', 0), ('Active subscribers show a greater tendency to use promo codes. By increasing promo code accessibility for subscribed users, businesses can drive engagement and increase cumulative sales.', 1), ('Credit card transactions usually have higher values than PayPal transactions, suggesting credit card-focused promotions might yield greater revenue increases and should be emphasized in marketing strategies.', 0), ('Footwear is frequently discounted compared to other categories. Recognizing this trend can guide tactical decisions in pricing strategies and sales promotions, optimizing margins and sales performances.', 0), ('Young adults tend to provide lower ratings than older age groups, indicating potential dissonance in product or service satisfaction. Focusing feedback initiatives and enhancements on this demographic could improve overall satisfaction.', 1)]
+Len: 9
+
+
+
+####################
+HYPOTHESIS DICTIONARY:
+{'General Hypothesis': ['Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.', 'Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.', 'Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.', 'Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.', 'Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.', 'Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.', 'Chi-Square Test for Independence: Test if two categorical variables are independent.', 'ANOVA (Analysis of Variance): Compare the means across multiple groups.', 'Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.', 'Normality Tests: Test if the distribution of a variable follows a normal distribution.', 'Homogeneity Tests: Determine if different samples come from populations with the same distribution.', 'Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.', 'Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.', 'Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.', 'Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.', 'Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.'], 'Clustering Hypothesis': ['Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.', 'Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.', 'Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.', 'Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.', 'Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.', 'Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.', 'Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.'], 'Outlier Detection': ['Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.', 'Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).', 'Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.', 'Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.', 'DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.'], 'Anomaly Detection': ['Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.', 'Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.', 'Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.', 'Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.', 'Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.', 'Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.'], 'Cause-Effect Relationships': ['Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.', 'Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.', 'Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.', 'Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.', 'Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.', 'Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.', 'Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.', 'Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.', 'Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.', 'Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.', 'Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.', 'Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.', 'Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.', 'Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.', 'Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.'], 'Latent Variable Hypotheses': ['Latent variable hypotheses explore relationships involving unobserved or hidden variables that help explain observed data structure. These hypotheses assist in understanding complex constructs, revealing deeper relationships that may not be directly measurable.', 'Existence of Latent Variable Hypothesis: Test for the presence of unobserved variables that influence observed patterns, suggesting an underlying factor.', 'Latent Variable-Observable Variable Association Hypothesis: Assess if latent variables associate with specific observable variables, clarifying hidden structure.', 'Factorial Structure Hypothesis: Test if observed variables load onto a smaller number of latent factors, suggesting a factorial structure.', 'Dimensionality Hypothesis: Explore if the dataset’s variance can be explained by a limited number of latent dimensions, indicating reduced complexity.', 'Latent Class or Group Hypothesis: Investigate if hidden classes or groups exist within the data, revealing categorical latent structures.', 'Measurement Invariance Hypothesis: Test if latent variables maintain consistent relationships across different groups, ensuring validity in comparisons.', 'Predictive Power of Latent Variable Hypothesis: Assess if latent variables can predict specific outcomes, indicating their impact on observed data.', 'Latent Growth Hypothesis: Analyze if changes in latent variables over time explain longitudinal data trends.', 'Construct Validity Hypothesis: Test if observed variables accurately measure the latent constructs they are meant to represent.', 'Latent Variable Mediation Hypothesis: Investigate if latent variables mediate relationships between observed variables, clarifying indirect pathways.', 'Residualized Latent Variable Hypothesis: Assess if latent variables, after controlling for observable variables, still impact outcomes.', 'Interaction of Latent Variables Hypothesis: Test if interactions among latent variables affect observed outcomes, indicating interdependent hidden factors.', 'Latent Trait Distribution Hypothesis: Explore the distribution of latent traits within the population, identifying variance in unobserved characteristics.', 'Latent Structure Instability Hypothesis: Test if the structure of latent variables shifts over time or across samples, suggesting structural variability.', 'Effect of External Variable on Latent Structure Hypothesis: Investigate if external variables affect the structure or interpretation of latent variables.', 'Higher-Order Latent Variable Hypothesis: Test if multiple latent variables combine into a second-order latent structure, adding hierarchical layers.']}
+HYPOTHESIS RESULTS:
+[('Promo code users tend to have higher purchase amounts, suggesting that promo code strategies can effectively increase average spend. Tailoring promo code offers could enhance revenue by encouraging higher-value purchases.', 0), ('Subscribers are more engaged with the brand, purchasing more frequently than non-subscribers. Thus, subscription models could enhance customer loyalty and sales frequency, advising further development of subscriber benefits.', 0), ('Applying discounts can enhance customer satisfaction, evident through improved review ratings. This suggests that periodic discounts can positively impact customer reviews and potentially increase brand reputation.', 0), ('Express shipping significantly influences customer satisfaction. Enhancing rapid delivery services and prioritizing express options may improve overall customer perceptions and feedback.', 0), ('Analyzing seasonal shopping preferences reveals distinct trends: heavier clothing and outerwear purchases in winter; lighter attire in summer. Marketing seasonal promotions helps target specific consumer needs effectively.', 0), ('Active subscribers show a greater tendency to use promo codes. By increasing promo code accessibility for subscribed users, businesses can drive engagement and increase cumulative sales.', 1), ('Credit card transactions usually have higher values than PayPal transactions, suggesting credit card-focused promotions might yield greater revenue increases and should be emphasized in marketing strategies.', 0), ('Footwear is frequently discounted compared to other categories. Recognizing this trend can guide tactical decisions in pricing strategies and sales promotions, optimizing margins and sales performances.', 0), ('Young adults tend to provide lower ratings than older age groups, indicating potential dissonance in product or service satisfaction. Focusing feedback initiatives and enhancements on this demographic could improve overall satisfaction.', 1)]

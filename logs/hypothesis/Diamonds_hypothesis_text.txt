@@ -1,0 +1,38 @@
+Below there is a list of accepted hypothesis:
+Higher carat values are associated with increased diamond prices.
+The cut quality impacts the price of diamonds, with 'Ideal' cut diamonds generally fetching higher prices.
+The color grade affects diamond pricing, with some colors being more desirable.
+Clarity has a significant impact on price, with clearer diamonds being priced higher.
+Diamonds with certain table size ranges have a significant price impact.
+There is a certain proportion of high-value color diamonds compared to others.
+The variance of prices differs across cut categories.
+Clarity categories exhibit different price distribution patterns.
+Outliers in 'carat' values could suggest mismeasured diamonds or fraudulent data entries, affecting price prediction accuracy.
+Detecting outliers in 'depth' could help refine the assessment of diamond proportions and inform price valuation.
+Identifying outliers in the 'table' percentage could indicate non-standard cuts and impact quality grading.
+Outliers in 'y' dimension may highlight incorrect measurements or atypical shapes, influencing valuation.
+DBSCAN can uncover natural groupings and isolate noise, enhancing dataset quality for size-related attributes x, y, z.
+High carat diamonds that are priced significantly lower than expected could indicate potential underpricing issues or may highlight counterfeit concerns.
+Anomalies in the 'cut' category may reveal supply chain inaccuracies or mislabelled diamond cuts.
+If x, y, or z dimensions do not conform to standard proportions, it may signify data entry errors or unusual diamond cuts.
+Higher carat values lead to increased diamond prices, as larger diamonds are valued more highly.
+The cut quality of a diamond affects its price, as higher quality cuts are more desirable and therefore priced higher.
+Diamond color affects price, with certain colors being more valued and thus influencing market pricing.
+Diamond clarity affects price, where clearer diamonds are typically more valued.
+Diamond dimensions, especially the width (x), affect the price significantly, as dimensions contribute to overall perception and value.
+The table measurement can influence diamond prices due to its impact on the diamond's surface appearance and light performance.
+A diamond's length (y) has potential price implications, as dimensions contribute to perceived size and value.
+The height (z) is likely to affect diamond valuation and pricing, influenced by the overall symmetry and flow of light.
+Combination of cut and color variables may interact to influence the price of diamonds, indicating possible compounded effects.
+There might be an unobserved variable that influences the diamond price, such as consumer trends or brand perception, which is not captured in the current dataset.
+The clarity of the diamond might have an underlying latent class structure that influences its perceived value, beyond just the labeled clarity grades.
+Certain dimension-related features (carat, x, y, z) may load onto a smaller number of latent dimensions that effectively summarize diamond size and shape, impacting the price.
+Changes in diamond pricing strategies over time might indicate shifts in latent variables such as market conditions or demand fluctuations.
+A latent structure may exist that consistently affects diamond attributes like cut, color, and clarity, impacting prices similarly across different types of diamonds.
+Interaction and compound effects among latent variables across various diamond attributes such as intrinsic/extrinsic factors contribute to pricing beyond independent variable effects.
+Higher-Order latent constructs may encapsulate multiple diamond attributes, providing hierarchical predictors for pricing structures.
+Below there is a list of rejected hypothesis:
+There is a correlation between depth and price, implying a structural impact.
+Greater depth percentages in diamonds are suspected to influence price, possibly affecting the diamond's aesthetic appeal and value.
+Certain latent traits may predict premiums paid for specific diamond attributes like cut or color, reflecting consumer willingness to pay.
+There might exist significant latent trait variation in the population, reflecting diverse consumer perceptions that drive diamond price volatility.

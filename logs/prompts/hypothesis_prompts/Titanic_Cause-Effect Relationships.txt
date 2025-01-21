@@ -55,3 +55,528 @@ description = "[description for hypothesis 10]"
 COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
 [test() for hypothesis 10]
 '''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (number of siblings / spouses aboard the Titanic)
+Parch (number of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Give me business insights based on the Cause-Effect Relationships.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (number of siblings / spouses aboard the Titanic)
+Parch (number of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Cause-Effect Relationships, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (number of siblings / spouses aboard the Titanic)
+Parch (number of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Cause-Effect Relationships, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (number of siblings / spouses aboard the Titanic)
+Parch (number of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Cause-Effect Relationships, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (number of siblings / spouses aboard the Titanic)
+Parch (number of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Feature Pclass:
+Count of NaN values: 0
+Datatype: int64
+max: 3.0
+min: 1.0
+mean: 2.308641975308642
+std: 0.8360712409770513
+Examples: [1, 3, 3, 2, 3]
+Feature Name:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 891
+the most frequent value: Braund, Mr. Owen Harris
+frequency of mode: 1
+Examples: ['Maioni, Miss. Roberta', 'Farrell, Mr. James', 'Moen, Mr. Sigurd Hansen', 'Sinkkonen, Miss. Anna', 'Beesley, Mr. Lawrence']
+Feature Sex:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 2
+the most frequent value: male
+frequency of mode: 577
+Examples: ['male', 'male', 'male', 'male', 'male']
+Feature Age:
+Count of NaN values: 177
+Datatype: float64
+max: 80.0
+min: 0.42
+mean: 29.69911764705882
+std: 14.526497332334044
+Examples: [30.0, 22.0, 2.0, 35.0, 34.0]
+Feature SibSp:
+Count of NaN values: 0
+Datatype: int64
+max: 8.0
+min: 0.0
+mean: 0.5230078563411896
+std: 1.1027434322934275
+Examples: [1, 1, 0, 0, 1]
+Feature Parch:
+Count of NaN values: 0
+Datatype: int64
+max: 6.0
+min: 0.0
+mean: 0.38159371492704824
+std: 0.8060572211299559
+Examples: [0, 0, 1, 0, 3]
+Feature Ticket:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 681
+the most frequent value: 347082
+frequency of mode: 7
+Examples: ['382649', 'F.C.C. 13531', '347082', '2689', 'CA 2144']
+Feature Fare:
+Count of NaN values: 0
+Datatype: float64
+max: 512.3292
+min: 0.0
+mean: 32.204207968574636
+std: 49.6934285971809
+Examples: [110.8833, 247.5208, 7.75, 32.5, 7.925]
+Feature Cabin:
+Count of NaN values: 687
+Datatype: object
+count of unique values: 147
+the most frequent value: B96 B98
+frequency of mode: 4
+Examples: ['D50', nan, nan, nan, 'C93']
+Feature Embarked:
+Count of NaN values: 2
+Datatype: object
+count of unique values: 3
+the most frequent value: S
+frequency of mode: 644
+Examples: ['S', 'S', 'S', 'S', 'S']
+Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.
+Hypothesis Generation Methods:
+Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.
+Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.
+Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.
+Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.
+Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.
+Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.
+Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.
+Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.
+Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.
+Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.
+Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.
+Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.
+Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.
+Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Cause-Effect Relationships, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This is titanic dataset. The goal is to predict which passenger survived. While there
+was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others. Below is the data description in the format - Variable (definition):
+
+Pclass (Ticket class: 1 = 1st, 2 = 2nd, 3 = 3rd)
+Sex (Sex: male, female)
+Age (Age in years)
+SibSp (number of siblings / spouses aboard the Titanic)
+Parch (number of parents / children aboard the Titanic)
+Ticket (Ticket number)
+Fare (Passenger fare)
+Cabin (Cabin number)
+Embarked (Port of Embarkation: C = Cherbourg,Q = Queenstown, S = Southampton)
+Name (Name of passenger)
+Feature Pclass:
+Count of NaN values: 0
+Datatype: int64
+max: 3.0
+min: 1.0
+mean: 2.308641975308642
+std: 0.8360712409770513
+Examples: [2, 1, 2, 2, 3]
+Feature Name:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 891
+the most frequent value: Braund, Mr. Owen Harris
+frequency of mode: 1
+Examples: ['Daniel, Mr. Robert Williams', 'Jussila, Mr. Eiriik', 'Johnson, Mr. William Cahoone Jr', 'Saundercock, Mr. William Henry', 'Radeff, Mr. Alexander']
+Feature Sex:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 2
+the most frequent value: male
+frequency of mode: 577
+Examples: ['female', 'female', 'male', 'male', 'female']
+Feature Age:
+Count of NaN values: 177
+Datatype: float64
+max: 80.0
+min: 0.42
+mean: 29.69911764705882
+std: 14.526497332334044
+Examples: [16.0, 33.0, 55.0, 22.0, 4.0]
+Feature SibSp:
+Count of NaN values: 0
+Datatype: int64
+max: 8.0
+min: 0.0
+mean: 0.5230078563411896
+std: 1.1027434322934275
+Examples: [0, 0, 0, 4, 0]
+Feature Parch:
+Count of NaN values: 0
+Datatype: int64
+max: 6.0
+min: 0.0
+mean: 0.38159371492704824
+std: 0.8060572211299559
+Examples: [0, 0, 0, 0, 1]
+Feature Ticket:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 681
+the most frequent value: 347082
+frequency of mode: 7
+Examples: ['349210', '17474', '330909', 'C.A./SOTON 34068', 'PC 17477']
+Feature Fare:
+Count of NaN values: 0
+Datatype: float64
+max: 512.3292
+min: 0.0
+mean: 32.204207968574636
+std: 49.6934285971809
+Examples: [93.5, 31.275, 7.925, 79.65, 26.55]
+Feature Cabin:
+Count of NaN values: 687
+Datatype: object
+count of unique values: 147
+the most frequent value: B96 B98
+frequency of mode: 4
+Examples: [nan, nan, nan, nan, nan]
+Feature Embarked:
+Count of NaN values: 2
+Datatype: object
+count of unique values: 3
+the most frequent value: S
+frequency of mode: 644
+Examples: ['S', 'S', 'S', 'S', 'S']
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a Python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Write a brief description that is **specific, detailed, and actionable**, supported by numerical evidence and real-world insights relevant to decision-makers, and save it as a string variable called description.
+2. Provide a detailed step-by-step chain-of-thought (COT) that identifies the hypothesis requirements, selects the correct statistical test, and explains the reasoning behind the method, saving it to a variable called COT.
+3. Provide Python code based on the COT variable to test the hypothesis using the dataset DataFrame. The code should define a function `test(dataset)` to implement the appropriate statistical test and return a binary variable called `result`, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside the `test()` function. For any hyperparameters, choose values based on dataset statistics (e.g., variance, dataset shape). Do not rename the test function or the description variable.
+4. Generate detailed **business insights** for each hypothesis based on Cause-Effect Relationships, incorporating specific metrics, trends, or thresholds derived from the dataset to provide meaningful, practical recommendations.
+
+**Example Hypotheses from Different Domains:**
+
+1. **Financial Markets (Stocks):**
+description = "Stocks ranked in the top 20% by 6-month cumulative returns tend to outperform over the next 6 months, while stocks in the bottom 20% underperform, creating a momentum spread of 20.5%."
+COT = '''
+1. Identify the metric of interest: 6-month cumulative returns for stocks.
+2. Define the ranking groups: Top 20% (winners) and bottom 20% (losers).
+3. Calculate the average returns for winners and losers in the subsequent 6 months.
+4. Compute the momentum spread: difference in average returns between winners and losers.
+5. Use statistical tests (e.g., t-test) to determine if the momentum spread is significant.
+6. Structure the function to ingest stock returns and perform the analysis dynamically for any dataset.
+'''
+insights = "Stocks in the top 20% of 6-month cumulative returns (e.g., +15% and +25%) yield an average 6-month return of +10%, while bottom 20% stocks (e.g., -5% and -20%) average -10.5%. This results in a momentum spread of +20.5%. This insight suggests implementing a long-short momentum strategy to capitalize on these trends, with annualized gains of approximately 15.2% and a Sharpe ratio of 1.25 over the 2015–2020 period."
+
+2. **E-commerce (Customer Behavior):**
+description = "Customers who make their first purchase during discount periods have a 35% higher probability of making a second purchase within 30 days compared to those who buy at regular prices."
+COT = '''
+1. Segment customers into groups: those whose first purchase was during a discount period (>20% discount) and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a second purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+'''
+insights = "Customers making their first purchase during periods of significant discounts (e.g., >20%) have a 35% higher chance of a second purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns for new customers to enhance lifetime value."
+
+3. **Healthcare (Patient Outcomes):**
+description = "Patients aged 60+ receiving regular physical therapy (3 sessions per week) after hip surgery have a 25% shorter recovery time compared to those receiving fewer sessions."
+COT = '''
+1. Define the groups: patients aged 60+ receiving ≥3 physical therapy sessions per week and those receiving fewer.
+2. Measure recovery times (e.g., time to regain full mobility) for both groups.
+3. Perform a statistical test (e.g., ANOVA) to compare recovery times between the groups.
+4. Interpret the results and quantify the effect size of increased therapy sessions.
+5. Use the findings to inform healthcare policies for optimizing post-surgical recovery plans.
+'''
+insights = "Regular physical therapy significantly accelerates recovery in older patients, with those receiving 3+ sessions per week recovering in 45 days on average, compared to 60 days for others. This 25% reduction highlights the value of structured therapy programs in reducing healthcare costs and improving patient outcomes."
+
+**Key Requirements for Each Hypothesis:**
+- Hypotheses must be **specific, actionable, and detailed**, similar to the provided examples.
+- Each hypothesis must include explicit metrics, comparisons, or thresholds relevant to the dataset.
+- Insights must clearly explain their relevance and practical implications for decision-making.
+- Avoid abstract or generic statements; provide real-world scenarios backed by numerical evidence.
+
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "[specific, actionable description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+insights = "[specific business insights for hypothesis 1, including actionable recommendations supported by metrics and trends.]"
+# Hypothesis 2.
+description = "[specific, actionable description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+insights = "[specific business insights for hypothesis 2, including actionable recommendations supported by metrics and trends.]"
+…
+# Hypothesis 10.
+description = "[specific, actionable description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+insights = "[specific business insights for hypothesis 10, including actionable recommendations supported by metrics and trends.]"
+'''

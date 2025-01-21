@@ -1,0 +1,535 @@
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This dataset presents the financial performance of Deutsche Bank,
+including key metrics like operating income, net income, and balance sheet indicators. It spans 800 records over time.
+Date (The date corresponding to each financial record (from January 2015 onwards).)
+Operating_Income (The income generated from the bank's core business operations.)
+Expenses (Total costs incurred during operations.)
+Net_Income (Profit after subtracting expenses from operating income.)
+Assets (Total assets owned by the bank (e.g., cash, investments).)
+Liabilities (The total debts and obligations owed.)
+Equity (Shareholders' equity, representing the net value of assets minus liabilities.)
+Debt_to_Equity (A financial ratio showing the proportion of debt compared to equity.)
+ROA (A profitability metric calculated as net income divided by total assets.)
+Revenue (Total income from all operations and activities.)
+Cash_Flow (The net cash generated or used in operations.)
+Profit_Margin (A ratio showing the percentage of revenue that remains as profit.)
+Interest_Expense (Costs associated with the bank's borrowings or debts.)
+Tax_Expense (The amount paid as taxes on profits.)
+Dividend_Payout (The portion of earnings distributed to shareholders as dividends.)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Anomaly Detection, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This dataset presents the financial performance of Deutsche Bank,
+including key metrics like operating income, net income, and balance sheet indicators. It spans 800 records over time.
+Date (The date corresponding to each financial record (from January 2015 onwards).)
+Operating_Income (The income generated from the bank's core business operations.)
+Expenses (Total costs incurred during operations.)
+Net_Income (Profit after subtracting expenses from operating income.)
+Assets (Total assets owned by the bank (e.g., cash, investments).)
+Liabilities (The total debts and obligations owed.)
+Equity (Shareholders' equity, representing the net value of assets minus liabilities.)
+Debt_to_Equity (A financial ratio showing the proportion of debt compared to equity.)
+ROA (A profitability metric calculated as net income divided by total assets.)
+Revenue (Total income from all operations and activities.)
+Cash_Flow (The net cash generated or used in operations.)
+Profit_Margin (A ratio showing the percentage of revenue that remains as profit.)
+Interest_Expense (Costs associated with the bank's borrowings or debts.)
+Tax_Expense (The amount paid as taxes on profits.)
+Dividend_Payout (The portion of earnings distributed to shareholders as dividends.)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Anomaly Detection, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This dataset presents the financial performance of Deutsche Bank,
+including key metrics like operating income, net income, and balance sheet indicators. It spans 800 records over time.
+Date (The date corresponding to each financial record (from January 2015 onwards).)
+Operating_Income (The income generated from the bank's core business operations.)
+Expenses (Total costs incurred during operations.)
+Net_Income (Profit after subtracting expenses from operating income.)
+Assets (Total assets owned by the bank (e.g., cash, investments).)
+Liabilities (The total debts and obligations owed.)
+Equity (Shareholders' equity, representing the net value of assets minus liabilities.)
+Debt_to_Equity (A financial ratio showing the proportion of debt compared to equity.)
+ROA (A profitability metric calculated as net income divided by total assets.)
+Revenue (Total income from all operations and activities.)
+Cash_Flow (The net cash generated or used in operations.)
+Profit_Margin (A ratio showing the percentage of revenue that remains as profit.)
+Interest_Expense (Costs associated with the bank's borrowings or debts.)
+Tax_Expense (The amount paid as taxes on profits.)
+Dividend_Payout (The portion of earnings distributed to shareholders as dividends.)
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Anomaly Detection, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This dataset presents the financial performance of Deutsche Bank,
+including key metrics like operating income, net income, and balance sheet indicators. It spans 800 records over time.
+Date (The date corresponding to each financial record (from January 2015 onwards).)
+Operating_Income (The income generated from the bank's core business operations.)
+Expenses (Total costs incurred during operations.)
+Net_Income (Profit after subtracting expenses from operating income.)
+Assets (Total assets owned by the bank (e.g., cash, investments).)
+Liabilities (The total debts and obligations owed.)
+Equity (Shareholders' equity, representing the net value of assets minus liabilities.)
+Debt_to_Equity (A financial ratio showing the proportion of debt compared to equity.)
+ROA (A profitability metric calculated as net income divided by total assets.)
+Revenue (Total income from all operations and activities.)
+Cash_Flow (The net cash generated or used in operations.)
+Profit_Margin (A ratio showing the percentage of revenue that remains as profit.)
+Interest_Expense (Costs associated with the bank's borrowings or debts.)
+Tax_Expense (The amount paid as taxes on profits.)
+Dividend_Payout (The portion of earnings distributed to shareholders as dividends.)
+Feature Date:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 800
+the most frequent value: 1/1/2015
+frequency of mode: 1
+Examples: ['3/6/2017', '7/15/2016', '8/15/2015', '11/22/2015', '7/31/2016']
+Feature Operating_Income:
+Count of NaN values: 0
+Datatype: float64
+max: 9997459.06
+min: 1045554.25
+mean: 5472606.9296
+std: 2642462.0106686493
+Examples: [4607662.75, 2042821.54, 2152412.55, 1180640.78, 7098079.26]
+Feature Expenses:
+Count of NaN values: 0
+Datatype: float64
+max: 4997361.77
+min: 520844.1
+mean: 2750535.7042375
+std: 1318118.0179277232
+Examples: [872594.01, 4379574.28, 3464184.99, 3464984.62, 3307366.96]
+Feature Assets:
+Count of NaN values: 0
+Datatype: float64
+max: 499256380.1
+min: 50704297.34
+mean: 274501411.479175
+std: 129328240.41548358
+Examples: [348705358.8, 266604868.2, 284650560.1, 428651398.9, 437616498.4]
+Feature Liabilities:
+Count of NaN values: 0
+Datatype: float64
+max: 399171925.2
+min: 20004421.21
+mean: 210155746.0895
+std: 110650275.32229204
+Examples: [278442516.5, 268767261.0, 225734890.8, 257969042.1, 325504232.9]
+Feature Equity:
+Count of NaN values: 0
+Datatype: float64
+max: 99960193.29
+min: 10058805.17
+mean: 54207193.23714999
+std: 25856773.40927051
+Examples: [12578718.48, 90176998.15, 63569155.07, 49576643.79, 30832769.24]
+Feature Revenue:
+Count of NaN values: 0
+Datatype: float64
+max: 14970742.06
+min: 2000399.34
+mean: 8405125.386225
+std: 3709089.810615304
+Examples: [10133864.86, 4688632.61, 14294746.13, 6473191.03, 10715646.34]
+Feature Cash_Flow:
+Count of NaN values: 0
+Datatype: float64
+max: 7990947.02
+min: 507075.61
+mean: 4230625.841262501
+std: 2156427.995259589
+Examples: [1152252.65, 6863538.31, 3022425.46, 3169683.3, 7829628.67]
+Feature Net_Income:
+Count of NaN values: 0
+Datatype: float64
+max: 9111468.57
+min: -3751341.37
+mean: 2722071.2253999994
+std: 2962314.8573313816
+Examples: [3031899.63, 4616735.04, -1258215.77, 2450128.0, -1049510.06]
+Feature Debt_to_Equity:
+Count of NaN values: 0
+Datatype: float64
+max: 35.45
+min: 0.24
+mean: 5.5343875
+std: 5.387372397703093
+Examples: [5.41, 2.21, 8.29, 0.42, 4.41]
+Feature ROA:
+Count of NaN values: 0
+Datatype: float64
+max: 0.13
+min: -0.04
+mean: 0.013925
+std: 0.021340422724317527
+Examples: [0.01, 0.04, 0.04, 0.01, 0.0]
+Feature Profit_Margin:
+Count of NaN values: 0
+Datatype: float64
+max: 3.59
+min: -1.53
+mean: 0.42269999999999996
+std: 0.6022126161446675
+Examples: [1.51, 0.42, 2.02, 0.69, 2.56]
+Feature Interest_Expense:
+Count of NaN values: 0
+Datatype: float64
+max: 1998975.29
+min: 107444.91
+mean: 1042662.2673000001
+std: 550328.3361975899
+Examples: [1701596.42, 1920145.03, 640882.0, 1700168.09, 664706.82]
+Feature Tax_Expense:
+Count of NaN values: 0
+Datatype: float64
+max: 1498850.58
+min: 50349.46
+mean: 771560.6261374999
+std: 420308.31000370585
+Examples: [430503.32, 524159.81, 106278.77, 1438761.65, 1377353.49]
+Feature Dividend_Payout:
+Count of NaN values: 0
+Datatype: float64
+max: 2996823.63
+min: 101164.48
+mean: 1481637.722425
+std: 829088.2835622694
+Examples: [617506.95, 471745.41, 1498833.0, 2700564.99, 1603629.63]
+Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.
+Hypothesis Generation Methods:
+Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.
+Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.
+Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.
+Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.
+Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Generate detailed business insights based on Anomaly Detection, supported by specific numerical analysis and evidence from the provided dataset.
+2. Write a brief description based on the previous insights and save it as a string variable called description.
+3. Provide detailed step by step chain-of-thought and save it to variable COT.
+4. Provide Python code based on COT variable to test the hypothesis using the dataset DataFrame. The code should write the function test(dataset) to implement appropriate statistical test and return the result as a binary variable called result, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside test() function. For any hyperparameters choose values based on dataset statistics (e.g. varience, dataset shape)Do not rename test function and description variable.
+**Example Hypothesis from different dataset:**
+Stocks ranked in the top 20% by 6-month cumulative returns (e.g., +15% and +25%) tend to outperform with an average 6-month return of +10%, while stocks in the bottom 20% (e.g., -5% and -20%) underperform with an average return of -10.5%, resulting in a statistically significant momentum spread of +20.5% over the 2015–2020 period.
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+insights = "[specific business insights for hypothesis 1]"
+description = "[description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+# Hypothesis 2.
+insights = "[specific business insights for hypothesis 2]"
+description = "[description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+…
+# Hypothesis 10.
+insights = "[specific business insights for hypothesis 10]"
+description = "[description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+'''
+Firstly, I will provide you with some information and then ask you to complete a task based on this information.
+This dataset presents the financial performance of Deutsche Bank,
+including key metrics like operating income, net income, and balance sheet indicators. It spans 800 records over time.
+Date (The date corresponding to each financial record (from January 2015 onwards).)
+Operating_Income (The income generated from the bank's core business operations.)
+Expenses (Total costs incurred during operations.)
+Net_Income (Profit after subtracting expenses from operating income.)
+Assets (Total assets owned by the bank (e.g., cash, investments).)
+Liabilities (The total debts and obligations owed.)
+Equity (Shareholders' equity, representing the net value of assets minus liabilities.)
+Debt_to_Equity (A financial ratio showing the proportion of debt compared to equity.)
+ROA (A profitability metric calculated as net income divided by total assets.)
+Revenue (Total income from all operations and activities.)
+Cash_Flow (The net cash generated or used in operations.)
+Profit_Margin (A ratio showing the percentage of revenue that remains as profit.)
+Interest_Expense (Costs associated with the bank's borrowings or debts.)
+Tax_Expense (The amount paid as taxes on profits.)
+Dividend_Payout (The portion of earnings distributed to shareholders as dividends.)
+Feature Date:
+Count of NaN values: 0
+Datatype: object
+count of unique values: 800
+the most frequent value: 1/1/2015
+frequency of mode: 1
+Examples: ['8/12/2016', '2/16/2015', '7/21/2015', '11/13/2016', '3/5/2016']
+Feature Operating_Income:
+Count of NaN values: 0
+Datatype: float64
+max: 9997459.06
+min: 1045554.25
+mean: 5472606.9296
+std: 2642462.0106686493
+Examples: [3638896.95, 9473183.28, 9820293.18, 7755532.76, 6252905.01]
+Feature Expenses:
+Count of NaN values: 0
+Datatype: float64
+max: 4997361.77
+min: 520844.1
+mean: 2750535.7042375
+std: 1318118.0179277232
+Examples: [4423295.87, 756890.85, 4107776.37, 3595485.75, 2291759.12]
+Feature Assets:
+Count of NaN values: 0
+Datatype: float64
+max: 499256380.1
+min: 50704297.34
+mean: 274501411.479175
+std: 129328240.41548358
+Examples: [91845787.92, 118411183.9, 386971851.6, 197686739.1, 283283609.9]
+Feature Liabilities:
+Count of NaN values: 0
+Datatype: float64
+max: 399171925.2
+min: 20004421.21
+mean: 210155746.0895
+std: 110650275.32229204
+Examples: [139938390.6, 265654321.8, 147531972.6, 186876930.3, 194238743.4]
+Feature Equity:
+Count of NaN values: 0
+Datatype: float64
+max: 99960193.29
+min: 10058805.17
+mean: 54207193.23714999
+std: 25856773.40927051
+Examples: [58234157.1, 44859026.62, 11723993.7, 59604396.57, 69717123.45]
+Feature Revenue:
+Count of NaN values: 0
+Datatype: float64
+max: 14970742.06
+min: 2000399.34
+mean: 8405125.386225
+std: 3709089.810615304
+Examples: [5813594.48, 2664952.67, 13574996.17, 12205830.97, 3559388.24]
+Feature Cash_Flow:
+Count of NaN values: 0
+Datatype: float64
+max: 7990947.02
+min: 507075.61
+mean: 4230625.841262501
+std: 2156427.995259589
+Examples: [6812165.06, 5341507.67, 6793247.74, 1343773.48, 2876781.03]
+Feature Net_Income:
+Count of NaN values: 0
+Datatype: float64
+max: 9111468.57
+min: -3751341.37
+mean: 2722071.2253999994
+std: 2962314.8573313816
+Examples: [3088667.55, -2465268.78, 2840402.07, 3701828.22, -1009289.81]
+Feature Debt_to_Equity:
+Count of NaN values: 0
+Datatype: float64
+max: 35.45
+min: 0.24
+mean: 5.5343875
+std: 5.387372397703093
+Examples: [5.21, 5.31, 2.76, 0.55, 8.67]
+Feature ROA:
+Count of NaN values: 0
+Datatype: float64
+max: 0.13
+min: -0.04
+mean: 0.013925
+std: 0.021340422724317527
+Examples: [0.02, -0.01, 0.05, 0.0, 0.0]
+Feature Profit_Margin:
+Count of NaN values: 0
+Datatype: float64
+max: 3.59
+min: -1.53
+mean: 0.42269999999999996
+std: 0.6022126161446675
+Examples: [0.5, 0.47, 0.34, 0.58, 1.06]
+Feature Interest_Expense:
+Count of NaN values: 0
+Datatype: float64
+max: 1998975.29
+min: 107444.91
+mean: 1042662.2673000001
+std: 550328.3361975899
+Examples: [1143882.48, 1376913.06, 1274395.63, 1762012.93, 472362.35]
+Feature Tax_Expense:
+Count of NaN values: 0
+Datatype: float64
+max: 1498850.58
+min: 50349.46
+mean: 771560.6261374999
+std: 420308.31000370585
+Examples: [1388674.43, 567248.6, 52071.1, 772025.46, 130271.73]
+Feature Dividend_Payout:
+Count of NaN values: 0
+Datatype: float64
+max: 2996823.63
+min: 101164.48
+mean: 1481637.722425
+std: 829088.2835622694
+Examples: [2098515.74, 2177343.5, 2727237.51, 500912.14, 2826521.52]
+
+Dataframe 'dataset' is given. No need to generate the data.
+Please provide a Python code with a list of 10 hypotheses for the dataset described above. For each hypothesis:
+1. Write a brief description that is **specific, detailed, and actionable**, supported by numerical evidence and real-world insights relevant to decision-makers, and save it as a string variable called description.
+2. Provide a detailed step-by-step chain-of-thought (COT) that identifies the hypothesis requirements, selects the correct statistical test, and explains the reasoning behind the method, saving it to a variable called COT.
+3. Provide Python code based on the COT variable to test the hypothesis using the dataset DataFrame. The code should define a function `test(dataset)` to implement the appropriate statistical test and return a binary variable called `result`, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside the `test()` function. For any hyperparameters, choose values based on dataset statistics (e.g., variance, dataset shape). Do not rename the test function or the description variable.
+4. Generate detailed **business insights** for each hypothesis based on Anomaly Detection, incorporating specific metrics, trends, or thresholds derived from the dataset to provide meaningful, practical recommendations.
+
+**Example Hypotheses from Different Domains:**
+
+1. **Financial Markets (Stocks):**
+description = "Stocks ranked in the top 20% by 6-month cumulative returns tend to outperform over the next 6 months, while stocks in the bottom 20% underperform, creating a momentum spread of 20.5%."
+COT = '''
+1. Identify the metric of interest: 6-month cumulative returns for stocks.
+2. Define the ranking groups: Top 20% (winners) and bottom 20% (losers).
+3. Calculate the average returns for winners and losers in the subsequent 6 months.
+4. Compute the momentum spread: difference in average returns between winners and losers.
+5. Use statistical tests (e.g., t-test) to determine if the momentum spread is significant.
+6. Structure the function to ingest stock returns and perform the analysis dynamically for any dataset.
+'''
+insights = "Stocks in the top 20% of 6-month cumulative returns (e.g., +15% and +25%) yield an average 6-month return of +10%, while bottom 20% stocks (e.g., -5% and -20%) average -10.5%. This results in a momentum spread of +20.5%. This insight suggests implementing a long-short momentum strategy to capitalize on these trends, with annualized gains of approximately 15.2% and a Sharpe ratio of 1.25 over the 2015–2020 period."
+
+2. **E-commerce (Customer Behavior):**
+description = "Customers who make their first purchase during discount periods have a 35% higher probability of making a second purchase within 30 days compared to those who buy at regular prices."
+COT = '''
+1. Segment customers into groups: those whose first purchase was during a discount period (>20% discount) and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a second purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+'''
+insights = "Customers making their first purchase during periods of significant discounts (e.g., >20%) have a 35% higher chance of a second purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns for new customers to enhance lifetime value."
+
+3. **Healthcare (Patient Outcomes):**
+description = "Patients aged 60+ receiving regular physical therapy (3 sessions per week) after hip surgery have a 25% shorter recovery time compared to those receiving fewer sessions."
+COT = '''
+1. Define the groups: patients aged 60+ receiving ≥3 physical therapy sessions per week and those receiving fewer.
+2. Measure recovery times (e.g., time to regain full mobility) for both groups.
+3. Perform a statistical test (e.g., ANOVA) to compare recovery times between the groups.
+4. Interpret the results and quantify the effect size of increased therapy sessions.
+5. Use the findings to inform healthcare policies for optimizing post-surgical recovery plans.
+'''
+insights = "Regular physical therapy significantly accelerates recovery in older patients, with those receiving 3+ sessions per week recovering in 45 days on average, compared to 60 days for others. This 25% reduction highlights the value of structured therapy programs in reducing healthcare costs and improving patient outcomes."
+
+**Key Requirements for Each Hypothesis:**
+- Hypotheses must be **specific, actionable, and detailed**, similar to the provided examples.
+- Each hypothesis must include explicit metrics, comparisons, or thresholds relevant to the dataset.
+- Insights must clearly explain their relevance and practical implications for decision-making.
+- Avoid abstract or generic statements; provide real-world scenarios backed by numerical evidence.
+
+Return the response using the following format:
+'''python
+# Hypothesis 1.
+description = "[specific, actionable description for hypothesis 1]"
+COT = "[Detailed chain-of-thought for hypothesis 1: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 1]
+insights = "[specific business insights for hypothesis 1, including actionable recommendations supported by metrics and trends.]"
+# Hypothesis 2.
+description = "[specific, actionable description for hypothesis 2]"
+COT = "[Detailed chain-of-thought for hypothesis 2: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 2]
+insights = "[specific business insights for hypothesis 2, including actionable recommendations supported by metrics and trends.]"
+…
+# Hypothesis 10.
+description = "[specific, actionable description for hypothesis 10]"
+COT = "[Detailed chain-of-thought for hypothesis 10: Step-by-step thought process to identify the hypothesis requirements, select the correct statistical test, structure the function, and interpret the results.]"
+[test() for hypothesis 10]
+insights = "[specific business insights for hypothesis 10, including actionable recommendations supported by metrics and trends.]"
+'''
