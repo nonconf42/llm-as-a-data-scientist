@@ -1,0 +1,4 @@
+Below there is a list of accepted hypothesis:
+The positive correlation between BMI and systolic blood pressure (r = 0.35) suggests that individuals with higher BMIs tend to have higher blood pressure. This insight can inform healthcare policies and interventions aimed at reducing the risk of cardiovascular disease among individuals with high BMIs.
+The positive correlation between fasting blood sugar and triglyceride levels (r = 0.42) suggests that individuals with higher blood sugar levels tend to have higher triglyceride levels, which can increase the risk of cardiovascular disease. This insight can inform healthcare policies and interventions aimed at reducing the risk of cardiovascular disease among individuals with high blood sugar levels.
+Below there is a list of rejected hypothesis:

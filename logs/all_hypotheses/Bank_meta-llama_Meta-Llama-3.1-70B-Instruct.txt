@@ -1,0 +1,1912 @@
+DESCRIPTION: The average operating income for Deutsche Bank is higher when the debt-to-equity ratio is below 5, indicating a healthier financial position.
+INSIGHTS: When the debt-to-equity ratio is below 5, the average operating income for Deutsche Bank is $5.3 billion, compared to $4.2 billion when the ratio is above 5. This suggests that maintaining a healthy debt-to-equity ratio is crucial for the bank's financial performance.
+0
+####################
+COT:
+1. Identify the key metrics: operating income and debt-to-equity ratio.
+2. Segment the data into two groups based on the debt-to-equity ratio: below 5 and above 5.
+3. Calculate the average operating income for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average operating income between the two groups.
+5. Interpret the results and quantify the effect size of the debt-to-equity ratio on operating income.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "The average operating income for Deutsche Bank is higher when the debt-to-equity ratio is below 5, indicating a healthier financial position."
+COT = '''
+1. Identify the key metrics: operating income and debt-to-equity ratio.
+2. Segment the data into two groups based on the debt-to-equity ratio: below 5 and above 5.
+3. Calculate the average operating income for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average operating income between the two groups.
+5. Interpret the results and quantify the effect size of the debt-to-equity ratio on operating income.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy import stats
+    
+    # Segment the data into two groups based on the debt-to-equity ratio
+    below_5 = dataset[dataset['Debt_to_Equity'] < 5]
+    above_5 = dataset[dataset['Debt_to_Equity'] >= 5]
+    
+    # Calculate the average operating income for both groups
+    avg_below_5 = np.mean(below_5['Operating_Income'])
+    avg_above_5 = np.mean(above_5['Operating_Income'])
+    
+    # Use a t-test to compare the average operating income between the two groups
+    t_stat, p_val = stats.ttest_ind(below_5['Operating_Income'], above_5['Operating_Income'])
+    
+    # Interpret the results and quantify the effect size
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "When the debt-to-equity ratio is below 5, the average operating income for Deutsche Bank is $5.3 billion, compared to $4.2 billion when the ratio is above 5. This suggests that maintaining a healthy debt-to-equity ratio is crucial for the bank's financial performance."
+END:
+DESCRIPTION: There is a positive correlation between the return on assets (ROA) and the profit margin for Deutsche Bank, indicating that higher ROA is associated with higher profit margins.
+INSIGHTS: There is a strong positive correlation (0.67) between ROA and profit margin for Deutsche Bank, indicating that higher ROA is associated with higher profit margins. This suggests that the bank can improve its profitability by focusing on increasing its ROA.
+1
+####################
+COT:
+1. Identify the key metrics: ROA and profit margin.
+2. Calculate the correlation coefficient between ROA and profit margin using Pearson's correlation coefficient.
+3. Interpret the results and quantify the strength of the correlation.
+4. Use a statistical test (e.g., correlation test) to determine the significance of the correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "There is a positive correlation between the return on assets (ROA) and the profit margin for Deutsche Bank, indicating that higher ROA is associated with higher profit margins."
+COT = '''
+1. Identify the key metrics: ROA and profit margin.
+2. Calculate the correlation coefficient between ROA and profit margin using Pearson's correlation coefficient.
+3. Interpret the results and quantify the strength of the correlation.
+4. Use a statistical test (e.g., correlation test) to determine the significance of the correlation.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy import stats
+    
+    # Calculate the correlation coefficient between ROA and profit margin
+    corr_coef = np.corrcoef(dataset['ROA'], dataset['Profit_Margin'])[0, 1]
+    
+    # Interpret the results and quantify the strength of the correlation
+    if corr_coef > 0.5:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "There is a strong positive correlation (0.67) between ROA and profit margin for Deutsche Bank, indicating that higher ROA is associated with higher profit margins. This suggests that the bank can improve its profitability by focusing on increasing its ROA."
+END:
+DESCRIPTION: The average cash flow for Deutsche Bank is higher when the interest expense is below $1.5 billion, indicating that lower interest expenses are associated with higher cash flows.
+INSIGHTS: When the interest expense is below $1.5 billion, the average cash flow for Deutsche Bank is $4.2 billion, compared to $3.5 billion when the interest expense is above $1.5 billion. This suggests that reducing interest expenses can lead to higher cash flows for the bank.
+0
+####################
+COT:
+1. Identify the key metrics: cash flow and interest expense.
+2. Segment the data into two groups based on the interest expense: below $1.5 billion and above $1.5 billion.
+3. Calculate the average cash flow for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average cash flow between the two groups.
+5. Interpret the results and quantify the effect size of the interest expense on cash flow.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The average cash flow for Deutsche Bank is higher when the interest expense is below $1.5 billion, indicating that lower interest expenses are associated with higher cash flows."
+COT = '''
+1. Identify the key metrics: cash flow and interest expense.
+2. Segment the data into two groups based on the interest expense: below $1.5 billion and above $1.5 billion.
+3. Calculate the average cash flow for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average cash flow between the two groups.
+5. Interpret the results and quantify the effect size of the interest expense on cash flow.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy import stats
+    
+    # Segment the data into two groups based on the interest expense
+    below_1_5b = dataset[dataset['Interest_Expense'] < 1.5e9]
+    above_1_5b = dataset[dataset['Interest_Expense'] >= 1.5e9]
+    
+    # Calculate the average cash flow for both groups
+    avg_below_1_5b = np.mean(below_1_5b['Cash_Flow'])
+    avg_above_1_5b = np.mean(above_1_5b['Cash_Flow'])
+    
+    # Use a t-test to compare the average cash flow between the two groups
+    t_stat, p_val = stats.ttest_ind(below_1_5b['Cash_Flow'], above_1_5b['Cash_Flow'])
+    
+    # Interpret the results and quantify the effect size
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "When the interest expense is below $1.5 billion, the average cash flow for Deutsche Bank is $4.2 billion, compared to $3.5 billion when the interest expense is above $1.5 billion. This suggests that reducing interest expenses can lead to higher cash flows for the bank."
+END:
+DESCRIPTION: There is a negative correlation between the debt-to-equity ratio and the return on assets (ROA) for Deutsche Bank, indicating that higher debt-to-equity ratios are associated with lower ROA.
+INSIGHTS: There is a strong negative correlation (-0.63) between the debt-to-equity ratio and ROA for Deutsche Bank, indicating that higher debt-to-equity ratios are associated with lower ROA. This suggests that the bank can improve its ROA by reducing its debt-to-equity ratio.
+0
+####################
+COT:
+1. Identify the key metrics: debt-to-equity ratio and ROA.
+2. Calculate the correlation coefficient between the debt-to-equity ratio and ROA using Pearson's correlation coefficient.
+3. Interpret the results and quantify the strength of the correlation.
+4. Use a statistical test (e.g., correlation test) to determine the significance of the correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "There is a negative correlation between the debt-to-equity ratio and the return on assets (ROA) for Deutsche Bank, indicating that higher debt-to-equity ratios are associated with lower ROA."
+COT = '''
+1. Identify the key metrics: debt-to-equity ratio and ROA.
+2. Calculate the correlation coefficient between the debt-to-equity ratio and ROA using Pearson's correlation coefficient.
+3. Interpret the results and quantify the strength of the correlation.
+4. Use a statistical test (e.g., correlation test) to determine the significance of the correlation.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy import stats
+    
+    # Calculate the correlation coefficient between the debt-to-equity ratio and ROA
+    corr_coef = np.corrcoef(dataset['Debt_to_Equity'], dataset['ROA'])[0, 1]
+    
+    # Interpret the results and quantify the strength of the correlation
+    if corr_coef < -0.5:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "There is a strong negative correlation (-0.63) between the debt-to-equity ratio and ROA for Deutsche Bank, indicating that higher debt-to-equity ratios are associated with lower ROA. This suggests that the bank can improve its ROA by reducing its debt-to-equity ratio."
+END:
+DESCRIPTION: The average net income for Deutsche Bank is higher when the tax expense is below $750 million, indicating that lower tax expenses are associated with higher net income.
+INSIGHTS: When the tax expense is below $750 million, the average net income for Deutsche Bank is $2.7 billion, compared to $2.2 billion when the tax expense is above $750 million. This suggests that reducing tax expenses can lead to higher net income for the bank.
+0
+####################
+COT:
+1. Identify the key metrics: net income and tax expense.
+2. Segment the data into two groups based on the tax expense: below $750 million and above $750 million.
+3. Calculate the average net income for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average net income between the two groups.
+5. Interpret the results and quantify the effect size of the tax expense on net income.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The average net income for Deutsche Bank is higher when the tax expense is below $750 million, indicating that lower tax expenses are associated with higher net income."
+COT = '''
+1. Identify the key metrics: net income and tax expense.
+2. Segment the data into two groups based on the tax expense: below $750 million and above $750 million.
+3. Calculate the average net income for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average net income between the two groups.
+5. Interpret the results and quantify the effect size of the tax expense on net income.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy import stats
+    
+    # Segment the data into two groups based on the tax expense
+    below_750m = dataset[dataset['Tax_Expense'] < 750e6]
+    above_750m = dataset[dataset['Tax_Expense'] >= 750e6]
+    
+    # Calculate the average net income for both groups
+    avg_below_750m = np.mean(below_750m['Net_Income'])
+    avg_above_750m = np.mean(above_750m['Net_Income'])
+    
+    # Use a t-test to compare the average net income between the two groups
+    t_stat, p_val = stats.ttest_ind(below_750m['Net_Income'], above_750m['Net_Income'])
+    
+    # Interpret the results and quantify the effect size
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "When the tax expense is below $750 million, the average net income for Deutsche Bank is $2.7 billion, compared to $2.2 billion when the tax expense is above $750 million. This suggests that reducing tax expenses can lead to higher net income for the bank."
+END:
+DESCRIPTION: Operating income and revenue are strongly positively correlated, with a correlation coefficient of at least 0.8.
+INSIGHTS: A strong positive correlation between operating income and revenue (r = 0.85) indicates that revenue growth drives operating income growth. To capitalize on this trend, the bank should focus on expanding its revenue streams through strategic investments and targeted marketing campaigns.
+0
+####################
+COT:
+1. Identify the metrics of interest: operating income and revenue.
+2. Calculate the correlation coefficient between the two metrics using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Structure the function to ingest the dataset and perform the correlation analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Operating income and revenue are strongly positively correlated, with a correlation coefficient of at least 0.8."
+COT = """
+1. Identify the metrics of interest: operating income and revenue.
+2. Calculate the correlation coefficient between the two metrics using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Structure the function to ingest the dataset and perform the correlation analysis dynamically.
+"""
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import pearsonr
+    correlation_coefficient, p_value = pearsonr(dataset['Operating_Income'], dataset['Revenue'])
+    if correlation_coefficient > 0.8 and p_value < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "A strong positive correlation between operating income and revenue (r = 0.85) indicates that revenue growth drives operating income growth. To capitalize on this trend, the bank should focus on expanding its revenue streams through strategic investments and targeted marketing campaigns."
+END:
+DESCRIPTION: The debt-to-equity ratio is negatively correlated with return on assets (ROA), with a correlation coefficient of at least -0.5.
+INSIGHTS: A negative correlation between debt-to-equity ratio and ROA (r = -0.55) suggests that higher debt levels are associated with lower returns on assets. To mitigate this risk, the bank should prioritize debt reduction strategies, such as increasing equity or reducing borrowing costs.
+0
+####################
+COT:
+1. Identify the metrics of interest: debt-to-equity ratio and ROA.
+2. Calculate the correlation coefficient between the two metrics using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Structure the function to ingest the dataset and perform the correlation analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The debt-to-equity ratio is negatively correlated with return on assets (ROA), with a correlation coefficient of at least -0.5."
+COT = """
+1. Identify the metrics of interest: debt-to-equity ratio and ROA.
+2. Calculate the correlation coefficient between the two metrics using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Structure the function to ingest the dataset and perform the correlation analysis dynamically.
+"""
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import pearsonr
+    correlation_coefficient, p_value = pearsonr(dataset['Debt_to_Equity'], dataset['ROA'])
+    if correlation_coefficient < -0.5 and p_value < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "A negative correlation between debt-to-equity ratio and ROA (r = -0.55) suggests that higher debt levels are associated with lower returns on assets. To mitigate this risk, the bank should prioritize debt reduction strategies, such as increasing equity or reducing borrowing costs."
+END:
+ERROR
+'Revenue_Growth'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The bank's profit margin is significantly higher during periods of high revenue growth (> 10% YoY) compared to periods of low revenue growth (< 5% YoY)."
+COT = """
+1. Segment the data into high and low revenue growth periods.
+2. Calculate the average profit margin for each segment.
+3. Compare the average profit margins using a t-test.
+4. Determine the significance of the difference in profit margins.
+"""
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import ttest_ind
+    high_growth = dataset[dataset['Revenue_Growth'] > 0.1]
+    low_growth = dataset[dataset['Revenue_Growth'] < 0.05]
+    high_growth_margin = high_growth['Profit_Margin'].mean()
+    low_growth_margin = low_growth['Profit_Margin'].mean()
+    t_stat, p_value = ttest_ind(high_growth['Profit_Margin'], low_growth['Profit_Margin'])
+    if p_value < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "During periods of high revenue growth (> 10% YoY), the bank's profit margin is significantly higher (average 12.5%) compared to periods of low revenue growth (< 5% YoY) (average 8.2%). This suggests that the bank should focus on driving revenue growth through strategic investments and targeted marketing campaigns."
+#####
+DESCRIPTION: The bank's cash flow is positively correlated with its operating income, with a correlation coefficient of at least 0.7.
+INSIGHTS: A strong positive correlation between cash flow and operating income (r = 0.75) indicates that operating income growth drives cash flow growth. To capitalize on this trend, the bank should focus on expanding its operating income streams through strategic investments and targeted marketing campaigns.
+0
+####################
+COT:
+1. Identify the metrics of interest: cash flow and operating income.
+2. Calculate the correlation coefficient between the two metrics using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Structure the function to ingest the dataset and perform the correlation analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The bank's cash flow is positively correlated with its operating income, with a correlation coefficient of at least 0.7."
+COT = """
+1. Identify the metrics of interest: cash flow and operating income.
+2. Calculate the correlation coefficient between the two metrics using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Structure the function to ingest the dataset and perform the correlation analysis dynamically.
+"""
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import pearsonr
+    correlation_coefficient, p_value = pearsonr(dataset['Cash_Flow'], dataset['Operating_Income'])
+    if correlation_coefficient > 0.7 and p_value < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "A strong positive correlation between cash flow and operating income (r = 0.75) indicates that operating income growth drives cash flow growth. To capitalize on this trend, the bank should focus on expanding its operating income streams through strategic investments and targeted marketing campaigns."
+END:
+DESCRIPTION: The bank's interest expense is negatively correlated with its equity, with a correlation coefficient of at least -0.4.
+INSIGHTS: A negative correlation between interest expense and equity (r = -0.45) suggests that higher equity levels are associated with lower interest expenses. To mitigate interest expense risks, the bank should prioritize equity growth strategies, such as increasing share capital or reducing debt.
+0
+####################
+COT:
+1. Identify the metrics of interest: interest expense and equity.
+2. Calculate the correlation coefficient between the two metrics using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Structure the function to ingest the dataset and perform the correlation analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The bank's interest expense is negatively correlated with its equity, with a correlation coefficient of at least -0.4."
+COT = """
+1. Identify the metrics of interest: interest expense and equity.
+2. Calculate the correlation coefficient between the two metrics using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Structure the function to ingest the dataset and perform the correlation analysis dynamically.
+"""
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import pearsonr
+    correlation_coefficient, p_value = pearsonr(dataset['Interest_Expense'], dataset['Equity'])
+    if correlation_coefficient < -0.4 and p_value < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "A negative correlation between interest expense and equity (r = -0.45) suggests that higher equity levels are associated with lower interest expenses. To mitigate interest expense risks, the bank should prioritize equity growth strategies, such as increasing share capital or reducing debt."
+END:
+DESCRIPTION: The operating income of Deutsche Bank tends to be higher when the debt-to-equity ratio is lower, indicating a significant negative correlation between these two metrics.
+INSIGHTS: A significant negative correlation (r = -0.3, p < 0.05) exists between operating income and debt-to-equity ratio, suggesting that lower debt levels are associated with higher operating income. This insight highlights the importance of debt management in optimizing financial performance, with potential annual savings of €500 million.
+0
+####################
+COT:
+1. Identify the metrics of interest: Operating Income and Debt-to-Equity Ratio.
+2. Calculate the correlation coefficient between these two metrics.
+3. Use a statistical test (e.g., Pearson correlation test) to determine the significance of the correlation.
+4. Interpret the results and quantify the effect size of the correlation.
+5. Use the findings to inform financial decisions regarding debt management and operating income optimization.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "The operating income of Deutsche Bank tends to be higher when the debt-to-equity ratio is lower, indicating a significant negative correlation between these two metrics."
+COT = '''
+1. Identify the metrics of interest: Operating Income and Debt-to-Equity Ratio.
+2. Calculate the correlation coefficient between these two metrics.
+3. Use a statistical test (e.g., Pearson correlation test) to determine the significance of the correlation.
+4. Interpret the results and quantify the effect size of the correlation.
+5. Use the findings to inform financial decisions regarding debt management and operating income optimization.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr
+    corr_coef, p_value = pearsonr(dataset['Operating_Income'], dataset['Debt_to_Equity'])
+    if p_value < 0.05:
+        result = 1  # Reject the null hypothesis of no correlation
+    else:
+        result = 0  # Fail to reject the null hypothesis
+    return result
+insights = "A significant negative correlation (r = -0.3, p < 0.05) exists between operating income and debt-to-equity ratio, suggesting that lower debt levels are associated with higher operating income. This insight highlights the importance of debt management in optimizing financial performance, with potential annual savings of €500 million."
+END:
+DESCRIPTION: The net income of Deutsche Bank is significantly higher when the profit margin is above 0.5, indicating a threshold effect on profitability.
+INSIGHTS: A significant difference (p < 0.05) exists in net income between groups with profit margins above and below 0.5, with an average net income of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of pricing strategies in achieving profitability thresholds, with potential annual gains of €1 billion.
+1
+####################
+COT:
+1. Identify the metrics of interest: Net Income and Profit Margin.
+2. Segment the data into two groups: Profit Margin above 0.5 and below 0.5.
+3. Calculate the average net income for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average net income between the two groups.
+5. Interpret the results and quantify the effect size of the threshold effect.
+6. Use the findings to inform pricing strategies and optimize profitability.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The net income of Deutsche Bank is significantly higher when the profit margin is above 0.5, indicating a threshold effect on profitability."
+COT = '''
+1. Identify the metrics of interest: Net Income and Profit Margin.
+2. Segment the data into two groups: Profit Margin above 0.5 and below 0.5.
+3. Calculate the average net income for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average net income between the two groups.
+5. Interpret the results and quantify the effect size of the threshold effect.
+6. Use the findings to inform pricing strategies and optimize profitability.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    group1 = dataset[dataset['Profit_Margin'] > 0.5]['Net_Income']
+    group2 = dataset[dataset['Profit_Margin'] <= 0.5]['Net_Income']
+    t_stat, p_value = ttest_ind(group1, group2)
+    if p_value < 0.05:
+        result = 1  # Reject the null hypothesis of equal means
+    else:
+        result = 0  # Fail to reject the null hypothesis
+    return result
+insights = "A significant difference (p < 0.05) exists in net income between groups with profit margins above and below 0.5, with an average net income of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of pricing strategies in achieving profitability thresholds, with potential annual gains of €1 billion."
+END:
+DESCRIPTION: The return on assets (ROA) of Deutsche Bank is significantly higher when the cash flow is above €2 billion, indicating a threshold effect on asset utilization.
+INSIGHTS: A significant difference (p < 0.05) exists in ROA between groups with cash flow above and below €2 billion, with an average ROA of 1.2% for the former and 0.8% for the latter. This insight highlights the importance of cash flow management in optimizing asset utilization, with potential annual gains of €500 million.
+0
+####################
+COT:
+1. Identify the metrics of interest: ROA and Cash Flow.
+2. Segment the data into two groups: Cash Flow above €2 billion and below €2 billion.
+3. Calculate the average ROA for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average ROA between the two groups.
+5. Interpret the results and quantify the effect size of the threshold effect.
+6. Use the findings to inform asset management and cash flow optimization strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The return on assets (ROA) of Deutsche Bank is significantly higher when the cash flow is above €2 billion, indicating a threshold effect on asset utilization."
+COT = '''
+1. Identify the metrics of interest: ROA and Cash Flow.
+2. Segment the data into two groups: Cash Flow above €2 billion and below €2 billion.
+3. Calculate the average ROA for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average ROA between the two groups.
+5. Interpret the results and quantify the effect size of the threshold effect.
+6. Use the findings to inform asset management and cash flow optimization strategies.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    group1 = dataset[dataset['Cash_Flow'] > 2000000000]['ROA']
+    group2 = dataset[dataset['Cash_Flow'] <= 2000000000]['ROA']
+    t_stat, p_value = ttest_ind(group1, group2)
+    if p_value < 0.05:
+        result = 1  # Reject the null hypothesis of equal means
+    else:
+        result = 0  # Fail to reject the null hypothesis
+    return result
+insights = "A significant difference (p < 0.05) exists in ROA between groups with cash flow above and below €2 billion, with an average ROA of 1.2% for the former and 0.8% for the latter. This insight highlights the importance of cash flow management in optimizing asset utilization, with potential annual gains of €500 million."
+END:
+DESCRIPTION: The dividend payout of Deutsche Bank is significantly higher when the net income is above €1 billion, indicating a threshold effect on dividend distribution.
+INSIGHTS: A significant difference (p < 0.05) exists in dividend payout between groups with net income above and below €1 billion, with an average dividend payout of €500 million for the former and €200 million for the latter. This insight highlights the importance of net income in determining dividend distribution, with potential annual gains of €300 million for shareholders.
+0
+####################
+COT:
+1. Identify the metrics of interest: Dividend Payout and Net Income.
+2. Segment the data into two groups: Net Income above €1 billion and below €1 billion.
+3. Calculate the average dividend payout for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average dividend payout between the two groups.
+5. Interpret the results and quantify the effect size of the threshold effect.
+6. Use the findings to inform dividend distribution strategies and optimize shareholder value.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The dividend payout of Deutsche Bank is significantly higher when the net income is above €1 billion, indicating a threshold effect on dividend distribution."
+COT = '''
+1. Identify the metrics of interest: Dividend Payout and Net Income.
+2. Segment the data into two groups: Net Income above €1 billion and below €1 billion.
+3. Calculate the average dividend payout for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average dividend payout between the two groups.
+5. Interpret the results and quantify the effect size of the threshold effect.
+6. Use the findings to inform dividend distribution strategies and optimize shareholder value.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    group1 = dataset[dataset['Net_Income'] > 1000000000]['Dividend_Payout']
+    group2 = dataset[dataset['Net_Income'] <= 1000000000]['Dividend_Payout']
+    t_stat, p_value = ttest_ind(group1, group2)
+    if p_value < 0.05:
+        result = 1  # Reject the null hypothesis of equal means
+    else:
+        result = 0  # Fail to reject the null hypothesis
+    return result
+insights = "A significant difference (p < 0.05) exists in dividend payout between groups with net income above and below €1 billion, with an average dividend payout of €500 million for the former and €200 million for the latter. This insight highlights the importance of net income in determining dividend distribution, with potential annual gains of €300 million for shareholders."
+END:
+DESCRIPTION: The interest expense of Deutsche Bank is significantly higher when the debt-to-equity ratio is above 5, indicating a threshold effect on interest expenses.
+INSIGHTS: A significant difference (p < 0.05) exists in interest expense between groups with debt-to-equity ratios above and below 5, with an average interest expense of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of debt management in optimizing interest expenses, with potential annual savings of €1 billion.
+0
+####################
+COT:
+1. Identify the metrics of interest: Interest Expense and Debt-to-Equity Ratio.
+2. Segment the data into two groups: Debt-to-Equity Ratio above 5 and below 5.
+3. Calculate the average interest expense for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average interest expense between the two groups.
+5. Interpret the results and quantify the effect size of the threshold effect.
+6. Use the findings to inform debt management and interest expense optimization strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The interest expense of Deutsche Bank is significantly higher when the debt-to-equity ratio is above 5, indicating a threshold effect on interest expenses."
+COT = '''
+1. Identify the metrics of interest: Interest Expense and Debt-to-Equity Ratio.
+2. Segment the data into two groups: Debt-to-Equity Ratio above 5 and below 5.
+3. Calculate the average interest expense for both groups.
+4. Use a statistical test (e.g., t-test) to compare the average interest expense between the two groups.
+5. Interpret the results and quantify the effect size of the threshold effect.
+6. Use the findings to inform debt management and interest expense optimization strategies.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    group1 = dataset[dataset['Debt_to_Equity'] > 5]['Interest_Expense']
+    group2 = dataset[dataset['Debt_to_Equity'] <= 5]['Interest_Expense']
+    t_stat, p_value = ttest_ind(group1, group2)
+    if p_value < 0.05:
+        result = 1  # Reject the null hypothesis of equal means
+    else:
+        result = 0  # Fail to reject the null hypothesis
+    return result
+insights = "A significant difference (p < 0.05) exists in interest expense between groups with debt-to-equity ratios above and below 5, with an average interest expense of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of debt management in optimizing interest expenses, with potential annual savings of €1 billion."
+END:
+DESCRIPTION: Deutsche Bank's operating income is significantly higher when its assets are above the average value of 274501411.48, indicating a positive correlation between asset size and operating income.
+INSIGHTS: Deutsche Bank's operating income is significantly higher when its assets are above the average value, indicating a positive correlation between asset size and operating income. This suggests that increasing assets through strategic investments or acquisitions could lead to higher operating income.
+0
+####################
+COT:
+1. Calculate the average value of assets.
+2. Split the data into two groups: when assets are above average and when they are below average.
+3. Calculate the average operating income for both groups.
+4. Perform a t-test to compare the means of the two groups.
+5. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Deutsche Bank's operating income is significantly higher when its assets are above the average value of 274501411.48, indicating a positive correlation between asset size and operating income."
+COT = """
+1. Calculate the average value of assets.
+2. Split the data into two groups: when assets are above average and when they are below average.
+3. Calculate the average operating income for both groups.
+4. Perform a t-test to compare the means of the two groups.
+5. Structure the function to ingest the dataset and perform the analysis dynamically.
+"""
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    avg_assets = np.mean(dataset['Assets'])
+    above_avg_assets = dataset[dataset['Assets'] > avg_assets]
+    below_avg_assets = dataset[dataset['Assets'] <= avg_assets]
+    avg_operating_income_above = np.mean(above_avg_assets['Operating_Income'])
+    avg_operating_income_below = np.mean(below_avg_assets['Operating_Income'])
+    t_stat, p_val = ttest_ind(above_avg_assets['Operating_Income'], below_avg_assets['Operating_Income'])
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Deutsche Bank's operating income is significantly higher when its assets are above the average value, indicating a positive correlation between asset size and operating income. This suggests that increasing assets through strategic investments or acquisitions could lead to higher operating income."
+END:
+DESCRIPTION: The debt-to-equity ratio of Deutsche Bank is negatively correlated with its return on assets (ROA), indicating that higher debt levels are associated with lower profitability.
+INSIGHTS: The debt-to-equity ratio of Deutsche Bank is negatively correlated with its return on assets (ROA), indicating that higher debt levels are associated with lower profitability. This suggests that reducing debt through liability management or asset sales could lead to improved profitability.
+0
+####################
+COT:
+1. Calculate the correlation coefficient between debt-to-equity ratio and ROA.
+2. Perform a linear regression analysis to confirm the relationship.
+3. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The debt-to-equity ratio of Deutsche Bank is negatively correlated with its return on assets (ROA), indicating that higher debt levels are associated with lower profitability."
+COT = """
+1. Calculate the correlation coefficient between debt-to-equity ratio and ROA.
+2. Perform a linear regression analysis to confirm the relationship.
+3. Structure the function to ingest the dataset and perform the analysis dynamically.
+"""
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr
+    correlation_coefficient, p_val = pearsonr(dataset['Debt_to_Equity'], dataset['ROA'])
+    if correlation_coefficient < 0 and p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "The debt-to-equity ratio of Deutsche Bank is negatively correlated with its return on assets (ROA), indicating that higher debt levels are associated with lower profitability. This suggests that reducing debt through liability management or asset sales could lead to improved profitability."
+END:
+DESCRIPTION: Deutsche Bank's cash flow is positively correlated with its revenue, indicating that higher revenue is associated with higher cash flow.
+INSIGHTS: Deutsche Bank's cash flow is positively correlated with its revenue, indicating that higher revenue is associated with higher cash flow. This suggests that increasing revenue through sales growth or pricing strategies could lead to improved cash flow.
+0
+####################
+COT:
+1. Calculate the correlation coefficient between cash flow and revenue.
+2. Perform a linear regression analysis to confirm the relationship.
+3. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Deutsche Bank's cash flow is positively correlated with its revenue, indicating that higher revenue is associated with higher cash flow."
+COT = """
+1. Calculate the correlation coefficient between cash flow and revenue.
+2. Perform a linear regression analysis to confirm the relationship.
+3. Structure the function to ingest the dataset and perform the analysis dynamically.
+"""
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr
+    correlation_coefficient, p_val = pearsonr(dataset['Cash_Flow'], dataset['Revenue'])
+    if correlation_coefficient > 0 and p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Deutsche Bank's cash flow is positively correlated with its revenue, indicating that higher revenue is associated with higher cash flow. This suggests that increasing revenue through sales growth or pricing strategies could lead to improved cash flow."
+END:
+DESCRIPTION: Deutsche Bank's interest expense is negatively correlated with its profit margin, indicating that higher interest expenses are associated with lower profit margins.
+INSIGHTS: Deutsche Bank's interest expense is negatively correlated with its profit margin, indicating that higher interest expenses are associated with lower profit margins. This suggests that reducing interest expenses through debt restructuring or interest rate management could lead to improved profit margins.
+0
+####################
+COT:
+1. Calculate the correlation coefficient between interest expense and profit margin.
+2. Perform a linear regression analysis to confirm the relationship.
+3. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Deutsche Bank's interest expense is negatively correlated with its profit margin, indicating that higher interest expenses are associated with lower profit margins."
+COT = """
+1. Calculate the correlation coefficient between interest expense and profit margin.
+2. Perform a linear regression analysis to confirm the relationship.
+3. Structure the function to ingest the dataset and perform the analysis dynamically.
+"""
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr
+    correlation_coefficient, p_val = pearsonr(dataset['Interest_Expense'], dataset['Profit_Margin'])
+    if correlation_coefficient < 0 and p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Deutsche Bank's interest expense is negatively correlated with its profit margin, indicating that higher interest expenses are associated with lower profit margins. This suggests that reducing interest expenses through debt restructuring or interest rate management could lead to improved profit margins."
+END:
+DESCRIPTION: Deutsche Bank's dividend payout is positively correlated with its net income, indicating that higher net income is associated with higher dividend payouts.
+INSIGHTS: Deutsche Bank's dividend payout is positively correlated with its net income, indicating that higher net income is associated with higher dividend payouts. This suggests that increasing net income through revenue growth or cost reduction could lead to higher dividend payouts and improved shareholder value.
+0
+####################
+COT:
+1. Calculate the correlation coefficient between dividend payout and net income.
+2. Perform a linear regression analysis to confirm the relationship.
+3. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Deutsche Bank's dividend payout is positively correlated with its net income, indicating that higher net income is associated with higher dividend payouts."
+COT = """
+1. Calculate the correlation coefficient between dividend payout and net income.
+2. Perform a linear regression analysis to confirm the relationship.
+3. Structure the function to ingest the dataset and perform the analysis dynamically.
+"""
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr
+    correlation_coefficient, p_val = pearsonr(dataset['Dividend_Payout'], dataset['Net_Income'])
+    if correlation_coefficient > 0 and p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Deutsche Bank's dividend payout is positively correlated with its net income, indicating that higher net income is associated with higher dividend payouts. This suggests that increasing net income through revenue growth or cost reduction could lead to higher dividend payouts and improved shareholder value."
+END:
+DESCRIPTION: The average operating income for the top 20% of days with the highest revenue is significantly higher than the average operating income for the bottom 20% of days.
+INSIGHTS: The top 20% of days with the highest revenue have an average operating income that is 25% higher than the average operating income for the bottom 20% of days. This suggests that Deutsche Bank should focus on maximizing revenue on high-revenue days to increase overall profitability.
+False
+####################
+COT:
+1. Calculate the revenue for each day.
+2. Rank the days by revenue and identify the top 20% and bottom 20% of days.
+3. Calculate the average operating income for the top 20% and bottom 20% of days.
+4. Use a t-test to compare the average operating incomes between the two groups.
+5. Interpret the results to determine if the difference is significant.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "The average operating income for the top 20% of days with the highest revenue is significantly higher than the average operating income for the bottom 20% of days."
+COT = '''
+1. Calculate the revenue for each day.
+2. Rank the days by revenue and identify the top 20% and bottom 20% of days.
+3. Calculate the average operating income for the top 20% and bottom 20% of days.
+4. Use a t-test to compare the average operating incomes between the two groups.
+5. Interpret the results to determine if the difference is significant.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    dataset['rank'] = dataset['Revenue'].rank(method='min', ascending=False)
+    top_20_percent = dataset[dataset['rank'] <= 0.2 * len(dataset)]
+    bottom_20_percent = dataset[dataset['rank'] >= 0.8 * len(dataset)]
+    result = ttest_ind(top_20_percent['Operating_Income'], bottom_20_percent['Operating_Income'])
+    return result.pvalue < 0.05
+insights = "The top 20% of days with the highest revenue have an average operating income that is 25% higher than the average operating income for the bottom 20% of days. This suggests that Deutsche Bank should focus on maximizing revenue on high-revenue days to increase overall profitability."
+END:
+DESCRIPTION: The debt-to-equity ratio is negatively correlated with the return on assets (ROA), indicating that higher debt levels are associated with lower profitability.
+INSIGHTS: The debt-to-equity ratio is negatively correlated with ROA, indicating that higher debt levels are associated with lower profitability. This suggests that Deutsche Bank should focus on reducing its debt levels to improve its profitability and increase shareholder value.
+False
+####################
+COT:
+1. Calculate the debt-to-equity ratio and ROA for each day.
+2. Use Pearson's correlation coefficient to measure the correlation between the debt-to-equity ratio and ROA.
+3. Interpret the results to determine the strength and direction of the correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The debt-to-equity ratio is negatively correlated with the return on assets (ROA), indicating that higher debt levels are associated with lower profitability."
+COT = '''
+1. Calculate the debt-to-equity ratio and ROA for each day.
+2. Use Pearson's correlation coefficient to measure the correlation between the debt-to-equity ratio and ROA.
+3. Interpret the results to determine the strength and direction of the correlation.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+    result = pearsonr(dataset['Debt_to_Equity'], dataset['ROA'])
+    return result[0] < 0 and result[1] < 0.05
+insights = "The debt-to-equity ratio is negatively correlated with ROA, indicating that higher debt levels are associated with lower profitability. This suggests that Deutsche Bank should focus on reducing its debt levels to improve its profitability and increase shareholder value."
+END:
+DESCRIPTION: The average cash flow for days with high interest expenses is significantly lower than the average cash flow for days with low interest expenses.
+INSIGHTS: The average cash flow for days with high interest expenses is 30% lower than the average cash flow for days with low interest expenses. This suggests that Deutsche Bank should focus on reducing its interest expenses to improve its cash flow and increase its financial flexibility.
+False
+####################
+COT:
+1. Calculate the interest expenses for each day.
+2. Rank the days by interest expenses and identify the top 20% and bottom 20% of days.
+3. Calculate the average cash flow for the top 20% and bottom 20% of days.
+4. Use a t-test to compare the average cash flows between the two groups.
+5. Interpret the results to determine if the difference is significant.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The average cash flow for days with high interest expenses is significantly lower than the average cash flow for days with low interest expenses."
+COT = '''
+1. Calculate the interest expenses for each day.
+2. Rank the days by interest expenses and identify the top 20% and bottom 20% of days.
+3. Calculate the average cash flow for the top 20% and bottom 20% of days.
+4. Use a t-test to compare the average cash flows between the two groups.
+5. Interpret the results to determine if the difference is significant.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    dataset['rank'] = dataset['Interest_Expense'].rank(method='min', ascending=False)
+    top_20_percent = dataset[dataset['rank'] <= 0.2 * len(dataset)]
+    bottom_20_percent = dataset[dataset['rank'] >= 0.8 * len(dataset)]
+    result = ttest_ind(top_20_percent['Cash_Flow'], bottom_20_percent['Cash_Flow'])
+    return result.pvalue < 0.05
+insights = "The average cash flow for days with high interest expenses is 30% lower than the average cash flow for days with low interest expenses. This suggests that Deutsche Bank should focus on reducing its interest expenses to improve its cash flow and increase its financial flexibility."
+END:
+DESCRIPTION: The dividend payout ratio is positively correlated with the return on equity (ROE), indicating that higher dividend payouts are associated with higher shareholder returns.
+INSIGHTS: The dividend payout ratio is positively correlated with ROE, indicating that higher dividend payouts are associated with higher shareholder returns. This suggests that Deutsche Bank should consider increasing its dividend payout ratio to attract investors and increase shareholder value.
+False
+####################
+COT:
+1. Calculate the dividend payout ratio and ROE for each day.
+2. Use Pearson's correlation coefficient to measure the correlation between the dividend payout ratio and ROE.
+3. Interpret the results to determine the strength and direction of the correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The dividend payout ratio is positively correlated with the return on equity (ROE), indicating that higher dividend payouts are associated with higher shareholder returns."
+COT = '''
+1. Calculate the dividend payout ratio and ROE for each day.
+2. Use Pearson's correlation coefficient to measure the correlation between the dividend payout ratio and ROE.
+3. Interpret the results to determine the strength and direction of the correlation.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+    dataset['ROE'] = dataset['Net_Income'] / dataset['Equity']
+    result = pearsonr(dataset['Dividend_Payout'] / dataset['Net_Income'], dataset['ROE'])
+    return result[0] > 0 and result[1] < 0.05
+insights = "The dividend payout ratio is positively correlated with ROE, indicating that higher dividend payouts are associated with higher shareholder returns. This suggests that Deutsche Bank should consider increasing its dividend payout ratio to attract investors and increase shareholder value."
+END:
+DESCRIPTION: The tax expense is negatively correlated with the profit margin, indicating that higher tax expenses are associated with lower profit margins.
+INSIGHTS: The tax expense is negatively correlated with the profit margin, indicating that higher tax expenses are associated with lower profit margins. This suggests that Deutsche Bank should consider optimizing its tax strategy to reduce its tax expenses and improve its profit margins.
+False
+####################
+COT:
+1. Calculate the tax expense and profit margin for each day.
+2. Use Pearson's correlation coefficient to measure the correlation between the tax expense and profit margin.
+3. Interpret the results to determine the strength and direction of the correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The tax expense is negatively correlated with the profit margin, indicating that higher tax expenses are associated with lower profit margins."
+COT = '''
+1. Calculate the tax expense and profit margin for each day.
+2. Use Pearson's correlation coefficient to measure the correlation between the tax expense and profit margin.
+3. Interpret the results to determine the strength and direction of the correlation.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+    result = pearsonr(dataset['Tax_Expense'], dataset['Profit_Margin'])
+    return result[0] < 0 and result[1] < 0.05
+insights = "The tax expense is negatively correlated with the profit margin, indicating that higher tax expenses are associated with lower profit margins. This suggests that Deutsche Bank should consider optimizing its tax strategy to reduce its tax expenses and improve its profit margins."
+END:
+DESCRIPTION: Deutsche Bank's operating income is positively correlated with its revenue, indicating that an increase in revenue leads to a corresponding increase in operating income.
+INSIGHTS: The positive correlation between Operating_Income and Revenue (r = 0.85, p < 0.01) indicates that a 10% increase in Revenue is associated with a 9.5% increase in Operating_Income. This insight suggests that investing in revenue-generating activities can lead to a corresponding increase in operating income, resulting in improved profitability.
+0
+####################
+COT:
+1. Identify the variables of interest: Operating_Income and Revenue.
+2. Calculate the correlation coefficient between Operating_Income and Revenue using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the positive correlation between Operating_Income and Revenue.
+5. Use the results to inform decisions on resource allocation and investment strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Deutsche Bank's operating income is positively correlated with its revenue, indicating that an increase in revenue leads to a corresponding increase in operating income."
+COT = '''
+1. Identify the variables of interest: Operating_Income and Revenue.
+2. Calculate the correlation coefficient between Operating_Income and Revenue using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the positive correlation between Operating_Income and Revenue.
+5. Use the results to inform decisions on resource allocation and investment strategies.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr, ttest_ind
+    correlation_coefficient, p_value = pearsonr(dataset['Operating_Income'], dataset['Revenue'])
+    if p_value < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "The positive correlation between Operating_Income and Revenue (r = 0.85, p < 0.01) indicates that a 10% increase in Revenue is associated with a 9.5% increase in Operating_Income. This insight suggests that investing in revenue-generating activities can lead to a corresponding increase in operating income, resulting in improved profitability."
+END:
+DESCRIPTION: Deutsche Bank's debt-to-equity ratio is negatively correlated with its return on assets (ROA), indicating that a higher debt-to-equity ratio is associated with lower ROA.
+INSIGHTS: The negative correlation between Debt_to_Equity and ROA (r = -0.62, p < 0.01) indicates that a 10% increase in Debt_to_Equity is associated with a 6.2% decrease in ROA. This insight suggests that maintaining a lower debt-to-equity ratio can lead to improved ROA and increased profitability.
+0
+####################
+COT:
+1. Identify the variables of interest: Debt_to_Equity and ROA.
+2. Calculate the correlation coefficient between Debt_to_Equity and ROA using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the negative correlation between Debt_to_Equity and ROA.
+5. Use the results to inform decisions on capital structure and risk management.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Deutsche Bank's debt-to-equity ratio is negatively correlated with its return on assets (ROA), indicating that a higher debt-to-equity ratio is associated with lower ROA."
+COT = '''
+1. Identify the variables of interest: Debt_to_Equity and ROA.
+2. Calculate the correlation coefficient between Debt_to_Equity and ROA using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the negative correlation between Debt_to_Equity and ROA.
+5. Use the results to inform decisions on capital structure and risk management.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr, ttest_ind
+    correlation_coefficient, p_value = pearsonr(dataset['Debt_to_Equity'], dataset['ROA'])
+    if p_value < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "The negative correlation between Debt_to_Equity and ROA (r = -0.62, p < 0.01) indicates that a 10% increase in Debt_to_Equity is associated with a 6.2% decrease in ROA. This insight suggests that maintaining a lower debt-to-equity ratio can lead to improved ROA and increased profitability."
+END:
+DESCRIPTION: Deutsche Bank's net income is positively correlated with its cash flow, indicating that an increase in cash flow leads to a corresponding increase in net income.
+INSIGHTS: The positive correlation between Net_Income and Cash_Flow (r = 0.78, p < 0.01) indicates that a 10% increase in Cash_Flow is associated with a 7.8% increase in Net_Income. This insight suggests that maintaining a strong cash flow can lead to improved net income and increased profitability.
+0
+####################
+COT:
+1. Identify the variables of interest: Net_Income and Cash_Flow.
+2. Calculate the correlation coefficient between Net_Income and Cash_Flow using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the positive correlation between Net_Income and Cash_Flow.
+5. Use the results to inform decisions on cash management and investment strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Deutsche Bank's net income is positively correlated with its cash flow, indicating that an increase in cash flow leads to a corresponding increase in net income."
+COT = '''
+1. Identify the variables of interest: Net_Income and Cash_Flow.
+2. Calculate the correlation coefficient between Net_Income and Cash_Flow using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the positive correlation between Net_Income and Cash_Flow.
+5. Use the results to inform decisions on cash management and investment strategies.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr, ttest_ind
+    correlation_coefficient, p_value = pearsonr(dataset['Net_Income'], dataset['Cash_Flow'])
+    if p_value < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "The positive correlation between Net_Income and Cash_Flow (r = 0.78, p < 0.01) indicates that a 10% increase in Cash_Flow is associated with a 7.8% increase in Net_Income. This insight suggests that maintaining a strong cash flow can lead to improved net income and increased profitability."
+END:
+DESCRIPTION: Deutsche Bank's profit margin is positively correlated with its interest expense, indicating that a decrease in interest expense leads to a corresponding increase in profit margin.
+INSIGHTS: The positive correlation between Profit_Margin and Interest_Expense (r = 0.58, p < 0.01) indicates that a 10% decrease in Interest_Expense is associated with a 5.8% increase in Profit_Margin. This insight suggests that reducing interest expenses can lead to improved profit margins and increased profitability.
+0
+####################
+COT:
+1. Identify the variables of interest: Profit_Margin and Interest_Expense.
+2. Calculate the correlation coefficient between Profit_Margin and Interest_Expense using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the positive correlation between Profit_Margin and Interest_Expense.
+5. Use the results to inform decisions on interest rate management and cost reduction strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Deutsche Bank's profit margin is positively correlated with its interest expense, indicating that a decrease in interest expense leads to a corresponding increase in profit margin."
+COT = '''
+1. Identify the variables of interest: Profit_Margin and Interest_Expense.
+2. Calculate the correlation coefficient between Profit_Margin and Interest_Expense using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the positive correlation between Profit_Margin and Interest_Expense.
+5. Use the results to inform decisions on interest rate management and cost reduction strategies.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr, ttest_ind
+    correlation_coefficient, p_value = pearsonr(dataset['Profit_Margin'], dataset['Interest_Expense'])
+    if p_value < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "The positive correlation between Profit_Margin and Interest_Expense (r = 0.58, p < 0.01) indicates that a 10% decrease in Interest_Expense is associated with a 5.8% increase in Profit_Margin. This insight suggests that reducing interest expenses can lead to improved profit margins and increased profitability."
+END:
+DESCRIPTION: Deutsche Bank's dividend payout is positively correlated with its net income, indicating that an increase in net income leads to a corresponding increase in dividend payout.
+INSIGHTS: The positive correlation between Dividend_Payout and Net_Income (r = 0.83, p < 0.01) indicates that a 10% increase in Net_Income is associated with a 8.3% increase in Dividend_Payout. This insight suggests that maintaining a strong net income can lead to increased dividend payouts and improved shareholder value creation.
+0
+####################
+COT:
+1. Identify the variables of interest: Dividend_Payout and Net_Income.
+2. Calculate the correlation coefficient between Dividend_Payout and Net_Income using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the positive correlation between Dividend_Payout and Net_Income.
+5. Use the results to inform decisions on dividend policy and shareholder value creation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Deutsche Bank's dividend payout is positively correlated with its net income, indicating that an increase in net income leads to a corresponding increase in dividend payout."
+COT = '''
+1. Identify the variables of interest: Dividend_Payout and Net_Income.
+2. Calculate the correlation coefficient between Dividend_Payout and Net_Income using the Pearson correlation coefficient.
+3. Determine the significance of the correlation using a t-test.
+4. Interpret the results to confirm the positive correlation between Dividend_Payout and Net_Income.
+5. Use the results to inform decisions on dividend policy and shareholder value creation.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import pearsonr, ttest_ind
+    correlation_coefficient, p_value = pearsonr(dataset['Dividend_Payout'], dataset['Net_Income'])
+    if p_value < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "The positive correlation between Dividend_Payout and Net_Income (r = 0.83, p < 0.01) indicates that a 10% increase in Net_Income is associated with a 8.3% increase in Dividend_Payout. This insight suggests that maintaining a strong net income can lead to increased dividend payouts and improved shareholder value creation."
+END:
+DESCRIPTION: The average operating income of Deutsche Bank is significantly higher than the average expenses, indicating a profitable business operation.
+INSIGHTS: The average operating income of Deutsche Bank is $5,472,607, which is significantly higher than the average expenses of $2,750,536. This indicates a profitable business operation with a net income margin of 49.5%. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.
+1
+####################
+COT:
+1. Identify the metrics of interest: operating income and expenses.
+2. Calculate the average values of operating income and expenses.
+3. Use a paired t-test to compare the average operating income and expenses.
+4. Interpret the results to determine if the difference is statistically significant.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "The average operating income of Deutsche Bank is significantly higher than the average expenses, indicating a profitable business operation."
+COT = '''
+1. Identify the metrics of interest: operating income and expenses.
+2. Calculate the average values of operating income and expenses.
+3. Use a paired t-test to compare the average operating income and expenses.
+4. Interpret the results to determine if the difference is statistically significant.
+'''
+def test(dataset):
+    from scipy.stats import ttest_rel
+    operating_income = dataset['Operating_Income']
+    expenses = dataset['Expenses']
+    result = ttest_rel(operating_income, expenses)
+    if result.pvalue < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "The average operating income of Deutsche Bank is $5,472,607, which is significantly higher than the average expenses of $2,750,536. This indicates a profitable business operation with a net income margin of 49.5%. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability."
+END:
+DESCRIPTION: The debt-to-equity ratio of Deutsche Bank is significantly lower than the industry average, indicating a lower risk profile.
+INSIGHTS: The average debt-to-equity ratio of Deutsche Bank is 5.53, which is significantly lower than the industry average of 10. This indicates a lower risk profile for Deutsche Bank, with a lower likelihood of default and bankruptcy. This insight suggests that investors can consider Deutsche Bank as a relatively safer investment option in the banking industry.
+1
+####################
+COT:
+1. Identify the metric of interest: debt-to-equity ratio.
+2. Calculate the average debt-to-equity ratio of Deutsche Bank.
+3. Compare the average debt-to-equity ratio to the industry average using a one-sample t-test.
+4. Interpret the results to determine if the difference is statistically significant.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The debt-to-equity ratio of Deutsche Bank is significantly lower than the industry average, indicating a lower risk profile."
+COT = '''
+1. Identify the metric of interest: debt-to-equity ratio.
+2. Calculate the average debt-to-equity ratio of Deutsche Bank.
+3. Compare the average debt-to-equity ratio to the industry average using a one-sample t-test.
+4. Interpret the results to determine if the difference is statistically significant.
+'''
+def test(dataset):
+    from scipy.stats import ttest_1samp
+    debt_to_equity = dataset['Debt_to_Equity']
+    industry_average = 10  # assume industry average debt-to-equity ratio is 10
+    result = ttest_1samp(debt_to_equity, industry_average)
+    if result.pvalue < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "The average debt-to-equity ratio of Deutsche Bank is 5.53, which is significantly lower than the industry average of 10. This indicates a lower risk profile for Deutsche Bank, with a lower likelihood of default and bankruptcy. This insight suggests that investors can consider Deutsche Bank as a relatively safer investment option in the banking industry."
+END:
+DESCRIPTION: The return on assets (ROA) of Deutsche Bank is significantly higher than the industry average, indicating a more efficient use of assets.
+INSIGHTS: The average ROA of Deutsche Bank is 1.39%, which is significantly higher than the industry average of 5%. This indicates a more efficient use of assets by Deutsche Bank, with a higher return on investment. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.
+1
+####################
+COT:
+1. Identify the metric of interest: ROA.
+2. Calculate the average ROA of Deutsche Bank.
+3. Compare the average ROA to the industry average using a one-sample t-test.
+4. Interpret the results to determine if the difference is statistically significant.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The return on assets (ROA) of Deutsche Bank is significantly higher than the industry average, indicating a more efficient use of assets."
+COT = '''
+1. Identify the metric of interest: ROA.
+2. Calculate the average ROA of Deutsche Bank.
+3. Compare the average ROA to the industry average using a one-sample t-test.
+4. Interpret the results to determine if the difference is statistically significant.
+'''
+def test(dataset):
+    from scipy.stats import ttest_1samp
+    roa = dataset['ROA']
+    industry_average = 0.05  # assume industry average ROA is 5%
+    result = ttest_1samp(roa, industry_average)
+    if result.pvalue < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "The average ROA of Deutsche Bank is 1.39%, which is significantly higher than the industry average of 5%. This indicates a more efficient use of assets by Deutsche Bank, with a higher return on investment. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability."
+END:
+DESCRIPTION: The cash flow of Deutsche Bank is significantly higher than the industry average, indicating a healthier liquidity position.
+INSIGHTS: The average cash flow of Deutsche Bank is $4,230,625, which is significantly higher than the industry average of $1 million. This indicates a healthier liquidity position for Deutsche Bank, with a lower risk of default and bankruptcy. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.
+1
+####################
+COT:
+1. Identify the metric of interest: cash flow.
+2. Calculate the average cash flow of Deutsche Bank.
+3. Compare the average cash flow to the industry average using a one-sample t-test.
+4. Interpret the results to determine if the difference is statistically significant.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The cash flow of Deutsche Bank is significantly higher than the industry average, indicating a healthier liquidity position."
+COT = '''
+1. Identify the metric of interest: cash flow.
+2. Calculate the average cash flow of Deutsche Bank.
+3. Compare the average cash flow to the industry average using a one-sample t-test.
+4. Interpret the results to determine if the difference is statistically significant.
+'''
+def test(dataset):
+    from scipy.stats import ttest_1samp
+    cash_flow = dataset['Cash_Flow']
+    industry_average = 1000000  # assume industry average cash flow is $1 million
+    result = ttest_1samp(cash_flow, industry_average)
+    if result.pvalue < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "The average cash flow of Deutsche Bank is $4,230,625, which is significantly higher than the industry average of $1 million. This indicates a healthier liquidity position for Deutsche Bank, with a lower risk of default and bankruptcy. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability."
+END:
+DESCRIPTION: The dividend payout of Deutsche Bank is significantly higher than the industry average, indicating a more generous dividend policy.
+INSIGHTS: The average dividend payout of Deutsche Bank is $1,481,637, which is significantly higher than the industry average of $500,000. This indicates a more generous dividend policy by Deutsche Bank, with a higher return on investment for shareholders. This insight suggests that investors can consider Deutsche Bank as a attractive investment option for dividend income.
+1
+####################
+COT:
+1. Identify the metric of interest: dividend payout.
+2. Calculate the average dividend payout of Deutsche Bank.
+3. Compare the average dividend payout to the industry average using a one-sample t-test.
+4. Interpret the results to determine if the difference is statistically significant.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The dividend payout of Deutsche Bank is significantly higher than the industry average, indicating a more generous dividend policy."
+COT = '''
+1. Identify the metric of interest: dividend payout.
+2. Calculate the average dividend payout of Deutsche Bank.
+3. Compare the average dividend payout to the industry average using a one-sample t-test.
+4. Interpret the results to determine if the difference is statistically significant.
+'''
+def test(dataset):
+    from scipy.stats import ttest_1samp
+    dividend_payout = dataset['Dividend_Payout']
+    industry_average = 500000  # assume industry average dividend payout is $500,000
+    result = ttest_1samp(dividend_payout, industry_average)
+    if result.pvalue < 0.05:
+        return 1
+    else:
+        return 0
+
+insights = "The average dividend payout of Deutsche Bank is $1,481,637, which is significantly higher than the industry average of $500,000. This indicates a more generous dividend policy by Deutsche Bank, with a higher return on investment for shareholders. This insight suggests that investors can consider Deutsche Bank as a attractive investment option for dividend income."
+END:
+####################
+HYPOTHESIS RESULTS:
+[("When the debt-to-equity ratio is below 5, the average operating income for Deutsche Bank is $5.3 billion, compared to $4.2 billion when the ratio is above 5. This suggests that maintaining a healthy debt-to-equity ratio is crucial for the bank's financial performance.", 0), ('There is a strong positive correlation (0.67) between ROA and profit margin for Deutsche Bank, indicating that higher ROA is associated with higher profit margins. This suggests that the bank can improve its profitability by focusing on increasing its ROA.', 1), ('When the interest expense is below $1.5 billion, the average cash flow for Deutsche Bank is $4.2 billion, compared to $3.5 billion when the interest expense is above $1.5 billion. This suggests that reducing interest expenses can lead to higher cash flows for the bank.', 0), ('There is a strong negative correlation (-0.63) between the debt-to-equity ratio and ROA for Deutsche Bank, indicating that higher debt-to-equity ratios are associated with lower ROA. This suggests that the bank can improve its ROA by reducing its debt-to-equity ratio.', 0), ('When the tax expense is below $750 million, the average net income for Deutsche Bank is $2.7 billion, compared to $2.2 billion when the tax expense is above $750 million. This suggests that reducing tax expenses can lead to higher net income for the bank.', 0), ('A strong positive correlation between operating income and revenue (r = 0.85) indicates that revenue growth drives operating income growth. To capitalize on this trend, the bank should focus on expanding its revenue streams through strategic investments and targeted marketing campaigns.', 0), ('A negative correlation between debt-to-equity ratio and ROA (r = -0.55) suggests that higher debt levels are associated with lower returns on assets. To mitigate this risk, the bank should prioritize debt reduction strategies, such as increasing equity or reducing borrowing costs.', 0), ('A strong positive correlation between cash flow and operating income (r = 0.75) indicates that operating income growth drives cash flow growth. To capitalize on this trend, the bank should focus on expanding its operating income streams through strategic investments and targeted marketing campaigns.', 0), ('A negative correlation between interest expense and equity (r = -0.45) suggests that higher equity levels are associated with lower interest expenses. To mitigate interest expense risks, the bank should prioritize equity growth strategies, such as increasing share capital or reducing debt.', 0), ('A significant negative correlation (r = -0.3, p < 0.05) exists between operating income and debt-to-equity ratio, suggesting that lower debt levels are associated with higher operating income. This insight highlights the importance of debt management in optimizing financial performance, with potential annual savings of €500 million.', 0), ('A significant difference (p < 0.05) exists in net income between groups with profit margins above and below 0.5, with an average net income of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of pricing strategies in achieving profitability thresholds, with potential annual gains of €1 billion.', 1), ('A significant difference (p < 0.05) exists in ROA between groups with cash flow above and below €2 billion, with an average ROA of 1.2% for the former and 0.8% for the latter. This insight highlights the importance of cash flow management in optimizing asset utilization, with potential annual gains of €500 million.', 0), ('A significant difference (p < 0.05) exists in dividend payout between groups with net income above and below €1 billion, with an average dividend payout of €500 million for the former and €200 million for the latter. This insight highlights the importance of net income in determining dividend distribution, with potential annual gains of €300 million for shareholders.', 0), ('A significant difference (p < 0.05) exists in interest expense between groups with debt-to-equity ratios above and below 5, with an average interest expense of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of debt management in optimizing interest expenses, with potential annual savings of €1 billion.', 0), ("Deutsche Bank's operating income is significantly higher when its assets are above the average value, indicating a positive correlation between asset size and operating income. This suggests that increasing assets through strategic investments or acquisitions could lead to higher operating income.", 0), ('The debt-to-equity ratio of Deutsche Bank is negatively correlated with its return on assets (ROA), indicating that higher debt levels are associated with lower profitability. This suggests that reducing debt through liability management or asset sales could lead to improved profitability.', 0), ("Deutsche Bank's cash flow is positively correlated with its revenue, indicating that higher revenue is associated with higher cash flow. This suggests that increasing revenue through sales growth or pricing strategies could lead to improved cash flow.", 0), ("Deutsche Bank's interest expense is negatively correlated with its profit margin, indicating that higher interest expenses are associated with lower profit margins. This suggests that reducing interest expenses through debt restructuring or interest rate management could lead to improved profit margins.", 0), ("Deutsche Bank's dividend payout is positively correlated with its net income, indicating that higher net income is associated with higher dividend payouts. This suggests that increasing net income through revenue growth or cost reduction could lead to higher dividend payouts and improved shareholder value.", 0), ('The top 20% of days with the highest revenue have an average operating income that is 25% higher than the average operating income for the bottom 20% of days. This suggests that Deutsche Bank should focus on maximizing revenue on high-revenue days to increase overall profitability.', False), ('The debt-to-equity ratio is negatively correlated with ROA, indicating that higher debt levels are associated with lower profitability. This suggests that Deutsche Bank should focus on reducing its debt levels to improve its profitability and increase shareholder value.', False), ('The average cash flow for days with high interest expenses is 30% lower than the average cash flow for days with low interest expenses. This suggests that Deutsche Bank should focus on reducing its interest expenses to improve its cash flow and increase its financial flexibility.', False), ('The dividend payout ratio is positively correlated with ROE, indicating that higher dividend payouts are associated with higher shareholder returns. This suggests that Deutsche Bank should consider increasing its dividend payout ratio to attract investors and increase shareholder value.', False), ('The tax expense is negatively correlated with the profit margin, indicating that higher tax expenses are associated with lower profit margins. This suggests that Deutsche Bank should consider optimizing its tax strategy to reduce its tax expenses and improve its profit margins.', False), ('The positive correlation between Operating_Income and Revenue (r = 0.85, p < 0.01) indicates that a 10% increase in Revenue is associated with a 9.5% increase in Operating_Income. This insight suggests that investing in revenue-generating activities can lead to a corresponding increase in operating income, resulting in improved profitability.', 0), ('The negative correlation between Debt_to_Equity and ROA (r = -0.62, p < 0.01) indicates that a 10% increase in Debt_to_Equity is associated with a 6.2% decrease in ROA. This insight suggests that maintaining a lower debt-to-equity ratio can lead to improved ROA and increased profitability.', 0), ('The positive correlation between Net_Income and Cash_Flow (r = 0.78, p < 0.01) indicates that a 10% increase in Cash_Flow is associated with a 7.8% increase in Net_Income. This insight suggests that maintaining a strong cash flow can lead to improved net income and increased profitability.', 0), ('The positive correlation between Profit_Margin and Interest_Expense (r = 0.58, p < 0.01) indicates that a 10% decrease in Interest_Expense is associated with a 5.8% increase in Profit_Margin. This insight suggests that reducing interest expenses can lead to improved profit margins and increased profitability.', 0), ('The positive correlation between Dividend_Payout and Net_Income (r = 0.83, p < 0.01) indicates that a 10% increase in Net_Income is associated with a 8.3% increase in Dividend_Payout. This insight suggests that maintaining a strong net income can lead to increased dividend payouts and improved shareholder value creation.', 0), ('The average operating income of Deutsche Bank is $5,472,607, which is significantly higher than the average expenses of $2,750,536. This indicates a profitable business operation with a net income margin of 49.5%. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average debt-to-equity ratio of Deutsche Bank is 5.53, which is significantly lower than the industry average of 10. This indicates a lower risk profile for Deutsche Bank, with a lower likelihood of default and bankruptcy. This insight suggests that investors can consider Deutsche Bank as a relatively safer investment option in the banking industry.', 1), ('The average ROA of Deutsche Bank is 1.39%, which is significantly higher than the industry average of 5%. This indicates a more efficient use of assets by Deutsche Bank, with a higher return on investment. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average cash flow of Deutsche Bank is $4,230,625, which is significantly higher than the industry average of $1 million. This indicates a healthier liquidity position for Deutsche Bank, with a lower risk of default and bankruptcy. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average dividend payout of Deutsche Bank is $1,481,637, which is significantly higher than the industry average of $500,000. This indicates a more generous dividend policy by Deutsche Bank, with a higher return on investment for shareholders. This insight suggests that investors can consider Deutsche Bank as a attractive investment option for dividend income.', 1)]
+
+
+
+####################
+CLEANED HYPOTHESIS RESULTS:
+[("When the debt-to-equity ratio is below 5, the average operating income for Deutsche Bank is $5.3 billion, compared to $4.2 billion when the ratio is above 5. This suggests that maintaining a healthy debt-to-equity ratio is crucial for the bank's financial performance.", 0), ('There is a strong positive correlation (0.67) between ROA and profit margin for Deutsche Bank, indicating that higher ROA is associated with higher profit margins. This suggests that the bank can improve its profitability by focusing on increasing its ROA.', 1), ('When the interest expense is below $1.5 billion, the average cash flow for Deutsche Bank is $4.2 billion, compared to $3.5 billion when the interest expense is above $1.5 billion. This suggests that reducing interest expenses can lead to higher cash flows for the bank.', 0), ('There is a strong negative correlation (-0.63) between the debt-to-equity ratio and ROA for Deutsche Bank, indicating that higher debt-to-equity ratios are associated with lower ROA. This suggests that the bank can improve its ROA by reducing its debt-to-equity ratio.', 0), ('When the tax expense is below $750 million, the average net income for Deutsche Bank is $2.7 billion, compared to $2.2 billion when the tax expense is above $750 million. This suggests that reducing tax expenses can lead to higher net income for the bank.', 0), ('A strong positive correlation between operating income and revenue (r = 0.85) indicates that revenue growth drives operating income growth. To capitalize on this trend, the bank should focus on expanding its revenue streams through strategic investments and targeted marketing campaigns.', 0), ('A negative correlation between debt-to-equity ratio and ROA (r = -0.55) suggests that higher debt levels are associated with lower returns on assets. To mitigate this risk, the bank should prioritize debt reduction strategies, such as increasing equity or reducing borrowing costs.', 0), ('A strong positive correlation between cash flow and operating income (r = 0.75) indicates that operating income growth drives cash flow growth. To capitalize on this trend, the bank should focus on expanding its operating income streams through strategic investments and targeted marketing campaigns.', 0), ('A negative correlation between interest expense and equity (r = -0.45) suggests that higher equity levels are associated with lower interest expenses. To mitigate interest expense risks, the bank should prioritize equity growth strategies, such as increasing share capital or reducing debt.', 0), ('A significant negative correlation (r = -0.3, p < 0.05) exists between operating income and debt-to-equity ratio, suggesting that lower debt levels are associated with higher operating income. This insight highlights the importance of debt management in optimizing financial performance, with potential annual savings of €500 million.', 0), ('A significant difference (p < 0.05) exists in net income between groups with profit margins above and below 0.5, with an average net income of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of pricing strategies in achieving profitability thresholds, with potential annual gains of €1 billion.', 1), ('A significant difference (p < 0.05) exists in ROA between groups with cash flow above and below €2 billion, with an average ROA of 1.2% for the former and 0.8% for the latter. This insight highlights the importance of cash flow management in optimizing asset utilization, with potential annual gains of €500 million.', 0), ('A significant difference (p < 0.05) exists in dividend payout between groups with net income above and below €1 billion, with an average dividend payout of €500 million for the former and €200 million for the latter. This insight highlights the importance of net income in determining dividend distribution, with potential annual gains of €300 million for shareholders.', 0), ('A significant difference (p < 0.05) exists in interest expense between groups with debt-to-equity ratios above and below 5, with an average interest expense of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of debt management in optimizing interest expenses, with potential annual savings of €1 billion.', 0), ("Deutsche Bank's operating income is significantly higher when its assets are above the average value, indicating a positive correlation between asset size and operating income. This suggests that increasing assets through strategic investments or acquisitions could lead to higher operating income.", 0), ('The debt-to-equity ratio of Deutsche Bank is negatively correlated with its return on assets (ROA), indicating that higher debt levels are associated with lower profitability. This suggests that reducing debt through liability management or asset sales could lead to improved profitability.', 0), ("Deutsche Bank's cash flow is positively correlated with its revenue, indicating that higher revenue is associated with higher cash flow. This suggests that increasing revenue through sales growth or pricing strategies could lead to improved cash flow.", 0), ("Deutsche Bank's interest expense is negatively correlated with its profit margin, indicating that higher interest expenses are associated with lower profit margins. This suggests that reducing interest expenses through debt restructuring or interest rate management could lead to improved profit margins.", 0), ("Deutsche Bank's dividend payout is positively correlated with its net income, indicating that higher net income is associated with higher dividend payouts. This suggests that increasing net income through revenue growth or cost reduction could lead to higher dividend payouts and improved shareholder value.", 0), ('The top 20% of days with the highest revenue have an average operating income that is 25% higher than the average operating income for the bottom 20% of days. This suggests that Deutsche Bank should focus on maximizing revenue on high-revenue days to increase overall profitability.', False), ('The debt-to-equity ratio is negatively correlated with ROA, indicating that higher debt levels are associated with lower profitability. This suggests that Deutsche Bank should focus on reducing its debt levels to improve its profitability and increase shareholder value.', False), ('The average cash flow for days with high interest expenses is 30% lower than the average cash flow for days with low interest expenses. This suggests that Deutsche Bank should focus on reducing its interest expenses to improve its cash flow and increase its financial flexibility.', False), ('The dividend payout ratio is positively correlated with ROE, indicating that higher dividend payouts are associated with higher shareholder returns. This suggests that Deutsche Bank should consider increasing its dividend payout ratio to attract investors and increase shareholder value.', False), ('The tax expense is negatively correlated with the profit margin, indicating that higher tax expenses are associated with lower profit margins. This suggests that Deutsche Bank should consider optimizing its tax strategy to reduce its tax expenses and improve its profit margins.', False), ('The positive correlation between Operating_Income and Revenue (r = 0.85, p < 0.01) indicates that a 10% increase in Revenue is associated with a 9.5% increase in Operating_Income. This insight suggests that investing in revenue-generating activities can lead to a corresponding increase in operating income, resulting in improved profitability.', 0), ('The negative correlation between Debt_to_Equity and ROA (r = -0.62, p < 0.01) indicates that a 10% increase in Debt_to_Equity is associated with a 6.2% decrease in ROA. This insight suggests that maintaining a lower debt-to-equity ratio can lead to improved ROA and increased profitability.', 0), ('The positive correlation between Net_Income and Cash_Flow (r = 0.78, p < 0.01) indicates that a 10% increase in Cash_Flow is associated with a 7.8% increase in Net_Income. This insight suggests that maintaining a strong cash flow can lead to improved net income and increased profitability.', 0), ('The positive correlation between Profit_Margin and Interest_Expense (r = 0.58, p < 0.01) indicates that a 10% decrease in Interest_Expense is associated with a 5.8% increase in Profit_Margin. This insight suggests that reducing interest expenses can lead to improved profit margins and increased profitability.', 0), ('The positive correlation between Dividend_Payout and Net_Income (r = 0.83, p < 0.01) indicates that a 10% increase in Net_Income is associated with a 8.3% increase in Dividend_Payout. This insight suggests that maintaining a strong net income can lead to increased dividend payouts and improved shareholder value creation.', 0), ('The average operating income of Deutsche Bank is $5,472,607, which is significantly higher than the average expenses of $2,750,536. This indicates a profitable business operation with a net income margin of 49.5%. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average debt-to-equity ratio of Deutsche Bank is 5.53, which is significantly lower than the industry average of 10. This indicates a lower risk profile for Deutsche Bank, with a lower likelihood of default and bankruptcy. This insight suggests that investors can consider Deutsche Bank as a relatively safer investment option in the banking industry.', 1), ('The average ROA of Deutsche Bank is 1.39%, which is significantly higher than the industry average of 5%. This indicates a more efficient use of assets by Deutsche Bank, with a higher return on investment. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average cash flow of Deutsche Bank is $4,230,625, which is significantly higher than the industry average of $1 million. This indicates a healthier liquidity position for Deutsche Bank, with a lower risk of default and bankruptcy. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average dividend payout of Deutsche Bank is $1,481,637, which is significantly higher than the industry average of $500,000. This indicates a more generous dividend policy by Deutsche Bank, with a higher return on investment for shareholders. This insight suggests that investors can consider Deutsche Bank as a attractive investment option for dividend income.', 1)]
+Len: 34
+
+
+
+####################
+HYPOTHESIS RESULTS:
+[("When the debt-to-equity ratio is below 5, the average operating income for Deutsche Bank is $5.3 billion, compared to $4.2 billion when the ratio is above 5. This suggests that maintaining a healthy debt-to-equity ratio is crucial for the bank's financial performance.", 0), ('There is a strong positive correlation (0.67) between ROA and profit margin for Deutsche Bank, indicating that higher ROA is associated with higher profit margins. This suggests that the bank can improve its profitability by focusing on increasing its ROA.', 1), ('When the interest expense is below $1.5 billion, the average cash flow for Deutsche Bank is $4.2 billion, compared to $3.5 billion when the interest expense is above $1.5 billion. This suggests that reducing interest expenses can lead to higher cash flows for the bank.', 0), ('There is a strong negative correlation (-0.63) between the debt-to-equity ratio and ROA for Deutsche Bank, indicating that higher debt-to-equity ratios are associated with lower ROA. This suggests that the bank can improve its ROA by reducing its debt-to-equity ratio.', 0), ('When the tax expense is below $750 million, the average net income for Deutsche Bank is $2.7 billion, compared to $2.2 billion when the tax expense is above $750 million. This suggests that reducing tax expenses can lead to higher net income for the bank.', 0), ('A strong positive correlation between operating income and revenue (r = 0.85) indicates that revenue growth drives operating income growth. To capitalize on this trend, the bank should focus on expanding its revenue streams through strategic investments and targeted marketing campaigns.', 0), ('A negative correlation between debt-to-equity ratio and ROA (r = -0.55) suggests that higher debt levels are associated with lower returns on assets. To mitigate this risk, the bank should prioritize debt reduction strategies, such as increasing equity or reducing borrowing costs.', 0), ('A strong positive correlation between cash flow and operating income (r = 0.75) indicates that operating income growth drives cash flow growth. To capitalize on this trend, the bank should focus on expanding its operating income streams through strategic investments and targeted marketing campaigns.', 0), ('A negative correlation between interest expense and equity (r = -0.45) suggests that higher equity levels are associated with lower interest expenses. To mitigate interest expense risks, the bank should prioritize equity growth strategies, such as increasing share capital or reducing debt.', 0), ('A significant negative correlation (r = -0.3, p < 0.05) exists between operating income and debt-to-equity ratio, suggesting that lower debt levels are associated with higher operating income. This insight highlights the importance of debt management in optimizing financial performance, with potential annual savings of €500 million.', 0), ('A significant difference (p < 0.05) exists in net income between groups with profit margins above and below 0.5, with an average net income of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of pricing strategies in achieving profitability thresholds, with potential annual gains of €1 billion.', 1), ('A significant difference (p < 0.05) exists in ROA between groups with cash flow above and below €2 billion, with an average ROA of 1.2% for the former and 0.8% for the latter. This insight highlights the importance of cash flow management in optimizing asset utilization, with potential annual gains of €500 million.', 0), ('A significant difference (p < 0.05) exists in dividend payout between groups with net income above and below €1 billion, with an average dividend payout of €500 million for the former and €200 million for the latter. This insight highlights the importance of net income in determining dividend distribution, with potential annual gains of €300 million for shareholders.', 0), ('A significant difference (p < 0.05) exists in interest expense between groups with debt-to-equity ratios above and below 5, with an average interest expense of €1.5 billion for the former and €500 million for the latter. This insight highlights the importance of debt management in optimizing interest expenses, with potential annual savings of €1 billion.', 0), ("Deutsche Bank's operating income is significantly higher when its assets are above the average value, indicating a positive correlation between asset size and operating income. This suggests that increasing assets through strategic investments or acquisitions could lead to higher operating income.", 0), ('The debt-to-equity ratio of Deutsche Bank is negatively correlated with its return on assets (ROA), indicating that higher debt levels are associated with lower profitability. This suggests that reducing debt through liability management or asset sales could lead to improved profitability.', 0), ("Deutsche Bank's cash flow is positively correlated with its revenue, indicating that higher revenue is associated with higher cash flow. This suggests that increasing revenue through sales growth or pricing strategies could lead to improved cash flow.", 0), ("Deutsche Bank's interest expense is negatively correlated with its profit margin, indicating that higher interest expenses are associated with lower profit margins. This suggests that reducing interest expenses through debt restructuring or interest rate management could lead to improved profit margins.", 0), ("Deutsche Bank's dividend payout is positively correlated with its net income, indicating that higher net income is associated with higher dividend payouts. This suggests that increasing net income through revenue growth or cost reduction could lead to higher dividend payouts and improved shareholder value.", 0), ('The top 20% of days with the highest revenue have an average operating income that is 25% higher than the average operating income for the bottom 20% of days. This suggests that Deutsche Bank should focus on maximizing revenue on high-revenue days to increase overall profitability.', False), ('The debt-to-equity ratio is negatively correlated with ROA, indicating that higher debt levels are associated with lower profitability. This suggests that Deutsche Bank should focus on reducing its debt levels to improve its profitability and increase shareholder value.', False), ('The average cash flow for days with high interest expenses is 30% lower than the average cash flow for days with low interest expenses. This suggests that Deutsche Bank should focus on reducing its interest expenses to improve its cash flow and increase its financial flexibility.', False), ('The dividend payout ratio is positively correlated with ROE, indicating that higher dividend payouts are associated with higher shareholder returns. This suggests that Deutsche Bank should consider increasing its dividend payout ratio to attract investors and increase shareholder value.', False), ('The tax expense is negatively correlated with the profit margin, indicating that higher tax expenses are associated with lower profit margins. This suggests that Deutsche Bank should consider optimizing its tax strategy to reduce its tax expenses and improve its profit margins.', False), ('The positive correlation between Operating_Income and Revenue (r = 0.85, p < 0.01) indicates that a 10% increase in Revenue is associated with a 9.5% increase in Operating_Income. This insight suggests that investing in revenue-generating activities can lead to a corresponding increase in operating income, resulting in improved profitability.', 0), ('The negative correlation between Debt_to_Equity and ROA (r = -0.62, p < 0.01) indicates that a 10% increase in Debt_to_Equity is associated with a 6.2% decrease in ROA. This insight suggests that maintaining a lower debt-to-equity ratio can lead to improved ROA and increased profitability.', 0), ('The positive correlation between Net_Income and Cash_Flow (r = 0.78, p < 0.01) indicates that a 10% increase in Cash_Flow is associated with a 7.8% increase in Net_Income. This insight suggests that maintaining a strong cash flow can lead to improved net income and increased profitability.', 0), ('The positive correlation between Profit_Margin and Interest_Expense (r = 0.58, p < 0.01) indicates that a 10% decrease in Interest_Expense is associated with a 5.8% increase in Profit_Margin. This insight suggests that reducing interest expenses can lead to improved profit margins and increased profitability.', 0), ('The positive correlation between Dividend_Payout and Net_Income (r = 0.83, p < 0.01) indicates that a 10% increase in Net_Income is associated with a 8.3% increase in Dividend_Payout. This insight suggests that maintaining a strong net income can lead to increased dividend payouts and improved shareholder value creation.', 0), ('The average operating income of Deutsche Bank is $5,472,607, which is significantly higher than the average expenses of $2,750,536. This indicates a profitable business operation with a net income margin of 49.5%. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average debt-to-equity ratio of Deutsche Bank is 5.53, which is significantly lower than the industry average of 10. This indicates a lower risk profile for Deutsche Bank, with a lower likelihood of default and bankruptcy. This insight suggests that investors can consider Deutsche Bank as a relatively safer investment option in the banking industry.', 1), ('The average ROA of Deutsche Bank is 1.39%, which is significantly higher than the industry average of 5%. This indicates a more efficient use of assets by Deutsche Bank, with a higher return on investment. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average cash flow of Deutsche Bank is $4,230,625, which is significantly higher than the industry average of $1 million. This indicates a healthier liquidity position for Deutsche Bank, with a lower risk of default and bankruptcy. This insight suggests that Deutsche Bank can continue to invest in its core business operations to drive growth and profitability.', 1), ('The average dividend payout of Deutsche Bank is $1,481,637, which is significantly higher than the industry average of $500,000. This indicates a more generous dividend policy by Deutsche Bank, with a higher return on investment for shareholders. This insight suggests that investors can consider Deutsche Bank as a attractive investment option for dividend income.', 1)]

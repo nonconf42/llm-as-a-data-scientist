@@ -3,6 +3,7 @@ import os
 import re
 import tempfile
 import warnings
+import sys
 from textwrap import dedent
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter, FileType, ArgumentTypeError
 
@@ -27,17 +28,27 @@ from llms.llm import LLM
 from models.model import Model
 from models.utils import *
 
+class Tee:
+    def __init__(self, *streams):
+        self.streams = streams
+
+    def write(self, message):
+        for stream in self.streams:
+            stream.write(message)
+            stream.flush() 
+
+    def flush(self):
+        for stream in self.streams:
+            stream.flush()
+
+log_file = open("output.log", "a")
+
+sys.stdout = Tee(sys.stdout, log_file)
+print('All logs appear here')
+
+
 llm_models = get_llms_list()
 datasets = get_dataset_names()
-hypothesis_list = [
-    "General Hypothesis",
-    "Clustering Hypothesis",
-    "Outlier Detection",
-    "Anomaly Detection",
-    "Cause-Effect Relationships",
-    "Latent Variable Hypotheses"
-]
-
 for dataset_name in tqdm(datasets):
     for platform, model_name in tqdm(llm_models):
         model_name_to_save = model_name.replace('/', '_')
@@ -50,8 +61,9 @@ for dataset_name in tqdm(datasets):
         hypothesis_results = []
         file = open(f'logs/all_hypotheses/{dataset_name}_{model_name_to_save}.txt', 'w')
         llm_model = LLM(platform=platform)
-        for hyp_type in hypothesis_list:
-            prompt = generate_hypothesis_prompt(hypothesis_type=hyp_type, dataset=df,num_hypothesis=10)
+        prompt = generate_hypothesis_prompt( dataset=df,num_hypothesis=5)
+        for i in range(10):
+            print(f'\nStart of iteration {i+1}/10 for hypotheses generation....')
             llm_output = llm_model.llm_call(prompt=prompt, model_name=model_name )
             python_code = extract_python_code(llm_output)
             hypothesis_list = extract_hypotheses_text(python_code)
@@ -123,7 +135,7 @@ for dataset_name in tqdm(datasets):
                 finally:
                     # Clean up the temporary file
                     os.remove(temp_module_path)
-
+            print(f'\nEnd of iteration {i+1} of hypothese generation...')
         file.write('#'*20 + '\n')
         file.write('HYPOTHESIS RESULTS:\n')
         file.write(str(hypothesis_results))
@@ -139,11 +151,7 @@ for dataset_name in tqdm(datasets):
 
         file.write('\n\n\n\n')
         file.write('#'*20 + '\n')
-        file.write('HYPOTHESIS DICTIONARY:\n')
-        # bag_of_hyp = hyp_results_to_text(cleaned_hypothesis_results, llm_model=llm_model)
-        # file.write(bag_of_hyp)
-        file.write(str(hypotheses_dict) + '\n')
-
+    
         file.write('HYPOTHESIS RESULTS:\n')
         file.write(str(hypothesis_results))
 
@@ -153,3 +161,5 @@ for dataset_name in tqdm(datasets):
             f'logs/all_hypotheses/{dataset_name}_{model_name_to_save}_hypotheses_text_only.txt'
         )
         print(f'Generation of hypothesis finished for dataset {dataset_name} with {model_name}')
+
+log_file.close()

@@ -40,6 +40,7 @@ class DataReader:
         self.description = dataset_descriptions[dataset_name]
 
         if dataset_name == 'Titanic': 
+            self.dataset_name = dataset_name
             self.train_input = self.train_base.drop(['Survived', 'PassengerId'], axis=1)
             self.train_labels = self.train_base['Survived']
             self.features_description = {
@@ -59,6 +60,7 @@ class DataReader:
             self.task = 'classification'
 
         elif dataset_name == 'Cars':
+            self.dataset_name = dataset_name
             self.train_input = self.train_base.drop(['id', 'price'], axis=1)
             self.train_labels = self.train_base['price']
             self.features_description = {
@@ -79,6 +81,7 @@ class DataReader:
             self.task = 'regression'
 
         elif dataset_name == 'Diamonds':
+            self.dataset_name = dataset_name
             self.train_input = self.train_base.drop(['price'], axis=1)
             self.train_labels = self.train_base['price']
             self.features_description = {
@@ -98,6 +101,7 @@ class DataReader:
             self.task = 'regression'
 
         elif dataset_name == 'Smoking':
+            self.dataset_name = dataset_name
             self.train_input = self.train_base.drop(['smoking'], axis=1)
             self.train_labels = self.train_base['smoking']
             self.features_description = {
@@ -130,6 +134,7 @@ class DataReader:
             self.task = 'classification'
 
         elif dataset_name == 'Shopping':
+            self.dataset_name = dataset_name
             self.train_input = self.train_base
             self.chosen_features = self.train_base.columns
             self.features_description = {
@@ -156,6 +161,7 @@ class DataReader:
             self.task = 'call to action'
         
         elif dataset_name == 'Bank':
+            self.dataset_name = dataset_name
             self.train_input = self.train_base
             self.chosen_features = self.train_base.columns
             self.features_description = {
@@ -178,10 +184,12 @@ class DataReader:
             self.task = 'call to action'
 
         elif dataset_name == 'Churn':
-            self.train_input = self.train_base
-            self.chosen_features = self.train_base.columns
+            self.dataset_name = dataset_name
+            self.train_input = self.train_base.drop(['RowNumber', 'Exited'], axis=1)
+            self.train_labels = self.train_base['Exited']
+            self.chosen_features = self.chosen_features = [col for col in self.train_base.columns if col not in ['RowNumber', 'Exited']]
             self.features_description = bank_data_dict = {
-                "RowNumber": "Row numbers from 1 to 10000",
+                #"RowNumber": "Row numbers from 1 to 10000",
                 "CustomerId": "Unique IDs for bank customer identification",
                 "Surname": "Customer's last name",
                 "CreditScore": "Credit score of the customer",
@@ -194,9 +202,9 @@ class DataReader:
                 "HasCrCard": "Binary flag for whether the customer holds a credit card with the bank or not",
                 "IsActiveMember": "Binary flag for whether the customer is an active member with the bank or not",
                 "EstimatedSalary": "Estimated salary of the customer in dollars",
-                "Exited": "Binary flag (1 if the customer closed account with the bank, 0 if the customer is retained)"
+                #"Exited": "Binary flag (1 if the customer closed account with the bank, 0 if the customer is retained)"
             }
-
+            self.label_name = 'Exited'
             self.task = 'classification'
 
 

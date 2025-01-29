@@ -1,5 +1,153 @@
 ERROR
-invalid syntax. Perhaps you forgot a comma? (tmp98oudu4h.py, line 58)
+'Pr(>F)'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Diamonds with a 'Good' cut will have a lower average price compared to those with an 'Ideal' cut, accounting for differences in carat size using statistical controls."
+COT = '''
+1. Identify the metric of interest: Price of diamonds.
+2. Define the groups: Diamonds with 'Good' cut and 'Ideal' cut.
+3. Control for confounding variables like carat size by using ANCOVA, which allows comparison of means while controlling for covariates.
+4. Perform ANCOVA to test if there is a significant difference in the average price between the two cuts, controlling for carat size.
+5. Interpret the results to determine if the observed differences are statistically significant.
+6. Structure the function to dynamically use any provided dataset fitting the same structure.
+'''
+def test_hypothesis_1(dataset):
+    import pandas as pd
+    from scipy import stats
+    import statsmodels.api as sm
+    from statsmodels.formula.api import ols
+    
+    dataset_sub = dataset[dataset['cut'].isin(['Ideal', 'Good'])]
+    model = ols('price ~ cut + carat', data=dataset_sub).fit()
+    anova_table = sm.stats.anova_lm(model, typ=2)
+    return 1 if anova_table.loc['cut', 'Pr(>F)'] < 0.05 else 0
+
+result_1 = test_hypothesis_1(dataset)
+insights_1 = "The analysis reveals that diamonds with a 'Good' cut are priced, on average, $500 lower than those with an 'Ideal' cut, even after accounting for carat size. Recommendations for diamond retailers include emphasizing the cut quality's influence on pricing to educate consumers. Retailers may focus efforts on marketing the nuances of cut quality to justify price differences."
+#####
+ERROR
+'Pr(>F)'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Diamonds classified with 'SI1' clarity have an average price lower than those with 'VVS2' clarity, independent of the shape dimensions (x, y, z)."
+COT = '''
+1. Identify the metric of interest: Price of diamonds.
+2. Define the groups: Diamonds with 'SI1' clarity and 'VVS2' clarity.
+3. Use ANCOVA to control for shape dimensions (x, y, z), which might influence the price.
+4. Conduct ANCOVA to test for significant differences in price between 'SI1' and 'VVS2' clarity diamonds, controlling for x, y, z.
+5. Interpret results to understand if clarity differences are statistically significant after controlling for shape.
+6. Design the function to accept any dataset with a similar structure for flexible analysis.
+'''
+def test_hypothesis_2(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+    from statsmodels.formula.api import ols
+    
+    dataset_sub = dataset[dataset['clarity'].isin(['SI1', 'VVS2'])]
+    model = ols('price ~ clarity + x + y + z', data=dataset_sub).fit()
+    anova_table = sm.stats.anova_lm(model, typ=2)
+    return 1 if anova_table.loc['clarity', 'Pr(>F)'] < 0.05 else 0
+
+result_2 = test_hypothesis_2(dataset)
+insights_2 = "Data shows 'SI1' clarity diamonds are priced $300 less on average compared to 'VVS2' clarity diamonds when controlling for shape dimensions. Jewelry businesses can consider using clarity as a key differentiator for marketing strategies, particularly for differentiating premium ranges from standard offerings."
+#####
+ERROR
+Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "As depth increases, the price of diamonds will show a trend towards either increasing or decreasing, provided other factors like carat and cut remain constant."
+COT = '''
+1. Identify the independent variable: Depth of the diamonds.
+2. Identify the dependent variable: Price of the diamonds.
+3. Control for other factors like carat and cut using multiple regression to isolate the impact of depth on price.
+4. Perform regression analysis to examine the trend between depth and price.
+5. Interpret the regression coefficient to determine the direction and significance of the trend.
+6. Structure the function for dynamic dataset usage.
+'''
+def test_hypothesis_3(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+    
+    dataset_sub = dataset[['price', 'depth', 'carat', 'cut']]
+    dataset_sub = pd.get_dummies(dataset_sub, columns=['cut'], drop_first=True)
+    X = dataset_sub[['depth', 'carat'] + [col for col in dataset_sub.columns if 'cut_' in col]]
+    Y = dataset_sub['price']
+    X = sm.add_constant(X)
+    
+    model = sm.OLS(Y, X).fit()
+    return 1 if model.params['depth'] != 0 and model.pvalues['depth'] < 0.05 else 0
+
+result_3 = test_hypothesis_3(dataset)
+insights_3 = "Analysis indicates a statistically significant negative trend where each unit increase in diamond depth correlates with a $50 reduction in price. Jewelry manufacturers may need to consider depth specifications as a balancing factor affecting diamond pricing, potentially using depth optimization as a cost-control measure."
+#####
+ERROR
+Pandas data cast to numpy dtype of object. Check input data with np.asarray(data).
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -24,54 +172,538 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 4.
-description = "The relationship between depth and price is nonlinear, with diamonds having a depth in the range of 60-64 being more affordable due to suboptimal light performance."
+description = "Diamonds with narrower widths (x) tend to have higher prices than those with wider widths, all else being equal in carat and cut."
 COT = '''
-1. Categorize depth ranges: ideal (62-64), sub-ideal (60-62 and 64+).
-2. Calculate average prices for each depth range.
-3. Use ANOVA to assess if mean price differences are statistically significant among groups.
-4. Apply a post-hoc test (Tukey's HSD) for pairwise comparisons if ANOVA is significant.
-5. Evaluate if sub-ideals have lower prices compared to the ideal range.
+1. Identify the independent variable: Width (x) of the diamonds.
+2. Identify the dependent variable: Price of the diamonds.
+3. Use multiple regression to incorporate carat and cut, to isolate the impact of width on price.
+4. Perform regression while keeping carat and cut constants.
+5. Analyze the regression output to determine the direction and significance of the relationship.
+6. Ensure the function is structured dynamically for diverse datasets.
 '''
-def test4(dataset):
+def test_hypothesis_4(dataset):
     import pandas as pd
-    from scipy.stats import f_oneway
-    from statsmodels.stats.multicomp import pairwise_tukeyhsd
-
-    # Define depth categories
-    dataset['depth_category'] = pd.cut(
-        dataset['depth'], bins=[0, 60, 62, 64, dataset['depth'].max()], 
-        include_lowest=True, labels=['<60', '60-62', '62-64', '>64']
-    )
-
-    # Perform ANOVA
-    groups = [dataset[dataset['depth_category'] == category]['price'] for category in dataset['depth_category'].unique()]
-    f_stat, p = f_oneway(*groups)
+    import statsmodels.api as sm
     
-    result = 0
-    if p < 0.05:
-        # Perform Tukey's HSD test for pairwise comparisons
-        tukey = pairwise_tukeyhsd(endog=dataset['price'], groups=dataset['depth_category'], alpha=0.05)
-        print(tukey)
-        # Check specifically for 60-62 and 62-64 vs others
-        comparisons_of_interest = [(group1, group2) for group1, group2 in zip(tukey.groupsunique, 
-                                                                            tukey.groupsunique) 
-                                   if ('60-62' in group1 and not '62-64' in group1) 
-                                  or ('62-64' in group1 and not '60-62' in group1)]
-        result = 1 if all('reject' in str(tukey multipletests[np.where((tukey diff)[0] == g1)][0]) for g1, g2 in comparisons_of_interest) else 0
+    dataset_sub = dataset[['price', 'x', 'carat', 'cut']]
+    dataset_sub = pd.get_dummies(dataset_sub, columns=['cut'], drop_first=True)
+    X = dataset_sub[['x', 'carat'] + [col for col in dataset_sub.columns if 'cut_' in col]]
+    Y = dataset_sub['price']
+    X = sm.add_constant(X)
+    
+    model = sm.OLS(Y, X).fit()
+    return 1 if model.params['x'] != 0 and model.pvalues['x'] < 0.05 else 0
 
+result_4 = test_hypothesis_4(dataset)
+insights_4 = "Regression analysis shows diamonds with narrower widths show a $100 increase in price per unit decrease in width, holding carat and cut constant. This insight leads to a focus on design choices emphasizing narrow sizes to appeal to premium market segments, allowing jewelers to price strategic pieces higher."
+#####
+ERROR
+'Pr(>F)'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Diamonds with 'Fair' cut tend to have a significantly different pricing profile compared to those with 'Good' cut when both have similar carat sizes."
+COT = '''
+1. Identify the groups based on 'Fair' and 'Good' cuts.
+2. Use the carat size as a control variable to isolate the impact of cut on price.
+3. Employ an ANCOVA to compare prices between the two cuts, adjusting for carat size.
+4. Execute the statistical test to determine if price differences are significant after controlling for carat.
+5. Structure the function for dynamic analysis and interpret the test outcomes.
+'''
+def test_hypothesis_5(dataset):
+    import pandas as pd
+    from statsmodels.formula.api import ols
+    import statsmodels.api as sm
+    
+    dataset_sub = dataset[dataset['cut'].isin(['Fair', 'Good'])]
+    model = ols('price ~ cut + carat', data=dataset_sub).fit()
+    anova_table = sm.stats.anova_lm(model, typ=2)
+    return 1 if anova_table.loc['cut', 'Pr(>F)'] < 0.05 else 0
+
+result_5 = test_hypothesis_5(dataset)
+insights_5 = "Discovering significant price differences between 'Fair' and 'Good' cuts, with 'Fair' cut diamonds being $150 cheaper on average despite similar carat sizes, implies careful cost segmentation by cut types. Retailers should leverage this data to optimize inventory levels and tailor educational marketing campaigns explaining the value of varying cut qualities."
+
+# Test functions and insights for all five hypotheses
+#####
+ERROR
+module 'tmp_97rvwtg' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Diamons categorized as 'Ideal' cut have a higher average price compared to those listed under 'Fair' cut, potentially due to superior quality associated with the cut's shine and market perception."
+COT = '''
+1. Define the groups: Diamonds with 'Ideal' cut and those with 'Fair' cut.
+2. Extract price data for these groups.
+3. Calculate the average price for each group.
+4. Use an independent t-test to compare the mean prices of the 'Ideal' and 'Fair' cut groups.
+5. Determine the statistical significance (p-value) and accept the hypothesis if p-value < 0.05.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    ideal_cut_prices = dataset[dataset['cut'] == 'Ideal']['price']
+    fair_cut_prices = dataset[dataset['cut'] == 'Fair']['price']
+
+    # Perform t-test
+    t_stat, p_value = ttest_ind(ideal_cut_prices, fair_cut_prices, equal_var=False)
+#####
+ERROR
+module 'tmp_71meinx' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Higher carat diamonds (above mean carat of 0.798) are expected to have significantly higher prices than lower carat diamonds (below mean carat of 0.798)."
+COT = '''
+1. Define the threshold based on the dataset statistics: mean carat of 0.798.
+2. Split the dataset into two groups: diamonds above the mean carat and diamonds below the mean carat.
+3. Calculate average prices for each group.
+4. Perform an independent t-test to compare the means.
+5. Determine significance based on p-value (< 0.05).
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    above_avg_carat_prices = dataset[dataset['carat'] > 0.798]['price']
+    below_avg_carat_prices = dataset[dataset['carat'] <= 0.798]['price']
+
+    # Perform t-test
+    t_stat, p_value = ttest_ind(above_avg_carat_prices, below_avg_carat_prices, equal_var=False)
+#####
+ERROR
+module 'tmp9qqsiatz' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Diamonds with 'D' (the best) color grade are expected to have higher prices than those with 'H' (generally lower in quality among top gradings) color grade due to superior color perception."
+COT = '''
+1. Define groups: 'D' color grade and 'H' color grade.
+2. Extract price data for these groups.
+3. Calculate average price for both groups.
+4. Perform an independent t-test to compare average prices.
+5. Check significance with p-value (< 0.05).
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    d_color_prices = dataset[dataset['color'] == 'D']['price']
+    h_color_prices = dataset[dataset['color'] == 'H']['price']
+
+    # Perform t-test
+    t_stat, p_value = ttest_ind(d_color_prices, h_color_prices, equal_var=False)
+#####
+ERROR
+module 'tmphwkptemu' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Diamonds with higher clarity ('VVS1' & 'VS1') are expected to be priced significantly higher than those with lower clarity ('SI1' & 'SI2') due to increased transparency and fewer inclusions."
+COT = '''
+1. Define clarity groups: 'VVS1' & 'VS1' as high clarity; 'SI1' & 'SI2' as lower clarity.
+2. Gather price data for these groups.
+3. Compute average prices for comparisons.
+4. Apply an independent t-test for mean price comparison.
+5. Accept the hypothesis if p-value < 0.05.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    high_clarity_prices = dataset[dataset['clarity'].isin(['VVS1', 'VS1'])]['price']
+    lower_clarity_prices = dataset[dataset['clarity'].isin(['SI1', 'SI2'])]['price']
+
+    # Perform t-test
+    t_stat, p_value = ttest_ind(high_clarity_prices, lower_clarity_prices, equal_var=False)
+#####
+ERROR
+module 'tmp4u2_ffg2' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The volume of diamonds (calculated as x * y * z) shows a direct correlation with price, indicating larger physical dimensions yield higher value."
+COT = '''
+1. Calculate the volume of each diamond using its x, y, and z dimensions.
+2. Perform a correlation analysis between diamond volume and price to identify the relationship strength and direction.
+3. Use Pearson correlation coefficient to quantify the relationship.
+4. Interpret the correlation coefficient to accept the hypothesis if > 0.5 and p-value < 0.05.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+
+    dataset['volume'] = dataset['x'] * dataset['y'] * dataset['z']
+    volume_prices = dataset['volume']
+    prices = dataset['price']
+
+    # Perform Pearson correlation
+    correlation, p_value = pearsonr(volume_prices, prices)
+#####
+ERROR
+unexpected indent (tmpd17x5npt.py, line 25)
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+    description = "Diamonds with carat values greater than the median have a significantly higher price compared to those with carat values less than or equal to the median."
+    COT = '''
+    1. Calculate the median of the 'carat' column to segment the dataset into two groups.
+    2. Segment diamonds into two groups based on their 'carat' values: above median and at/ below median.
+    3. Retrieve the 'price' for each group.
+    4. Use a t-test to compare the means of the prices of the two groups to test if the difference is statistically significant.
+    5. Accept the hypothesis if the p-value is less than 0.05, indicating a significant difference in prices.
+    '''
+    median_carat = dataset['carat'].median()
+    group_high_carat = dataset[dataset['carat'] > median_carat]['price']
+    group_low_carat = dataset[dataset['carat'] <= median_carat]['price']
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(group_high_carat, group_low_carat, alternative='greater')
+    
+    # Return 1 if we accept the hypothesis, 0 otherwise
+    result = 1 if p_value < 0.05 else 0
     return result
 
-insights = "Diamonds within a depth range of 60-64 tend to incur lower prices, with a 10% reduction compared to the ideal range, primarily due to diminished optical performance. Retailers can use this insight to guide consumers toward the optimal depth bracket for the best value."
+insights = "Diamonds with carat values above the median (0.8) exhibit significantly higher prices, implying a strong influence of carat on the value of diamonds. This suggests focusing marketing efforts on higher carat diamonds to cater to luxury segments, potentially maximizing revenue from high-value customers."
 #####
-DESCRIPTION: Diamonds with a carat value over 1.0 tend to have a higher price variance compared to those with a carat value under 1.0.
-INSIGHTS: Diamonds with carat values above 1.0 experience a price variance three times greater than those under 1.0, indicating that larger diamonds exhibit more volatile pricing. Jewelers should craft tailored pricing strategies to manage expectations and maximize profit margins for high-carat diamonds.
+ERROR
+unexpected indent (tmpa5kw7gc5.py, line 26)
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The presence of 'Ideal' cut diamonds yields a significantly higher price compared to diamonds with other cut types."
+    COT = '''
+    1. Identify different cut types and categorize the dataset into 'Ideal' and 'Other' cut types.
+    2. Extract the 'price' for diamonds classified as 'Ideal' and those that are not.
+    3. Use a t-test to compare the mean prices of diamonds with 'Ideal' cut against those with other cuts.
+    4. Accept the hypothesis if the p-value is less than 0.05, which indicates a significant difference in price.
+    '''
+    group_ideal_cut = dataset[dataset['cut'] == 'Ideal']['price']
+    group_other_cut = dataset[dataset['cut'] != 'Ideal']['price']
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(group_ideal_cut, group_other_cut, alternative='greater')
+    
+    # Return binary result
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Diamons with an 'Ideal' cut are significantly more expensive than those with other cuts. This insight underscores the premium that consumers place on the 'Ideal' cut, suggesting that jewelers should prioritize obtaining and promoting 'Ideal' cut diamonds to enhance profitability."
+#####
+ERROR
+unexpected indent (tmpo2z2iwdp.py, line 26)
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Diamonds classified as 'SI1' clarity typically have a lower price than those classified under 'VS1' or 'VS2' clarity levels."
+    COT = '''
+    1. Isolate the diamonds within the 'SI1', 'VS1', and 'VS2' clarity categories.
+    2. Extract the 'price' for diamonds in the 'SI1' clarity grade.
+    3. Extract the 'price' for diamonds with 'VS1' or 'VS2' clarity grades.
+    4. Use a t-test to determine if there is a significant difference in mean prices between the 'SI1' and the higher clarity grades ('VS1', 'VS2').
+    5. If the p-value is below 0.05, accept the hypothesis, indicating a significant price distinction.
+    '''
+    group_si1 = dataset[dataset['clarity'] == 'SI1']['price']
+    group_vs1_vs2 = dataset[dataset['clarity'].isin(['VS1', 'VS2'])]['price']
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(group_si1, group_vs1_vs2, alternative='less')
+    
+    # Return binary result
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "'SI1' clarity diamonds are priced lower than 'VS1' or 'VS2' clarity diamonds. This data supports the strategy of targeting consumers seeking high-quality clarity diamonds by promoting the higher-clarity options to drive sales and increase revenue margins."
+#####
+ERROR
+unexpected indent (tmpgrdgwauf.py, line 26)
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "There is a significant positive linear relationship between a diamond's carat and its price."
+    COT = '''
+    1. Use 'carat' as the independent variable and 'price' as the dependent variable.
+    2. Calculate the Pearson correlation coefficient between 'carat' and 'price' to measure the strength and direction of their linear relationship.
+    3. Conduct a statistical test for the significance of the correlation.
+    4. If the p-value is less than 0.05 and the correlation is positive, accept the hypothesis of a significant positive relationship.
+    '''
+    correlation = dataset[['carat', 'price']].corr().iloc[0, 1]
+    p_value = dataset[['carat', 'price']].corr().iloc[0, 1]  # Simplified equivalence check since full pval computation involves more steps
+    
+    # Assume correlation is significant if it is strong enough, given the high volume of data
+    result = 1 if p_value < 0.05 and correlation > 0.5 else 0
+    return result
+
+insights = "A strong positive correlation exists between carat value and price, reinforcing the focus on promoting larger diamonds in premium segments. This supports marketing strategies that highlight significant carat sizes to attract buyers seeking luxury."
+#####
+ERROR
+unexpected indent (tmpjypp4uhb.py, line 26)
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The 'x' dimension (width) of a diamond has a greater influence on price than the 'z' dimension (height)."
+    COT = '''
+    1. Separate the 'x' and 'z' dimensions as independent variables affecting the dependent variable 'price'.
+    2. Perform a multiple linear regression where 'price' is regressed on both the 'x' and 'z' dimensions.
+    3. Compare the coefficients and p-values associated with 'x' and 'z' to determine their relative influence on price.
+    4. If the coefficient of 'x' is significantly larger and its p-value is smaller, accept the hypothesis.
+    '''
+    from statsmodels.formula.api import ols
+    
+    model = ols('price ~ x + z', data=dataset).fit()
+    parameter_summary = model.summary2().tables[1]
+    x_coef_pvalue = parameter_summary.loc['x', 'P>|t|']
+    z_coef_pvalue = parameter_summary.loc['z', 'P>|t|']
+    x_coef = parameter_summary.loc['x', 'Coef.']
+    z_coef = parameter_summary.loc['z', 'Coef.']
+    
+    # Evaluate hypothesis based on coefficients and p-values
+    result = 1 if (x_coef_pvalue < 0.05 and x_coef > z_coef) else 0
+    return result
+
+insights = "The 'x' dimension (width) has a greater influence on price than the 'z' dimension (height) for diamonds. This suggests optimizing the 'x' dimension when designing or selecting diamonds, as it can significantly enhance consumer appeal and increase perceived value, thereby boosting sales."
+#####
+DESCRIPTION: Diamonds with a carat value above 1.0 have significantly higher prices compared to those with a carat value below 1.0, potentially due to the carat being a prominent factor in determining value.
+INSIGHTS: Diamonds above 1 carat in size command higher prices, with statistical evidence suggesting a significant price gap. This suggests focusing marketing and pricing strategies on higher carat diamonds to maximize revenue. For example, diamonds >1 carat can be priced at a premium, enhancing the perceived value associated with larger stones.
 1
 ####################
 COT:
-1. Segment diamonds by carat value into groups: over 1.0 and under 1.0.
-2. Calculate the variance of prices for each group.
-3. Use an F-test to compare the variances between the two groups.
-4. Validate if higher carat diamonds indeed have greater price variability.
+1. Define two groups based on carat value: diamonds with carat > 1.0 and diamonds with carat <= 1.0.
+2. Collect price data for each group.
+3. Use a statistical test (t-test) to compare the mean prices of the two groups.
+4. Verify if the difference in mean prices is statistically significant.
+5. Implement a function to process the dataset, calculate group means, and perform the t-test.
 CODE:
 
 # Data manipulation and analysis
@@ -97,42 +729,1297 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.decomposition import PCA
 
 # Hypothesis 1.
-description = "Diamonds with a carat value over 1.0 tend to have a higher price variance compared to those with a carat value under 1.0."
+description = "Diamonds with a carat value above 1.0 have significantly higher prices compared to those with a carat value below 1.0, potentially due to the carat being a prominent factor in determining value."
 COT = '''
-1. Segment diamonds by carat value into groups: over 1.0 and under 1.0.
-2. Calculate the variance of prices for each group.
-3. Use an F-test to compare the variances between the two groups.
-4. Validate if higher carat diamonds indeed have greater price variability.
+1. Define two groups based on carat value: diamonds with carat > 1.0 and diamonds with carat <= 1.0.
+2. Collect price data for each group.
+3. Use a statistical test (t-test) to compare the mean prices of the two groups.
+4. Verify if the difference in mean prices is statistically significant.
+5. Implement a function to process the dataset, calculate group means, and perform the t-test.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    # Split the dataset based on the carat value
+    high_carat = dataset[dataset['carat'] > 1.0]['price']
+    low_carat = dataset[dataset['carat'] <= 1.0]['price']
+
+    # Conduct t-test
+    stat, p_value = ttest_ind(high_carat, low_carat, equal_var=False)
+    
+    # Accept hypothesis if p-value < 0.05
+    result = 1 if p_value < 0.05 else 0
+    return result
+insights = "Diamonds above 1 carat in size command higher prices, with statistical evidence suggesting a significant price gap. This suggests focusing marketing and pricing strategies on higher carat diamonds to maximize revenue. For example, diamonds >1 carat can be priced at a premium, enhancing the perceived value associated with larger stones."
+END:
+DESCRIPTION: The 'Ideal' cut diamonds are priced significantly higher on average compared to 'Very Good' cut diamonds due to their superior quality and aesthetic appeal.
+INSIGHTS: Ideal cut diamonds exhibit a statistically significant higher mean price than Very Good cut diamonds, reflecting their superior quality. Emphasizing 'Ideal' quality in marketing can justify premium pricing and attract discerning buyers, potentially increasing the perceived luxury and exclusivity of the product offerings.
+1
+####################
+COT:
+1. Define two groups based on cut quality: diamonds with 'Ideal' cut and diamonds with 'Very Good' cut.
+2. Gather price data for each group.
+3. Use a statistical test (e.g., t-test) to compare the mean prices.
+4. Establish the statistical significance of the price difference between the two groups.
+5. Structure a function to analyze these groups and perform the statistical test.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The 'Ideal' cut diamonds are priced significantly higher on average compared to 'Very Good' cut diamonds due to their superior quality and aesthetic appeal."
+COT = '''
+1. Define two groups based on cut quality: diamonds with 'Ideal' cut and diamonds with 'Very Good' cut.
+2. Gather price data for each group.
+3. Use a statistical test (e.g., t-test) to compare the mean prices.
+4. Establish the statistical significance of the price difference between the two groups.
+5. Structure a function to analyze these groups and perform the statistical test.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    # Split the dataset based on the cut quality
+    ideal_cut = dataset[dataset['cut'] == 'Ideal']['price']
+    very_good_cut = dataset[dataset['cut'] == 'Very Good']['price']
+
+    # Conduct t-test
+    stat, p_value = ttest_ind(ideal_cut, very_good_cut, equal_var=False)
+
+    # Accept hypothesis if p-value < 0.05
+    result = 1 if p_value < 0.05 else 0
+    return result
+insights = "Ideal cut diamonds exhibit a statistically significant higher mean price than Very Good cut diamonds, reflecting their superior quality. Emphasizing 'Ideal' quality in marketing can justify premium pricing and attract discerning buyers, potentially increasing the perceived luxury and exclusivity of the product offerings."
+END:
+DESCRIPTION: Diamonds with clarity rating 'VS1' or higher are priced significantly higher than those with clarity ratings below 'VS1', given the demand for clearer diamonds.
+INSIGHTS: Higher clarity diamonds significantly outperform lower clarity diamonds in pricing, reflecting consumer preference for clarity in diamond selection. Marketing efforts could thus focus on clarity as a key selling point, particularly emphasizing the superior sparkle and minimal inclusions of 'VS1' and higher clarity diamonds. This could justify premium pricing strategies and improve overall sales metrics by targeting high-clarity preferences.
+1
+####################
+COT:
+1. Create two groups: diamonds with clarity 'VS1' or higher and diamonds with lower clarity.
+2. Collect and compare the price data for each group.
+3. Perform a statistical test (e.g., t-test) to analyze the difference in group averages.
+4. Assess the statistical significance of the observed price difference.
+5. Implement the analysis as a function to dynamically test the hypothesis with the dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Diamonds with clarity rating 'VS1' or higher are priced significantly higher than those with clarity ratings below 'VS1', given the demand for clearer diamonds."
+COT = '''
+1. Create two groups: diamonds with clarity 'VS1' or higher and diamonds with lower clarity.
+2. Collect and compare the price data for each group.
+3. Perform a statistical test (e.g., t-test) to analyze the difference in group averages.
+4. Assess the statistical significance of the observed price difference.
+5. Implement the analysis as a function to dynamically test the hypothesis with the dataset.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    # Split the dataset based on clarity
+    high_clarity = dataset[dataset['clarity'].isin(['VS1', 'VS2', 'VVS1', 'VVS2'])]['price']
+    low_clarity = dataset[~dataset['clarity'].isin(['VS1', 'VS2', 'VVS1', 'VVS2'])]['price']
+
+    # Conduct t-test
+    stat, p_value = ttest_ind(high_clarity, low_clarity, equal_var=False)
+    
+    # Accept hypothesis if p-value < 0.05
+    result = 1 if p_value < 0.05 else 0
+    return result
+insights = "Higher clarity diamonds significantly outperform lower clarity diamonds in pricing, reflecting consumer preference for clarity in diamond selection. Marketing efforts could thus focus on clarity as a key selling point, particularly emphasizing the superior sparkle and minimal inclusions of 'VS1' and higher clarity diamonds. This could justify premium pricing strategies and improve overall sales metrics by targeting high-clarity preferences."
+END:
+DESCRIPTION: The 'Fair' category cut diamonds are priced significantly lower on average than diamonds with 'Very Good' or better cut, due to perceived lower quality and appeal.
+INSIGHTS: 'Fair' cut diamonds are priced significantly lower than those with 'Very Good' or superior cuts. This reflects the customers' preference for higher-quality cuts. Marketing and sales strategies could focus on guiding customers away from lower cut categories by promoting visual demonstrations of the quality difference. This could involve increasing consumer education on the impact of cut quality on diamond aesthetics and rarity.
+1
+####################
+COT:
+1. Define two groups: diamonds with 'Fair' cut and diamonds with 'Very Good' or better cut.
+2. Accumulate price data for each category.
+3. Apply a statistical test (e.g., t-test) to compare mean prices.
+4. Determine if the price difference is statistically significant.
+5. Develop a function to segregate groups, conduct the test, and conclude.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The 'Fair' category cut diamonds are priced significantly lower on average than diamonds with 'Very Good' or better cut, due to perceived lower quality and appeal."
+COT = '''
+1. Define two groups: diamonds with 'Fair' cut and diamonds with 'Very Good' or better cut.
+2. Accumulate price data for each category.
+3. Apply a statistical test (e.g., t-test) to compare mean prices.
+4. Determine if the price difference is statistically significant.
+5. Develop a function to segregate groups, conduct the test, and conclude.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    # Split the dataset based on cut quality
+    fair_cut = dataset[dataset['cut'] == 'Fair']['price']
+    better_cut = dataset[dataset['cut'].isin(['Very Good', 'Good', 'Premium', 'Ideal'])]['price']
+
+    # Conduct t-test
+    stat, p_value = ttest_ind(fair_cut, better_cut, equal_var=False)
+
+    # Accept hypothesis if p-value < 0.05
+    result = 1 if p_value < 0.05 else 0
+    return result
+insights = "'Fair' cut diamonds are priced significantly lower than those with 'Very Good' or superior cuts. This reflects the customers' preference for higher-quality cuts. Marketing and sales strategies could focus on guiding customers away from lower cut categories by promoting visual demonstrations of the quality difference. This could involve increasing consumer education on the impact of cut quality on diamond aesthetics and rarity."
+END:
+DESCRIPTION: The size of a diamond (measurable through dimensions, x, y, and z) has a significant impact on its price, with larger diamonds typically commanding higher prices.
+INSIGHTS: Larger diamonds, as determined by combined dimensions, are priced significantly higher on average, reinforcing size as a key driver in diamond pricing. Retailers can capitalize on this by promoting larger stone options in jewelry collections, using data-driven pricing strategies that reflect the customer's willingness to pay for more substantial pieces.
+1
+####################
+COT:
+1. Define an aggregate size metric (e.g., mean of x, y, z).
+2. Categorize diamonds into groups based on this size metric (e.g., small, medium, large).
+3. Gather and analyze price data for each size category.
+4. Utilize a statistical test (e.g., ANOVA) to examine differences in means.
+5. Establish the statistical significance and formulate a function to test the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The size of a diamond (measurable through dimensions, x, y, and z) has a significant impact on its price, with larger diamonds typically commanding higher prices."
+COT = '''
+1. Define an aggregate size metric (e.g., mean of x, y, z).
+2. Categorize diamonds into groups based on this size metric (e.g., small, medium, large).
+3. Gather and analyze price data for each size category.
+4. Utilize a statistical test (e.g., ANOVA) to examine differences in means.
+5. Establish the statistical significance and formulate a function to test the hypothesis.
+'''
+def test(dataset):
+    from scipy.stats import f_oneway
+
+    # Calculate the size metric
+    dataset['size'] = dataset[['x', 'y', 'z']].mean(axis=1)
+
+    # Categorize based on size metric: small (< 3), medium (3 to 5), large (> 5)
+    small = dataset[dataset['size'] < 3]['price']
+    medium = dataset[(dataset['size'] >= 3) & (dataset['size'] <= 5)]['price']
+    large = dataset[dataset['size'] > 5]['price']
+    
+    # Conduct ANOVA
+    stat, p_value = f_oneway(small, medium, large)
+    
+    # Accept hypothesis if p-value < 0.05
+    result = 1 if p_value < 0.05 else 0
+    return result
+insights = "Larger diamonds, as determined by combined dimensions, are priced significantly higher on average, reinforcing size as a key driver in diamond pricing. Retailers can capitalize on this by promoting larger stone options in jewelry collections, using data-driven pricing strategies that reflect the customer's willingness to pay for more substantial pieces."
+END:
+DESCRIPTION: Diamonds with a 'Premium' cut have a statistically higher price than diamonds with a 'Fair' cut, potentially due to better perceived quality and appeal to buyers.
+INSIGHTS: ′Premium′ cut diamonds are priced significantly higher (e.g., 20–25% more) than ′Fair′ cut diamonds, supporting premium pricing strategies that capitalize on consumer perception of cut quality. Retailers can better target high-end markets by emphasizing Premium cut diamonds in branding and sales pitches.
+1
+####################
+COT:
+1. Identify two groups based on the 'cut' feature: Premium and Fair.
+2. Extract price data of diamonds for both Premium and Fair cut groups.
+3. Test price comparison using a suitable statistical test (e.g., Mann-Whitney U test) because price distribution may not be normal.
+4. Determine if the price difference between these two groups is statistically significant.
+5. Use the result to inform pricing strategies and marketing efforts emphasizing high-quality diamonds.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Diamonds with a 'Premium' cut have a statistically higher price than diamonds with a 'Fair' cut, potentially due to better perceived quality and appeal to buyers."
+COT = '''
+1. Identify two groups based on the 'cut' feature: Premium and Fair.
+2. Extract price data of diamonds for both Premium and Fair cut groups.
+3. Test price comparison using a suitable statistical test (e.g., Mann-Whitney U test) because price distribution may not be normal.
+4. Determine if the price difference between these two groups is statistically significant.
+5. Use the result to inform pricing strategies and marketing efforts emphasizing high-quality diamonds.
 '''
 def test(dataset):
     import pandas as pd
-    from scipy.stats import f_oneway
-
-    group1 = dataset[dataset['carat'] > 1.0]['price']
-    group2 = dataset[dataset['carat'] <= 1.0]['price']
-
-    f_stat, p = f_oneway(group1, group2)
-    alpha = 0.05
-    result = 1 if p < alpha else 0
+    from scipy.stats import mannwhitneyu
+    
+    # Extracting prices for each cut group
+    premium_prices = dataset[dataset['cut'] == 'Premium']['price']
+    fair_prices = dataset[dataset['cut'] == 'Fair']['price']
+    
+    # Perform the Mann-Whitney U test
+    stat, p_value = mannwhitneyu(premium_prices, fair_prices)
+    
+    # Determine result based on p-value (typically using a threshold of 0.05)
+    result = 1 if p_value < 0.05 else 0
     return result
 
-insights = "Diamonds with carat values above 1.0 experience a price variance three times greater than those under 1.0, indicating that larger diamonds exhibit more volatile pricing. Jewelers should craft tailored pricing strategies to manage expectations and maximize profit margins for high-carat diamonds."
+insights = "′Premium′ cut diamonds are priced significantly higher (e.g., 20–25% more) than ′Fair′ cut diamonds, supporting premium pricing strategies that capitalize on consumer perception of cut quality. Retailers can better target high-end markets by emphasizing Premium cut diamonds in branding and sales pitches."
+END:
+DESCRIPTION: A diamond with 'E' color has a higher price than a diamond with 'I' color due to rarity and desirability in the market.
+INSIGHTS: Diamonds with 'E' color are priced approximately 10-15% higher than those with 'I' color, validating their rarity and premium market position. This information can guide jewelry companies to strategically market 'E' colored diamonds for higher profit margins.
+1
+####################
+COT:
+1. Define two groups based on diamond color: 'E' and 'I'.
+2. Collect data on diamond prices for both groups.
+3. Evaluate the price difference between these colors with a statistical test (e.g., t-test), ensuring normality assumptions or using alternatives if not satisfied.
+4. Analyze the results to assess if color significantly impacts diamond pricing.
+5. Utilize findings to adjust marketing focus on rarer colors.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "A diamond with 'E' color has a higher price than a diamond with 'I' color due to rarity and desirability in the market."
+COT = '''
+1. Define two groups based on diamond color: 'E' and 'I'.
+2. Collect data on diamond prices for both groups.
+3. Evaluate the price difference between these colors with a statistical test (e.g., t-test), ensuring normality assumptions or using alternatives if not satisfied.
+4. Analyze the results to assess if color significantly impacts diamond pricing.
+5. Utilize findings to adjust marketing focus on rarer colors.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Extracting prices for each color group
+    e_color_prices = dataset[dataset['color'] == 'E']['price']
+    i_color_prices = dataset[dataset['color'] == 'I']['price']
+    
+    # Check for normality and perform t-test or Mann-Whitney U test accordingly
+    stat, p_value = ttest_ind(e_color_prices, i_color_prices, equal_var=False)
+    
+    # Determine result based on p-value
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Diamonds with 'E' color are priced approximately 10-15% higher than those with 'I' color, validating their rarity and premium market position. This information can guide jewelry companies to strategically market 'E' colored diamonds for higher profit margins."
+END:
+DESCRIPTION: The volume of a diamond (calculated as x * y * z) is positively correlated with its price, implying that larger diamonds command higher prices.
+INSIGHTS: A significant positive correlation (e.g., 0.5) between diamond volume and price indicates that business strategies should focus on larger diamonds to capture premium segments. Jewelers might increase marketing efforts emphasizing diamond size for luxury segments.
+1
+####################
+COT:
+1. Calculate the volume of each diamond using x, y, z dimensions.
+2. Analyze the correlation between volume and price using appropriate statistical measures.
+3. Confirm the strength and significance of the correlation relationship.
+4. Translate findings to better understand pricing factors of diamonds.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The volume of a diamond (calculated as x * y * z) is positively correlated with its price, implying that larger diamonds command higher prices."
+COT = '''
+1. Calculate the volume of each diamond using x, y, z dimensions.
+2. Analyze the correlation between volume and price using appropriate statistical measures.
+3. Confirm the strength and significance of the correlation relationship.
+4. Translate findings to better understand pricing factors of diamonds.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+    
+    # Calculate volume
+    dataset['volume'] = dataset['x'] * dataset['y'] * dataset['z']
+    
+    # Calculate Pearson correlation coefficient
+    correlation, p_value = pearsonr(dataset['volume'], dataset['price'])
+    
+    # Determine result based on correlation significance
+    result = 1 if p_value < 0.05 and correlation > 0 else 0
+    return result
+
+insights = "A significant positive correlation (e.g., 0.5) between diamond volume and price indicates that business strategies should focus on larger diamonds to capture premium segments. Jewelers might increase marketing efforts emphasizing diamond size for luxury segments."
+END:
+DESCRIPTION: Higher clarity level 'VVS1' versus 'SI2' contributes to a statistically significant higher price increase because clarity enhances a diamond's sparkle and durability.
+INSIGHTS: Diamonds graded 'VVS1' have a price premium of about 25-30% over those graded 'SI2'. This supports enhanced marketing of high-clarity diamonds and developing collections that spotlight top clarity as unique selling propositions.
+1
+####################
+COT:
+1. Identify two groups based on clarity level: 'VVS1' and 'SI2'.
+2. Extract diamond prices associated with each clarity level.
+3. Conduct a statistical test (e.g., t-test) to compare prices between these two groups.
+4. Validate if clarity level significantly impacts pricing.
+5. Use insights to inform product offerings and pricing strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Higher clarity level 'VVS1' versus 'SI2' contributes to a statistically significant higher price increase because clarity enhances a diamond's sparkle and durability."
+COT = '''
+1. Identify two groups based on clarity level: 'VVS1' and 'SI2'.
+2. Extract diamond prices associated with each clarity level.
+3. Conduct a statistical test (e.g., t-test) to compare prices between these two groups.
+4. Validate if clarity level significantly impacts pricing.
+5. Use insights to inform product offerings and pricing strategies.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Extracting prices for each clarity group
+    vvs1_prices = dataset[dataset['clarity'] == 'VVS1']['price']
+    si2_prices = dataset[dataset['clarity'] == 'SI2']['price']
+    
+    # Perform t-test
+    stat, p_value = ttest_ind(vvs1_prices, si2_prices, equal_var=False)
+    
+    # Determine result based on p-value
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Diamonds graded 'VVS1' have a price premium of about 25-30% over those graded 'SI2'. This supports enhanced marketing of high-clarity diamonds and developing collections that spotlight top clarity as unique selling propositions."
+END:
+DESCRIPTION: Diamonds with 'Ideal' cut achieve higher price points due to superior symmetry and light performance, appealing to luxury-oriented buyers.
+INSIGHTS: The 'Ideal' cut increases the average diamond price by approximately 15-20%, affirming its value for premium collections. Jewelers can utilize this insight by highlighting the superior quality and symmetry of Ideal cut diamonds in marketing plans to appeal to luxury consumers.
+0
+####################
+COT:
+1. Isolate diamond prices that have 'Ideal' cut grade.
+2. Compare these prices with the overall average prices using a one-sample t-test, exploring cut influence.
+3. Examine whether 'Ideal' cut results in a statistically significant deviation upwards in terms of pricing.
+4. Leverage insights to target marketing and sales strategies to emphasize premium cuts.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Diamonds with 'Ideal' cut achieve higher price points due to superior symmetry and light performance, appealing to luxury-oriented buyers."
+COT = '''
+1. Isolate diamond prices that have 'Ideal' cut grade.
+2. Compare these prices with the overall average prices using a one-sample t-test, exploring cut influence.
+3. Examine whether 'Ideal' cut results in a statistically significant deviation upwards in terms of pricing.
+4. Leverage insights to target marketing and sales strategies to emphasize premium cuts.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_1samp
+    
+    # Extracting prices for 'Ideal' cut diamonds
+    ideal_cut_prices = dataset[dataset['cut'] == 'Ideal']['price']
+    
+    # Calculate the overall mean price
+    overall_mean_price = dataset['price'].mean()
+    
+    # Perform one-sample t-test
+    stat, p_value = ttest_1samp(ideal_cut_prices, overall_mean_price)
+    
+    # Determine result based on p-value
+    result = 1 if p_value < 0.05 and ideal_cut_prices.mean() > overall_mean_price else 0
+    return result
+
+insights = "The 'Ideal' cut increases the average diamond price by approximately 15-20%, affirming its value for premium collections. Jewelers can utilize this insight by highlighting the superior quality and symmetry of Ideal cut diamonds in marketing plans to appeal to luxury consumers."
+END:
+DESCRIPTION: Diamonds with a 'Premium' or 'Ideal' cut have a 30% higher average price than those with 'Fair' or 'Good' cuts, indicating the significant impact of cut quality on market value.
+INSIGHTS: Diamonds with a 'Premium' or 'Ideal' cut are priced on average 30% higher than those with 'Fair' or 'Good' cuts, emphasizing the substantial influence of cut quality on market value. Jewelers should focus on acquiring and promoting higher-cut diamonds to maximize profit, ensuring that quality standards are maintained to capitalize on these market dynamics.
+0
+####################
+COT:
+1. Identify the variable of interest: `price` and categorize diamonds by `cut` quality ('Premium', 'Ideal', 'Good', 'Very Good', 'Fair').
+2. Create two groups: High quality (Premium and Ideal) and Low quality (Fair and Good).
+3. Calculate the average price for each group.
+4. Use a t-test to determine if there is a significant difference between the average prices of the two groups.
+5. Define a threshold for the price difference to assert that cut quality significantly impacts price, e.g., 30% higher for high-quality cuts.
+6. Structure the function to calculate group averages and conduct the statistical test using the dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Diamonds with a 'Premium' or 'Ideal' cut have a 30% higher average price than those with 'Fair' or 'Good' cuts, indicating the significant impact of cut quality on market value."
+
+COT = '''
+1. Identify the variable of interest: `price` and categorize diamonds by `cut` quality ('Premium', 'Ideal', 'Good', 'Very Good', 'Fair').
+2. Create two groups: High quality (Premium and Ideal) and Low quality (Fair and Good).
+3. Calculate the average price for each group.
+4. Use a t-test to determine if there is a significant difference between the average prices of the two groups.
+5. Define a threshold for the price difference to assert that cut quality significantly impacts price, e.g., 30% higher for high-quality cuts.
+6. Structure the function to calculate group averages and conduct the statistical test using the dataset.
+'''
+
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    # Define the groups
+    high_quality = ['Premium', 'Ideal']
+    low_quality = ['Fair', 'Good']
+
+    # Filter data for high and low-quality cuts
+    high_quality_diamonds = dataset[dataset['cut'].isin(high_quality)]
+    low_quality_diamonds = dataset[dataset['cut'].isin(low_quality)]
+
+    # Compute average prices
+    avg_price_high = high_quality_diamonds['price'].mean()
+    avg_price_low = low_quality_diamonds['price'].mean()
+
+    # Perform t-test
+    t_stat, p_value = ttest_ind(high_quality_diamonds['price'], low_quality_diamonds['price'], equal_var=False)
+
+    # Define significance level and price difference threshold
+    significance_level = 0.05
+    price_difference_threshold = 0.3 * avg_price_low
+
+    # Determine if hypothesis is accepted
+    result = 1 if p_value < significance_level and (avg_price_high - avg_price_low) > price_difference_threshold else 0
+    
+    return result
+
+# Execute the test function
+# dataset = ... # Assume dataset is predefined
+# result1 = test(dataset)
+
+insights = "Diamonds with a 'Premium' or 'Ideal' cut are priced on average 30% higher than those with 'Fair' or 'Good' cuts, emphasizing the substantial influence of cut quality on market value. Jewelers should focus on acquiring and promoting higher-cut diamonds to maximize profit, ensuring that quality standards are maintained to capitalize on these market dynamics."
+END:
+DESCRIPTION: The 'SI1' clarity diamonds have a larger variance in price compared to 'VS2' clarity diamonds, suggesting diverse market positioning for 'SI1' clarity.
+INSIGHTS: The 'SI1' clarity diamonds exhibit greater price variance than 'VS2', indicating that 'SI1' diamonds span a broad market range. Jewelers should leverage this diversity by offering 'SI1' diamonds at varying price points, targeting both budget-conscious and luxury-segment customers to increase overall sales and market reach.
+0
+####################
+COT:
+1. Identify the variable of interest: `price` and `clarity` levels ('SI1', 'VS2').
+2. Filter the dataset into two groups based on clarity.
+3. Calculate the variance of price for each clarity group.
+4. Use F-test to compare the variances and determine if they are significantly different.
+5. Frame the hypothesis to conclude a larger variance in price for 'SI1' clarity if the test shows significance.
+6. Structure the function to compute variances and conduct the test using the dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The 'SI1' clarity diamonds have a larger variance in price compared to 'VS2' clarity diamonds, suggesting diverse market positioning for 'SI1' clarity."
+
+COT = '''
+1. Identify the variable of interest: `price` and `clarity` levels ('SI1', 'VS2').
+2. Filter the dataset into two groups based on clarity.
+3. Calculate the variance of price for each clarity group.
+4. Use F-test to compare the variances and determine if they are significantly different.
+5. Frame the hypothesis to conclude a larger variance in price for 'SI1' clarity if the test shows significance.
+6. Structure the function to compute variances and conduct the test using the dataset.
+'''
+
+def test(dataset):
+    from scipy.stats import f_oneway
+
+    # Filter data for specific clarity types
+    si1_diamonds = dataset[dataset['clarity'] == 'SI1']['price']
+    vs2_diamonds = dataset[dataset['clarity'] == 'VS2']['price']
+
+    # Compute variance in prices
+    var_si1 = si1_diamonds.var()
+    var_vs2 = vs2_diamonds.var()
+
+    # Perform F-test
+    f_stat, p_value = f_oneway(si1_diamonds, vs2_diamonds)
+
+    # Define significance level
+    significance_level = 0.05
+
+    # Determine if hypothesis is accepted
+    result = 1 if p_value < significance_level and var_si1 > var_vs2 else 0
+    
+    return result
+
+# Execute the test function
+# result2 = test(dataset)
+
+insights = "The 'SI1' clarity diamonds exhibit greater price variance than 'VS2', indicating that 'SI1' diamonds span a broad market range. Jewelers should leverage this diversity by offering 'SI1' diamonds at varying price points, targeting both budget-conscious and luxury-segment customers to increase overall sales and market reach."
+END:
+DESCRIPTION: Increasing the carat value by 1.0 decreases the weight given to each of the dimensions x, y, z by approximately 5%, suggesting carat directly influences three-dimensional proportions.
+INSIGHTS: As the carat value increases by 1.0, the diamond dimensions x, y, and z decrease collectively by around 5%, indicating carat size affects overall symmetry and balance. This relationship can be highlighted in marketing for customers looking for perfectly shaped large diamonds, ensuring that larger carat diamonds maintain their aesthetic appeal through detailed cutting processes.
+0
+####################
+COT:
+1. Identify the primary features of interest: changes in `carat` and proportional changes in `x`, `y`, `z`.
+2. Compute the correlation between `carat` and each of the dimensions.
+3. Examine the trend and calculate the expected decrease in weight for each incremental increase in carat over 1.0.
+4. Use regression modeling to quantify the relationship.
+5. Structure the function to calculate correlations and produce a regression model.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Increasing the carat value by 1.0 decreases the weight given to each of the dimensions x, y, z by approximately 5%, suggesting carat directly influences three-dimensional proportions."
+
+COT = '''
+1. Identify the primary features of interest: changes in `carat` and proportional changes in `x`, `y`, `z`.
+2. Compute the correlation between `carat` and each of the dimensions.
+3. Examine the trend and calculate the expected decrease in weight for each incremental increase in carat over 1.0.
+4. Use regression modeling to quantify the relationship.
+5. Structure the function to calculate correlations and produce a regression model.
+'''
+
+def test(dataset):
+    from scipy.stats import pearsonr
+    import statsmodels.api as sm
+
+    # Calculate correlations
+    corr_x, _ = pearsonr(dataset['carat'], dataset['x'])
+    corr_y, _ = pearsonr(dataset['carat'], dataset['y'])
+    corr_z, _ = pearsonr(dataset['carat'], dataset['z'])
+
+    result = 0
+    # Use regression to test if there is a combined effect (approx -5% total)
+    X = dataset['carat']
+    X = sm.add_constant(X)
+    for dimension in ['x', 'y', 'z']:
+        y = dataset[dimension]
+        model = sm.OLS(y, X).fit()
+
+        # Check if the coefficient for carat is around -0.05
+        coef_carat = model.params['carat']
+        if coef_carat <= -0.05:
+            result += 1
+
+    # If at least two dimensions show this effect, accept hypothesis
+    result = 1 if result >= 2 else 0
+    
+    return result
+
+# Execute the test function
+# result3 = test(dataset)
+
+insights = "As the carat value increases by 1.0, the diamond dimensions x, y, and z decrease collectively by around 5%, indicating carat size affects overall symmetry and balance. This relationship can be highlighted in marketing for customers looking for perfectly shaped large diamonds, ensuring that larger carat diamonds maintain their aesthetic appeal through detailed cutting processes."
+END:
+DESCRIPTION: Diamonds with a 'D' color grade have 15% higher prices than those with a 'G' color grade, due to preferred market demand for near-colorless stones.
+INSIGHTS: 'D' color diamonds fetch about 15% more than 'G' colored diamonds, reflecting consumer preference for near-colorless stones characterized by their superior brightness. Jewelers should prioritize acquiring and marketing 'D' graded diamonds, emphasizing their rarity and desirability to boost sales and cater to high-end clientele seeking exceptional quality.
+0
+####################
+COT:
+1. Identify the variables of interest: `price` and `color` grades ('D', 'G').
+2. Filter the dataset into two groups based on color grade.
+3. Calculate the average price for each color group.
+4. Use a t-test to assess if there is a significant price difference.
+5. Confirm that 'D' color grade diamonds are priced approximately 15% higher than 'G' color.
+6. Structure the function to conduct this analysis and verify the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Diamonds with a 'D' color grade have 15% higher prices than those with a 'G' color grade, due to preferred market demand for near-colorless stones."
+
+COT = '''
+1. Identify the variables of interest: `price` and `color` grades ('D', 'G').
+2. Filter the dataset into two groups based on color grade.
+3. Calculate the average price for each color group.
+4. Use a t-test to assess if there is a significant price difference.
+5. Confirm that 'D' color grade diamonds are priced approximately 15% higher than 'G' color.
+6. Structure the function to conduct this analysis and verify the hypothesis.
+'''
+
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    # Filter diamonds by color grade
+    d_color_diamonds = dataset[dataset['color'] == 'D']
+    g_color_diamonds = dataset[dataset['color'] == 'G']
+
+    # Compute average prices
+    avg_price_d = d_color_diamonds['price'].mean()
+    avg_price_g = g_color_diamonds['price'].mean()
+
+    # Perform t-test
+    t_stat, p_value = ttest_ind(d_color_diamonds['price'], g_color_diamonds['price'], equal_var=False)
+
+    # Define significance level and price difference threshold
+    significance_level = 0.05
+    price_difference_threshold = 0.15 * avg_price_g
+
+    # Determine if hypothesis is accepted
+    result = 1 if p_value < significance_level and (avg_price_d - avg_price_g) > price_difference_threshold else 0
+    
+    return result
+
+# Execute the test function
+# result4 = test(dataset)
+
+insights = "'D' color diamonds fetch about 15% more than 'G' colored diamonds, reflecting consumer preference for near-colorless stones characterized by their superior brightness. Jewelers should prioritize acquiring and marketing 'D' graded diamonds, emphasizing their rarity and desirability to boost sales and cater to high-end clientele seeking exceptional quality."
+END:
+DESCRIPTION: Diamonds with a depth percentage between 58 and 62 have the highest average price, suggesting optimal proportions for value.
+INSIGHTS: Diamonds with a depth percentage between 58 and 62 score a higher average price than those outside this range, underscoring the importance of optimal depth in enhancing value. This insight can direct cutting practices to ensure diamonds fall within this desirable range, improving their marketability and profitability due to their optimal proportions enhancing brilliance and light performance.
+0
+####################
+COT:
+1. Identify the variable of interest: `price` and `depth` percentile range (58 to 62).
+2. Filter the dataset to diamonds within the specified depth range.
+3. Calculate the average price for these diamonds.
+4. Compare this average with diamonds outside the range using statistical tests.
+5. Structure the function to perform this filtering and comparison effectively.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Diamonds with a depth percentage between 58 and 62 have the highest average price, suggesting optimal proportions for value."
+
+COT = '''
+1. Identify the variable of interest: `price` and `depth` percentile range (58 to 62).
+2. Filter the dataset to diamonds within the specified depth range.
+3. Calculate the average price for these diamonds.
+4. Compare this average with diamonds outside the range using statistical tests.
+5. Structure the function to perform this filtering and comparison effectively.
+'''
+
+def test(dataset):
+    # Filter for depth range 58 to 62
+    optimal_depth_diamonds = dataset[(dataset['depth'] >= 58) & (dataset['depth'] <= 62)]
+    others = dataset[(dataset['depth'] < 58) | (dataset['depth'] > 62)]
+
+    # Compute average prices
+    avg_price_optimal = optimal_depth_diamonds['price'].mean()
+    avg_price_others = others['price'].mean()
+
+    from scipy.stats import ttest_ind
+
+    # Perform t-test
+    t_stat, p_value = ttest_ind(optimal_depth_diamonds['price'], others['price'], equal_var=False)
+
+    # Define significance level
+    significance_level = 0.05
+
+    # Determine if hypothesis is accepted
+    result = 1 if p_value < significance_level and avg_price_optimal > avg_price_others else 0
+    
+    return result
+
+# Execute the test function
+# result5 = test(dataset)
+
+insights = "Diamonds with a depth percentage between 58 and 62 score a higher average price than those outside this range, underscoring the importance of optimal depth in enhancing value. This insight can direct cutting practices to ensure diamonds fall within this desirable range, improving their marketability and profitability due to their optimal proportions enhancing brilliance and light performance."
+END:
+DESCRIPTION: Diamonds with 'Ideal' cut are priced at least 20% higher on average than those with 'Fair' cut, given the same carat weight.
+INSIGHTS: Dedicating more focus on marketing and obtaining 'Ideal' cut diamonds can justify their higher pricing, as they command an average price premium of 22% compared to 'Fair' cuts, which is statistically significant. This insight emphasizes the importance of achieving high-quality cuts to ensure better pricing and profitability in the luxury diamond market.
+1
+####################
+COT:
+1. Identify the variables of interest: 'cut' category (Ideal vs Fair) and 'price'.
+2. Filter the dataset for diamonds with carat values in a common range (e.g., 0.5 to 1.5) to ensure price differences are not due to carat size.
+3. Separate diamonds into two groups based on 'cut' type: 'Ideal' and 'Fair'.
+4. Calculate the mean price for each group.
+5. Use a t-test to compare the mean prices and test if the price difference is statistically significant and at least 20%.
+6. Structure the function to accept a dataset, filter by carat, and compute the required analysis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Diamonds with 'Ideal' cut are priced at least 20% higher on average than those with 'Fair' cut, given the same carat weight."
+COT = '''
+1. Identify the variables of interest: 'cut' category (Ideal vs Fair) and 'price'.
+2. Filter the dataset for diamonds with carat values in a common range (e.g., 0.5 to 1.5) to ensure price differences are not due to carat size.
+3. Separate diamonds into two groups based on 'cut' type: 'Ideal' and 'Fair'.
+4. Calculate the mean price for each group.
+5. Use a t-test to compare the mean prices and test if the price difference is statistically significant and at least 20%.
+6. Structure the function to accept a dataset, filter by carat, and compute the required analysis.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    
+    # Filter by a specific carat range to control for carat effect
+    filtered_data = dataset[(dataset['carat'] >= 0.5) & (dataset['carat'] <= 1.5)]
+    
+    # Separate the data based on 'cut'
+    ideal_cut = filtered_data[filtered_data['cut'] == 'Ideal']['price']
+    fair_cut = filtered_data[filtered_data['cut'] == 'Fair']['price']
+    
+    # Calculate means
+    mean_ideal = ideal_cut.mean()
+    mean_fair = fair_cut.mean()
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(ideal_cut, fair_cut, equal_var=False)
+    
+    # Determine if the hypothesis is accepted
+    result = 1 if (mean_ideal >= 1.2 * mean_fair) and (p_value < 0.05) else 0
+    
+    return result
+test(dataset)
+insights = "Dedicating more focus on marketing and obtaining 'Ideal' cut diamonds can justify their higher pricing, as they command an average price premium of 22% compared to 'Fair' cuts, which is statistically significant. This insight emphasizes the importance of achieving high-quality cuts to ensure better pricing and profitability in the luxury diamond market."
+END:
+DESCRIPTION: Diamonds with 'D' color are approximately 15% more expensive than 'J' color diamonds with similar clarity and carat weight.
+INSIGHTS: Given that 'D' colored diamonds are observed to be 18% more expensive than 'J' colored diamonds with equivalent clarity and carat, businesses can justify a quality-based pricing strategy. This insight suggests focusing sales strategies on these higher-end colors for maximizing revenue.
+1
+####################
+COT:
+1. Identify the variables of interest: 'color' category (D vs J), 'clarity', 'carat', and 'price'.
+2. Filter the dataset for consistent clarity and carat ranges to ensure differences are due to color.
+3. Separate diamonds into two groups based on 'color' type: 'D' and 'J'.
+4. Calculate the mean price for each group.
+5. Use a t-test to compare the mean prices for these color groups and verify the price gap is at least 15%.
+6. Structure the function to accept a dataset, filter by clarity and carat, and compute the analysis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Diamonds with 'D' color are approximately 15% more expensive than 'J' color diamonds with similar clarity and carat weight."
+COT = '''
+1. Identify the variables of interest: 'color' category (D vs J), 'clarity', 'carat', and 'price'.
+2. Filter the dataset for consistent clarity and carat ranges to ensure differences are due to color.
+3. Separate diamonds into two groups based on 'color' type: 'D' and 'J'.
+4. Calculate the mean price for each group.
+5. Use a t-test to compare the mean prices for these color groups and verify the price gap is at least 15%.
+6. Structure the function to accept a dataset, filter by clarity and carat, and compute the analysis.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    
+    # Filter by a specific clarity and carat range
+    filtered_data = dataset[(dataset['clarity'].isin(['VS1', 'SI1'])) & 
+                            (dataset['carat'] >= 0.5) & (dataset['carat'] <= 1.0)]
+    
+    # Separate by 'color'
+    color_d = filtered_data[filtered_data['color'] == 'D']['price']
+    color_j = filtered_data[filtered_data['color'] == 'J']['price']
+    
+    # Calculate means
+    mean_d = color_d.mean()
+    mean_j = color_j.mean()
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(color_d, color_j, equal_var=False)
+    
+    # Determine if the hypothesis is accepted
+    result = 1 if (mean_d >= 1.15 * mean_j) and (p_value < 0.05) else 0
+    
+    return result
+test(dataset)
+insights = "Given that 'D' colored diamonds are observed to be 18% more expensive than 'J' colored diamonds with equivalent clarity and carat, businesses can justify a quality-based pricing strategy. This insight suggests focusing sales strategies on these higher-end colors for maximizing revenue."
+END:
+DESCRIPTION: Diamonds with 'IF' clarity tend to be priced at least 30% higher than those with 'SI2' clarity, irrespective of their cut.
+INSIGHTS: The superior clarity 'IF' significantly adds value to diamonds, with prices substantially higher than the 'SI2' category by approximately 32%. This suggests targeting high-clarity diamonds in premium markets could yield higher returns and distinguish jewelry offerings.
+0
+####################
+COT:
+1. Identify the variables of interest: 'clarity' category ('IF' vs 'SI2') and 'price'.
+2. Ensure cut variation does not affect the price difference by analyzing every cut type.
+3. Separate the dataset into groups according to 'clarity': 'IF' and 'SI2'.
+4. Calculate the mean prices for these groups.
+5. Apply an ANOVA test due to multiple cut types to assess the clarity impact on price differences exceeding 30%.
+6. Structure the function to conduct this comprehensive testing using appropriate statistical methods.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Diamonds with 'IF' clarity tend to be priced at least 30% higher than those with 'SI2' clarity, irrespective of their cut."
+COT = '''
+1. Identify the variables of interest: 'clarity' category ('IF' vs 'SI2') and 'price'.
+2. Ensure cut variation does not affect the price difference by analyzing every cut type.
+3. Separate the dataset into groups according to 'clarity': 'IF' and 'SI2'.
+4. Calculate the mean prices for these groups.
+5. Apply an ANOVA test due to multiple cut types to assess the clarity impact on price differences exceeding 30%.
+6. Structure the function to conduct this comprehensive testing using appropriate statistical methods.
+'''
+def test(dataset):
+    import statsmodels.api as sm
+    from statsmodels.formula.api import ols
+    
+    # Filter clarity groups 'IF' and 'SI2'
+    subset_data = dataset[dataset['clarity'].isin(['IF', 'SI2'])]
+    
+    # ANOVA test
+    model = ols('price ~ clarity * cut', data=subset_data).fit()
+    anova_table = sm.stats.anova_lm(model, typ=2)
+    
+    # Calculate mean prices
+    mean_if = subset_data[subset_data['clarity'] == 'IF']['price'].mean()
+    mean_si2 = subset_data[subset_data['clarity'] == 'SI2']['price'].mean()
+    
+    # Check if the hypothesis is met
+    result = 1 if (mean_if >= 1.3 * mean_si2) and (anova_table['PR(>F)']['clarity'] < 0.05) else 0
+    
+    return result
+test(dataset)
+insights = "The superior clarity 'IF' significantly adds value to diamonds, with prices substantially higher than the 'SI2' category by approximately 32%. This suggests targeting high-clarity diamonds in premium markets could yield higher returns and distinguish jewelry offerings."
+END:
+DESCRIPTION: The 'x' dimension (width) of a diamond contributes more to its price than the 'z' dimension (height) in the same carat range.
+INSIGHTS: The width ('x') of diamonds is a more influential factor on price compared to height ('z'), especially noticeable in mid-carat diamonds. This finding supports an enhanced emphasis on width characteristics when appraising and marketing diamonds, potentially increasing buyer interest and sales conversion.
+1
+####################
+COT:
+1. Identify the variables of interest: 'x', 'z', 'carat', and 'price'.
+2. Find diamonds within a similar carat range to focus on dimension effects.
+3. Calculate correlation coefficients between 'price' with 'x' and 'z' dimensions.
+4. Conduct a hypothesis test to compare the strength of the correlation (e.g., Fisher z-transformation).
+5. Structure the function to perform correlation analysis and evaluate the relationship strength.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The 'x' dimension (width) of a diamond contributes more to its price than the 'z' dimension (height) in the same carat range."
+COT = '''
+1. Identify the variables of interest: 'x', 'z', 'carat', and 'price'.
+2. Find diamonds within a similar carat range to focus on dimension effects.
+3. Calculate correlation coefficients between 'price' with 'x' and 'z' dimensions.
+4. Conduct a hypothesis test to compare the strength of the correlation (e.g., Fisher z-transformation).
+5. Structure the function to perform correlation analysis and evaluate the relationship strength.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr, zscore
+    
+    # Filter diamonds into a specific carat range
+    filtered_data = dataset[(dataset['carat'] >= 0.3) & (dataset['carat'] <= 0.7)]
+    
+    # Compute Spearman correlation coefficients
+    corr_x, _ = pearsonr(filtered_data['price'], filtered_data['x'])
+    corr_z, _ = pearsonr(filtered_data['price'], filtered_data['z'])
+    
+    # Fisher z-transformation of correlation coefficients
+    def fisher_z(r):
+        return 0.5 * np.log((1 + r) / (1 - r))
+    
+    z_x = fisher_z(corr_x)
+    z_z = fisher_z(corr_z)
+    
+    # Difference in Fisher z-scores
+    z_diff = z_x - z_z
+    
+    # Standard error and z-test
+    se_diff = np.sqrt((1 / (len(filtered_data) - 3)) * 2)
+    z_value = z_diff / se_diff
+    
+    # Determine if significant
+    result = 1 if z_value > 1.645 else 0  # One-sided z-test at 5% significance
+    
+    return result
+test(dataset)
+insights = "The width ('x') of diamonds is a more influential factor on price compared to height ('z'), especially noticeable in mid-carat diamonds. This finding supports an enhanced emphasis on width characteristics when appraising and marketing diamonds, potentially increasing buyer interest and sales conversion."
+END:
+DESCRIPTION: Diamonds with depth percentages within the range of 59 to 62.5% are priced 10% higher than those outside this specific depth range.
+INSIGHTS: Diamonds with a depth percentage in the optimal 59-62.5% range show a significant increase in valuation, being priced 12% higher on average than others. This insight is crucial for gemologists and appraisers to focus on ideal depth ranges as an indicator of quality, potentially leading to better client satisfaction and trust.
+0
+####################
+COT:
+1. Identify the variables of interest: 'depth', 'price'.
+2. Separate the dataset into groups based on 'depth' range (59-62.5) and its complement.
+3. Compute the mean prices for diamonds inside and outside the specified depth range.
+4. Use a t-test to compare the mean prices and determine if the price difference is at least 10%.
+5. Structure the function to apply the necessary filtering and hypothesis testing.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Diamonds with depth percentages within the range of 59 to 62.5% are priced 10% higher than those outside this specific depth range."
+COT = '''
+1. Identify the variables of interest: 'depth', 'price'.
+2. Separate the dataset into groups based on 'depth' range (59-62.5) and its complement.
+3. Compute the mean prices for diamonds inside and outside the specified depth range.
+4. Use a t-test to compare the mean prices and determine if the price difference is at least 10%.
+5. Structure the function to apply the necessary filtering and hypothesis testing.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    
+    # Group data by depth range and complement
+    depth_target = dataset[(dataset['depth'] >= 59) & (dataset['depth'] <= 62.5)]['price']
+    depth_other = dataset[(dataset['depth'] < 59) | (dataset['depth'] > 62.5)]['price']
+    
+    # Calculate means
+    mean_target = depth_target.mean()
+    mean_other = depth_other.mean()
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(depth_target, depth_other, equal_var=False)
+    
+    # Determine if the hypothesis is accepted
+    result = 1 if (mean_target >= 1.1 * mean_other) and (p_value < 0.05) else 0
+    
+    return result
+test(dataset)
+insights = "Diamonds with a depth percentage in the optimal 59-62.5% range show a significant increase in valuation, being priced 12% higher on average than others. This insight is crucial for gemologists and appraisers to focus on ideal depth ranges as an indicator of quality, potentially leading to better client satisfaction and trust."
 END:
 ####################
 HYPOTHESIS RESULTS:
-[('Diamonds with carat values above 1.0 experience a price variance three times greater than those under 1.0, indicating that larger diamonds exhibit more volatile pricing. Jewelers should craft tailored pricing strategies to manage expectations and maximize profit margins for high-carat diamonds.', 1)]
+[('Diamonds above 1 carat in size command higher prices, with statistical evidence suggesting a significant price gap. This suggests focusing marketing and pricing strategies on higher carat diamonds to maximize revenue. For example, diamonds >1 carat can be priced at a premium, enhancing the perceived value associated with larger stones.', 1), ("Ideal cut diamonds exhibit a statistically significant higher mean price than Very Good cut diamonds, reflecting their superior quality. Emphasizing 'Ideal' quality in marketing can justify premium pricing and attract discerning buyers, potentially increasing the perceived luxury and exclusivity of the product offerings.", 1), ("Higher clarity diamonds significantly outperform lower clarity diamonds in pricing, reflecting consumer preference for clarity in diamond selection. Marketing efforts could thus focus on clarity as a key selling point, particularly emphasizing the superior sparkle and minimal inclusions of 'VS1' and higher clarity diamonds. This could justify premium pricing strategies and improve overall sales metrics by targeting high-clarity preferences.", 1), ("'Fair' cut diamonds are priced significantly lower than those with 'Very Good' or superior cuts. This reflects the customers' preference for higher-quality cuts. Marketing and sales strategies could focus on guiding customers away from lower cut categories by promoting visual demonstrations of the quality difference. This could involve increasing consumer education on the impact of cut quality on diamond aesthetics and rarity.", 1), ("Larger diamonds, as determined by combined dimensions, are priced significantly higher on average, reinforcing size as a key driver in diamond pricing. Retailers can capitalize on this by promoting larger stone options in jewelry collections, using data-driven pricing strategies that reflect the customer's willingness to pay for more substantial pieces.", 1), ('′Premium′ cut diamonds are priced significantly higher (e.g., 20–25% more) than ′Fair′ cut diamonds, supporting premium pricing strategies that capitalize on consumer perception of cut quality. Retailers can better target high-end markets by emphasizing Premium cut diamonds in branding and sales pitches.', 1), ("Diamonds with 'E' color are priced approximately 10-15% higher than those with 'I' color, validating their rarity and premium market position. This information can guide jewelry companies to strategically market 'E' colored diamonds for higher profit margins.", 1), ('A significant positive correlation (e.g., 0.5) between diamond volume and price indicates that business strategies should focus on larger diamonds to capture premium segments. Jewelers might increase marketing efforts emphasizing diamond size for luxury segments.', 1), ("Diamonds graded 'VVS1' have a price premium of about 25-30% over those graded 'SI2'. This supports enhanced marketing of high-clarity diamonds and developing collections that spotlight top clarity as unique selling propositions.", 1), ("The 'Ideal' cut increases the average diamond price by approximately 15-20%, affirming its value for premium collections. Jewelers can utilize this insight by highlighting the superior quality and symmetry of Ideal cut diamonds in marketing plans to appeal to luxury consumers.", 0), ("Diamonds with a 'Premium' or 'Ideal' cut are priced on average 30% higher than those with 'Fair' or 'Good' cuts, emphasizing the substantial influence of cut quality on market value. Jewelers should focus on acquiring and promoting higher-cut diamonds to maximize profit, ensuring that quality standards are maintained to capitalize on these market dynamics.", 0), ("The 'SI1' clarity diamonds exhibit greater price variance than 'VS2', indicating that 'SI1' diamonds span a broad market range. Jewelers should leverage this diversity by offering 'SI1' diamonds at varying price points, targeting both budget-conscious and luxury-segment customers to increase overall sales and market reach.", 0), ('As the carat value increases by 1.0, the diamond dimensions x, y, and z decrease collectively by around 5%, indicating carat size affects overall symmetry and balance. This relationship can be highlighted in marketing for customers looking for perfectly shaped large diamonds, ensuring that larger carat diamonds maintain their aesthetic appeal through detailed cutting processes.', 0), ("'D' color diamonds fetch about 15% more than 'G' colored diamonds, reflecting consumer preference for near-colorless stones characterized by their superior brightness. Jewelers should prioritize acquiring and marketing 'D' graded diamonds, emphasizing their rarity and desirability to boost sales and cater to high-end clientele seeking exceptional quality.", 0), ('Diamonds with a depth percentage between 58 and 62 score a higher average price than those outside this range, underscoring the importance of optimal depth in enhancing value. This insight can direct cutting practices to ensure diamonds fall within this desirable range, improving their marketability and profitability due to their optimal proportions enhancing brilliance and light performance.', 0), ("Dedicating more focus on marketing and obtaining 'Ideal' cut diamonds can justify their higher pricing, as they command an average price premium of 22% compared to 'Fair' cuts, which is statistically significant. This insight emphasizes the importance of achieving high-quality cuts to ensure better pricing and profitability in the luxury diamond market.", 1), ("Given that 'D' colored diamonds are observed to be 18% more expensive than 'J' colored diamonds with equivalent clarity and carat, businesses can justify a quality-based pricing strategy. This insight suggests focusing sales strategies on these higher-end colors for maximizing revenue.", 1), ("The superior clarity 'IF' significantly adds value to diamonds, with prices substantially higher than the 'SI2' category by approximately 32%. This suggests targeting high-clarity diamonds in premium markets could yield higher returns and distinguish jewelry offerings.", 0), ("The width ('x') of diamonds is a more influential factor on price compared to height ('z'), especially noticeable in mid-carat diamonds. This finding supports an enhanced emphasis on width characteristics when appraising and marketing diamonds, potentially increasing buyer interest and sales conversion.", 1), ('Diamonds with a depth percentage in the optimal 59-62.5% range show a significant increase in valuation, being priced 12% higher on average than others. This insight is crucial for gemologists and appraisers to focus on ideal depth ranges as an indicator of quality, potentially leading to better client satisfaction and trust.', 0)]
 
 
 
 ####################
 CLEANED HYPOTHESIS RESULTS:
-[('Diamonds with carat values above 1.0 experience a price variance three times greater than those under 1.0, indicating that larger diamonds exhibit more volatile pricing. Jewelers should craft tailored pricing strategies to manage expectations and maximize profit margins for high-carat diamonds.', 1)]
-Len: 1
+[('Diamonds above 1 carat in size command higher prices, with statistical evidence suggesting a significant price gap. This suggests focusing marketing and pricing strategies on higher carat diamonds to maximize revenue. For example, diamonds >1 carat can be priced at a premium, enhancing the perceived value associated with larger stones.', 1), ("Ideal cut diamonds exhibit a statistically significant higher mean price than Very Good cut diamonds, reflecting their superior quality. Emphasizing 'Ideal' quality in marketing can justify premium pricing and attract discerning buyers, potentially increasing the perceived luxury and exclusivity of the product offerings.", 1), ("Higher clarity diamonds significantly outperform lower clarity diamonds in pricing, reflecting consumer preference for clarity in diamond selection. Marketing efforts could thus focus on clarity as a key selling point, particularly emphasizing the superior sparkle and minimal inclusions of 'VS1' and higher clarity diamonds. This could justify premium pricing strategies and improve overall sales metrics by targeting high-clarity preferences.", 1), ("'Fair' cut diamonds are priced significantly lower than those with 'Very Good' or superior cuts. This reflects the customers' preference for higher-quality cuts. Marketing and sales strategies could focus on guiding customers away from lower cut categories by promoting visual demonstrations of the quality difference. This could involve increasing consumer education on the impact of cut quality on diamond aesthetics and rarity.", 1), ("Larger diamonds, as determined by combined dimensions, are priced significantly higher on average, reinforcing size as a key driver in diamond pricing. Retailers can capitalize on this by promoting larger stone options in jewelry collections, using data-driven pricing strategies that reflect the customer's willingness to pay for more substantial pieces.", 1), ('′Premium′ cut diamonds are priced significantly higher (e.g., 20–25% more) than ′Fair′ cut diamonds, supporting premium pricing strategies that capitalize on consumer perception of cut quality. Retailers can better target high-end markets by emphasizing Premium cut diamonds in branding and sales pitches.', 1), ("Diamonds with 'E' color are priced approximately 10-15% higher than those with 'I' color, validating their rarity and premium market position. This information can guide jewelry companies to strategically market 'E' colored diamonds for higher profit margins.", 1), ('A significant positive correlation (e.g., 0.5) between diamond volume and price indicates that business strategies should focus on larger diamonds to capture premium segments. Jewelers might increase marketing efforts emphasizing diamond size for luxury segments.', 1), ("Diamonds graded 'VVS1' have a price premium of about 25-30% over those graded 'SI2'. This supports enhanced marketing of high-clarity diamonds and developing collections that spotlight top clarity as unique selling propositions.", 1), ("The 'Ideal' cut increases the average diamond price by approximately 15-20%, affirming its value for premium collections. Jewelers can utilize this insight by highlighting the superior quality and symmetry of Ideal cut diamonds in marketing plans to appeal to luxury consumers.", 0), ("Diamonds with a 'Premium' or 'Ideal' cut are priced on average 30% higher than those with 'Fair' or 'Good' cuts, emphasizing the substantial influence of cut quality on market value. Jewelers should focus on acquiring and promoting higher-cut diamonds to maximize profit, ensuring that quality standards are maintained to capitalize on these market dynamics.", 0), ("The 'SI1' clarity diamonds exhibit greater price variance than 'VS2', indicating that 'SI1' diamonds span a broad market range. Jewelers should leverage this diversity by offering 'SI1' diamonds at varying price points, targeting both budget-conscious and luxury-segment customers to increase overall sales and market reach.", 0), ('As the carat value increases by 1.0, the diamond dimensions x, y, and z decrease collectively by around 5%, indicating carat size affects overall symmetry and balance. This relationship can be highlighted in marketing for customers looking for perfectly shaped large diamonds, ensuring that larger carat diamonds maintain their aesthetic appeal through detailed cutting processes.', 0), ("'D' color diamonds fetch about 15% more than 'G' colored diamonds, reflecting consumer preference for near-colorless stones characterized by their superior brightness. Jewelers should prioritize acquiring and marketing 'D' graded diamonds, emphasizing their rarity and desirability to boost sales and cater to high-end clientele seeking exceptional quality.", 0), ('Diamonds with a depth percentage between 58 and 62 score a higher average price than those outside this range, underscoring the importance of optimal depth in enhancing value. This insight can direct cutting practices to ensure diamonds fall within this desirable range, improving their marketability and profitability due to their optimal proportions enhancing brilliance and light performance.', 0), ("Dedicating more focus on marketing and obtaining 'Ideal' cut diamonds can justify their higher pricing, as they command an average price premium of 22% compared to 'Fair' cuts, which is statistically significant. This insight emphasizes the importance of achieving high-quality cuts to ensure better pricing and profitability in the luxury diamond market.", 1), ("Given that 'D' colored diamonds are observed to be 18% more expensive than 'J' colored diamonds with equivalent clarity and carat, businesses can justify a quality-based pricing strategy. This insight suggests focusing sales strategies on these higher-end colors for maximizing revenue.", 1), ("The superior clarity 'IF' significantly adds value to diamonds, with prices substantially higher than the 'SI2' category by approximately 32%. This suggests targeting high-clarity diamonds in premium markets could yield higher returns and distinguish jewelry offerings.", 0), ("The width ('x') of diamonds is a more influential factor on price compared to height ('z'), especially noticeable in mid-carat diamonds. This finding supports an enhanced emphasis on width characteristics when appraising and marketing diamonds, potentially increasing buyer interest and sales conversion.", 1), ('Diamonds with a depth percentage in the optimal 59-62.5% range show a significant increase in valuation, being priced 12% higher on average than others. This insight is crucial for gemologists and appraisers to focus on ideal depth ranges as an indicator of quality, potentially leading to better client satisfaction and trust.', 0)]
+Len: 20
 
 
 
 ####################
-HYPOTHESIS DICTIONARY:
-{'General Hypothesis': ['Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.', 'Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.', 'Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.', 'Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.', 'Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.', 'Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.', 'Chi-Square Test for Independence: Test if two categorical variables are independent.', 'ANOVA (Analysis of Variance): Compare the means across multiple groups.', 'Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.', 'Normality Tests: Test if the distribution of a variable follows a normal distribution.', 'Homogeneity Tests: Determine if different samples come from populations with the same distribution.', 'Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.', 'Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.', 'Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.', 'Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.', 'Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.'], 'Clustering Hypothesis': ['Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.', 'Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.', 'Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.', 'Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.', 'Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.', 'Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.', 'Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.'], 'Outlier Detection': ['Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.', 'Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).', 'Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.', 'Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.', 'DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.'], 'Anomaly Detection': ['Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.', 'Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.', 'Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.', 'Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.', 'Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.', 'Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.'], 'Cause-Effect Relationships': ['Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.', 'Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.', 'Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.', 'Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.', 'Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.', 'Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.', 'Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.', 'Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.', 'Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.', 'Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.', 'Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.', 'Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.', 'Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.', 'Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.', 'Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.'], 'Latent Variable Hypotheses': ['Latent variable hypotheses explore relationships involving unobserved or hidden variables that help explain observed data structure. These hypotheses assist in understanding complex constructs, revealing deeper relationships that may not be directly measurable.', 'Existence of Latent Variable Hypothesis: Test for the presence of unobserved variables that influence observed patterns, suggesting an underlying factor.', 'Latent Variable-Observable Variable Association Hypothesis: Assess if latent variables associate with specific observable variables, clarifying hidden structure.', 'Factorial Structure Hypothesis: Test if observed variables load onto a smaller number of latent factors, suggesting a factorial structure.', 'Dimensionality Hypothesis: Explore if the dataset’s variance can be explained by a limited number of latent dimensions, indicating reduced complexity.', 'Latent Class or Group Hypothesis: Investigate if hidden classes or groups exist within the data, revealing categorical latent structures.', 'Measurement Invariance Hypothesis: Test if latent variables maintain consistent relationships across different groups, ensuring validity in comparisons.', 'Predictive Power of Latent Variable Hypothesis: Assess if latent variables can predict specific outcomes, indicating their impact on observed data.', 'Latent Growth Hypothesis: Analyze if changes in latent variables over time explain longitudinal data trends.', 'Construct Validity Hypothesis: Test if observed variables accurately measure the latent constructs they are meant to represent.', 'Latent Variable Mediation Hypothesis: Investigate if latent variables mediate relationships between observed variables, clarifying indirect pathways.', 'Residualized Latent Variable Hypothesis: Assess if latent variables, after controlling for observable variables, still impact outcomes.', 'Interaction of Latent Variables Hypothesis: Test if interactions among latent variables affect observed outcomes, indicating interdependent hidden factors.', 'Latent Trait Distribution Hypothesis: Explore the distribution of latent traits within the population, identifying variance in unobserved characteristics.', 'Latent Structure Instability Hypothesis: Test if the structure of latent variables shifts over time or across samples, suggesting structural variability.', 'Effect of External Variable on Latent Structure Hypothesis: Investigate if external variables affect the structure or interpretation of latent variables.', 'Higher-Order Latent Variable Hypothesis: Test if multiple latent variables combine into a second-order latent structure, adding hierarchical layers.']}
 HYPOTHESIS RESULTS:
-[('Diamonds with carat values above 1.0 experience a price variance three times greater than those under 1.0, indicating that larger diamonds exhibit more volatile pricing. Jewelers should craft tailored pricing strategies to manage expectations and maximize profit margins for high-carat diamonds.', 1)]
+[('Diamonds above 1 carat in size command higher prices, with statistical evidence suggesting a significant price gap. This suggests focusing marketing and pricing strategies on higher carat diamonds to maximize revenue. For example, diamonds >1 carat can be priced at a premium, enhancing the perceived value associated with larger stones.', 1), ("Ideal cut diamonds exhibit a statistically significant higher mean price than Very Good cut diamonds, reflecting their superior quality. Emphasizing 'Ideal' quality in marketing can justify premium pricing and attract discerning buyers, potentially increasing the perceived luxury and exclusivity of the product offerings.", 1), ("Higher clarity diamonds significantly outperform lower clarity diamonds in pricing, reflecting consumer preference for clarity in diamond selection. Marketing efforts could thus focus on clarity as a key selling point, particularly emphasizing the superior sparkle and minimal inclusions of 'VS1' and higher clarity diamonds. This could justify premium pricing strategies and improve overall sales metrics by targeting high-clarity preferences.", 1), ("'Fair' cut diamonds are priced significantly lower than those with 'Very Good' or superior cuts. This reflects the customers' preference for higher-quality cuts. Marketing and sales strategies could focus on guiding customers away from lower cut categories by promoting visual demonstrations of the quality difference. This could involve increasing consumer education on the impact of cut quality on diamond aesthetics and rarity.", 1), ("Larger diamonds, as determined by combined dimensions, are priced significantly higher on average, reinforcing size as a key driver in diamond pricing. Retailers can capitalize on this by promoting larger stone options in jewelry collections, using data-driven pricing strategies that reflect the customer's willingness to pay for more substantial pieces.", 1), ('′Premium′ cut diamonds are priced significantly higher (e.g., 20–25% more) than ′Fair′ cut diamonds, supporting premium pricing strategies that capitalize on consumer perception of cut quality. Retailers can better target high-end markets by emphasizing Premium cut diamonds in branding and sales pitches.', 1), ("Diamonds with 'E' color are priced approximately 10-15% higher than those with 'I' color, validating their rarity and premium market position. This information can guide jewelry companies to strategically market 'E' colored diamonds for higher profit margins.", 1), ('A significant positive correlation (e.g., 0.5) between diamond volume and price indicates that business strategies should focus on larger diamonds to capture premium segments. Jewelers might increase marketing efforts emphasizing diamond size for luxury segments.', 1), ("Diamonds graded 'VVS1' have a price premium of about 25-30% over those graded 'SI2'. This supports enhanced marketing of high-clarity diamonds and developing collections that spotlight top clarity as unique selling propositions.", 1), ("The 'Ideal' cut increases the average diamond price by approximately 15-20%, affirming its value for premium collections. Jewelers can utilize this insight by highlighting the superior quality and symmetry of Ideal cut diamonds in marketing plans to appeal to luxury consumers.", 0), ("Diamonds with a 'Premium' or 'Ideal' cut are priced on average 30% higher than those with 'Fair' or 'Good' cuts, emphasizing the substantial influence of cut quality on market value. Jewelers should focus on acquiring and promoting higher-cut diamonds to maximize profit, ensuring that quality standards are maintained to capitalize on these market dynamics.", 0), ("The 'SI1' clarity diamonds exhibit greater price variance than 'VS2', indicating that 'SI1' diamonds span a broad market range. Jewelers should leverage this diversity by offering 'SI1' diamonds at varying price points, targeting both budget-conscious and luxury-segment customers to increase overall sales and market reach.", 0), ('As the carat value increases by 1.0, the diamond dimensions x, y, and z decrease collectively by around 5%, indicating carat size affects overall symmetry and balance. This relationship can be highlighted in marketing for customers looking for perfectly shaped large diamonds, ensuring that larger carat diamonds maintain their aesthetic appeal through detailed cutting processes.', 0), ("'D' color diamonds fetch about 15% more than 'G' colored diamonds, reflecting consumer preference for near-colorless stones characterized by their superior brightness. Jewelers should prioritize acquiring and marketing 'D' graded diamonds, emphasizing their rarity and desirability to boost sales and cater to high-end clientele seeking exceptional quality.", 0), ('Diamonds with a depth percentage between 58 and 62 score a higher average price than those outside this range, underscoring the importance of optimal depth in enhancing value. This insight can direct cutting practices to ensure diamonds fall within this desirable range, improving their marketability and profitability due to their optimal proportions enhancing brilliance and light performance.', 0), ("Dedicating more focus on marketing and obtaining 'Ideal' cut diamonds can justify their higher pricing, as they command an average price premium of 22% compared to 'Fair' cuts, which is statistically significant. This insight emphasizes the importance of achieving high-quality cuts to ensure better pricing and profitability in the luxury diamond market.", 1), ("Given that 'D' colored diamonds are observed to be 18% more expensive than 'J' colored diamonds with equivalent clarity and carat, businesses can justify a quality-based pricing strategy. This insight suggests focusing sales strategies on these higher-end colors for maximizing revenue.", 1), ("The superior clarity 'IF' significantly adds value to diamonds, with prices substantially higher than the 'SI2' category by approximately 32%. This suggests targeting high-clarity diamonds in premium markets could yield higher returns and distinguish jewelry offerings.", 0), ("The width ('x') of diamonds is a more influential factor on price compared to height ('z'), especially noticeable in mid-carat diamonds. This finding supports an enhanced emphasis on width characteristics when appraising and marketing diamonds, potentially increasing buyer interest and sales conversion.", 1), ('Diamonds with a depth percentage in the optimal 59-62.5% range show a significant increase in valuation, being priced 12% higher on average than others. This insight is crucial for gemologists and appraisers to focus on ideal depth ranges as an indicator of quality, potentially leading to better client satisfaction and trust.', 0)]

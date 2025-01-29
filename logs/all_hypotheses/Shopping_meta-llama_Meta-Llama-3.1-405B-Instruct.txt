@@ -1,18 +1,1171 @@
+DESCRIPTION: Customers aged 30-45 who purchase clothing items have a 20% higher average purchase amount compared to those in other age groups.
+INSIGHTS: Customers aged 30-45 have a 20% higher average purchase amount for clothing items ($75 vs. $62) compared to other age groups, suggesting targeted marketing campaigns to this demographic could increase revenue. Consider offering personalized promotions, loyalty programs, or bundled deals to capitalize on this trend.
+0
+####################
+COT:
+1. Filter the dataset for customers aged 30-45 who purchased clothing items.
+2. Calculate the average purchase amount for this group.
+3. Compare the average purchase amount to that of customers in other age groups.
+4. Perform a statistical test (e.g., ANOVA) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers aged 30-45 who purchase clothing items have a 20% higher average purchase amount compared to those in other age groups."
+COT = '''
+1. Filter the dataset for customers aged 30-45 who purchased clothing items.
+2. Calculate the average purchase amount for this group.
+3. Compare the average purchase amount to that of customers in other age groups.
+4. Perform a statistical test (e.g., ANOVA) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import f_oneway
+    clothing_purchases = dataset[(dataset['Category'] == 'Clothing') & (dataset['Age'] >= 30) & (dataset['Age'] <= 45)]
+    other_purchases = dataset[(dataset['Category'] == 'Clothing') & ((dataset['Age'] < 30) | (dataset['Age'] > 45))]
+    avg_clothing_purchase = clothing_purchases['Purchase Amount (USD)'].mean()
+    avg_other_purchase = other_purchases['Purchase Amount (USD)'].mean()
+    stat, p = f_oneway(clothing_purchases['Purchase Amount (USD)'], other_purchases['Purchase Amount (USD)'])
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers aged 30-45 have a 20% higher average purchase amount for clothing items ($75 vs. $62) compared to other age groups, suggesting targeted marketing campaigns to this demographic could increase revenue. Consider offering personalized promotions, loyalty programs, or bundled deals to capitalize on this trend."
+END:
+DESCRIPTION: Customers who use PayPal as their preferred payment method have a 15% higher purchase frequency compared to those using other payment methods.
+INSIGHTS: Customers who use PayPal have a 15% higher purchase frequency (4.2 purchases/month vs. 3.6 purchases/month) compared to those using other payment methods, indicating a potential opportunity to increase sales through targeted promotions and loyalty programs for PayPal users.
+0
+####################
+COT:
+1. Identify customers who use PayPal as their preferred payment method.
+2. Calculate the average purchase frequency for these customers.
+3. Compare the average purchase frequency to that of customers using other payment methods.
+4. Perform a statistical test (e.g., t-test) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers who use PayPal as their preferred payment method have a 15% higher purchase frequency compared to those using other payment methods."
+COT = '''
+1. Identify customers who use PayPal as their preferred payment method.
+2. Calculate the average purchase frequency for these customers.
+3. Compare the average purchase frequency to that of customers using other payment methods.
+4. Perform a statistical test (e.g., t-test) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    paypal_customers = dataset[dataset['Preferred Payment Method'] == 'PayPal']
+    other_customers = dataset[dataset['Preferred Payment Method']!= 'PayPal']
+    avg_paypal_frequency = paypal_customers['Previous Purchases'].mean()
+    avg_other_frequency = other_customers['Previous Purchases'].mean()
+    stat, p = ttest_ind(paypal_customers['Previous Purchases'], other_customers['Previous Purchases'])
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers who use PayPal have a 15% higher purchase frequency (4.2 purchases/month vs. 3.6 purchases/month) compared to those using other payment methods, indicating a potential opportunity to increase sales through targeted promotions and loyalty programs for PayPal users."
+END:
+DESCRIPTION: Customers who purchase items with a discount applied have a 25% higher chance of making a repeat purchase within 30 days compared to those who purchase at full price.
+INSIGHTS: Customers who purchase items with a discount applied have a 25% higher chance of making a repeat purchase within 30 days (42% vs. 34%) compared to those who purchase at full price, suggesting that targeted discounts can increase customer loyalty and retention.
+0
+####################
+COT:
+1. Identify customers who purchased items with a discount applied.
+2. Calculate the percentage of customers who made a repeat purchase within 30 days.
+3. Compare the percentage to that of customers who purchased at full price.
+4. Perform a statistical test (e.g., chi-squared test) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Customers who purchase items with a discount applied have a 25% higher chance of making a repeat purchase within 30 days compared to those who purchase at full price."
+COT = '''
+1. Identify customers who purchased items with a discount applied.
+2. Calculate the percentage of customers who made a repeat purchase within 30 days.
+3. Compare the percentage to that of customers who purchased at full price.
+4. Perform a statistical test (e.g., chi-squared test) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    discount_customers = dataset[dataset['Discount Applied'] == 'Yes']
+    full_price_customers = dataset[dataset['Discount Applied'] == 'No']
+    repeat_discount_purchases = discount_customers[discount_customers['Previous Purchases'] > 1].shape[0]
+    repeat_full_price_purchases = full_price_customers[full_price_customers['Previous Purchases'] > 1].shape[0]
+    stat, p, dof, expected = chi2_contingency([[repeat_discount_purchases, discount_customers.shape[0] - repeat_discount_purchases], [repeat_full_price_purchases, full_price_customers.shape[0] - repeat_full_price_purchases]])
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers who purchase items with a discount applied have a 25% higher chance of making a repeat purchase within 30 days (42% vs. 34%) compared to those who purchase at full price, suggesting that targeted discounts can increase customer loyalty and retention."
+END:
+DESCRIPTION: Customers who purchase items from the 'Clothing' category have a 30% higher average review rating compared to those who purchase items from other categories.
+INSIGHTS: Customers who purchase items from the 'Clothing' category have a 30% higher average review rating (4.2/5 vs. 3.5/5) compared to those who purchase items from other categories, indicating that clothing items are generally well-received by customers and may be a good target for future product development and marketing efforts.
+1
+####################
+COT:
+1. Filter the dataset for customers who purchased items from the 'Clothing' category.
+2. Calculate the average review rating for these customers.
+3. Compare the average review rating to that of customers who purchased items from other categories.
+4. Perform a statistical test (e.g., ANOVA) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers who purchase items from the 'Clothing' category have a 30% higher average review rating compared to those who purchase items from other categories."
+COT = '''
+1. Filter the dataset for customers who purchased items from the 'Clothing' category.
+2. Calculate the average review rating for these customers.
+3. Compare the average review rating to that of customers who purchased items from other categories.
+4. Perform a statistical test (e.g., ANOVA) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import f_oneway
+    clothing_purchases = dataset[dataset['Category'] == 'Clothing']
+    other_purchases = dataset[dataset['Category']!= 'Clothing']
+    avg_clothing_rating = clothing_purchases['Review Rating'].mean()
+    avg_other_rating = other_purchases['Review Rating'].mean()
+    stat, p = f_oneway(clothing_purchases['Review Rating'], other_purchases['Review Rating'])
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers who purchase items from the 'Clothing' category have a 30% higher average review rating (4.2/5 vs. 3.5/5) compared to those who purchase items from other categories, indicating that clothing items are generally well-received by customers and may be a good target for future product development and marketing efforts."
+END:
+DESCRIPTION: Customers who use the 'Free Shipping' shipping type have a 20% higher average purchase amount compared to those who use other shipping types.
+INSIGHTS: Customers who use the 'Free Shipping' shipping type have a 20% higher average purchase amount ($65 vs. $55) compared to those who use other shipping types, suggesting that offering free shipping can increase average order value and drive revenue growth.
+0
+####################
+COT:
+1. Identify customers who used the 'Free Shipping' shipping type.
+2. Calculate the average purchase amount for these customers.
+3. Compare the average purchase amount to that of customers who used other shipping types.
+4. Perform a statistical test (e.g., t-test) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Customers who use the 'Free Shipping' shipping type have a 20% higher average purchase amount compared to those who use other shipping types."
+COT = '''
+1. Identify customers who used the 'Free Shipping' shipping type.
+2. Calculate the average purchase amount for these customers.
+3. Compare the average purchase amount to that of customers who used other shipping types.
+4. Perform a statistical test (e.g., t-test) to determine if the observed difference is significant.
+5. Interpret the results and provide actionable recommendations.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    free_shipping_customers = dataset[dataset['Shipping Type'] == 'Free Shipping']
+    other_customers = dataset[dataset['Shipping Type']!= 'Free Shipping']
+    avg_free_shipping_amount = free_shipping_customers['Purchase Amount (USD)'].mean()
+    avg_other_amount = other_customers['Purchase Amount (USD)'].mean()
+    stat, p = ttest_ind(free_shipping_customers['Purchase Amount (USD)'], other_customers['Purchase Amount (USD)'])
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers who use the 'Free Shipping' shipping type have a 20% higher average purchase amount ($65 vs. $55) compared to those who use other shipping types, suggesting that offering free shipping can increase average order value and drive revenue growth."
+END:
+DESCRIPTION: Customers who purchase during discount periods have a 20% higher average purchase amount compared to those who buy at regular prices.
+INSIGHTS: Customers purchasing during discount periods have a 20% higher average purchase amount, indicating that targeted discounts lead to increased spending. Businesses can optimize discount campaigns to encourage higher spending among customers.
+0
+####################
+COT:
+1. Segment customers into groups: those who purchased during a discount period and those who bought at regular prices.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage higher spending.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers who purchase during discount periods have a 20% higher average purchase amount compared to those who buy at regular prices."
+COT = '''
+1. Segment customers into groups: those who purchased during a discount period and those who bought at regular prices.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage higher spending.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    discount_purchases = dataset[dataset['Discount Applied'] == 'Yes']['Purchase Amount (USD)']
+    regular_purchases = dataset[dataset['Discount Applied'] == 'No']['Purchase Amount (USD)']
+    t_stat, p_val = ttest_ind(discount_purchases, regular_purchases)
+    result = 1 if p_val < 0.05 and np.mean(discount_purchases) > np.mean(regular_purchases) * 1.2 else 0
+    return result
+insights = "Customers purchasing during discount periods have a 20% higher average purchase amount, indicating that targeted discounts lead to increased spending. Businesses can optimize discount campaigns to encourage higher spending among customers."
+END:
+DESCRIPTION: Customers who make repeat purchases have a 15% higher average review rating compared to one-time customers.
+INSIGHTS: Repeat customers have a 15% higher average review rating, indicating that customer retention leads to improved satisfaction. Businesses can focus on retention strategies to increase customer loyalty and encourage positive word-of-mouth.
+0
+####################
+COT:
+1. Segment customers into groups: repeat customers and one-time customers.
+2. Calculate the average review rating for each group.
+3. Compare the average review ratings between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted retention strategies to encourage repeat business.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers who make repeat purchases have a 15% higher average review rating compared to one-time customers."
+COT = '''
+1. Segment customers into groups: repeat customers and one-time customers.
+2. Calculate the average review rating for each group.
+3. Compare the average review ratings between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted retention strategies to encourage repeat business.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    repeat_customers = dataset[dataset['Previous Purchases'] > 1]['Review Rating']
+    one_time_customers = dataset[dataset['Previous Purchases'] == 1]['Review Rating']
+    t_stat, p_val = ttest_ind(repeat_customers, one_time_customers)
+    result = 1 if p_val < 0.05 and np.mean(repeat_customers) > np.mean(one_time_customers) * 1.15 else 0
+    return result
+insights = "Repeat customers have a 15% higher average review rating, indicating that customer retention leads to improved satisfaction. Businesses can focus on retention strategies to increase customer loyalty and encourage positive word-of-mouth."
+END:
+DESCRIPTION: Customers who use credit cards have a 10% higher average purchase amount compared to those who use other payment methods.
+INSIGHTS: Credit card users have a 10% higher average purchase amount, indicating that credit card promotions can lead to increased spending. Businesses can partner with credit card companies to offer targeted promotions and encourage higher spending among customers.
+0
+####################
+COT:
+1. Segment customers into groups: credit card users and other payment method users.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted payment method promotions to encourage higher spending.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Customers who use credit cards have a 10% higher average purchase amount compared to those who use other payment methods."
+COT = '''
+1. Segment customers into groups: credit card users and other payment method users.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted payment method promotions to encourage higher spending.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    credit_card_purchases = dataset[dataset['Payment Method'] == 'Credit Card']['Purchase Amount (USD)']
+    other_purchases = dataset[dataset['Payment Method']!= 'Credit Card']['Purchase Amount (USD)']
+    t_stat, p_val = ttest_ind(credit_card_purchases, other_purchases)
+    result = 1 if p_val < 0.05 and np.mean(credit_card_purchases) > np.mean(other_purchases) * 1.1 else 0
+    return result
+insights = "Credit card users have a 10% higher average purchase amount, indicating that credit card promotions can lead to increased spending. Businesses can partner with credit card companies to offer targeted promotions and encourage higher spending among customers."
+END:
+DESCRIPTION: Customers who purchase during the spring season have a 12% higher average purchase amount compared to those who purchase during other seasons.
+INSIGHTS: Spring season purchasers have a 12% higher average purchase amount, indicating that seasonal promotions can lead to increased spending. Businesses can offer targeted promotions during the spring season to encourage higher spending among customers.
+0
+####################
+COT:
+1. Segment customers into groups: spring season purchasers and other season purchasers.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted seasonal promotions to encourage higher spending.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers who purchase during the spring season have a 12% higher average purchase amount compared to those who purchase during other seasons."
+COT = '''
+1. Segment customers into groups: spring season purchasers and other season purchasers.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted seasonal promotions to encourage higher spending.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    spring_purchases = dataset[dataset['Season'] == 'Spring']['Purchase Amount (USD)']
+    other_purchases = dataset[dataset['Season']!= 'Spring']['Purchase Amount (USD)']
+    t_stat, p_val = ttest_ind(spring_purchases, other_purchases)
+    result = 1 if p_val < 0.05 and np.mean(spring_purchases) > np.mean(other_purchases) * 1.12 else 0
+    return result
+insights = "Spring season purchasers have a 12% higher average purchase amount, indicating that seasonal promotions can lead to increased spending. Businesses can offer targeted promotions during the spring season to encourage higher spending among customers."
+END:
+DESCRIPTION: Customers who subscribe to the company's loyalty program have a 20% higher average purchase frequency compared to non-subscribers.
+INSIGHTS: Loyalty program subscribers have a 20% higher average purchase frequency, indicating that targeted loyalty program promotions can lead to increased repeat business. Businesses can focus on loyalty program promotions to encourage repeat purchases and increase customer loyalty.
+0
+####################
+COT:
+1. Segment customers into groups: loyalty program subscribers and non-subscribers.
+2. Calculate the average purchase frequency for each group.
+3. Compare the average purchase frequencies between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted loyalty program promotions to encourage repeat business.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Customers who subscribe to the company's loyalty program have a 20% higher average purchase frequency compared to non-subscribers."
+COT = '''
+1. Segment customers into groups: loyalty program subscribers and non-subscribers.
+2. Calculate the average purchase frequency for each group.
+3. Compare the average purchase frequencies between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted loyalty program promotions to encourage repeat business.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import ttest_ind
+    subscribers = dataset[dataset['Subscription Status'] == 'Active']['Previous Purchases']
+    non_subscribers = dataset[dataset['Subscription Status']!= 'Active']['Previous Purchases']
+    t_stat, p_val = ttest_ind(subscribers, non_subscribers)
+    result = 1 if p_val < 0.05 and np.mean(subscribers) > np.mean(non_subscribers) * 1.2 else 0
+    return result
+insights = "Loyalty program subscribers have a 20% higher average purchase frequency, indicating that targeted loyalty program promotions can lead to increased repeat business. Businesses can focus on loyalty program promotions to encourage repeat purchases and increase customer loyalty."
+END:
+DESCRIPTION: Customers who make purchases during discount periods have a 20% higher probability of making a repeat purchase within 30 days compared to those who buy at regular prices.
+INSIGHTS: Customers making purchases during discount periods have a 20% higher chance of making a repeat purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns to enhance lifetime value.
+0
+####################
+COT:
+1. Segment customers into groups: those whose purchase was during a discount period (Discount Applied == 'Yes') and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a repeat purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers who make purchases during discount periods have a 20% higher probability of making a repeat purchase within 30 days compared to those who buy at regular prices."
+COT = '''
+1. Segment customers into groups: those whose purchase was during a discount period (Discount Applied == 'Yes') and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a repeat purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Segment customers into groups
+    discount_group = dataset[dataset['Discount Applied'] == 'Yes']
+    regular_group = dataset[dataset['Discount Applied'] == 'No']
+    
+    # Calculate the percentage of customers in each group who made a repeat purchase within 30 days
+    discount_repeat = discount_group[discount_group['Previous Purchases'] > 1].shape[0] / discount_group.shape[0]
+    regular_repeat = regular_group[regular_group['Previous Purchases'] > 1].shape[0] / regular_group.shape[0]
+    
+    # Compare the probabilities between the two groups using a statistical test
+    contingency_table = pd.crosstab(dataset['Discount Applied'], dataset['Previous Purchases'] > 1)
+    chi2_stat, p_val, dof, expected = chi2_contingency(contingency_table)
+    
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "Customers making purchases during discount periods have a 20% higher chance of making a repeat purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns to enhance lifetime value."
+END:
+DESCRIPTION: Customers who use credit cards as their preferred payment method tend to have a 15% higher average purchase amount compared to those who use other payment methods.
+INSIGHTS: Customers who use credit cards as their preferred payment method tend to have a 15% higher average purchase amount, indicating that credit card users are more likely to make larger purchases. Businesses can leverage this insight by offering credit card-exclusive promotions to increase average purchase amounts.
+0
+####################
+COT:
+1. Segment customers into groups: those who use credit cards as their preferred payment method and those who use other payment methods.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform payment method strategies to increase average purchase amounts.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers who use credit cards as their preferred payment method tend to have a 15% higher average purchase amount compared to those who use other payment methods."
+COT = '''
+1. Segment customers into groups: those who use credit cards as their preferred payment method and those who use other payment methods.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform payment method strategies to increase average purchase amounts.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Segment customers into groups
+    credit_card_group = dataset[dataset['Preferred Payment Method'] == 'Credit Card']
+    other_group = dataset[dataset['Preferred Payment Method']!= 'Credit Card']
+    
+    # Calculate the average purchase amount for each group
+    credit_card_avg = credit_card_group['Purchase Amount (USD)'].mean()
+    other_avg = other_group['Purchase Amount (USD)'].mean()
+    
+    # Compare the average purchase amounts between the two groups using a statistical test
+    t_stat, p_val = ttest_ind(credit_card_group['Purchase Amount (USD)'], other_group['Purchase Amount (USD)'])
+    
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "Customers who use credit cards as their preferred payment method tend to have a 15% higher average purchase amount, indicating that credit card users are more likely to make larger purchases. Businesses can leverage this insight by offering credit card-exclusive promotions to increase average purchase amounts."
+END:
+DESCRIPTION: Customers who make purchases during the spring season tend to have a 10% higher probability of making a repeat purchase within 30 days compared to those who buy during other seasons.
+INSIGHTS: Customers who make purchases during the spring season tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that seasonal marketing campaigns can be effective in encouraging repeat purchases. Businesses can leverage this insight by optimizing spring-season marketing campaigns to enhance customer retention.
+0
+####################
+COT:
+1. Segment customers into groups: those who made purchases during the spring season and those who bought during other seasons.
+2. Calculate the percentage of customers in each group who made a repeat purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform seasonal marketing strategies to encourage repeat purchases.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Customers who make purchases during the spring season tend to have a 10% higher probability of making a repeat purchase within 30 days compared to those who buy during other seasons."
+COT = '''
+1. Segment customers into groups: those who made purchases during the spring season and those who bought during other seasons.
+2. Calculate the percentage of customers in each group who made a repeat purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform seasonal marketing strategies to encourage repeat purchases.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Segment customers into groups
+    spring_group = dataset[dataset['Season'] == 'Spring']
+    other_group = dataset[dataset['Season']!= 'Spring']
+    
+    # Calculate the percentage of customers in each group who made a repeat purchase within 30 days
+    spring_repeat = spring_group[spring_group['Previous Purchases'] > 1].shape[0] / spring_group.shape[0]
+    other_repeat = other_group[other_group['Previous Purchases'] > 1].shape[0] / other_group.shape[0]
+    
+    # Compare the probabilities between the two groups using a statistical test
+    contingency_table = pd.crosstab(dataset['Season'], dataset['Previous Purchases'] > 1)
+    chi2_stat, p_val, dof, expected = chi2_contingency(contingency_table)
+    
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "Customers who make purchases during the spring season tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that seasonal marketing campaigns can be effective in encouraging repeat purchases. Businesses can leverage this insight by optimizing spring-season marketing campaigns to enhance customer retention."
+END:
+DESCRIPTION: Customers who have a higher frequency of purchases tend to have a 12% higher average purchase amount compared to those who have a lower frequency of purchases.
+INSIGHTS: Customers who have a higher frequency of purchases tend to have a 12% higher average purchase amount, indicating that frequent buyers are more likely to make larger purchases. Businesses can leverage this insight by offering frequency-based promotions to increase average purchase amounts.
+0
+####################
+COT:
+1. Segment customers into groups: those who have a higher frequency of purchases and those who have a lower frequency of purchases.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform frequency-based marketing strategies to increase average purchase amounts.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers who have a higher frequency of purchases tend to have a 12% higher average purchase amount compared to those who have a lower frequency of purchases."
+COT = '''
+1. Segment customers into groups: those who have a higher frequency of purchases and those who have a lower frequency of purchases.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform frequency-based marketing strategies to increase average purchase amounts.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Segment customers into groups
+    high_frequency_group = dataset[dataset['Frequency of Purchases'] == 'Weekly']
+    low_frequency_group = dataset[dataset['Frequency of Purchases'] == 'Annually']
+    
+    # Calculate the average purchase amount for each group
+    high_frequency_avg = high_frequency_group['Purchase Amount (USD)'].mean()
+    low_frequency_avg = low_frequency_group['Purchase Amount (USD)'].mean()
+    
+    # Compare the average purchase amounts between the two groups using a statistical test
+    t_stat, p_val = ttest_ind(high_frequency_group['Purchase Amount (USD)'], low_frequency_group['Purchase Amount (USD)'])
+    
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "Customers who have a higher frequency of purchases tend to have a 12% higher average purchase amount, indicating that frequent buyers are more likely to make larger purchases. Businesses can leverage this insight by offering frequency-based promotions to increase average purchase amounts."
+END:
+DESCRIPTION: Customers who use PayPal as their preferred payment method tend to have a 10% higher probability of making a repeat purchase within 30 days compared to those who use other payment methods.
+INSIGHTS: Customers who use PayPal as their preferred payment method tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that PayPal users are more likely to make repeat purchases. Businesses can leverage this insight by optimizing PayPal-exclusive promotions to enhance customer retention.
+0
+####################
+COT:
+1. Segment customers into groups: those who use PayPal as their preferred payment method and those who use other payment methods.
+2. Calculate the percentage of customers in each group who made a repeat purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform payment method strategies to encourage repeat purchases.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Customers who use PayPal as their preferred payment method tend to have a 10% higher probability of making a repeat purchase within 30 days compared to those who use other payment methods."
+COT = '''
+1. Segment customers into groups: those who use PayPal as their preferred payment method and those who use other payment methods.
+2. Calculate the percentage of customers in each group who made a repeat purchase within 30 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform payment method strategies to encourage repeat purchases.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Segment customers into groups
+    paypal_group = dataset[dataset['Preferred Payment Method'] == 'PayPal']
+    other_group = dataset[dataset['Preferred Payment Method']!= 'PayPal']
+    
+    # Calculate the percentage of customers in each group who made a repeat purchase within 30 days
+    paypal_repeat = paypal_group[paypal_group['Previous Purchases'] > 1].shape[0] / paypal_group.shape[0]
+    other_repeat = other_group[other_group['Previous Purchases'] > 1].shape[0] / other_group.shape[0]
+    
+    # Compare the probabilities between the two groups using a statistical test
+    contingency_table = pd.crosstab(dataset['Preferred Payment Method'], dataset['Previous Purchases'] > 1)
+    chi2_stat, p_val, dof, expected = chi2_contingency(contingency_table)
+    
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    
+    return result
+insights = "Customers who use PayPal as their preferred payment method tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that PayPal users are more likely to make repeat purchases. Businesses can leverage this insight by optimizing PayPal-exclusive promotions to enhance customer retention."
+END:
+DESCRIPTION: Customers aged 40-60 who purchase clothing items with a 10% discount have a 20% higher probability of making a repeat purchase within 60 days compared to those who buy at regular prices.
+INSIGHTS: Customers aged 40-60 who purchase clothing items with a 10% discount have a 20% higher chance of making a repeat purchase within 60 days. This suggests that targeted discount campaigns for this demographic can lead to increased customer loyalty and retention.
+0
+####################
+COT:
+1. Segment customers into groups: those aged 40-60 who purchased clothing items with a 10% discount and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a repeat purchase within 60 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers aged 40-60 who purchase clothing items with a 10% discount have a 20% higher probability of making a repeat purchase within 60 days compared to those who buy at regular prices."
+COT = '''
+1. Segment customers into groups: those aged 40-60 who purchased clothing items with a 10% discount and those who bought at regular prices.
+2. Calculate the percentage of customers in each group who made a repeat purchase within 60 days.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted discount strategies to encourage repeat purchases.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    # Filter customers aged 40-60 who purchased clothing items
+    df = dataset[(dataset['Age'] >= 40) & (dataset['Age'] <= 60) & (dataset['Category'] == 'Clothing')]
+    # Create a contingency table for the chi-squared test
+    contingency_table = pd.crosstab(df['Discount Applied'], df['Previous Purchases'] > 0)
+    # Perform the chi-squared test
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    # Return 1 if the hypothesis is accepted, 0 otherwise
+    return 1 if p < 0.05 else 0
+insights = "Customers aged 40-60 who purchase clothing items with a 10% discount have a 20% higher chance of making a repeat purchase within 60 days. This suggests that targeted discount campaigns for this demographic can lead to increased customer loyalty and retention."
+END:
+DESCRIPTION: The average purchase amount for customers who use PayPal as their preferred payment method is 15% higher than those who use credit cards.
+INSIGHTS: Customers who use PayPal as their preferred payment method have an average purchase amount 15% higher than those who use credit cards. This suggests that optimizing payment methods to prioritize PayPal can lead to increased revenue.
+0
+####################
+COT:
+1. Segment customers into groups: those who use PayPal as their preferred payment method and those who use credit cards.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform payment method optimization strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The average purchase amount for customers who use PayPal as their preferred payment method is 15% higher than those who use credit cards."
+COT = '''
+1. Segment customers into groups: those who use PayPal as their preferred payment method and those who use credit cards.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform payment method optimization strategies.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    # Filter customers who use PayPal or credit cards as their preferred payment method
+    paypal_df = dataset[dataset['Preferred Payment Method'] == 'PayPal']
+    credit_card_df = dataset[dataset['Preferred Payment Method'] == 'Credit Card']
+    # Perform the t-test
+    t_stat, p_val = ttest_ind(paypal_df['Purchase Amount (USD)'], credit_card_df['Purchase Amount (USD)'])
+    # Return 1 if the hypothesis is accepted, 0 otherwise
+    return 1 if p_val < 0.05 else 0
+insights = "Customers who use PayPal as their preferred payment method have an average purchase amount 15% higher than those who use credit cards. This suggests that optimizing payment methods to prioritize PayPal can lead to increased revenue."
+END:
+DESCRIPTION: Customers who purchase items during the spring season have a 25% higher probability of leaving a review with a 4-star or higher rating compared to those who purchase during other seasons.
+INSIGHTS: Customers who purchase items during the spring season have a 25% higher chance of leaving a review with a 4-star or higher rating. This suggests that targeted marketing campaigns during the spring season can lead to increased customer satisfaction and loyalty.
+0
+####################
+COT:
+1. Segment customers into groups: those who purchased items during the spring season and those who purchased during other seasons.
+2. Calculate the percentage of customers in each group who left a review with a 4-star or higher rating.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform seasonal marketing strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Customers who purchase items during the spring season have a 25% higher probability of leaving a review with a 4-star or higher rating compared to those who purchase during other seasons."
+COT = '''
+1. Segment customers into groups: those who purchased items during the spring season and those who purchased during other seasons.
+2. Calculate the percentage of customers in each group who left a review with a 4-star or higher rating.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform seasonal marketing strategies.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    # Filter customers who purchased items during the spring season
+    spring_df = dataset[dataset['Season'] == 'Spring']
+    # Create a contingency table for the chi-squared test
+    contingency_table = pd.crosstab(spring_df['Season'], spring_df['Review Rating'] >= 4)
+    # Perform the chi-squared test
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    # Return 1 if the hypothesis is accepted, 0 otherwise
+    return 1 if p < 0.05 else 0
+insights = "Customers who purchase items during the spring season have a 25% higher chance of leaving a review with a 4-star or higher rating. This suggests that targeted marketing campaigns during the spring season can lead to increased customer satisfaction and loyalty."
+END:
+DESCRIPTION: The average frequency of purchases for customers who subscribe to the company's newsletter is 30% higher than those who do not subscribe.
+INSIGHTS: Customers who subscribe to the company's newsletter have an average frequency of purchases 30% higher than those who do not subscribe. This suggests that optimizing newsletter content and frequency can lead to increased customer engagement and loyalty.
+0
+####################
+COT:
+1. Segment customers into groups: those who subscribe to the company's newsletter and those who do not subscribe.
+2. Calculate the average frequency of purchases for each group.
+3. Compare the average frequency of purchases between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform newsletter optimization strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The average frequency of purchases for customers who subscribe to the company's newsletter is 30% higher than those who do not subscribe."
+COT = '''
+1. Segment customers into groups: those who subscribe to the company's newsletter and those who do not subscribe.
+2. Calculate the average frequency of purchases for each group.
+3. Compare the average frequency of purchases between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform newsletter optimization strategies.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    # Filter customers who subscribe to the company's newsletter
+    subscriber_df = dataset[dataset['Subscription Status'] == 'Active']
+    non_subscriber_df = dataset[dataset['Subscription Status'] == 'Inactive']
+    # Perform the t-test
+    t_stat, p_val = ttest_ind(subscriber_df['Frequency of Purchases'], non_subscriber_df['Frequency of Purchases'])
+    # Return 1 if the hypothesis is accepted, 0 otherwise
+    return 1 if p_val < 0.05 else 0
+insights = "Customers who subscribe to the company's newsletter have an average frequency of purchases 30% higher than those who do not subscribe. This suggests that optimizing newsletter content and frequency can lead to increased customer engagement and loyalty."
+END:
+DESCRIPTION: The average purchase amount for customers who use the company's mobile app is 20% higher than those who use the website.
+INSIGHTS: Customers who use the company's mobile app have an average purchase amount 20% higher than those who use the website. This suggests that optimizing the mobile app user experience can lead to increased revenue and customer satisfaction.
+0
+####################
+COT:
+1. Segment customers into groups: those who use the company's mobile app and those who use the website.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform mobile app optimization strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The average purchase amount for customers who use the company's mobile app is 20% higher than those who use the website."
+COT = '''
+1. Segment customers into groups: those who use the company's mobile app and those who use the website.
+2. Calculate the average purchase amount for each group.
+3. Compare the average purchase amounts between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform mobile app optimization strategies.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    # Filter customers who use the company's mobile app
+    mobile_app_df = dataset[dataset['Payment Method'] == 'Mobile App']
+    website_df = dataset[dataset['Payment Method'] == 'Website']
+    # Perform the t-test
+    t_stat, p_val = ttest_ind(mobile_app_df['Purchase Amount (USD)'], website_df['Purchase Amount (USD)'])
+    # Return 1 if the hypothesis is accepted, 0 otherwise
+    return 1 if p_val < 0.05 else 0
+insights = "Customers who use the company's mobile app have an average purchase amount 20% higher than those who use the website. This suggests that optimizing the mobile app user experience can lead to increased revenue and customer satisfaction."
+END:
 ####################
 HYPOTHESIS RESULTS:
-[]
+[('Customers aged 30-45 have a 20% higher average purchase amount for clothing items ($75 vs. $62) compared to other age groups, suggesting targeted marketing campaigns to this demographic could increase revenue. Consider offering personalized promotions, loyalty programs, or bundled deals to capitalize on this trend.', 0), ('Customers who use PayPal have a 15% higher purchase frequency (4.2 purchases/month vs. 3.6 purchases/month) compared to those using other payment methods, indicating a potential opportunity to increase sales through targeted promotions and loyalty programs for PayPal users.', 0), ('Customers who purchase items with a discount applied have a 25% higher chance of making a repeat purchase within 30 days (42% vs. 34%) compared to those who purchase at full price, suggesting that targeted discounts can increase customer loyalty and retention.', 0), ("Customers who purchase items from the 'Clothing' category have a 30% higher average review rating (4.2/5 vs. 3.5/5) compared to those who purchase items from other categories, indicating that clothing items are generally well-received by customers and may be a good target for future product development and marketing efforts.", 1), ("Customers who use the 'Free Shipping' shipping type have a 20% higher average purchase amount ($65 vs. $55) compared to those who use other shipping types, suggesting that offering free shipping can increase average order value and drive revenue growth.", 0), ('Customers purchasing during discount periods have a 20% higher average purchase amount, indicating that targeted discounts lead to increased spending. Businesses can optimize discount campaigns to encourage higher spending among customers.', 0), ('Repeat customers have a 15% higher average review rating, indicating that customer retention leads to improved satisfaction. Businesses can focus on retention strategies to increase customer loyalty and encourage positive word-of-mouth.', 0), ('Credit card users have a 10% higher average purchase amount, indicating that credit card promotions can lead to increased spending. Businesses can partner with credit card companies to offer targeted promotions and encourage higher spending among customers.', 0), ('Spring season purchasers have a 12% higher average purchase amount, indicating that seasonal promotions can lead to increased spending. Businesses can offer targeted promotions during the spring season to encourage higher spending among customers.', 0), ('Loyalty program subscribers have a 20% higher average purchase frequency, indicating that targeted loyalty program promotions can lead to increased repeat business. Businesses can focus on loyalty program promotions to encourage repeat purchases and increase customer loyalty.', 0), ('Customers making purchases during discount periods have a 20% higher chance of making a repeat purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns to enhance lifetime value.', 0), ('Customers who use credit cards as their preferred payment method tend to have a 15% higher average purchase amount, indicating that credit card users are more likely to make larger purchases. Businesses can leverage this insight by offering credit card-exclusive promotions to increase average purchase amounts.', 0), ('Customers who make purchases during the spring season tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that seasonal marketing campaigns can be effective in encouraging repeat purchases. Businesses can leverage this insight by optimizing spring-season marketing campaigns to enhance customer retention.', 0), ('Customers who have a higher frequency of purchases tend to have a 12% higher average purchase amount, indicating that frequent buyers are more likely to make larger purchases. Businesses can leverage this insight by offering frequency-based promotions to increase average purchase amounts.', 0), ('Customers who use PayPal as their preferred payment method tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that PayPal users are more likely to make repeat purchases. Businesses can leverage this insight by optimizing PayPal-exclusive promotions to enhance customer retention.', 0), ('Customers aged 40-60 who purchase clothing items with a 10% discount have a 20% higher chance of making a repeat purchase within 60 days. This suggests that targeted discount campaigns for this demographic can lead to increased customer loyalty and retention.', 0), ('Customers who use PayPal as their preferred payment method have an average purchase amount 15% higher than those who use credit cards. This suggests that optimizing payment methods to prioritize PayPal can lead to increased revenue.', 0), ('Customers who purchase items during the spring season have a 25% higher chance of leaving a review with a 4-star or higher rating. This suggests that targeted marketing campaigns during the spring season can lead to increased customer satisfaction and loyalty.', 0), ("Customers who subscribe to the company's newsletter have an average frequency of purchases 30% higher than those who do not subscribe. This suggests that optimizing newsletter content and frequency can lead to increased customer engagement and loyalty.", 0), ("Customers who use the company's mobile app have an average purchase amount 20% higher than those who use the website. This suggests that optimizing the mobile app user experience can lead to increased revenue and customer satisfaction.", 0)]
 
 
 
 ####################
 CLEANED HYPOTHESIS RESULTS:
-[]
-Len: 0
+[('Customers aged 30-45 have a 20% higher average purchase amount for clothing items ($75 vs. $62) compared to other age groups, suggesting targeted marketing campaigns to this demographic could increase revenue. Consider offering personalized promotions, loyalty programs, or bundled deals to capitalize on this trend.', 0), ('Customers who use PayPal have a 15% higher purchase frequency (4.2 purchases/month vs. 3.6 purchases/month) compared to those using other payment methods, indicating a potential opportunity to increase sales through targeted promotions and loyalty programs for PayPal users.', 0), ('Customers who purchase items with a discount applied have a 25% higher chance of making a repeat purchase within 30 days (42% vs. 34%) compared to those who purchase at full price, suggesting that targeted discounts can increase customer loyalty and retention.', 0), ("Customers who purchase items from the 'Clothing' category have a 30% higher average review rating (4.2/5 vs. 3.5/5) compared to those who purchase items from other categories, indicating that clothing items are generally well-received by customers and may be a good target for future product development and marketing efforts.", 1), ("Customers who use the 'Free Shipping' shipping type have a 20% higher average purchase amount ($65 vs. $55) compared to those who use other shipping types, suggesting that offering free shipping can increase average order value and drive revenue growth.", 0), ('Customers purchasing during discount periods have a 20% higher average purchase amount, indicating that targeted discounts lead to increased spending. Businesses can optimize discount campaigns to encourage higher spending among customers.', 0), ('Repeat customers have a 15% higher average review rating, indicating that customer retention leads to improved satisfaction. Businesses can focus on retention strategies to increase customer loyalty and encourage positive word-of-mouth.', 0), ('Credit card users have a 10% higher average purchase amount, indicating that credit card promotions can lead to increased spending. Businesses can partner with credit card companies to offer targeted promotions and encourage higher spending among customers.', 0), ('Spring season purchasers have a 12% higher average purchase amount, indicating that seasonal promotions can lead to increased spending. Businesses can offer targeted promotions during the spring season to encourage higher spending among customers.', 0), ('Loyalty program subscribers have a 20% higher average purchase frequency, indicating that targeted loyalty program promotions can lead to increased repeat business. Businesses can focus on loyalty program promotions to encourage repeat purchases and increase customer loyalty.', 0), ('Customers making purchases during discount periods have a 20% higher chance of making a repeat purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns to enhance lifetime value.', 0), ('Customers who use credit cards as their preferred payment method tend to have a 15% higher average purchase amount, indicating that credit card users are more likely to make larger purchases. Businesses can leverage this insight by offering credit card-exclusive promotions to increase average purchase amounts.', 0), ('Customers who make purchases during the spring season tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that seasonal marketing campaigns can be effective in encouraging repeat purchases. Businesses can leverage this insight by optimizing spring-season marketing campaigns to enhance customer retention.', 0), ('Customers who have a higher frequency of purchases tend to have a 12% higher average purchase amount, indicating that frequent buyers are more likely to make larger purchases. Businesses can leverage this insight by offering frequency-based promotions to increase average purchase amounts.', 0), ('Customers who use PayPal as their preferred payment method tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that PayPal users are more likely to make repeat purchases. Businesses can leverage this insight by optimizing PayPal-exclusive promotions to enhance customer retention.', 0), ('Customers aged 40-60 who purchase clothing items with a 10% discount have a 20% higher chance of making a repeat purchase within 60 days. This suggests that targeted discount campaigns for this demographic can lead to increased customer loyalty and retention.', 0), ('Customers who use PayPal as their preferred payment method have an average purchase amount 15% higher than those who use credit cards. This suggests that optimizing payment methods to prioritize PayPal can lead to increased revenue.', 0), ('Customers who purchase items during the spring season have a 25% higher chance of leaving a review with a 4-star or higher rating. This suggests that targeted marketing campaigns during the spring season can lead to increased customer satisfaction and loyalty.', 0), ("Customers who subscribe to the company's newsletter have an average frequency of purchases 30% higher than those who do not subscribe. This suggests that optimizing newsletter content and frequency can lead to increased customer engagement and loyalty.", 0), ("Customers who use the company's mobile app have an average purchase amount 20% higher than those who use the website. This suggests that optimizing the mobile app user experience can lead to increased revenue and customer satisfaction.", 0)]
+Len: 20
 
 
 
 ####################
-HYPOTHESIS DICTIONARY:
-{'General Hypothesis': ['Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.', 'Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.', 'Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.', 'Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.', 'Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.', 'Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.', 'Chi-Square Test for Independence: Test if two categorical variables are independent.', 'ANOVA (Analysis of Variance): Compare the means across multiple groups.', 'Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.', 'Normality Tests: Test if the distribution of a variable follows a normal distribution.', 'Homogeneity Tests: Determine if different samples come from populations with the same distribution.', 'Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.', 'Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.', 'Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.', 'Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.', 'Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.'], 'Clustering Hypothesis': ['Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.', 'Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.', 'Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.', 'Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.', 'Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.', 'Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.', 'Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.'], 'Outlier Detection': ['Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.', 'Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).', 'Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.', 'Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.', 'DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.'], 'Anomaly Detection': ['Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.', 'Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.', 'Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.', 'Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.', 'Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.', 'Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.'], 'Cause-Effect Relationships': ['Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.', 'Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.', 'Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.', 'Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.', 'Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.', 'Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.', 'Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.', 'Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.', 'Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.', 'Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.', 'Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.', 'Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.', 'Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.', 'Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.', 'Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.'], 'Latent Variable Hypotheses': ['Latent variable hypotheses explore relationships involving unobserved or hidden variables that help explain observed data structure. These hypotheses assist in understanding complex constructs, revealing deeper relationships that may not be directly measurable.', 'Existence of Latent Variable Hypothesis: Test for the presence of unobserved variables that influence observed patterns, suggesting an underlying factor.', 'Latent Variable-Observable Variable Association Hypothesis: Assess if latent variables associate with specific observable variables, clarifying hidden structure.', 'Factorial Structure Hypothesis: Test if observed variables load onto a smaller number of latent factors, suggesting a factorial structure.', 'Dimensionality Hypothesis: Explore if the dataset’s variance can be explained by a limited number of latent dimensions, indicating reduced complexity.', 'Latent Class or Group Hypothesis: Investigate if hidden classes or groups exist within the data, revealing categorical latent structures.', 'Measurement Invariance Hypothesis: Test if latent variables maintain consistent relationships across different groups, ensuring validity in comparisons.', 'Predictive Power of Latent Variable Hypothesis: Assess if latent variables can predict specific outcomes, indicating their impact on observed data.', 'Latent Growth Hypothesis: Analyze if changes in latent variables over time explain longitudinal data trends.', 'Construct Validity Hypothesis: Test if observed variables accurately measure the latent constructs they are meant to represent.', 'Latent Variable Mediation Hypothesis: Investigate if latent variables mediate relationships between observed variables, clarifying indirect pathways.', 'Residualized Latent Variable Hypothesis: Assess if latent variables, after controlling for observable variables, still impact outcomes.', 'Interaction of Latent Variables Hypothesis: Test if interactions among latent variables affect observed outcomes, indicating interdependent hidden factors.', 'Latent Trait Distribution Hypothesis: Explore the distribution of latent traits within the population, identifying variance in unobserved characteristics.', 'Latent Structure Instability Hypothesis: Test if the structure of latent variables shifts over time or across samples, suggesting structural variability.', 'Effect of External Variable on Latent Structure Hypothesis: Investigate if external variables affect the structure or interpretation of latent variables.', 'Higher-Order Latent Variable Hypothesis: Test if multiple latent variables combine into a second-order latent structure, adding hierarchical layers.']}
 HYPOTHESIS RESULTS:
-[]
+[('Customers aged 30-45 have a 20% higher average purchase amount for clothing items ($75 vs. $62) compared to other age groups, suggesting targeted marketing campaigns to this demographic could increase revenue. Consider offering personalized promotions, loyalty programs, or bundled deals to capitalize on this trend.', 0), ('Customers who use PayPal have a 15% higher purchase frequency (4.2 purchases/month vs. 3.6 purchases/month) compared to those using other payment methods, indicating a potential opportunity to increase sales through targeted promotions and loyalty programs for PayPal users.', 0), ('Customers who purchase items with a discount applied have a 25% higher chance of making a repeat purchase within 30 days (42% vs. 34%) compared to those who purchase at full price, suggesting that targeted discounts can increase customer loyalty and retention.', 0), ("Customers who purchase items from the 'Clothing' category have a 30% higher average review rating (4.2/5 vs. 3.5/5) compared to those who purchase items from other categories, indicating that clothing items are generally well-received by customers and may be a good target for future product development and marketing efforts.", 1), ("Customers who use the 'Free Shipping' shipping type have a 20% higher average purchase amount ($65 vs. $55) compared to those who use other shipping types, suggesting that offering free shipping can increase average order value and drive revenue growth.", 0), ('Customers purchasing during discount periods have a 20% higher average purchase amount, indicating that targeted discounts lead to increased spending. Businesses can optimize discount campaigns to encourage higher spending among customers.', 0), ('Repeat customers have a 15% higher average review rating, indicating that customer retention leads to improved satisfaction. Businesses can focus on retention strategies to increase customer loyalty and encourage positive word-of-mouth.', 0), ('Credit card users have a 10% higher average purchase amount, indicating that credit card promotions can lead to increased spending. Businesses can partner with credit card companies to offer targeted promotions and encourage higher spending among customers.', 0), ('Spring season purchasers have a 12% higher average purchase amount, indicating that seasonal promotions can lead to increased spending. Businesses can offer targeted promotions during the spring season to encourage higher spending among customers.', 0), ('Loyalty program subscribers have a 20% higher average purchase frequency, indicating that targeted loyalty program promotions can lead to increased repeat business. Businesses can focus on loyalty program promotions to encourage repeat purchases and increase customer loyalty.', 0), ('Customers making purchases during discount periods have a 20% higher chance of making a repeat purchase within 30 days, indicating that initial price incentives lead to improved customer retention. Businesses can leverage this insight by optimizing discount campaigns to enhance lifetime value.', 0), ('Customers who use credit cards as their preferred payment method tend to have a 15% higher average purchase amount, indicating that credit card users are more likely to make larger purchases. Businesses can leverage this insight by offering credit card-exclusive promotions to increase average purchase amounts.', 0), ('Customers who make purchases during the spring season tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that seasonal marketing campaigns can be effective in encouraging repeat purchases. Businesses can leverage this insight by optimizing spring-season marketing campaigns to enhance customer retention.', 0), ('Customers who have a higher frequency of purchases tend to have a 12% higher average purchase amount, indicating that frequent buyers are more likely to make larger purchases. Businesses can leverage this insight by offering frequency-based promotions to increase average purchase amounts.', 0), ('Customers who use PayPal as their preferred payment method tend to have a 10% higher chance of making a repeat purchase within 30 days, indicating that PayPal users are more likely to make repeat purchases. Businesses can leverage this insight by optimizing PayPal-exclusive promotions to enhance customer retention.', 0), ('Customers aged 40-60 who purchase clothing items with a 10% discount have a 20% higher chance of making a repeat purchase within 60 days. This suggests that targeted discount campaigns for this demographic can lead to increased customer loyalty and retention.', 0), ('Customers who use PayPal as their preferred payment method have an average purchase amount 15% higher than those who use credit cards. This suggests that optimizing payment methods to prioritize PayPal can lead to increased revenue.', 0), ('Customers who purchase items during the spring season have a 25% higher chance of leaving a review with a 4-star or higher rating. This suggests that targeted marketing campaigns during the spring season can lead to increased customer satisfaction and loyalty.', 0), ("Customers who subscribe to the company's newsletter have an average frequency of purchases 30% higher than those who do not subscribe. This suggests that optimizing newsletter content and frequency can lead to increased customer engagement and loyalty.", 0), ("Customers who use the company's mobile app have an average purchase amount 20% higher than those who use the website. This suggests that optimizing the mobile app user experience can lead to increased revenue and customer satisfaction.", 0)]

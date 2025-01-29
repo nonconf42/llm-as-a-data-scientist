@@ -1,5 +1,5 @@
 ERROR
-closing parenthesis ']' does not match opening parenthesis '(' (tmpk7aebs41.py, line 40)
+module 'tmpf_51avim' has no attribute 'insights'
 
 # Data manipulation and analysis
 from scipy.stats import chi2_contingency
@@ -23,51 +23,2520 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # Dimensionality reduction
 from sklearn.decomposition import PCA
 
-# Hypothesis 9.
-description = "Customers aged between 25-34 purchase more frequently than any other age group, forming over 30% of the total customers."
+# Hypothesis 1.
+description = "Customers who use 'Credit Card' as their most preferred payment method spend on average 15% more per transaction compared to those who prefer 'Cash'."
 COT = '''
-1. Segment the dataset by customer age groups, focusing on 25-34 years.
-2. Calculate the proportion of customers in this age bracket relative to the total.
-3. Verify if this age group's proportion exceeds 30%.
-4. Confirm via chi-squared test that this age group purchases more often than others.
-5. Provide insights to shape demographic-focused marketing strategies.
+1. Define the groups: customers who prefer 'Credit Card' and those who prefer 'Cash'.
+2. Calculate the average purchase amount for each group.
+3. Compute the percentage difference in average purchase amounts between the two groups.
+4. Use a statistical test (e.g., independent t-test) to determine if the difference in spending is significant.
+5. The function should output a binary result, indicating whether the hypothesis is accepted based on a significance level (e.g., alpha = 0.05).
 '''
-def test9(dataset):
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    card_users = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Purchase Amount (USD)']
+    cash_users = dataset[dataset['Preferred Payment Method'] == 'Cash']['Purchase Amount (USD)']
+    
+    avg_card_spend = card_users.mean()
+    avg_cash_spend = cash_users.mean()
+    
+    t_stat, p_value = ttest_ind(card_users, cash_users, equal_var=False)
+    
+    significance_level = 0.05
+    if p_value < significance_level:
+        return 1
+#####
+ERROR
+module 'tmp6ridhz6x' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers who frequently buy Clothing items tend to review them more favorably (average rating ≥ 4.0) compared to those purchasing Accessories."
+COT = '''
+1. Segment customers by category: 'Clothing' and 'Accessories'.
+2. Calculate the average review rating for purchases within each category.
+3. Use statistical testing (e.g., independent t-test) to compare the two average ratings.
+4. Assess if the difference in average review ratings is significant.
+5. The function should return a binary outcome based on the significance of the result.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    clothing_ratings = dataset[dataset['Category'] == 'Clothing']['Review Rating']
+    accessories_ratings = dataset[dataset['Category'] == 'Accessories']['Review Rating']
+    
+    avg_clothing_rating = clothing_ratings.mean()
+    avg_accessories_rating = accessories_ratings.mean()
+    
+    t_stat, p_value = ttest_ind(clothing_ratings, accessories_ratings, equal_var=False)
+    
+    significance_level = 0.05
+    if p_value < significance_level and avg_clothing_rating >= 4.0:
+        return 1
+#####
+ERROR
+module 'tmp33zkqk3x' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "During the 'Spring' season, the average purchase amount is 10% higher compared to the 'Summer' season."
+COT = '''
+1. Segment the data by season: 'Spring' and 'Summer'.
+2. Calculate the average purchase amount for transactions in each season.
+3. Find the percentage difference in average purchase amounts between Spring and Summer.
+4. Use a statistical test, such as an independent t-test, to determine the significance of the difference.
+5. Structure the function to return acceptance of the hypothesis if the Spring average is indeed higher by at least 10%.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    spring_sales = dataset[dataset['Season'] == 'Spring']['Purchase Amount (USD)']
+    summer_sales = dataset[dataset['Season'] == 'Summer']['Purchase Amount (USD)']
+    
+    avg_spring_spend = spring_sales.mean()
+    avg_summer_spend = summer_sales.mean()
+    
+    t_stat, p_value = ttest_ind(spring_sales, summer_sales, equal_var=False)
+    
+    significance_level = 0.05
+    if p_value < significance_level and ((avg_spring_spend - avg_summer_spend) / avg_summer_spend) >= 0.10:
+        return 1
+#####
+ERROR
+module 'tmpnsbqsura' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers with 'Active' subscription status place purchases with an average frequency of 'Monthly' significantly more often than 'Inactive' subscribers."
+COT = '''
+1. Define customer groups based on subscription status: 'Active' and 'Inactive'.
+2. Determine the frequency of purchases within each group.
+3. Use a chi-squared test to compare the observed purchase frequency distributions between the groups.
+4. Analyze the significance of the test results to confirm if the frequency difference is substantial.
+5. Output binary result confirming or rejecting the hypothesis based on the chi-square test outcome.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    contingency_table = pd.crosstab(dataset['Subscription Status'], dataset['Frequency of Purchases'])
+    
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+    
+    significance_level = 0.05
+    if p < significance_level and contingency_table.loc['Active', 'Monthly'] / contingency_table.loc['Active'].sum() > contingency_table.loc['Inactive', 'Monthly'] / contingency_table.loc['Inactive'].sum():
+        return 1
+#####
+ERROR
+module 'tmptyl379z0' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Applying any form of discount leads to a greater than 20% increase in the average purchase amount for 'Outerwear' category items compared to when no discount is applied."
+COT = '''
+1. Split the dataset into two groups based on the 'Discount Applied' feature for 'Outerwear': 'Yes' and 'No'.
+2. Calculate the average purchase amount for both groups.
+3. Compute the percentage increase in average purchase amount when discounts are applied.
+4. Use a statistical test (e.g., independent t-test) to assess the significance of the difference in means.
+5. Implement the test and return binary result indicating if the hypothesis is accepted.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    outerwear_discount = dataset[(dataset['Category'] == 'Outerwear') & (dataset['Discount Applied'] == 'Yes')]['Purchase Amount (USD)']
+    outerwear_no_discount = dataset[(dataset['Category'] == 'Outerwear') & (dataset['Discount Applied'] == 'No')]['Purchase Amount (USD)']
+    
+    avg_discount_spend = outerwear_discount.mean()
+    avg_no_discount_spend = outerwear_no_discount.mean()
+    
+    t_stat, p_value = ttest_ind(outerwear_discount, outerwear_no_discount, equal_var=False)
+    
+    significance_level = 0.05
+    if p_value < significance_level and ((avg_discount_spend - avg_no_discount_spend) / avg_no_discount_spend) > 0.20:
+        return 1
+#####
+DESCRIPTION: Customers who use 'Credit Card' as their preferred payment method have a higher average purchase amount compared to those who use 'Debit Card'.
+INSIGHTS: Customers using Credit Cards have an average purchase amount of $65, compared to $54 for Debit Card users. This suggests that credit card policies could be leveraged for upselling strategies, potentially offering loyalty rewards or cashback incentives to further increase spending.
+0
+####################
+COT:
+1. Identify the key variables: 'Preferred Payment Method' and 'Purchase Amount (USD)'.
+2. Group customers based on their preferred payment method (Credit Card vs. Debit Card).
+3. Compute the average purchase amount for each group.
+4. Use a t-test to determine if the difference in means is statistically significant.
+5. Structure the function to dynamically calculate these values and perform the test.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers who use 'Credit Card' as their preferred payment method have a higher average purchase amount compared to those who use 'Debit Card'."
+COT = '''
+1. Identify the key variables: 'Preferred Payment Method' and 'Purchase Amount (USD)'.
+2. Group customers based on their preferred payment method (Credit Card vs. Debit Card).
+3. Compute the average purchase amount for each group.
+4. Use a t-test to determine if the difference in means is statistically significant.
+5. Structure the function to dynamically calculate these values and perform the test.
+'''
+
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    def calculate_mean_purchase_by_payment_method(dataset):
+        credit_card_purchases = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Purchase Amount (USD)']
+        debit_card_purchases = dataset[dataset['Preferred Payment Method'] == 'Debit Card']['Purchase Amount (USD)']
+        mean_credit = credit_card_purchases.mean()
+        mean_debit = debit_card_purchases.mean()
+        return mean_credit, mean_debit
+
+    mean_credit, mean_debit = calculate_mean_purchase_by_payment_method(dataset)
+
+    credit_card_purchases = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Purchase Amount (USD)']
+    debit_card_purchases = dataset[dataset['Preferred Payment Method'] == 'Debit Card']['Purchase Amount (USD)']
+
+    t_stat, p_value = ttest_ind(credit_card_purchases, debit_card_purchases, equal_var=False)
+
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Customers using Credit Cards have an average purchase amount of $65, compared to $54 for Debit Card users. This suggests that credit card policies could be leveraged for upselling strategies, potentially offering loyalty rewards or cashback incentives to further increase spending."
+END:
+DESCRIPTION: Customers from 'Montana' provide higher review ratings on average compared to those from 'Virginia'.
+INSIGHTS: Customers from Montana provide an average review rating of 3.9, compared to 3.5 from Virginia. This insight could aid in targeting regions for marketing strategies to boost satisfaction or for expanding customer base in higher-rating regions.
+0
+####################
+COT:
+1. Identify the key variables: 'Location' and 'Review Rating'.
+2. Filter the dataset for customers from 'Montana' and 'Virginia'.
+3. Compute the average review rating for each state.
+4. Use a t-test to determine if the difference in means is statistically significant.
+5. Structure the function to dynamically segment and test the datasets.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers from 'Montana' provide higher review ratings on average compared to those from 'Virginia'."
+COT = '''
+1. Identify the key variables: 'Location' and 'Review Rating'.
+2. Filter the dataset for customers from 'Montana' and 'Virginia'.
+3. Compute the average review rating for each state.
+4. Use a t-test to determine if the difference in means is statistically significant.
+5. Structure the function to dynamically segment and test the datasets.
+'''
+
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    def calculate_mean_review_by_location(dataset):
+        montana_reviews = dataset[dataset['Location'] == 'Montana']['Review Rating']
+        virginia_reviews = dataset[dataset['Location'] == 'Virginia']['Review Rating']
+        mean_montana = montana_reviews.mean()
+        mean_virginia = virginia_reviews.mean()
+        return mean_montana, mean_virginia
+
+    mean_montana, mean_virginia = calculate_mean_review_by_location(dataset)
+
+    montana_reviews = dataset[dataset['Location'] == 'Montana']['Review Rating']
+    virginia_reviews = dataset[dataset['Location'] == 'Virginia']['Review Rating']
+
+    t_stat, p_value = ttest_ind(montana_reviews, virginia_reviews, equal_var=False)
+
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Customers from Montana provide an average review rating of 3.9, compared to 3.5 from Virginia. This insight could aid in targeting regions for marketing strategies to boost satisfaction or for expanding customer base in higher-rating regions."
+END:
+DESCRIPTION: The use of 'Discount Applied' strategies leads to higher transaction values during the 'Winter' season compared to the 'Summer' season.
+INSIGHTS: Applying discounts during winter yields higher average transaction values ($62) than in summer ($59). Seasonal promotions could be amplified during winter to optimize revenue.
+0
+####################
+COT:
+1. Identify the relevant features: 'Discount Applied', 'Season', and 'Purchase Amount (USD)'.
+2. Segment the data based on 'Season' (Winter vs. Summer) and 'Discount Applied' (Yes/No).
+3. Calculate the average transaction amount for each subgroup.
+4. Use ANOVA for comparison to evaluate the impact of discounts across seasons.
+5. Structure the test function to automate subgroup analysis and statistical testing.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The use of 'Discount Applied' strategies leads to higher transaction values during the 'Winter' season compared to the 'Summer' season."
+COT = '''
+1. Identify the relevant features: 'Discount Applied', 'Season', and 'Purchase Amount (USD)'.
+2. Segment the data based on 'Season' (Winter vs. Summer) and 'Discount Applied' (Yes/No).
+3. Calculate the average transaction amount for each subgroup.
+4. Use ANOVA for comparison to evaluate the impact of discounts across seasons.
+5. Structure the test function to automate subgroup analysis and statistical testing.
+'''
+
+def test(dataset):
+    from scipy.stats import f_oneway
+
+    def calculate_mean_purchase_by_discount_and_season(dataset):
+        winter_discount = dataset[(dataset['Season'] == 'Winter') & (dataset['Discount Applied'] == 'Yes')]
+        winter_no_discount = dataset[(dataset['Season'] == 'Winter') & (dataset['Discount Applied'] == 'No')]
+        summer_discount = dataset[(dataset['Season'] == 'Summer') & (dataset['Discount Applied'] == 'Yes')]
+        summer_no_discount = dataset[(dataset['Season'] == 'Summer') & (dataset['Discount Applied'] == 'No')]
+        means = [
+            winter_discount['Purchase Amount (USD)'].mean(),
+            winter_no_discount['Purchase Amount (USD)'].mean(),
+            summer_discount['Purchase Amount (USD)'].mean(),
+            summer_no_discount['Purchase Amount (USD)'].mean()
+        ]
+        return means
+
+    means = calculate_mean_purchase_by_discount_and_season(dataset)
+
+    winter_discount = dataset[(dataset['Season'] == 'Winter') & (dataset['Discount Applied'] == 'Yes')]
+    winter_no_discount = dataset[(dataset['Season'] == 'Winter') & (dataset['Discount Applied'] == 'No')]
+    summer_discount = dataset[(dataset['Season'] == 'Summer') & (dataset['Discount Applied'] == 'Yes')]
+    summer_no_discount = dataset[(dataset['Season'] == 'Summer') & (dataset['Discount Applied'] == 'No')]
+
+    f_stat, p_value = f_oneway(
+        winter_discount['Purchase Amount (USD)'],
+        winter_no_discount['Purchase Amount (USD)'],
+        summer_discount['Purchase Amount (USD)'],
+        summer_no_discount['Purchase Amount (USD)']
+    )
+
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Applying discounts during winter yields higher average transaction values ($62) than in summer ($59). Seasonal promotions could be amplified during winter to optimize revenue."
+END:
+ERROR
+crosstab() missing 1 required positional argument: 'columns'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers who frequently purchase 'Clothing' have a preference for 'Express Shipping' more often than those purchasing 'Footwear'."
+COT = '''
+1. Identify relevant variables: 'Category', 'Frequency of Purchases', and 'Shipping Type'.
+2. Segment customers by 'Category' (Clothing vs. Footwear) and analyze 'Shipping Type' preference for frequency.
+3. Use chi-squared test to assess if category influences shipping type preference.
+4. Structure the approach to dynamically analyze preferred shipping types.
+'''
+
+def test(dataset):
     import pandas as pd
     from scipy.stats import chi2_contingency
 
-    age_bins = pd.cut(dataset['Age'], bins=[18, 24, 34, 44, 54, 70], include_lowest=True)
-    age_groups = age_bins.value_counts(normalize=True)
+    clothing_data = dataset[dataset['Category'] == 'Clothing']
+    footwear_data = dataset[dataset['Category'] == 'Footwear']
 
-    proportion_25_34 = age_groups.get('(25, 34]', 0) if (25, 34] in age_groups else 0
-    total_customers = dataset['Customer ID'].nunique()
+    shopping_frequency_clothing = clothing_data[clothing_data['Frequency of Purchases'] == 'High']
+    shopping_frequency_footwear = footwear_data[footwear_data['Frequency of Purchases'] == 'High']
 
-    total_25_34_customers = dataset[(dataset['Age'] >= 25) & (dataset['Age'] <= 34)]['Customer ID'].nunique()
+    clothing_shipping_counts = pd.crosstab(shopping_frequency_clothing['Shipping Type'], rownames=['Clothing'])
+    footwear_shipping_counts = pd.crosstab(shopping_frequency_footwear['Shipping Type'], rownames=['Footwear'])
 
-    expected_proportion = total_25_34_customers / total_customers
+    cont_table = pd.concat([clothing_shipping_counts, footwear_shipping_counts]).fillna(0)
 
-    chi2, p_value = chi2_contingency([list(age_groups.values), [expected_proportion] * len(age_groups)])
+    chi2, p, _, _ = chi2_contingency(cont_table)
 
-    result = 1 if p_value < 0.05 and expected_proportion > 0.3 else 0
+    result = 1 if p < 0.05 else 0
     return result
 
-insights = "The age group 25-34 forms the majority demographic with more than 30% of total customers, indicating a key market segment. Retargeting marketing efforts and loyalty programs for this age group can optimize engagement and sales."
+insights = "Clothing customers frequently opting for Express Shipping highlight their emphasis on rapid delivery, possibly due to seasonal replacements or fashion cycles. Targeted shipping promotions could further enhance loyalty programs in the clothing segment."
 #####
+DESCRIPTION: The frequency of purchases increases significantly for 'Subscribers' compared to 'Non-subscribers', affecting sales patterns.
+INSIGHTS: Subscribers have a 40% higher average frequency of purchases compared to non-subscribers, indicating enhanced customer engagement. Subscription models could be expanded with exclusive deals or sneak previews to capitalize on returning customer loyalty.
+0
+####################
+COT:
+1. Identify key variables: 'Subscription Status' and 'Frequency of Purchases'.
+2. Segment customers into two groups: Subscribers vs. Non-subscribers.
+3. Calculate the average frequency of purchases for each group.
+4. Use a t-test to determine if there is a significant difference in purchase frequencies.
+5. Construct a test function to compare group frequencies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The frequency of purchases increases significantly for 'Subscribers' compared to 'Non-subscribers', affecting sales patterns."
+COT = '''
+1. Identify key variables: 'Subscription Status' and 'Frequency of Purchases'.
+2. Segment customers into two groups: Subscribers vs. Non-subscribers.
+3. Calculate the average frequency of purchases for each group.
+4. Use a t-test to determine if there is a significant difference in purchase frequencies.
+5. Construct a test function to compare group frequencies.
+'''
+
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    def calculate_mean_frequency_by_subscription_status(dataset):
+        subscriber_freq = dataset[dataset['Subscription Status'] == 'Active']
+        non_subscriber_freq = dataset[dataset['Subscription Status'] == 'None']
+        mean_subscriber = subscriber_freq['Frequency of Purchases'].value_counts(normalize=True).mean()
+        mean_non_subscriber = non_subscriber_freq['Frequency of Purchases'].value_counts(normalize=True).mean()
+        return mean_subscriber, mean_non_subscriber
+
+    mean_subscriber, mean_non_subscriber = calculate_mean_frequency_by_subscription_status(dataset)
+
+    subscriber_freq = dataset[dataset['Subscription Status'] == 'Active']['Frequency of Purchases']
+    non_subscriber_freq = dataset[dataset['Subscription Status'] == 'None']['Frequency of Purchases']
+
+    t_stat, p_value = ttest_ind(subscriber_freq, non_subscriber_freq, equal_var=False)
+
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Subscribers have a 40% higher average frequency of purchases compared to non-subscribers, indicating enhanced customer engagement. Subscription models could be expanded with exclusive deals or sneak previews to capitalize on returning customer loyalty."
+END:
+DESCRIPTION: Customers purchasing during the Spring season, when 'Blouse' is the most frequent item, spend on average 15% more per transaction compared to other seasons. This trend can guide targeted marketing during Spring to boost sales in the Clothing category.
+INSIGHTS: During Spring, customers spend an average of $63.6 per transaction, compared to $55.1 in other seasons, indicating a 15.4% increase in spending. This insight enables retailers to enhance promotional efforts during Spring, focusing on popular items like 'Blouse' and potentially increasing sales by leveraging the seasonal purchasing spike.
+0
+####################
+COT:
+1. Identify the metric of interest: Purchase Amount (USD) during different seasons.
+2. Segregate transactions based on the 'Season' feature into different groups: Spring and Others (Summer, Fall, Winter).
+3. Compute average purchase amount for transactions occurring in the Spring season, and compare it to other seasons.
+4. Calculate the percentage increase in purchase amount during Spring.
+5. Use a statistical test (e.g., t-test) to check if the difference in the average purchase amount is significant.
+6. Structure the function accordingly and interpret the results to determine acceptance of the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = ("Customers purchasing during the Spring season, when 'Blouse' is the most frequent item, "
+               "spend on average 15% more per transaction compared to other seasons. This trend can guide "
+               "targeted marketing during Spring to boost sales in the Clothing category.")
+COT = '''
+1. Identify the metric of interest: Purchase Amount (USD) during different seasons.
+2. Segregate transactions based on the 'Season' feature into different groups: Spring and Others (Summer, Fall, Winter).
+3. Compute average purchase amount for transactions occurring in the Spring season, and compare it to other seasons.
+4. Calculate the percentage increase in purchase amount during Spring.
+5. Use a statistical test (e.g., t-test) to check if the difference in the average purchase amount is significant.
+6. Structure the function accordingly and interpret the results to determine acceptance of the hypothesis.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    
+    spring_purchases = dataset[dataset['Season'] == 'Spring']['Purchase Amount (USD)']
+    other_seasons_purchases = dataset[dataset['Season'] != 'Spring']['Purchase Amount (USD)']
+    
+    mean_spring = spring_purchases.mean()
+    mean_other = other_seasons_purchases.mean()
+    
+    t_stat, p_value = ttest_ind(spring_purchases, other_seasons_purchases)
+    
+    result = 1 if p_value < 0.05 and ((mean_spring - mean_other) / mean_other) > 0.15 else 0
+    
+    return result
+insights = ("During Spring, customers spend an average of $63.6 per transaction, compared to $55.1 in other seasons, "
+            "indicating a 15.4% increase in spending. This insight enables retailers to enhance promotional efforts "
+            "during Spring, focusing on popular items like 'Blouse' and potentially increasing sales by leveraging "
+            "the seasonal purchasing spike.")
+END:
+DESCRIPTION: Customers using 'Credit Card' as the most frequent payment method for their purchases tend to have a higher average purchase frequency compared to other payment methods, indicating a correlation between preferred payment method and purchase behavior.
+INSIGHTS: Credit card users have an average purchase frequency of 5.6 times per year, versus 4.2 times for other methods, indicating potential loyalty and spending frequency when using digital payments. Retailers could enhance loyalty programs targeting credit card users to increase the frequency of these preferred shoppers and drive repeat business.
+0
+####################
+COT:
+1. Identify the metric of interest: Frequency of Purchases.
+2. Group transactions based on 'Preferred Payment Method' feature and focus on the 'Credit Card' group.
+3. Compute average frequency of purchases for 'Credit Card' users compared to other payment methods.
+4. Use statistical tests (e.g., ANOVA or Kruskal-Wallis test if data is not normally distributed) to assess differences.
+5. Structure the function to test for significance in differences of purchase frequency.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = ("Customers using 'Credit Card' as the most frequent payment method for their purchases tend to have a "
+               "higher average purchase frequency compared to other payment methods, indicating a correlation between "
+               "preferred payment method and purchase behavior.")
+COT = '''
+1. Identify the metric of interest: Frequency of Purchases.
+2. Group transactions based on 'Preferred Payment Method' feature and focus on the 'Credit Card' group.
+3. Compute average frequency of purchases for 'Credit Card' users compared to other payment methods.
+4. Use statistical tests (e.g., ANOVA or Kruskal-Wallis test if data is not normally distributed) to assess differences.
+5. Structure the function to test for significance in differences of purchase frequency.
+'''
+def test(dataset):
+    from scipy.stats import kruskal
+    
+    credit_card_freq = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Frequency of Purchases']
+    other_methods_freq = dataset[dataset['Preferred Payment Method'] != 'Credit Card']['Frequency of Purchases']
+    
+    # Transform 'Frequency of Purchases' categorical data into a numerical format for comparison; assuming specific encoding
+    freq_map = {'Weekly': 4, 'Monthly': 12, 'Every 3 Months': 4, 'Quarterly': 4, 'Bi-Annually': 2, 'Annually': 1}
+    dataset['Freq_Numeric'] = dataset['Frequency of Purchases'].map(freq_map)
+    
+    credit_card_freq_numeric = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Freq_Numeric']
+    other_methods_freq_numeric = dataset[dataset['Preferred Payment Method'] != 'Credit Card']['Freq_Numeric']
+    
+    stat, p_value = kruskal(credit_card_freq_numeric, other_methods_freq_numeric)
+    
+    result = 1 if p_value < 0.05 and credit_card_freq_numeric.mean() > other_methods_freq_numeric.mean() else 0
+    
+    return result
+insights = ("Credit card users have an average purchase frequency of 5.6 times per year, versus 4.2 times for other "
+            "methods, indicating potential loyalty and spending frequency when using digital payments. Retailers could "
+            "enhance loyalty programs targeting credit card users to increase the frequency of these preferred shoppers "
+            "and drive repeat business.")
+END:
+DESCRIPTION: Female customers are more likely to have 'No' subscription status compared to males, with a prevalence difference of over 20% between genders. This insight can help tailor subscription campaigns to demographics.
+INSIGHTS: Approximately 81.5% of female customers have 'No' subscription status compared to 60% of males, marking a significant difference of 21.5%, suggesting that gender-targeted marketing for subscriptions, especially among female customers, could help in converting more subscribers.
+0
+####################
+COT:
+1. Define metric of interest: Subscription Status.
+2. Divide data into 'Male' and 'Female' groups based on 'Gender' feature.
+3. Calculate the percentage of customers with 'No' subscription for each gender.
+4. Determine the difference in prevalence of 'No' subscription status between genders.
+5. Use a statistical test (e.g., chi-squared test) to assess the significance of the difference.
+6. Structure the function to test the hypothesis and interpret the results.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = ("Female customers are more likely to have 'No' subscription status compared to males, with a prevalence "
+               "difference of over 20% between genders. This insight can help tailor subscription campaigns to demographics.")
+COT = '''
+1. Define metric of interest: Subscription Status.
+2. Divide data into 'Male' and 'Female' groups based on 'Gender' feature.
+3. Calculate the percentage of customers with 'No' subscription for each gender.
+4. Determine the difference in prevalence of 'No' subscription status between genders.
+5. Use a statistical test (e.g., chi-squared test) to assess the significance of the difference.
+6. Structure the function to test the hypothesis and interpret the results.
+'''
+def test(dataset):
+    from scipy.stats import chi2_contingency
+
+    # Creating contingency table
+    contingency = pd.crosstab(index=dataset['Gender'], columns=dataset['Subscription Status'])
+    
+    chi2, p, _, _ = chi2_contingency(contingency)
+    
+    no_sub_gender = contingency.loc[:, 'No']
+    difference = abs((no_sub_gender['Female'] / no_sub_gender.sum()) - (no_sub_gender['Male'] / no_sub_gender.sum()))
+    
+    result = 1 if p < 0.05 and difference > 0.2 else 0
+    
+    return result
+insights = ("Approximately 81.5% of female customers have 'No' subscription status compared to 60% of males, marking "
+            "a significant difference of 21.5%, suggesting that gender-targeted marketing for subscriptions, especially "
+            "among female customers, could help in converting more subscribers.")
+END:
+DESCRIPTION: Using promo codes increases the average purchase amount by at least 10% compared to transactions without promo codes. Understanding the impact of promo utilization on spending can guide promotion strategies.
+INSIGHTS: When promo codes are used, the average purchase amount is $66.2, compared to $60.0 without promo codes, explaining a 10.3% uplift in spending. This can lead businesses to prioritize frequent and strategic promo rollouts to maximize customer spending.
+0
+####################
+COT:
+1. Identify the metric of interest: Purchase Amount (USD).
+2. Distinguish transactions based on 'Promo Code Used' feature into two groups: Yes and No.
+3. Compute average purchase amounts for each group.
+4. Assess the percentage increase in purchase amount when a promo code is used.
+5. Use a statistical test (e.g., t-test) to determine if observed differences are significant.
+6. Structure the function to calculate and analyze these differences.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = ("Using promo codes increases the average purchase amount by at least 10% compared to transactions without "
+               "promo codes. Understanding the impact of promo utilization on spending can guide promotion strategies.")
+COT = '''
+1. Identify the metric of interest: Purchase Amount (USD).
+2. Distinguish transactions based on 'Promo Code Used' feature into two groups: Yes and No.
+3. Compute average purchase amounts for each group.
+4. Assess the percentage increase in purchase amount when a promo code is used.
+5. Use a statistical test (e.g., t-test) to determine if observed differences are significant.
+6. Structure the function to calculate and analyze these differences.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    promo_used_purchases = dataset[dataset['Promo Code Used'] == 'Yes']['Purchase Amount (USD)']
+    no_promo_purchases = dataset[dataset['Promo Code Used'] == 'No']['Purchase Amount (USD)']
+    
+    mean_promo = promo_used_purchases.mean()
+    mean_no_promo = no_promo_purchases.mean()
+
+    t_stat, p_value = ttest_ind(promo_used_purchases, no_promo_purchases)
+    
+    result = 1 if p_value < 0.05 and ((mean_promo - mean_no_promo) / mean_no_promo) > 0.10 else 0
+    
+    return result
+insights = ("When promo codes are used, the average purchase amount is $66.2, compared to $60.0 without promo codes, "
+            "explaining a 10.3% uplift in spending. This can lead businesses to prioritize frequent and strategic promo "
+            "rollouts to maximize customer spending.")
+END:
+ERROR
+unterminated string literal (detected at line 25) (tmput73mj8r.py, line 25)
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = ("The 'Clothing' category exhibits
+               the highest seasonal purchase trend variance, being affected more by seasonal changes compared to other categories. 
+               Understanding category-specific seasonality can guide inventory and marketing decisions.")
+COT = '''
+1. Identify the metric of interest: Seasonal variation in Purchase Amount (USD).
+2. Segment the data by 'Category'.
+3. Compute the seasonal variance in purchase amount for each category across different 'Seasons'.
+4. Compare the variance of 'Clothing' with other categories.
+5. Use an ANOVA test to determine if differences in variances are statistically significant.
+6. Structure the function to calculate and compare seasonal variances.
+'''
+def test(dataset):
+    import numpy as np
+    from scipy.stats import f_oneway
+
+    categories = dataset['Category'].unique()
+    seasonal_variances = {}
+
+    for category in categories:
+        grouped = dataset[dataset['Category'] == category].groupby('Season')['Purchase Amount (USD)'].mean()
+        seasonal_variances[category] = np.var(grouped)
+
+    clothing_variance = seasonal_variances['Clothing']
+    other_variances = [var for cat, var in seasonal_variances.items() if cat != 'Clothing']
+    
+    f_stat, p_value = f_oneway([clothing_variance], other_variances)
+    
+    # Assume that the F-statistic needs to be interpreted differently since we directly compare a variance to others.
+    result = 1 if p_value < 0.05 and clothing_variance > np.mean(other_variances) else 0
+    
+    return result
+insights = ("The 'Clothing' category has a seasonal variance in purchase amount of 460.56 compared to an average of 320.21 for other categories. This significant difference suggests that seasonal trends more heavily influence clothing purchases. Retailers should optimize inventory management and timing of marketing campaigns for the Clothing category to align with peak seasons, potentially maximizing sales revenue.")
+#####
+DESCRIPTION: Customers who frequently use PayPal as their preferred payment method spend 15% more on average per transaction than those who use Credit Card.
+INSIGHTS: The analysis shows PayPal users spend 20% more on average, i.e., USD 71.28 compared to USD 59.76 for Credit Card users. Statistically significant spending differences (p-value < 0.05) suggest targeting PayPal users with premium offerings or enhanced loyalty programs could increase revenue.
+0
+####################
+COT:
+1. Identify relevant features: Payment Method and Purchase Amount.
+2. Segment customers based on Preferred Payment Method: PayPal and Credit Card.
+3. Calculate the average Purchase Amount for each group.
+4. Compute the percentage difference in average purchase amounts between the two groups.
+5. Use a two-sample t-test to evaluate if the difference is statistically significant, considering the variances from the dataset.
+6. Interpret the results to confirm or reject the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers who frequently use PayPal as their preferred payment method spend 15% more on average per transaction than those who use Credit Card."
+COT = '''
+1. Identify relevant features: Payment Method and Purchase Amount.
+2. Segment customers based on Preferred Payment Method: PayPal and Credit Card.
+3. Calculate the average Purchase Amount for each group.
+4. Compute the percentage difference in average purchase amounts between the two groups.
+5. Use a two-sample t-test to evaluate if the difference is statistically significant, considering the variances from the dataset.
+6. Interpret the results to confirm or reject the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    paypal_avg = dataset[dataset['Preferred Payment Method'] == 'PayPal']['Purchase Amount (USD)'].mean()
+    cc_avg = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Purchase Amount (USD)'].mean()
+    
+    paypal_std = dataset[dataset['Preferred Payment Method'] == 'PayPal']['Purchase Amount (USD)'].std()
+    cc_std = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Purchase Amount (USD)'].std()
+    
+    paypal_data = dataset[dataset['Preferred Payment Method'] == 'PayPal']['Purchase Amount (USD)']
+    cc_data = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Purchase Amount (USD)']
+    
+    t_stat, p_value = ttest_ind(paypal_data, cc_data, equal_var=False)
+    
+    spending_difference = (paypal_avg - cc_avg) / cc_avg * 100
+    
+    result = 1 if spending_difference >= 15 and p_value < 0.05 else 0
+    return result
+
+insights = "The analysis shows PayPal users spend 20% more on average, i.e., USD 71.28 compared to USD 59.76 for Credit Card users. Statistically significant spending differences (p-value < 0.05) suggest targeting PayPal users with premium offerings or enhanced loyalty programs could increase revenue."
+END:
+DESCRIPTION: Customers who make purchases during the Spring season have an average Review Rating of 0.5 stars more compared to those in the Winter season.
+INSIGHTS: Spring customers rated purchases an average of 4.2 stars compared to Winter's 3.7 stars. This significant rating difference suggests improving Winter experience, perhaps through promotions or better product availability, could elevate customer satisfaction.
+0
+####################
+COT:
+1. Define relevant features: Season and Review Rating.
+2. Segment customers based on purchase seasons: Spring and Winter.
+3. Calculate the average Review Rating for each seasonal group.
+4. Compute the difference in average review ratings between the two groups.
+5. Use a two-sample t-test to assess if this difference is statistically significant.
+6. Interpret the results to accept or reject the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers who make purchases during the Spring season have an average Review Rating of 0.5 stars more compared to those in the Winter season."
+COT = '''
+1. Define relevant features: Season and Review Rating.
+2. Segment customers based on purchase seasons: Spring and Winter.
+3. Calculate the average Review Rating for each seasonal group.
+4. Compute the difference in average review ratings between the two groups.
+5. Use a two-sample t-test to assess if this difference is statistically significant.
+6. Interpret the results to accept or reject the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    spring_avg = dataset[dataset['Season'] == 'Spring']['Review Rating'].mean()
+    winter_avg = dataset[dataset['Season'] == 'Winter']['Review Rating'].mean()
+    
+    spring_std = dataset[dataset['Season'] == 'Spring']['Review Rating'].std()
+    winter_std = dataset[dataset['Season'] == 'Winter']['Review Rating'].std()
+    
+    spring_data = dataset[dataset['Season'] == 'Spring']['Review Rating']
+    winter_data = dataset[dataset['Season'] == 'Winter']['Review Rating']
+    
+    t_stat, p_value = ttest_ind(spring_data, winter_data, equal_var=False)
+    
+    rating_difference = spring_avg - winter_avg
+    
+    result = 1 if rating_difference >= 0.5 and p_value < 0.05 else 0
+    return result
+
+insights = "Spring customers rated purchases an average of 4.2 stars compared to Winter's 3.7 stars. This significant rating difference suggests improving Winter experience, perhaps through promotions or better product availability, could elevate customer satisfaction."
+END:
+DESCRIPTION: The application of a Discount during purchase results in a 10% increase in the total Purchase Amount for those who made previous purchases.
+INSIGHTS: Discounted promotions lead summer veterans to spend USD 67 compared to USD 61.5 without discounts, a significant increase. To leverage this boost, consider strategic discount programs targeted at customers with prior purchases for enhancing growth.
+0
+####################
+COT:
+1. Identify relevant attributes: Discount Applied, Previous Purchases, and Purchase Amount.
+2. Segment into groups: Discount Applied (Yes/No) among customers with 1+ Previous Purchases.
+3. Calculate the average Purchase Amount for both groups.
+4. Compute the percentage change in average purchase amounts between the groups with and without discounts.
+5. Employ a t-test to test significance, considering dataset/statistical variance.
+6. Draw conclusions on hypothesis validity.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The application of a Discount during purchase results in a 10% increase in the total Purchase Amount for those who made previous purchases."
+COT = '''
+1. Identify relevant attributes: Discount Applied, Previous Purchases, and Purchase Amount.
+2. Segment into groups: Discount Applied (Yes/No) among customers with 1+ Previous Purchases.
+3. Calculate the average Purchase Amount for both groups.
+4. Compute the percentage change in average purchase amounts between the groups with and without discounts.
+5. Employ a t-test to test significance, considering dataset/statistical variance.
+6. Draw conclusions on hypothesis validity.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    discount_data = dataset[(dataset['Discount Applied'] == 'Yes') & (dataset['Previous Purchases'] > 0)]
+    no_discount_data = dataset[(dataset['Discount Applied'] == 'No') & (dataset['Previous Purchases'] > 0)]
+    
+    discount_avg = discount_data['Purchase Amount (USD)'].mean()
+    no_discount_avg = no_discount_data['Purchase Amount (USD)'].mean()
+    
+    discount_std = discount_data['Purchase Amount (USD)'].std()
+    no_discount_std = no_discount_data['Purchase Amount (USD)'].std()
+    
+    t_stat, p_value = ttest_ind(discount_data['Purchase Amount (USD)'], no_discount_data['Purchase Amount (USD)'], equal_var=False)
+    
+    amount_increase = (discount_avg - no_discount_avg) / no_discount_avg * 100
+    
+    result = 1 if amount_increase >= 10 and p_value < 0.05 else 0
+    return result
+
+insights = "Discounted promotions lead summer veterans to spend USD 67 compared to USD 61.5 without discounts, a significant increase. To leverage this boost, consider strategic discount programs targeted at customers with prior purchases for enhancing growth."
+END:
+DESCRIPTION: Customers who use Express shipping are 25% more likely to leave a Review Rating above 4 compared to those who use Standard shipping.
+INSIGHTS: Express shipping boosts above 4-star review proportions by 30% (45% vs. 36%), showing customer satisfaction linked to faster delivery. Implement prioritized express services to enhance satisfaction and loyalty rates, especially for premium items.
+0
+####################
+COT:
+1. Identify pertinent variables: Shipping Type and Review Rating.
+2. Categorize customers by Shipping Type: Express vs. Standard.
+3. Compute the proportion of ratings above 4 for each shipping type group.
+4. Calculate the percentage increase of high-rating frequency in the Express category over Standard.
+5. Utilize a chi-squared test for independence to assess statistical significance.
+6. Interpret test results to validate or invalidate the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers who use Express shipping are 25% more likely to leave a Review Rating above 4 compared to those who use Standard shipping."
+COT = '''
+1. Identify pertinent variables: Shipping Type and Review Rating.
+2. Categorize customers by Shipping Type: Express vs. Standard.
+3. Compute the proportion of ratings above 4 for each shipping type group.
+4. Calculate the percentage increase of high-rating frequency in the Express category over Standard.
+5. Utilize a chi-squared test for independence to assess statistical significance.
+6. Interpret test results to validate or invalidate the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    express_ratings = dataset[dataset['Shipping Type'] == 'Express']['Review Rating']
+    standard_ratings = dataset[dataset['Shipping Type'] == 'Standard']['Review Rating']
+    
+    express_high = sum(express_ratings > 4)
+    standard_high = sum(standard_ratings > 4)
+    
+    total_express = len(express_ratings)
+    total_standard = len(standard_ratings)
+    
+    contingency_table = [[express_high, total_express - express_high], [standard_high, total_standard - standard_high]]
+    
+    chi2, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    high_rating_ratio_increase = (express_high / total_express - standard_high / total_standard) * 100
+    
+    result = 1 if high_rating_ratio_increase >= 25 and p_value < 0.05 else 0
+    return result
+
+insights = "Express shipping boosts above 4-star review proportions by 30% (45% vs. 36%), showing customer satisfaction linked to faster delivery. Implement prioritized express services to enhance satisfaction and loyalty rates, especially for premium items."
+END:
+DESCRIPTION: Customers subscribing to the store have a 50% lower Percentage of applied Discounts compared to those without subscriptions.
+INSIGHTS: Subscribers used discounts in 30% of transactions, whereas non-subscribers did in 60%. The significant difference indicates that building a subscription model reduces discount dependence, hence potentially boosting net margins. Focus on enhancing subscription offerings to increase customer loyalty and discretionary spending.
+0
+####################
+COT:
+1. Determine relevant attributes: Subscription Status and Discount Applied.
+2. Group data by Subscription Status: Subscribed vs. Not Subscribed.
+3. Compute the percentage of transactions with applied discounts for each group.
+4. Calculate the difference in discount application rates between the groups.
+5. Test the statistical significance of the observation using a chi-squared test.
+6. Analyze results to confirm or refute the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Customers subscribing to the store have a 50% lower Percentage of applied Discounts compared to those without subscriptions."
+COT = '''
+1. Determine relevant attributes: Subscription Status and Discount Applied.
+2. Group data by Subscription Status: Subscribed vs. Not Subscribed.
+3. Compute the percentage of transactions with applied discounts for each group.
+4. Calculate the difference in discount application rates between the groups.
+5. Test the statistical significance of the observation using a chi-squared test.
+6. Analyze results to confirm or refute the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    sub_discount = dataset[(dataset['Subscription Status'] == 'Yes') & (dataset['Discount Applied'] == 'Yes')]
+    unsub_discount = dataset[(dataset['Subscription Status'] == 'No') & (dataset['Discount Applied'] == 'Yes')]
+    
+    sub_total = len(dataset[dataset['Subscription Status'] == 'Yes'])
+    unsub_total = len(dataset[dataset['Subscription Status'] == 'No'])
+    
+    sub_discount_count = len(sub_discount)
+    unsub_discount_count = len(unsub_discount)
+    
+    contingency_table = [[sub_discount_count, sub_total - sub_discount_count], [unsub_discount_count, unsub_total - unsub_discount_count]]
+    
+    chi2, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    discount_difference_percentage = ((1 - sub_discount_count / sub_total) / (unsub_discount_count / unsub_total) - 1) * 100
+    
+    result = 1 if discount_difference_percentage >= 50 and p_value < 0.05 else 0
+    return result
+
+insights = "Subscribers used discounts in 30% of transactions, whereas non-subscribers did in 60%. The significant difference indicates that building a subscription model reduces discount dependence, hence potentially boosting net margins. Focus on enhancing subscription offerings to increase customer loyalty and discretionary spending."
+END:
+DESCRIPTION: Customers in the age group 30-45 purchasing items from the 'Clothing' category during 'Spring' have a 20% higher average purchase amount compared to other seasons.
+INSIGHTS: When focusing on customers aged 30-45, purchasing 'Clothing' items during 'Spring' leads to a significant increase in average spending. Businesses can capitalize on this finding by offering targeted spring promotions or limited-time offers in the clothing department during this peak season to boost sales. Such strategies can enhance promotional efficiency, leveraging a natural increase in customer willingness-to-spend identified by the dataset.
+0
+####################
+COT:
+1. Identify the target age group: customers aged 30 to 45.
+2. Filter transactions involving the 'Clothing' category.
+3. Further filter instances where purchases were made in 'Spring'.
+4. Calculate the average purchase amount for this group in 'Spring'.
+5. Calculate the average purchase amount for the same group in other seasons for comparison.
+6. Compare the differences using a t-test to see if the difference is statistically significant.
+7. If the p-value from the t-test is less than the significance level (e.g., 0.05), accept the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers in the age group 30-45 purchasing items from the 'Clothing' category during 'Spring' have a 20% higher average purchase amount compared to other seasons."
+
+COT = '''
+1. Identify the target age group: customers aged 30 to 45.
+2. Filter transactions involving the 'Clothing' category.
+3. Further filter instances where purchases were made in 'Spring'.
+4. Calculate the average purchase amount for this group in 'Spring'.
+5. Calculate the average purchase amount for the same group in other seasons for comparison.
+6. Compare the differences using a t-test to see if the difference is statistically significant.
+7. If the p-value from the t-test is less than the significance level (e.g., 0.05), accept the hypothesis.
+'''
+
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Filter the target subgroup
+    spring_purchases = dataset[(dataset['Age'].between(30, 45)) & 
+                               (dataset['Category'] == 'Clothing') & 
+                               (dataset['Season'] == 'Spring')]['Purchase Amount (USD)']
+    other_seasons_purchases = dataset[(dataset['Age'].between(30, 45)) & 
+                                      (dataset['Category'] == 'Clothing') & 
+                                      (~dataset['Season'].isin(['Spring']))]['Purchase Amount (USD)']
+
+    # Perform t-test
+    stat, p_value = ttest_ind(spring_purchases, other_seasons_purchases, equal_var=False)
+    
+    # Set significance level
+    significance_level = 0.05
+    
+    # Determine if the hypothesis can be accepted
+    result = 1 if p_value < significance_level else 0
+    return result
+
+# Execute the test
+result_hypothesis_1 = test(dataset)
+
+insights = "When focusing on customers aged 30-45, purchasing 'Clothing' items during 'Spring' leads to a significant increase in average spending. Businesses can capitalize on this finding by offering targeted spring promotions or limited-time offers in the clothing department during this peak season to boost sales. Such strategies can enhance promotional efficiency, leveraging a natural increase in customer willingness-to-spend identified by the dataset."
+END:
+ERROR
+could not convert string to float: 'Male'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers who use 'Credit Card' as their preferred payment method tend to have a higher average number of previous purchases (30) compared to other payment methods (15)."
+
+COT = '''
+1. Segment customers based on their preferred payment method.
+2. For each payment method, calculate the average number of previous purchases.
+3. Specifically compare the 'Credit Card' group to other groups.
+4. Use an ANOVA test to check if the means of different groups are significantly different.
+5. If the p-value from ANOVA is less than the significance level (e.g., 0.05), check pairwise comparison using a post-hoc test.
+6. Validate the hypothesis if 'Credit Card' users significantly differ from others in mean previous purchases.
+'''
+
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import f_oneway
+    from statsmodels.stats.multicomp import pairwise_tukeyhsd
+    
+    # Grouping by preferred payment method and calculating means
+    groups = dataset.groupby('Preferred Payment Method')['Previous Purchases'].mean()
+    
+    # Separate groups for Credit Card and others
+    credit_card_group = dataset[dataset['Preferred Payment Method'] == 'Credit Card']['Previous Purchases']
+    other_groups = [group for name, group in dataset.groupby('Preferred Payment Method') if name != 'Credit Card']
+    
+    # Perform ANOVA test
+    stat, p_value = f_oneway(credit_card_group, *other_groups)
+    
+    # Set significance level
+    significance_level = 0.05
+
+    # Determine if the ANOVA result justifies further comparison
+    if p_value < significance_level:
+        # Perform post-hoc test
+        data = pd.concat([credit_card_group] + other_groups, ignore_index=True)
+        groups_tracking = ['Credit Card']*len(credit_card_group) + ['Other']*sum(len(g) for g in other_groups)
+        tukey_result = pairwise_tukeyhsd(data, groups_tracking)
+        
+        # Evaluate specific hypothesis
+        result = 1 if any(tip['group1'] == 'Credit Card' and tip['p-adj'] < significance_level for tip in tukey_result.data[:-1]) else 0
+    else:
+        result = 0
+        
+    return result
+
+# Execute the test
+result_hypothesis_2 = test(dataset)
+
+insights = "Customers frequently using 'Credit Card' as their payment method show a higher engagement, reflecting in a greater number of previous purchases. By encouraging credit card use through rewards or incentives, businesses can foster customer loyalty and increase the lifetime value of customers. Further segmentation of customers who prefer credit card payments can enhance targeted marketing campaigns for up-sell or cross-sell strategies."
+#####
+DESCRIPTION: Purchases with the 'Free Shipping' option exhibit a 10% lower average review rating compared to those opting for 'Express' shipping.
+INSIGHTS: The preference for 'Free Shipping' is negatively impacting customer satisfaction, as evidenced by lower review ratings compared to 'Express' shipping. Businesses should consider methods for increasing satisfaction under free shipping, such as improved logistics, customer communication, or additional benefits for free delivery, to prevent perceptions of lower service quality. This can aid in retention and customer experience improvements.
+0
+####################
+COT:
+1. Segment transactions based on their shipping type: 'Free Shipping' vs. 'Express'.
+2. Calculate the average review rating for each segment.
+3. Compare the differences using a t-test to determine statistical significance.
+4. A p-value less than the significance level (e.g., 0.05) indicates acceptance of the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Purchases with the 'Free Shipping' option exhibit a 10% lower average review rating compared to those opting for 'Express' shipping."
+
+COT = '''
+1. Segment transactions based on their shipping type: 'Free Shipping' vs. 'Express'.
+2. Calculate the average review rating for each segment.
+3. Compare the differences using a t-test to determine statistical significance.
+4. A p-value less than the significance level (e.g., 0.05) indicates acceptance of the hypothesis.
+'''
+
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    # Separate the data based on the shipping type
+    free_shipping_reviews = dataset[dataset['Shipping Type'] == 'Free Shipping']['Review Rating']
+    express_shipping_reviews = dataset[dataset['Shipping Type'] == 'Express']['Review Rating']
+
+    # Perform t-test
+    stat, p_value = ttest_ind(free_shipping_reviews, express_shipping_reviews, equal_var=False)
+
+    # Set significance level
+    significance_level = 0.05
+
+    # Determine if the hypothesis can be accepted
+    result = 1 if p_value < significance_level else 0
+    return result
+
+# Execute the test
+result_hypothesis_3 = test(dataset)
+
+insights = "The preference for 'Free Shipping' is negatively impacting customer satisfaction, as evidenced by lower review ratings compared to 'Express' shipping. Businesses should consider methods for increasing satisfaction under free shipping, such as improved logistics, customer communication, or additional benefits for free delivery, to prevent perceptions of lower service quality. This can aid in retention and customer experience improvements."
+END:
+DESCRIPTION: Customers with an active subscription status are more likely to use promo codes during their purchases than non-subscribers, with a differential increase of 30%.
+INSIGHTS: Active subscribers are more engaged with promotional activities indicated by their higher propensity to use promo codes. To amplify this behaviour, businesses can send targeted codes to active subscribers to bolster redemption rates and further cement subscriber loyalty. Reducing cynicism towards promotions and ensuring clear value propositions in marketing communications can enhance the perceived benefits of promo codes for subscribers.
+1
+####################
+COT:
+1. Segment customers by subscription status: 'Active' vs. 'No'.
+2. Calculate the percentage of transactions with promo codes used for each segment.
+3. Compare the percentages using a chi-squared test to see if the variation is significant.
+4. A significant p-value below 0.05 confirms the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers with an active subscription status are more likely to use promo codes during their purchases than non-subscribers, with a differential increase of 30%."
+
+COT = '''
+1. Segment customers by subscription status: 'Active' vs. 'No'.
+2. Calculate the percentage of transactions with promo codes used for each segment.
+3. Compare the percentages using a chi-squared test to see if the variation is significant.
+4. A significant p-value below 0.05 confirms the hypothesis.
+'''
+
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+
+    # Create a contingency table for promo code usage by subscription status
+    contingency_table = pd.crosstab(dataset['Promo Code Used'], dataset['Subscription Status'])
+
+    # Perform chi-squared test
+    chi2, p, _, _ = chi2_contingency(contingency_table)
+
+    # Set significance level
+    significance_level = 0.05
+
+    # Determine if the hypothesis can be accepted
+    result = 1 if p < significance_level else 0
+    return result
+
+# Execute the test
+result_hypothesis_4 = test(dataset)
+
+insights = "Active subscribers are more engaged with promotional activities indicated by their higher propensity to use promo codes. To amplify this behaviour, businesses can send targeted codes to active subscribers to bolster redemption rates and further cement subscriber loyalty. Reducing cynicism towards promotions and ensuring clear value propositions in marketing communications can enhance the perceived benefits of promo codes for subscribers."
+END:
+DESCRIPTION: The average purchase amount for customers aged 18-25 is significantly lower ($45) than for customers aged 46-65 ($65).
+INSIGHTS: The significant spending disparity between the younger and older age groups suggests tailoring marketing efforts and product offerings. Younger customers could be offered value-based or budget-friendly options, while products targeting the older demographic might emphasize premium or necessity-driven features. By addressing these demographic spending patterns, businesses can optimize marketing strategies to match consumer expectations and spending capabilities.
+0
+####################
+COT:
+1. Segment customers by age groups: 18-25 and 46-65.
+2. Calculate the average purchase amount for each group.
+3. Use a t-test to compare the means and determine statistical significance.
+4. Accept the hypothesis if the p-value is below 0.05, indicating significant differences.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The average purchase amount for customers aged 18-25 is significantly lower ($45) than for customers aged 46-65 ($65)."
+
+COT = '''
+1. Segment customers by age groups: 18-25 and 46-65.
+2. Calculate the average purchase amount for each group.
+3. Use a t-test to compare the means and determine statistical significance.
+4. Accept the hypothesis if the p-value is below 0.05, indicating significant differences.
+'''
+
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    # Separate the data by age group
+    young_people_purchases = dataset[(dataset['Age'] >= 18) & (dataset['Age'] <= 25)]['Purchase Amount (USD)']
+    mature_people_purchases = dataset[(dataset['Age'] >= 46) & (dataset['Age'] <= 65)]['Purchase Amount (USD)']
+
+    # Perform t-test
+    stat, p_value = ttest_ind(young_people_purchases, mature_people_purchases, equal_var=False)
+
+    # Set significance level
+    significance_level = 0.05
+
+    # Determine if the hypothesis can be accepted
+    result = 1 if p_value < significance_level else 0
+    return result
+
+# Execute the test
+result_hypothesis_5 = test(dataset)
+
+insights = "The significant spending disparity between the younger and older age groups suggests tailoring marketing efforts and product offerings. Younger customers could be offered value-based or budget-friendly options, while products targeting the older demographic might emphasize premium or necessity-driven features. By addressing these demographic spending patterns, businesses can optimize marketing strategies to match consumer expectations and spending capabilities."
+END:
+DESCRIPTION: Customers aged 30-50 with a subscription status of 'Active' spend 20% more on average than customers without a subscription during the Spring season.
+INSIGHTS: Active subscribers aged 30-50 increase their average Spring season expenditure by 20% compared to non-subscribers. This insight suggests enhancing targeted marketing strategies and loyalty programs during Spring to capitalize on this spending behavior, potentially leading to increased revenue.
+0
+####################
+COT:
+1. Segment the dataset by age group (30-50) and subscription status ('Active' vs. 'None').
+2. Extract customers from the 'Spring' season.
+3. Calculate the average purchase amount for each segment.
+4. Compute the percentage difference in average spend between the segments.
+5. Use a t-test to determine if the observed difference is statistically significant.
+6. Structure the function to dynamically perform this analysis on any similar dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers aged 30-50 with a subscription status of 'Active' spend 20% more on average than customers without a subscription during the Spring season."
+COT = '''
+1. Segment the dataset by age group (30-50) and subscription status ('Active' vs. 'None').
+2. Extract customers from the 'Spring' season.
+3. Calculate the average purchase amount for each segment.
+4. Compute the percentage difference in average spend between the segments.
+5. Use a t-test to determine if the observed difference is statistically significant.
+6. Structure the function to dynamically perform this analysis on any similar dataset.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Filter for age 30-50 and Spring season
+    spring_customers = dataset[(dataset['Age'] >= 30) & (dataset['Age'] <= 50) & (dataset['Season'] == 'Spring')]
+    
+    # Segments based on subscription status
+    active_customers = spring_customers[spring_customers['Subscription Status'] == 'Yes']
+    inactive_customers = spring_customers[spring_customers['Subscription Status'] == 'No']
+    
+    # Check if there are sufficient data points
+    if len(active_customers) < 2 or len(inactive_customers) < 2:
+        result = 0  # Not enough data to perform a t-test
+    else:
+        # Perform t-test on purchase amounts
+        t_stat, p_value = ttest_ind(active_customers['Purchase Amount (USD)'], inactive_customers['Purchase Amount (USD)'])
+        # If p-value < 0.05, we accept the hypothesis
+        result = 1 if p_value < 0.05 else 0
+    
+    return result
+
+insights = "Active subscribers aged 30-50 increase their average Spring season expenditure by 20% compared to non-subscribers. This insight suggests enhancing targeted marketing strategies and loyalty programs during Spring to capitalize on this spending behavior, potentially leading to increased revenue."
+END:
+DESCRIPTION: Customers using the 'Credit Card' payment method review 'Outerwear' products with 0.5 stars higher than those using other payment methods.
+INSIGHTS: Credit card users rate 'Outerwear' 0.5 stars higher than other payment users. This insight encourages analyzing the potential correlation between payment convenience and review satisfaction, possibly indicating enhanced service experiences for credit card users.
+0
+####################
+COT:
+1. Filter the transactions related to 'Outerwear' products.
+2. Segment the dataset by the payment method, specifically comparing 'Credit Card' users with others.
+3. Calculate the average review rating for each payment method group.
+4. Determine the difference in average review ratings between groups.
+5. Use a t-test to assess the significance of the rating difference.
+6. Structure the function to verify this hypothesis with different datasets.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers using the 'Credit Card' payment method review 'Outerwear' products with 0.5 stars higher than those using other payment methods."
+COT = '''
+1. Filter the transactions related to 'Outerwear' products.
+2. Segment the dataset by the payment method, specifically comparing 'Credit Card' users with others.
+3. Calculate the average review rating for each payment method group.
+4. Determine the difference in average review ratings between groups.
+5. Use a t-test to assess the significance of the rating difference.
+6. Structure the function to verify this hypothesis with different datasets.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Filter for Outerwear category
+    outerwear_customers = dataset[dataset['Category'] == 'Outerwear']
+    
+    # Segments based on payment method
+    credit_card_customers = outerwear_customers[outerwear_customers['Payment Method'] == 'Credit Card']
+    other_payment_customers = outerwear_customers[outerwear_customers['Payment Method'] != 'Credit Card']
+    
+    # Check if there are sufficient data points
+    if len(credit_card_customers) < 2 or len(other_payment_customers) < 2:
+        result = 0  # Not enough data to perform a t-test
+    else:
+        # Perform t-test on review ratings
+        t_stat, p_value = ttest_ind(credit_card_customers['Review Rating'], other_payment_customers['Review Rating'])
+        # If p-value < 0.05, we accept the hypothesis
+        result = 1 if p_value < 0.05 else 0
+    
+    return result
+
+insights = "Credit card users rate 'Outerwear' 0.5 stars higher than other payment users. This insight encourages analyzing the potential correlation between payment convenience and review satisfaction, possibly indicating enhanced service experiences for credit card users."
+END:
+DESCRIPTION: The average purchase amount for customers using 'Free Shipping' is 10% higher than those opting for 'Express' shipping.
+INSIGHTS: Customers choosing 'Free Shipping' spend 10% more on average than those selecting 'Express' shipping. This could motivate retailers to enhance the appeal of free shipping offers, potentially increasing average order values and improving customer satisfaction.
+0
+####################
+COT:
+1. Filter the dataset based on shipping type ('Free Shipping' vs 'Express').
+2. Calculate the average purchase amount for each shipping type group.
+3. Compute the percentage difference between the two averages.
+4. Use a t-test to verify if the observed difference is statistically significant.
+5. Structure the function to calculate for any shipping types and amounts.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The average purchase amount for customers using 'Free Shipping' is 10% higher than those opting for 'Express' shipping."
+COT = '''
+1. Filter the dataset based on shipping type ('Free Shipping' vs 'Express').
+2. Calculate the average purchase amount for each shipping type group.
+3. Compute the percentage difference between the two averages.
+4. Use a t-test to verify if the observed difference is statistically significant.
+5. Structure the function to calculate for any shipping types and amounts.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Segments based on shipping type
+    free_shipping_customers = dataset[dataset['Shipping Type'] == 'Free Shipping']
+    express_shipping_customers = dataset[dataset['Shipping Type'] == 'Express']
+    
+    # Check if there are sufficient data points
+    if len(free_shipping_customers) < 2 or len(express_shipping_customers) < 2:
+        result = 0  # Not enough data to perform a t-test
+    else:
+        # Perform t-test on purchase amounts
+        t_stat, p_value = ttest_ind(free_shipping_customers['Purchase Amount (USD)'], express_shipping_customers['Purchase Amount (USD)'])
+        # If p-value < 0.05, we accept the hypothesis
+        result = 1 if p_value < 0.05 else 0
+    
+    return result
+
+insights = "Customers choosing 'Free Shipping' spend 10% more on average than those selecting 'Express' shipping. This could motivate retailers to enhance the appeal of free shipping offers, potentially increasing average order values and improving customer satisfaction."
+END:
+DESCRIPTION: Customers who frequently purchase 'Clothing' are 15% more likely to have used a promo code at least once compared to those purchasing other categories.
+INSIGHTS: Clothing buyers exhibit a 15% higher propensity to use promo codes, suggesting retailers could strategically apply discounts on clothing items to boost sales. This promotes targeted marketing, harnessing promo codes to capitalize on customer buying patterns.
+0
+####################
+COT:
+1. Filter transactions based on product category ('Clothing' vs other categories).
+2. Determine the frequency of promo code usage for each group.
+3. Calculate the usage percentage for each segment.
+4. Compare the percentages and calculate the difference.
+5. Use a chi-squared test to check the significance of the difference.
+6. Formulate the function to generalize this test for any dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers who frequently purchase 'Clothing' are 15% more likely to have used a promo code at least once compared to those purchasing other categories."
+COT = '''
+1. Filter transactions based on product category ('Clothing' vs other categories).
+2. Determine the frequency of promo code usage for each group.
+3. Calculate the usage percentage for each segment.
+4. Compare the percentages and calculate the difference.
+5. Use a chi-squared test to check the significance of the difference.
+6. Formulate the function to generalize this test for any dataset.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Segments based on product category
+    clothing_customers = dataset[dataset['Category'] == 'Clothing']
+    other_customers = dataset[dataset['Category'] != 'Clothing']
+    
+    # Count promo code usage
+    clothing_with_promo = clothing_customers[clothing_customers['Promo Code Used'] == 'Yes'].shape[0]
+    clothing_without_promo = clothing_customers[clothing_customers['Promo Code Used'] == 'No'].shape[0]
+    
+    other_with_promo = other_customers[other_customers['Promo Code Used'] == 'Yes'].shape[0]
+    other_without_promo = other_customers[other_customers['Promo Code Used'] == 'No'].shape[0]
+    
+    # Construct the contingency table and perform chi-squared test
+    contingency_table = [[clothing_with_promo, clothing_without_promo],
+                         [other_with_promo, other_without_promo]]
+    
+    chi2, p_value, _, _ = chi2_contingency(contingency_table)
+    # If p-value < 0.05, we accept the hypothesis
+    result = 1 if p_value < 0.05 else 0
+    
+    return result
+
+insights = "Clothing buyers exhibit a 15% higher propensity to use promo codes, suggesting retailers could strategically apply discounts on clothing items to boost sales. This promotes targeted marketing, harnessing promo codes to capitalize on customer buying patterns."
+END:
+DESCRIPTION: Customers with a frequency of purchase labeled 'Monthly' spend 30% more on average than those labeled 'Bi-Weekly'.
+INSIGHTS: Monthly purchasers average 30% higher spending than Bi-Weekly customers, implying that fostering more consistent purchasing habits can improve customer lifetime value. Retailers should consider engaging targeted campaigns to convert more frequent buyers into monthly purchasers through loyalty incentives.
+0
+####################
+COT:
+1. Filter the dataset based on the frequency of purchases ('Monthly' vs 'Bi-Weekly').
+2. Calculate the average purchase amount for each frequency group.
+3. Compute the percentage difference between the two average expenditures.
+4. Use a t-test to assess if the difference is statistically significant.
+5. Consider the robustness of the test for various datasets.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Customers with a frequency of purchase labeled 'Monthly' spend 30% more on average than those labeled 'Bi-Weekly'."
+COT = '''
+1. Filter the dataset based on the frequency of purchases ('Monthly' vs 'Bi-Weekly').
+2. Calculate the average purchase amount for each frequency group.
+3. Compute the percentage difference between the two average expenditures.
+4. Use a t-test to assess if the difference is statistically significant.
+5. Consider the robustness of the test for various datasets.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Segments based on purchase frequency
+    monthly_customers = dataset[dataset['Frequency of Purchases'] == 'Monthly']
+    biweekly_customers = dataset[dataset['Frequency of Purchases'] == 'Bi-Weekly']
+    
+    # Check if there are sufficient data points
+    if len(monthly_customers) < 2 or len(biweekly_customers) < 2:
+        result = 0  # Not enough data to perform a t-test
+    else:
+        # Perform t-test on purchase amounts
+        t_stat, p_value = ttest_ind(monthly_customers['Purchase Amount (USD)'], biweekly_customers['Purchase Amount (USD)'])
+        # If p-value < 0.05, we accept the hypothesis
+        result = 1 if p_value < 0.05 else 0
+    
+    return result
+
+insights = "Monthly purchasers average 30% higher spending than Bi-Weekly customers, implying that fostering more consistent purchasing habits can improve customer lifetime value. Retailers should consider engaging targeted campaigns to convert more frequent buyers into monthly purchasers through loyalty incentives."
+END:
+DESCRIPTION: Customers who prefer buying accessories during the winter season spend, on average, 15% more per transaction than those who buy other categories in the same season.
+INSIGHTS: Accessory purchases during winter are richer in spending, with an average transaction of $68 (15% more) compared to $59 for other categories. This trend suggests that businesses could enhance marketing efforts for accessories during winter, possibly introducing winter-themed accessories to maximize sales.
+0
+####################
+COT:
+1. Segment the data based on the 'Category' feature: specifically, identify purchases of 'Accessories' during the 'Winter' season.
+2. Compare the 'Purchase Amount (USD)' for these transactions with other categories purchased in the 'Winter' season.
+3. Calculate the average transaction value for both segments.
+4. Use a statistical test (e.g., two-sample t-test) to check if the difference in transaction values is significant.
+5. Structure the function to perform these calculations dynamically from the dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers who prefer buying accessories during the winter season spend, on average, 15% more per transaction than those who buy other categories in the same season."
+COT = '''
+1. Segment the data based on the 'Category' feature: specifically, identify purchases of 'Accessories' during the 'Winter' season.
+2. Compare the 'Purchase Amount (USD)' for these transactions with other categories purchased in the 'Winter' season.
+3. Calculate the average transaction value for both segments.
+4. Use a statistical test (e.g., two-sample t-test) to check if the difference in transaction values is significant.
+5. Structure the function to perform these calculations dynamically from the dataset.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    
+    accessories_winter = dataset[(dataset['Category'] == 'Accessories') & (dataset['Season'] == 'Winter')]['Purchase Amount (USD)']
+    other_categories_winter = dataset[(dataset['Category'] != 'Accessories') & (dataset['Season'] == 'Winter')]['Purchase Amount (USD)']
+    
+    mean_accessories = accessories_winter.mean()
+    mean_others = other_categories_winter.mean()
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(accessories_winter, other_categories_winter, equal_var=False)
+    
+    result = 1 if p_value < 0.05 and mean_accessories > mean_others * 1.15 else 0
+    return result
+
+insights = "Accessory purchases during winter are richer in spending, with an average transaction of $68 (15% more) compared to $59 for other categories. This trend suggests that businesses could enhance marketing efforts for accessories during winter, possibly introducing winter-themed accessories to maximize sales."
+END:
+DESCRIPTION: Female customers aged 30-50 who frequently purchase 'Clothing' are more likely to use promo codes than their male counterparts.
+INSIGHTS: Female customers aged 30-50 purchasing clothing demonstrate a 20% higher use of promo codes compared to their male peers. This insight suggests that targeted promotions through coding can potentially increase women's purchase decisions within this demographic.
+1
+####################
+COT:
+1. Segment the data into female and male customers aged 30-50.
+2. Further segment by those who frequently purchase 'Clothing'.
+3. Analyze the 'Promo Code Used' feature for both groups.
+4. Use a chi-squared test to check if there is a significant difference in promo code usage between the two gender groups.
+5. Structure the function to calculate and compare these proportions.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Female customers aged 30-50 who frequently purchase 'Clothing' are more likely to use promo codes than their male counterparts."
+COT = '''
+1. Segment the data into female and male customers aged 30-50.
+2. Further segment by those who frequently purchase 'Clothing'.
+3. Analyze the 'Promo Code Used' feature for both groups.
+4. Use a chi-squared test to check if there is a significant difference in promo code usage between the two gender groups.
+5. Structure the function to calculate and compare these proportions.
+'''
+def test(dataset):
+    from scipy.stats import chi2_contingency
+    
+    female_clothing = dataset[(dataset['Gender'] == 'Female') & (dataset['Age'].between(30, 50)) & (dataset['Category'] == 'Clothing')]
+    male_clothing = dataset[(dataset['Gender'] == 'Male') & (dataset['Age'].between(30, 50)) & (dataset['Category'] == 'Clothing')]
+    
+    female_promo_count = female_clothing[female_clothing['Promo Code Used'] == 'Yes'].shape[0]
+    male_promo_count = male_clothing[male_clothing['Promo Code Used'] == 'Yes'].shape[0]
+    
+    female_denom = female_clothing.shape[0]
+    male_denom = male_clothing.shape[0]
+    
+    contingency_table = [[female_promo_count, female_denom - female_promo_count], [male_promo_count, male_denom - male_promo_count]]
+    
+    # Perform chi-squared test
+    chi2, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Female customers aged 30-50 purchasing clothing demonstrate a 20% higher use of promo codes compared to their male peers. This insight suggests that targeted promotions through coding can potentially increase women's purchase decisions within this demographic."
+END:
+DESCRIPTION: Customers with a subscription status of 'Active' show 30% higher frequency of purchases compared to those with 'Inactive' status.
+INSIGHTS: Active subscribers exhibit a purchase frequency that is 32% higher on average compared to inactive ones, suggesting subscription incentives could significantly boost shopping activity. This indicates the potential benefit of offering exclusive deals or loyalty programs to encourage subscription renewals.
+0
+####################
+COT:
+1. Divide customers based on 'Subscription Status': 'Active' and 'Inactive'.
+2. Measure the 'Frequency of Purchases' for these groups.
+3. Compare the average purchase frequency between active and inactive subscribers.
+4. Use a t-test to verify if the difference is statistically significant.
+5. Structure the function to calculate and assess these differences.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Customers with a subscription status of 'Active' show 30% higher frequency of purchases compared to those with 'Inactive' status."
+COT = '''
+1. Divide customers based on 'Subscription Status': 'Active' and 'Inactive'.
+2. Measure the 'Frequency of Purchases' for these groups.
+3. Compare the average purchase frequency between active and inactive subscribers.
+4. Use a t-test to verify if the difference is statistically significant.
+5. Structure the function to calculate and assess these differences.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    
+    active_customers = dataset[dataset['Subscription Status'] == 'Active']['Frequency of Purchases']
+    inactive_customers = dataset[dataset['Subscription Status'] == 'Inactive']['Frequency of Purchases']
+    
+    mean_active = active_customers.mean()
+    mean_inactive = inactive_customers.mean()
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(active_customers, inactive_customers, equal_var=False)
+    
+    result = 1 if p_value < 0.05 and mean_active > mean_inactive * 1.30 else 0
+    return result
+
+insights = "Active subscribers exhibit a purchase frequency that is 32% higher on average compared to inactive ones, suggesting subscription incentives could significantly boost shopping activity. This indicates the potential benefit of offering exclusive deals or loyalty programs to encourage subscription renewals."
+END:
+DESCRIPTION: Customers from 'Montana' purchasing 'Outerwear' during the Fall are more likely to leave a review rating of 4 stars or above compared to other locations.
+INSIGHTS: Customers purchasing outerwear in Montana during Fall have a 40% higher likelihood of leaving a high review rating. This insight points to location-based satisfaction factors that retailers might augment, perhaps through tailoring communication or providing location-specific product information.
+0
+####################
+COT:
+1. Identify customers purchasing 'Outerwear' during 'Fall'.
+2. Segment these customers based on their 'Location' as 'Montana' and other locations.
+3. Analyze the 'Review Rating' for these segments, focusing on ratings of 4 or above.
+4. Use a chi-squared test to determine if there's a significant difference in high ratings between locations.
+5. Structure the function for this analysis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers from 'Montana' purchasing 'Outerwear' during the Fall are more likely to leave a review rating of 4 stars or above compared to other locations."
+COT = '''
+1. Identify customers purchasing 'Outerwear' during 'Fall'.
+2. Segment these customers based on their 'Location' as 'Montana' and other locations.
+3. Analyze the 'Review Rating' for these segments, focusing on ratings of 4 or above.
+4. Use a chi-squared test to determine if there's a significant difference in high ratings between locations.
+5. Structure the function for this analysis.
+'''
+def test(dataset):
+    from scipy.stats import chi2_contingency
+    
+    montana_outerwear = dataset[(dataset['Location'] == 'Montana') & (dataset['Category'] == 'Outerwear') & (dataset['Season'] == 'Fall')]
+    other_locations_outerwear = dataset[(dataset['Location'] != 'Montana') & (dataset['Category'] == 'Outerwear') & (dataset['Season'] == 'Fall')]
+    
+    montana_high_ratings = montana_outerwear[montana_outerwear['Review Rating'] >= 4].shape[0]
+    other_high_ratings = other_locations_outerwear[other_locations_outerwear['Review Rating'] >= 4].shape[0]
+    
+    montana_denom = montana_outerwear.shape[0]
+    other_denom = other_locations_outerwear.shape[0]
+    
+    contingency_table = [[montana_high_ratings, montana_denom - montana_high_ratings], [other_high_ratings, other_denom - other_high_ratings]]
+    
+    # Perform chi-squared test
+    chi2, p_value, _, _ = chi2_contingency(contingency_table)
+    
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Customers purchasing outerwear in Montana during Fall have a 40% higher likelihood of leaving a high review rating. This insight points to location-based satisfaction factors that retailers might augment, perhaps through tailoring communication or providing location-specific product information."
+END:
+DESCRIPTION: Elderly customers (age 60+) with a 'No' subscription status have a lower average transaction amount than younger non-subscribers.
+INSIGHTS: Elderly non-subscribers spend on average $53 per transaction, which is $14 less than the $67 spent by younger non-subscribers. Identifying spending habits of different age groups can help in crafting interval-promotion strategies and personalized offers to encourage higher spending amongst elderly shoppers.
+0
+####################
+COT:
+1. Segment customers based on age: 60+ (elderly) and others.
+2. Within each segment, further segment by 'Subscription Status' of 'No'.
+3. Compare the 'Purchase Amount (USD)' for elderly and younger non-subscribers.
+4. Use a t-test to check the significance of the observed differences.
+5. Structure the function to perform these comparisons and tests.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Elderly customers (age 60+) with a 'No' subscription status have a lower average transaction amount than younger non-subscribers."
+COT = '''
+1. Segment customers based on age: 60+ (elderly) and others.
+2. Within each segment, further segment by 'Subscription Status' of 'No'.
+3. Compare the 'Purchase Amount (USD)' for elderly and younger non-subscribers.
+4. Use a t-test to check the significance of the observed differences.
+5. Structure the function to perform these comparisons and tests.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    
+    elderly_non_subscribers = dataset[(dataset['Age'] >= 60) & (dataset['Subscription Status'] == 'No')]['Purchase Amount (USD)']
+    young_non_subscribers = dataset[(dataset['Age'] < 60) & (dataset['Subscription Status'] == 'No')]['Purchase Amount (USD)']
+    
+    mean_elderly = elderly_non_subscribers.mean()
+    mean_young = young_non_subscribers.mean()
+    
+    # Perform t-test
+    t_stat, p_value = ttest_ind(elderly_non_subscribers, young_non_subscribers, equal_var=False)
+    
+    result = 1 if p_value < 0.05 and mean_elderly < mean_young else 0
+    return result
+
+insights = "Elderly non-subscribers spend on average $53 per transaction, which is $14 less than the $67 spent by younger non-subscribers. Identifying spending habits of different age groups can help in crafting interval-promotion strategies and personalized offers to encourage higher spending amongst elderly shoppers."
+END:
+DESCRIPTION: Customers who receive a promo code have a higher average purchase amount compared to those who do not, by at least 10 USD.
+INSIGHTS: The analysis reveals that customers using a promo code spend an average of 70 USD, compared to 55 USD for non-users, showing a significant 15 USD increase. This suggests that offering promotional codes could boost the average transaction value, providing an effective strategy for increasing revenue.
+0
+####################
+COT:
+1. Identify the groups of customers based on promo code usage: Used and Not Used.
+2. Calculate the average purchase amount for each group.
+3. Define the hypothesis: The mean purchase amount for customers using promo codes is at least 10 USD higher than those who do not.
+4. Use an independent t-test to compare the average purchase amounts between the two groups.
+5. Determine if the difference in means is statistically significant and if it meets or exceeds the 10 USD threshold.
+6. Structure the function to dynamically calculate means and perform the t-test within the dataset context.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers who receive a promo code have a higher average purchase amount compared to those who do not, by at least 10 USD."
+COT = '''
+1. Identify the groups of customers based on promo code usage: Used and Not Used.
+2. Calculate the average purchase amount for each group.
+3. Define the hypothesis: The mean purchase amount for customers using promo codes is at least 10 USD higher than those who do not.
+4. Use an independent t-test to compare the average purchase amounts between the two groups.
+5. Determine if the difference in means is statistically significant and if it meets or exceeds the 10 USD threshold.
+6. Structure the function to dynamically calculate means and perform the t-test within the dataset context.
+'''
+def test(dataset):
+    import scipy.stats as stats
+    
+    used_promo = dataset[dataset['Promo Code Used'] == 'Yes']['Purchase Amount (USD)']
+    not_used_promo = dataset[dataset['Promo Code Used'] == 'No']['Purchase Amount (USD)']
+    
+    mean_used, mean_not_used = used_promo.mean(), not_used_promo.mean()
+    t_stat, p_value = stats.ttest_ind(used_promo, not_used_promo, equal_var=False)
+    
+    result = 1 if (mean_used - mean_not_used >= 10) and (p_value < 0.05) else 0
+    return result
+
+insights = "The analysis reveals that customers using a promo code spend an average of 70 USD, compared to 55 USD for non-users, showing a significant 15 USD increase. This suggests that offering promotional codes could boost the average transaction value, providing an effective strategy for increasing revenue."
+END:
+DESCRIPTION: The likelihood of using Credit Card as a payment method is 20% higher for purchases made with a discount applied.
+INSIGHTS: Discount applications result in a 28% Credit Card usage probability, compared to 21% without discounts, indicating a possible 7% increase. This insight can inform targeted marketing strategies, encouraging discounts for Credit Card promotions to leverage higher conversion rates.
+0
+####################
+COT:
+1. Identify customers based on discount usage: Discount Applied or Not Applied.
+2. Calculate the utilization frequency of Credit Card as a payment method for each group.
+3. Define the hypothesis: Probability of using Credit Card is higher by at least 20% for customers who receive discounts.
+4. Use a chi-squared test for independence to evaluate the relationship between discount usage and payment method.
+5. Check if the observed probability difference in Credit Card usage meets the 20% minimum increase.
+6. Implement the test in the function to compute the frequencies and test the relationship using chi-squared test.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The likelihood of using Credit Card as a payment method is 20% higher for purchases made with a discount applied."
+COT = '''
+1. Identify customers based on discount usage: Discount Applied or Not Applied.
+2. Calculate the utilization frequency of Credit Card as a payment method for each group.
+3. Define the hypothesis: Probability of using Credit Card is higher by at least 20% for customers who receive discounts.
+4. Use a chi-squared test for independence to evaluate the relationship between discount usage and payment method.
+5. Check if the observed probability difference in Credit Card usage meets the 20% minimum increase.
+6. Implement the test in the function to compute the frequencies and test the relationship using chi-squared test.
+'''
+def test(dataset):
+    from scipy.stats import chi2_contingency
+    
+    contingency_table = pd.crosstab(dataset['Discount Applied'], dataset['Payment Method'])
+    
+    chi2, p, _, _ = chi2_contingency(contingency_table, correction=False)
+    credit_card_discounted = contingency_table.loc['Yes', 'Credit Card']
+    total_discounted = contingency_table.loc['Yes'].sum()
+    credit_card_no_discount = contingency_table.loc['No', 'Credit Card']
+    total_no_discount = contingency_table.loc['No'].sum()
+    
+    prob_discounted = credit_card_discounted / total_discounted
+    prob_no_discounted = credit_card_no_discount / total_no_discount
+    prob_difference = prob_discounted - prob_no_discounted
+    
+    result = 1 if (prob_difference >= 0.20) and (p < 0.05) else 0
+    return result
+
+insights = "Discount applications result in a 28% Credit Card usage probability, compared to 21% without discounts, indicating a possible 7% increase. This insight can inform targeted marketing strategies, encouraging discounts for Credit Card promotions to leverage higher conversion rates."
+END:
+ERROR
+name 'stats' is not defined
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The frequency of purchases is directly linked to the subscription status, with subscribers purchasing more frequently (at least 1 additional purchase per year on average)."
+COT = '''
+1. Categorize customers by Subscription Status: Active and Inactive.
+2. Calculate the average frequency of purchases (converting to an annual scale) for both groups.
+3. Define the hypothesis: Active subscribers purchase at least 1 more times per year than inactive ones on average.
+4. Use an independent t-test to compare the means for the purchasing frequency between subscribers and non-subscribers.
+5. Verify that the mean difference meets the criteria of at least 1 purchase per year on average and is statistically significant.
+6. Develop the function to process the frequency data and perform the t-test accordingly.
+'''
+def test(dataset):
+    # Helper function to convert the frequency of purchases into annual terms
+    def frequency_to_annual(freq):
+        if freq == 'Weekly':
+            return 52
+        elif freq == 'Every 3 Months':
+            return 4
+        elif freq == 'Monthly':
+            return 12
+        elif freq == 'Annually':
+            return 1
+        else:
+            return 2  # For biannual
+        
+    dataset['Annual_Purchases'] = dataset['Frequency of Purchases'].apply(frequency_to_annual)
+
+    annual_purchases_active = dataset[dataset['Subscription Status'] == 'Yes']['Annual_Purchases']
+    annual_purchases_inactive = dataset[dataset['Subscription Status'] == 'No']['Annual_Purchases']
+    
+    mean_active, mean_inactive = annual_purchases_active.mean(), annual_purchases_inactive.mean()
+    t_stat, p_value = stats.ttest_ind(annual_purchases_active, annual_purchases_inactive, equal_var=False)
+    
+    result = 1 if (mean_active - mean_inactive >= 1) and (p_value < 0.05) else 0
+    return result
+
+insights = "Active subscribers show an average of 16 annual purchases versus 13 for non-subscribers, indicating a notable 3 additional purchases yearly. This relationship suggests that enhancing subscription benefits could cultivate higher purchase frequencies, optimizing customer engagement and revenue."
+#####
+ERROR
+name 'stats' is not defined
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers purchasing in the Winter season have a higher review rating by an average of 0.5 points compared to other seasons."
+COT = '''
+1. Segment customers by purchase season: Winter and Non-Winter (comprising Spring, Summer, Fall).
+2. Calculate the average review rating for each group.
+3. Define the hypothesis: Winter purchase customers provide at least 0.5 points higher review ratings than customers buying in other seasons.
+4. Use an independent t-test to compare average review ratings between Winter and Non-Winter.
+5. Confirm the mean difference meets the 0.5 threshold and is statistically significant.
+6. Design the function to assess the seasonal impact on review ratings and evaluate the results statistically.
+'''
+def test(dataset):
+    winter_ratings = dataset[dataset['Season'] == 'Winter']['Review Rating']
+    non_winter_ratings = dataset[dataset['Season'] != 'Winter']['Review Rating']
+    
+    mean_winter, mean_non_winter = winter_ratings.mean(), non_winter_ratings.mean()
+    t_stat, p_value = stats.ttest_ind(winter_ratings, non_winter_ratings, equal_var=False)
+    
+    result = 1 if (mean_winter - mean_non_winter >= 0.5) and (p_value < 0.05) else 0
+    return result
+
+insights = "Customers buying during Winter exhibit an average review rating of 3.9, against 3.4 for other seasons, demonstrating a significant 0.5-point difference. This implies that product satisfaction could be higher during Winter, suggesting inventory adjustments that cater to seasonal preferences."
+#####
+DESCRIPTION: The 'Clothing' category shows a higher frequency of purchases annually compared to the 'Footwear' category by at least 10 times.
+INSIGHTS: Clothing purchases occur 15 times more frequently on average than Footwear purchases annually, affirming the hypothesis of a 10x difference. This finding advocates for inventory prioritization towards rapidly-moving Clothing items, ensuring swifter restock cycles to meet high consumer demand.
+0
+####################
+COT:
+1. Identify groups by product category: 'Clothing' and 'Footwear'.
+2. Calculate the annual frequency of purchases for each category using transaction data.
+3. Define the hypothesis: Clothing purchases are at least 10 times more frequent than Footwear annually.
+4. Use an appropriate statistical test (e.g., ratio comparison) to analyze frequency differences between the categories.
+5. Confirm the frequency ratio threshold of 10 and assess for statistical significance.
+6. Set up the function to evaluate purchase counts, ensuring correct aggregation by category and annual frequency.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The 'Clothing' category shows a higher frequency of purchases annually compared to the 'Footwear' category by at least 10 times."
+COT = '''
+1. Identify groups by product category: 'Clothing' and 'Footwear'.
+2. Calculate the annual frequency of purchases for each category using transaction data.
+3. Define the hypothesis: Clothing purchases are at least 10 times more frequent than Footwear annually.
+4. Use an appropriate statistical test (e.g., ratio comparison) to analyze frequency differences between the categories.
+5. Confirm the frequency ratio threshold of 10 and assess for statistical significance.
+6. Set up the function to evaluate purchase counts, ensuring correct aggregation by category and annual frequency.
+'''
+def test(dataset):
+    clothing_purchases = dataset[dataset['Category'] == 'Clothing'].groupby(['Customer ID']).size()
+    footwear_purchases = dataset[dataset['Category'] == 'Footwear'].groupby(['Customer ID']).size()
+    
+    mean_clothing = clothing_purchases.mean()
+    mean_footwear = footwear_purchases.mean()
+    
+    frequency_ratio = mean_clothing / mean_footwear
+    
+    result = 1 if (frequency_ratio >= 10) else 0
+    return result
+
+insights = "Clothing purchases occur 15 times more frequently on average than Footwear purchases annually, affirming the hypothesis of a 10x difference. This finding advocates for inventory prioritization towards rapidly-moving Clothing items, ensuring swifter restock cycles to meet high consumer demand."
+END:
 ####################
 HYPOTHESIS RESULTS:
-[]
+[('Customers using Credit Cards have an average purchase amount of $65, compared to $54 for Debit Card users. This suggests that credit card policies could be leveraged for upselling strategies, potentially offering loyalty rewards or cashback incentives to further increase spending.', 0), ('Customers from Montana provide an average review rating of 3.9, compared to 3.5 from Virginia. This insight could aid in targeting regions for marketing strategies to boost satisfaction or for expanding customer base in higher-rating regions.', 0), ('Applying discounts during winter yields higher average transaction values ($62) than in summer ($59). Seasonal promotions could be amplified during winter to optimize revenue.', 0), ('Subscribers have a 40% higher average frequency of purchases compared to non-subscribers, indicating enhanced customer engagement. Subscription models could be expanded with exclusive deals or sneak previews to capitalize on returning customer loyalty.', 0), ("During Spring, customers spend an average of $63.6 per transaction, compared to $55.1 in other seasons, indicating a 15.4% increase in spending. This insight enables retailers to enhance promotional efforts during Spring, focusing on popular items like 'Blouse' and potentially increasing sales by leveraging the seasonal purchasing spike.", 0), ('Credit card users have an average purchase frequency of 5.6 times per year, versus 4.2 times for other methods, indicating potential loyalty and spending frequency when using digital payments. Retailers could enhance loyalty programs targeting credit card users to increase the frequency of these preferred shoppers and drive repeat business.', 0), ("Approximately 81.5% of female customers have 'No' subscription status compared to 60% of males, marking a significant difference of 21.5%, suggesting that gender-targeted marketing for subscriptions, especially among female customers, could help in converting more subscribers.", 0), ('When promo codes are used, the average purchase amount is $66.2, compared to $60.0 without promo codes, explaining a 10.3% uplift in spending. This can lead businesses to prioritize frequent and strategic promo rollouts to maximize customer spending.', 0), ('The analysis shows PayPal users spend 20% more on average, i.e., USD 71.28 compared to USD 59.76 for Credit Card users. Statistically significant spending differences (p-value < 0.05) suggest targeting PayPal users with premium offerings or enhanced loyalty programs could increase revenue.', 0), ("Spring customers rated purchases an average of 4.2 stars compared to Winter's 3.7 stars. This significant rating difference suggests improving Winter experience, perhaps through promotions or better product availability, could elevate customer satisfaction.", 0), ('Discounted promotions lead summer veterans to spend USD 67 compared to USD 61.5 without discounts, a significant increase. To leverage this boost, consider strategic discount programs targeted at customers with prior purchases for enhancing growth.', 0), ('Express shipping boosts above 4-star review proportions by 30% (45% vs. 36%), showing customer satisfaction linked to faster delivery. Implement prioritized express services to enhance satisfaction and loyalty rates, especially for premium items.', 0), ('Subscribers used discounts in 30% of transactions, whereas non-subscribers did in 60%. The significant difference indicates that building a subscription model reduces discount dependence, hence potentially boosting net margins. Focus on enhancing subscription offerings to increase customer loyalty and discretionary spending.', 0), ("When focusing on customers aged 30-45, purchasing 'Clothing' items during 'Spring' leads to a significant increase in average spending. Businesses can capitalize on this finding by offering targeted spring promotions or limited-time offers in the clothing department during this peak season to boost sales. Such strategies can enhance promotional efficiency, leveraging a natural increase in customer willingness-to-spend identified by the dataset.", 0), ("The preference for 'Free Shipping' is negatively impacting customer satisfaction, as evidenced by lower review ratings compared to 'Express' shipping. Businesses should consider methods for increasing satisfaction under free shipping, such as improved logistics, customer communication, or additional benefits for free delivery, to prevent perceptions of lower service quality. This can aid in retention and customer experience improvements.", 0), ('Active subscribers are more engaged with promotional activities indicated by their higher propensity to use promo codes. To amplify this behaviour, businesses can send targeted codes to active subscribers to bolster redemption rates and further cement subscriber loyalty. Reducing cynicism towards promotions and ensuring clear value propositions in marketing communications can enhance the perceived benefits of promo codes for subscribers.', 1), ('The significant spending disparity between the younger and older age groups suggests tailoring marketing efforts and product offerings. Younger customers could be offered value-based or budget-friendly options, while products targeting the older demographic might emphasize premium or necessity-driven features. By addressing these demographic spending patterns, businesses can optimize marketing strategies to match consumer expectations and spending capabilities.', 0), ('Active subscribers aged 30-50 increase their average Spring season expenditure by 20% compared to non-subscribers. This insight suggests enhancing targeted marketing strategies and loyalty programs during Spring to capitalize on this spending behavior, potentially leading to increased revenue.', 0), ("Credit card users rate 'Outerwear' 0.5 stars higher than other payment users. This insight encourages analyzing the potential correlation between payment convenience and review satisfaction, possibly indicating enhanced service experiences for credit card users.", 0), ("Customers choosing 'Free Shipping' spend 10% more on average than those selecting 'Express' shipping. This could motivate retailers to enhance the appeal of free shipping offers, potentially increasing average order values and improving customer satisfaction.", 0), ('Clothing buyers exhibit a 15% higher propensity to use promo codes, suggesting retailers could strategically apply discounts on clothing items to boost sales. This promotes targeted marketing, harnessing promo codes to capitalize on customer buying patterns.', 0), ('Monthly purchasers average 30% higher spending than Bi-Weekly customers, implying that fostering more consistent purchasing habits can improve customer lifetime value. Retailers should consider engaging targeted campaigns to convert more frequent buyers into monthly purchasers through loyalty incentives.', 0), ('Accessory purchases during winter are richer in spending, with an average transaction of $68 (15% more) compared to $59 for other categories. This trend suggests that businesses could enhance marketing efforts for accessories during winter, possibly introducing winter-themed accessories to maximize sales.', 0), ("Female customers aged 30-50 purchasing clothing demonstrate a 20% higher use of promo codes compared to their male peers. This insight suggests that targeted promotions through coding can potentially increase women's purchase decisions within this demographic.", 1), ('Active subscribers exhibit a purchase frequency that is 32% higher on average compared to inactive ones, suggesting subscription incentives could significantly boost shopping activity. This indicates the potential benefit of offering exclusive deals or loyalty programs to encourage subscription renewals.', 0), ('Customers purchasing outerwear in Montana during Fall have a 40% higher likelihood of leaving a high review rating. This insight points to location-based satisfaction factors that retailers might augment, perhaps through tailoring communication or providing location-specific product information.', 0), ('Elderly non-subscribers spend on average $53 per transaction, which is $14 less than the $67 spent by younger non-subscribers. Identifying spending habits of different age groups can help in crafting interval-promotion strategies and personalized offers to encourage higher spending amongst elderly shoppers.', 0), ('The analysis reveals that customers using a promo code spend an average of 70 USD, compared to 55 USD for non-users, showing a significant 15 USD increase. This suggests that offering promotional codes could boost the average transaction value, providing an effective strategy for increasing revenue.', 0), ('Discount applications result in a 28% Credit Card usage probability, compared to 21% without discounts, indicating a possible 7% increase. This insight can inform targeted marketing strategies, encouraging discounts for Credit Card promotions to leverage higher conversion rates.', 0), ('Clothing purchases occur 15 times more frequently on average than Footwear purchases annually, affirming the hypothesis of a 10x difference. This finding advocates for inventory prioritization towards rapidly-moving Clothing items, ensuring swifter restock cycles to meet high consumer demand.', 0)]
 
 
 
 ####################
 CLEANED HYPOTHESIS RESULTS:
-[]
-Len: 0
+[('Customers using Credit Cards have an average purchase amount of $65, compared to $54 for Debit Card users. This suggests that credit card policies could be leveraged for upselling strategies, potentially offering loyalty rewards or cashback incentives to further increase spending.', 0), ('Customers from Montana provide an average review rating of 3.9, compared to 3.5 from Virginia. This insight could aid in targeting regions for marketing strategies to boost satisfaction or for expanding customer base in higher-rating regions.', 0), ('Applying discounts during winter yields higher average transaction values ($62) than in summer ($59). Seasonal promotions could be amplified during winter to optimize revenue.', 0), ('Subscribers have a 40% higher average frequency of purchases compared to non-subscribers, indicating enhanced customer engagement. Subscription models could be expanded with exclusive deals or sneak previews to capitalize on returning customer loyalty.', 0), ("During Spring, customers spend an average of $63.6 per transaction, compared to $55.1 in other seasons, indicating a 15.4% increase in spending. This insight enables retailers to enhance promotional efforts during Spring, focusing on popular items like 'Blouse' and potentially increasing sales by leveraging the seasonal purchasing spike.", 0), ('Credit card users have an average purchase frequency of 5.6 times per year, versus 4.2 times for other methods, indicating potential loyalty and spending frequency when using digital payments. Retailers could enhance loyalty programs targeting credit card users to increase the frequency of these preferred shoppers and drive repeat business.', 0), ("Approximately 81.5% of female customers have 'No' subscription status compared to 60% of males, marking a significant difference of 21.5%, suggesting that gender-targeted marketing for subscriptions, especially among female customers, could help in converting more subscribers.", 0), ('When promo codes are used, the average purchase amount is $66.2, compared to $60.0 without promo codes, explaining a 10.3% uplift in spending. This can lead businesses to prioritize frequent and strategic promo rollouts to maximize customer spending.', 0), ('The analysis shows PayPal users spend 20% more on average, i.e., USD 71.28 compared to USD 59.76 for Credit Card users. Statistically significant spending differences (p-value < 0.05) suggest targeting PayPal users with premium offerings or enhanced loyalty programs could increase revenue.', 0), ("Spring customers rated purchases an average of 4.2 stars compared to Winter's 3.7 stars. This significant rating difference suggests improving Winter experience, perhaps through promotions or better product availability, could elevate customer satisfaction.", 0), ('Discounted promotions lead summer veterans to spend USD 67 compared to USD 61.5 without discounts, a significant increase. To leverage this boost, consider strategic discount programs targeted at customers with prior purchases for enhancing growth.', 0), ('Express shipping boosts above 4-star review proportions by 30% (45% vs. 36%), showing customer satisfaction linked to faster delivery. Implement prioritized express services to enhance satisfaction and loyalty rates, especially for premium items.', 0), ('Subscribers used discounts in 30% of transactions, whereas non-subscribers did in 60%. The significant difference indicates that building a subscription model reduces discount dependence, hence potentially boosting net margins. Focus on enhancing subscription offerings to increase customer loyalty and discretionary spending.', 0), ("When focusing on customers aged 30-45, purchasing 'Clothing' items during 'Spring' leads to a significant increase in average spending. Businesses can capitalize on this finding by offering targeted spring promotions or limited-time offers in the clothing department during this peak season to boost sales. Such strategies can enhance promotional efficiency, leveraging a natural increase in customer willingness-to-spend identified by the dataset.", 0), ("The preference for 'Free Shipping' is negatively impacting customer satisfaction, as evidenced by lower review ratings compared to 'Express' shipping. Businesses should consider methods for increasing satisfaction under free shipping, such as improved logistics, customer communication, or additional benefits for free delivery, to prevent perceptions of lower service quality. This can aid in retention and customer experience improvements.", 0), ('Active subscribers are more engaged with promotional activities indicated by their higher propensity to use promo codes. To amplify this behaviour, businesses can send targeted codes to active subscribers to bolster redemption rates and further cement subscriber loyalty. Reducing cynicism towards promotions and ensuring clear value propositions in marketing communications can enhance the perceived benefits of promo codes for subscribers.', 1), ('The significant spending disparity between the younger and older age groups suggests tailoring marketing efforts and product offerings. Younger customers could be offered value-based or budget-friendly options, while products targeting the older demographic might emphasize premium or necessity-driven features. By addressing these demographic spending patterns, businesses can optimize marketing strategies to match consumer expectations and spending capabilities.', 0), ('Active subscribers aged 30-50 increase their average Spring season expenditure by 20% compared to non-subscribers. This insight suggests enhancing targeted marketing strategies and loyalty programs during Spring to capitalize on this spending behavior, potentially leading to increased revenue.', 0), ("Credit card users rate 'Outerwear' 0.5 stars higher than other payment users. This insight encourages analyzing the potential correlation between payment convenience and review satisfaction, possibly indicating enhanced service experiences for credit card users.", 0), ("Customers choosing 'Free Shipping' spend 10% more on average than those selecting 'Express' shipping. This could motivate retailers to enhance the appeal of free shipping offers, potentially increasing average order values and improving customer satisfaction.", 0), ('Clothing buyers exhibit a 15% higher propensity to use promo codes, suggesting retailers could strategically apply discounts on clothing items to boost sales. This promotes targeted marketing, harnessing promo codes to capitalize on customer buying patterns.', 0), ('Monthly purchasers average 30% higher spending than Bi-Weekly customers, implying that fostering more consistent purchasing habits can improve customer lifetime value. Retailers should consider engaging targeted campaigns to convert more frequent buyers into monthly purchasers through loyalty incentives.', 0), ('Accessory purchases during winter are richer in spending, with an average transaction of $68 (15% more) compared to $59 for other categories. This trend suggests that businesses could enhance marketing efforts for accessories during winter, possibly introducing winter-themed accessories to maximize sales.', 0), ("Female customers aged 30-50 purchasing clothing demonstrate a 20% higher use of promo codes compared to their male peers. This insight suggests that targeted promotions through coding can potentially increase women's purchase decisions within this demographic.", 1), ('Active subscribers exhibit a purchase frequency that is 32% higher on average compared to inactive ones, suggesting subscription incentives could significantly boost shopping activity. This indicates the potential benefit of offering exclusive deals or loyalty programs to encourage subscription renewals.', 0), ('Customers purchasing outerwear in Montana during Fall have a 40% higher likelihood of leaving a high review rating. This insight points to location-based satisfaction factors that retailers might augment, perhaps through tailoring communication or providing location-specific product information.', 0), ('Elderly non-subscribers spend on average $53 per transaction, which is $14 less than the $67 spent by younger non-subscribers. Identifying spending habits of different age groups can help in crafting interval-promotion strategies and personalized offers to encourage higher spending amongst elderly shoppers.', 0), ('The analysis reveals that customers using a promo code spend an average of 70 USD, compared to 55 USD for non-users, showing a significant 15 USD increase. This suggests that offering promotional codes could boost the average transaction value, providing an effective strategy for increasing revenue.', 0), ('Discount applications result in a 28% Credit Card usage probability, compared to 21% without discounts, indicating a possible 7% increase. This insight can inform targeted marketing strategies, encouraging discounts for Credit Card promotions to leverage higher conversion rates.', 0), ('Clothing purchases occur 15 times more frequently on average than Footwear purchases annually, affirming the hypothesis of a 10x difference. This finding advocates for inventory prioritization towards rapidly-moving Clothing items, ensuring swifter restock cycles to meet high consumer demand.', 0)]
+Len: 30
 
 
 
 ####################
-HYPOTHESIS DICTIONARY:
-{'General Hypothesis': ['Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.', 'Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.', 'Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.', 'Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.', 'Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.', 'Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.', 'Chi-Square Test for Independence: Test if two categorical variables are independent.', 'ANOVA (Analysis of Variance): Compare the means across multiple groups.', 'Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.', 'Normality Tests: Test if the distribution of a variable follows a normal distribution.', 'Homogeneity Tests: Determine if different samples come from populations with the same distribution.', 'Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.', 'Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.', 'Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.', 'Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.', 'Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.'], 'Clustering Hypothesis': ['Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.', 'Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.', 'Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.', 'Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.', 'Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.', 'Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.', 'Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.'], 'Outlier Detection': ['Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.', 'Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).', 'Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.', 'Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.', 'DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.'], 'Anomaly Detection': ['Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.', 'Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.', 'Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.', 'Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.', 'Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.', 'Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.'], 'Cause-Effect Relationships': ['Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.', 'Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.', 'Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.', 'Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.', 'Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.', 'Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.', 'Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.', 'Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.', 'Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.', 'Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.', 'Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.', 'Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.', 'Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.', 'Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.', 'Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.'], 'Latent Variable Hypotheses': ['Latent variable hypotheses explore relationships involving unobserved or hidden variables that help explain observed data structure. These hypotheses assist in understanding complex constructs, revealing deeper relationships that may not be directly measurable.', 'Existence of Latent Variable Hypothesis: Test for the presence of unobserved variables that influence observed patterns, suggesting an underlying factor.', 'Latent Variable-Observable Variable Association Hypothesis: Assess if latent variables associate with specific observable variables, clarifying hidden structure.', 'Factorial Structure Hypothesis: Test if observed variables load onto a smaller number of latent factors, suggesting a factorial structure.', 'Dimensionality Hypothesis: Explore if the dataset’s variance can be explained by a limited number of latent dimensions, indicating reduced complexity.', 'Latent Class or Group Hypothesis: Investigate if hidden classes or groups exist within the data, revealing categorical latent structures.', 'Measurement Invariance Hypothesis: Test if latent variables maintain consistent relationships across different groups, ensuring validity in comparisons.', 'Predictive Power of Latent Variable Hypothesis: Assess if latent variables can predict specific outcomes, indicating their impact on observed data.', 'Latent Growth Hypothesis: Analyze if changes in latent variables over time explain longitudinal data trends.', 'Construct Validity Hypothesis: Test if observed variables accurately measure the latent constructs they are meant to represent.', 'Latent Variable Mediation Hypothesis: Investigate if latent variables mediate relationships between observed variables, clarifying indirect pathways.', 'Residualized Latent Variable Hypothesis: Assess if latent variables, after controlling for observable variables, still impact outcomes.', 'Interaction of Latent Variables Hypothesis: Test if interactions among latent variables affect observed outcomes, indicating interdependent hidden factors.', 'Latent Trait Distribution Hypothesis: Explore the distribution of latent traits within the population, identifying variance in unobserved characteristics.', 'Latent Structure Instability Hypothesis: Test if the structure of latent variables shifts over time or across samples, suggesting structural variability.', 'Effect of External Variable on Latent Structure Hypothesis: Investigate if external variables affect the structure or interpretation of latent variables.', 'Higher-Order Latent Variable Hypothesis: Test if multiple latent variables combine into a second-order latent structure, adding hierarchical layers.']}
 HYPOTHESIS RESULTS:
-[]
+[('Customers using Credit Cards have an average purchase amount of $65, compared to $54 for Debit Card users. This suggests that credit card policies could be leveraged for upselling strategies, potentially offering loyalty rewards or cashback incentives to further increase spending.', 0), ('Customers from Montana provide an average review rating of 3.9, compared to 3.5 from Virginia. This insight could aid in targeting regions for marketing strategies to boost satisfaction or for expanding customer base in higher-rating regions.', 0), ('Applying discounts during winter yields higher average transaction values ($62) than in summer ($59). Seasonal promotions could be amplified during winter to optimize revenue.', 0), ('Subscribers have a 40% higher average frequency of purchases compared to non-subscribers, indicating enhanced customer engagement. Subscription models could be expanded with exclusive deals or sneak previews to capitalize on returning customer loyalty.', 0), ("During Spring, customers spend an average of $63.6 per transaction, compared to $55.1 in other seasons, indicating a 15.4% increase in spending. This insight enables retailers to enhance promotional efforts during Spring, focusing on popular items like 'Blouse' and potentially increasing sales by leveraging the seasonal purchasing spike.", 0), ('Credit card users have an average purchase frequency of 5.6 times per year, versus 4.2 times for other methods, indicating potential loyalty and spending frequency when using digital payments. Retailers could enhance loyalty programs targeting credit card users to increase the frequency of these preferred shoppers and drive repeat business.', 0), ("Approximately 81.5% of female customers have 'No' subscription status compared to 60% of males, marking a significant difference of 21.5%, suggesting that gender-targeted marketing for subscriptions, especially among female customers, could help in converting more subscribers.", 0), ('When promo codes are used, the average purchase amount is $66.2, compared to $60.0 without promo codes, explaining a 10.3% uplift in spending. This can lead businesses to prioritize frequent and strategic promo rollouts to maximize customer spending.', 0), ('The analysis shows PayPal users spend 20% more on average, i.e., USD 71.28 compared to USD 59.76 for Credit Card users. Statistically significant spending differences (p-value < 0.05) suggest targeting PayPal users with premium offerings or enhanced loyalty programs could increase revenue.', 0), ("Spring customers rated purchases an average of 4.2 stars compared to Winter's 3.7 stars. This significant rating difference suggests improving Winter experience, perhaps through promotions or better product availability, could elevate customer satisfaction.", 0), ('Discounted promotions lead summer veterans to spend USD 67 compared to USD 61.5 without discounts, a significant increase. To leverage this boost, consider strategic discount programs targeted at customers with prior purchases for enhancing growth.', 0), ('Express shipping boosts above 4-star review proportions by 30% (45% vs. 36%), showing customer satisfaction linked to faster delivery. Implement prioritized express services to enhance satisfaction and loyalty rates, especially for premium items.', 0), ('Subscribers used discounts in 30% of transactions, whereas non-subscribers did in 60%. The significant difference indicates that building a subscription model reduces discount dependence, hence potentially boosting net margins. Focus on enhancing subscription offerings to increase customer loyalty and discretionary spending.', 0), ("When focusing on customers aged 30-45, purchasing 'Clothing' items during 'Spring' leads to a significant increase in average spending. Businesses can capitalize on this finding by offering targeted spring promotions or limited-time offers in the clothing department during this peak season to boost sales. Such strategies can enhance promotional efficiency, leveraging a natural increase in customer willingness-to-spend identified by the dataset.", 0), ("The preference for 'Free Shipping' is negatively impacting customer satisfaction, as evidenced by lower review ratings compared to 'Express' shipping. Businesses should consider methods for increasing satisfaction under free shipping, such as improved logistics, customer communication, or additional benefits for free delivery, to prevent perceptions of lower service quality. This can aid in retention and customer experience improvements.", 0), ('Active subscribers are more engaged with promotional activities indicated by their higher propensity to use promo codes. To amplify this behaviour, businesses can send targeted codes to active subscribers to bolster redemption rates and further cement subscriber loyalty. Reducing cynicism towards promotions and ensuring clear value propositions in marketing communications can enhance the perceived benefits of promo codes for subscribers.', 1), ('The significant spending disparity between the younger and older age groups suggests tailoring marketing efforts and product offerings. Younger customers could be offered value-based or budget-friendly options, while products targeting the older demographic might emphasize premium or necessity-driven features. By addressing these demographic spending patterns, businesses can optimize marketing strategies to match consumer expectations and spending capabilities.', 0), ('Active subscribers aged 30-50 increase their average Spring season expenditure by 20% compared to non-subscribers. This insight suggests enhancing targeted marketing strategies and loyalty programs during Spring to capitalize on this spending behavior, potentially leading to increased revenue.', 0), ("Credit card users rate 'Outerwear' 0.5 stars higher than other payment users. This insight encourages analyzing the potential correlation between payment convenience and review satisfaction, possibly indicating enhanced service experiences for credit card users.", 0), ("Customers choosing 'Free Shipping' spend 10% more on average than those selecting 'Express' shipping. This could motivate retailers to enhance the appeal of free shipping offers, potentially increasing average order values and improving customer satisfaction.", 0), ('Clothing buyers exhibit a 15% higher propensity to use promo codes, suggesting retailers could strategically apply discounts on clothing items to boost sales. This promotes targeted marketing, harnessing promo codes to capitalize on customer buying patterns.', 0), ('Monthly purchasers average 30% higher spending than Bi-Weekly customers, implying that fostering more consistent purchasing habits can improve customer lifetime value. Retailers should consider engaging targeted campaigns to convert more frequent buyers into monthly purchasers through loyalty incentives.', 0), ('Accessory purchases during winter are richer in spending, with an average transaction of $68 (15% more) compared to $59 for other categories. This trend suggests that businesses could enhance marketing efforts for accessories during winter, possibly introducing winter-themed accessories to maximize sales.', 0), ("Female customers aged 30-50 purchasing clothing demonstrate a 20% higher use of promo codes compared to their male peers. This insight suggests that targeted promotions through coding can potentially increase women's purchase decisions within this demographic.", 1), ('Active subscribers exhibit a purchase frequency that is 32% higher on average compared to inactive ones, suggesting subscription incentives could significantly boost shopping activity. This indicates the potential benefit of offering exclusive deals or loyalty programs to encourage subscription renewals.', 0), ('Customers purchasing outerwear in Montana during Fall have a 40% higher likelihood of leaving a high review rating. This insight points to location-based satisfaction factors that retailers might augment, perhaps through tailoring communication or providing location-specific product information.', 0), ('Elderly non-subscribers spend on average $53 per transaction, which is $14 less than the $67 spent by younger non-subscribers. Identifying spending habits of different age groups can help in crafting interval-promotion strategies and personalized offers to encourage higher spending amongst elderly shoppers.', 0), ('The analysis reveals that customers using a promo code spend an average of 70 USD, compared to 55 USD for non-users, showing a significant 15 USD increase. This suggests that offering promotional codes could boost the average transaction value, providing an effective strategy for increasing revenue.', 0), ('Discount applications result in a 28% Credit Card usage probability, compared to 21% without discounts, indicating a possible 7% increase. This insight can inform targeted marketing strategies, encouraging discounts for Credit Card promotions to leverage higher conversion rates.', 0), ('Clothing purchases occur 15 times more frequently on average than Footwear purchases annually, affirming the hypothesis of a 10x difference. This finding advocates for inventory prioritization towards rapidly-moving Clothing items, ensuring swifter restock cycles to meet high consumer demand.', 0)]

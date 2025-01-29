@@ -26,6 +26,8 @@ from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 from catboost import CatBoostClassifier
 
+from models.utils import *
+
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -73,24 +75,24 @@ def get_classifiers(n_features):
         }, True),
 
         #works. poor performance
-        ('RidgeClassifier', RidgeClassifier(max_iter=100000), {
-            'classifier__alpha': np.logspace(-4, 4, 20),
-            'classifier__solver': ['auto', 'svd', 'cholesky', 'lsqr', 'sag', 'saga']
-        }, True),
+    #     ('RidgeClassifier', RidgeClassifier(max_iter=100000), {
+    #         'classifier__alpha': np.logspace(-4, 4, 20),
+    #         'classifier__solver': ['auto', 'svd', 'cholesky', 'lsqr', 'sag', 'saga']
+    #     }, True),
 
-       # works. good performance
-        ('SGDClassifier', SGDClassifier(max_iter=1000, tol=1e-3), {
-            'classifier__loss': ['log_loss', 'modified_huber', 'squared_hinge'],
-            'classifier__penalty': ['l2', 'l1', 'elasticnet'],
-            'classifier__alpha': np.logspace(-6, -1, 10),
-            'classifier__learning_rate': ['constant', 'optimal', 'invscaling', 'adaptive'],
-        }, True),
+    #    # works. good performance
+    #     ('SGDClassifier', SGDClassifier(max_iter=1000, tol=1e-3), {
+    #         'classifier__loss': ['log_loss', 'modified_huber', 'squared_hinge'],
+    #         'classifier__penalty': ['l2', 'l1', 'elasticnet'],
+    #         'classifier__alpha': np.logspace(-6, -1, 10),
+    #         'classifier__learning_rate': ['constant', 'optimal', 'invscaling', 'adaptive'],
+    #     }, True),
 
-        #fixed
-        ('PassiveAggressiveClassifier', PassiveAggressiveClassifier(max_iter=1000, tol=1e-3), {
-            'classifier__C': np.logspace(-4, 1, 10),
-            'classifier__loss': ['hinge', 'squared_hinge'],
-        }, True),
+    #     #fixed
+    #     ('PassiveAggressiveClassifier', PassiveAggressiveClassifier(max_iter=1000, tol=1e-3), {
+    #         'classifier__C': np.logspace(-4, 1, 10),
+    #         'classifier__loss': ['hinge', 'squared_hinge'],
+    #     }, True),
 
         #works. good performance on Iris
         ('KNeighborsClassifier', KNeighborsClassifier(), {
@@ -101,7 +103,7 @@ def get_classifiers(n_features):
 
         #works. good performance on Iris
         ('DecisionTreeClassifier', DecisionTreeClassifier(), {
-            'classifier__criterion': ['gini', 'entropy', 'log_loss'],
+            'classifier__criterion': ['gini'],#, 'entropy', 'log_loss'],
             'classifier__max_depth': [None] + list(range(2, 20)),
             'classifier__min_samples_split': range(2, 20),
             'classifier__min_samples_leaf': range(1, 20)
@@ -110,108 +112,108 @@ def get_classifiers(n_features):
         #works. good performance on Iris
         ('RandomForestClassifier', RandomForestClassifier(), {
             'classifier__n_estimators': [100, 200, 500],
-            'classifier__criterion': ['gini', 'entropy', 'log_loss'],
-            'classifier__max_depth': [None] + list(range(2, 20)),
-            'classifier__min_samples_split': range(2, 20),
-            'classifier__min_samples_leaf': range(1, 20)
+            'classifier__criterion': ['gini'],#, 'entropy', 'log_loss'],
+            'classifier__max_depth': [None] + list(range(2, 20, 3)),
+            'classifier__min_samples_split': range(2, 20, 3),
+            'classifier__min_samples_leaf': range(1, 20, 3)
         }, False),
 
        # works. good performance on Iris
-        ('GradientBoostingClassifier', GradientBoostingClassifier(), {
-            'classifier__n_estimators': [100, 200, 500],
-            'classifier__learning_rate': [0.001, 0.01, 0.1],
-            'classifier__loss': ['log_loss', 'exponential'],
-            'classifier__max_depth': range(2, 10),
-            'classifier__min_samples_split': range(2, 20),
-            'classifier__min_samples_leaf': range(1, 20)
-        }, False),
+        # ('GradientBoostingClassifier', GradientBoostingClassifier(), {
+        #     'classifier__n_estimators': [100, 200, 500],
+        #     'classifier__learning_rate': [0.001, 0.01, 0.1],
+        #     'classifier__loss': ['log_loss', 'exponential'],
+        #     'classifier__max_depth': range(2, 10),
+        #     'classifier__min_samples_split': range(2, 20),
+        #     'classifier__min_samples_leaf': range(1, 20)
+        # }, False),
 
         #gives some warnings
-        ('AdaBoostClassifier', AdaBoostClassifier(), {
-            'classifier__n_estimators': [50, 100, 200],
-            'classifier__learning_rate': [0.001, 0.01, 0.1, 1.0],
-            'classifier__algorithm': ['SAMME', 'SAMME.R']
-        }, False),
+        # ('AdaBoostClassifier', AdaBoostClassifier(), {
+        #     'classifier__n_estimators': [50, 100, 200],
+        #     'classifier__learning_rate': [0.001, 0.01, 0.1, 1.0],
+        #     'classifier__algorithm': ['SAMME', 'SAMME.R']
+        # }, False),
 
-        ('SVC', SVC(probability=True), [
-            {
-                'classifier__kernel': ['linear'],
-                'classifier__C': np.logspace(-3, 3, 10),
-            },
-            {
-                'classifier__kernel': ['poly'],
-                'classifier__C': np.logspace(-3, 3, 10),
-                'classifier__degree': [2, 3, 4],
-                'classifier__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
-            },
-            {
-                'classifier__kernel': ['rbf', 'sigmoid'],
-                'classifier__C': np.logspace(-3, 3, 10),
-                'classifier__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
-            },
-        ], True),
+        # ('SVC', SVC(probability=True), [
+        #     {
+        #         'classifier__kernel': ['linear'],
+        #         'classifier__C': np.logspace(-3, 3, 10),
+        #     },
+        #     {
+        #         'classifier__kernel': ['poly'],
+        #         'classifier__C': np.logspace(-3, 3, 10),
+        #         'classifier__degree': [2, 3, 4],
+        #         'classifier__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
+        #     },
+        #     {
+        #         'classifier__kernel': ['rbf', 'sigmoid'],
+        #         'classifier__C': np.logspace(-3, 3, 10),
+        #         'classifier__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
+        #     },
+        # ], True),
 
-        ('SVC_linear', SVC(probability=True), 
-            {
-                'classifier__kernel': ['linear'],
-                'classifier__C': np.logspace(-3, 3, 10),
-            }, True),
+        # ('SVC_linear', SVC(probability=True), 
+        #     {
+        #         'classifier__kernel': ['linear'],
+        #         'classifier__C': np.logspace(-3, 3, 10),
+        #     }, True),
 
-        ('LinearSVC', LinearSVC(max_iter=10000), {
-            'classifier__C': np.logspace(-3, 3, 10),
-            'classifier__penalty': ['l2'],
-            'classifier__loss': ['hinge', 'squared_hinge'],
-        }, True),
+        # ('LinearSVC', LinearSVC(max_iter=10000), {
+        #     'classifier__C': np.logspace(-3, 3, 10),
+        #     'classifier__penalty': ['l2'],
+        #     'classifier__loss': ['hinge', 'squared_hinge'],
+        # }, True),
 
-        ('NuSVC', NuSVC(probability=True), [
-            {
-                'classifier__kernel': ['linear'],
-                'classifier__nu': np.linspace(0.1, 0.9, 9),
-            },
-            {
-                'classifier__kernel': ['poly'],
-                'classifier__nu': np.linspace(0.1, 0.9, 9),
-                'classifier__degree': [2, 3, 4],
-                'classifier__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
-            },
-            {
-                'classifier__kernel': ['rbf', 'sigmoid'],
-                'classifier__nu': np.linspace(0.1, 0.9, 9),
-                'classifier__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
-            },
-        ], True),
+        # ('NuSVC', NuSVC(probability=True), [
+        #     {
+        #         'classifier__kernel': ['linear'],
+        #         'classifier__nu': np.linspace(0.1, 0.9, 9),
+        #     },
+        #     {
+        #         'classifier__kernel': ['poly'],
+        #         'classifier__nu': np.linspace(0.1, 0.9, 9),
+        #         'classifier__degree': [2, 3, 4],
+        #         'classifier__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
+        #     },
+        #     {
+        #         'classifier__kernel': ['rbf', 'sigmoid'],
+        #         'classifier__nu': np.linspace(0.1, 0.9, 9),
+        #         'classifier__gamma': ['scale', 'auto'] + list(np.logspace(-4, 0, 5)),
+        #     },
+        # ], True),
 
         #works
-        ('GaussianNB', GaussianNB(), {}, False), 
+        # ('GaussianNB', GaussianNB(), {}, False), 
 
-        #works. But good only for Binary classification
-        ('BernoulliNB', BernoulliNB(), {        
-            'classifier__alpha': np.logspace(-4, 0, 10),
-            'classifier__binarize': [0.0, 0.5, 1.0],
-        }, False),
+        # #works. But good only for Binary classification
+        # ('BernoulliNB', BernoulliNB(), {        
+        #     'classifier__alpha': np.logspace(-4, 0, 10),
+        #     'classifier__binarize': [0.0, 0.5, 1.0],
+        # }, False),
 
         #works. Gives good performance on Iris
-        ('MultinomialNB', MultinomialNB(), {       
-            'classifier__alpha': np.logspace(-4, 0, 10),
-            'classifier__fit_prior': [True, False],
-        }, False),
+        # ('MultinomialNB', MultinomialNB(), {       
+        #     'classifier__alpha': np.logspace(-4, 0, 10),
+        #     'classifier__fit_prior': [True, False],
+        # }, False),
 
         #works. Poor performance on Iris
-        ('ComplementNB', ComplementNB(), {         
-            'classifier__alpha': np.logspace(-4, 0, 10),
-            'classifier__fit_prior': [True, False],
-        }, False),
+        # ('ComplementNB', ComplementNB(), {         
+        #     'classifier__alpha': np.logspace(-4, 0, 10),
+        #     'classifier__fit_prior': [True, False],
+        # }, False),
 
         #works. Good performance on Iris
-        ('LinearDiscriminantAnalysis', LinearDiscriminantAnalysis(), { 
-            'classifier__solver': ['svd', 'lsqr', 'eigen'],
-            'classifier__shrinkage': [None, 'auto'] + list(np.linspace(0, 1, 5)),
-        }, True),
+        # ('LinearDiscriminantAnalysis', LinearDiscriminantAnalysis(), { 
+        #     'classifier__solver': ['svd', 'lsqr', 'eigen'],
+        #     'classifier__shrinkage': [None, 'auto'] + list(np.linspace(0, 1, 5)),
+        # }, True),
 
-        # # works. Good performance on Iris
-        ('QuadraticDiscriminantAnalysis', QuadraticDiscriminantAnalysis(), {
-            'classifier__reg_param': np.linspace(0, 1, 5),
-        }, True),
+        # # # works. Good performance on Iris
+        # ('QuadraticDiscriminantAnalysis', QuadraticDiscriminantAnalysis(), {
+        #     'classifier__reg_param': np.linspace(0, 1, 5),
+        # }, True),
 
         # #works. Good performance on Iris
         ('XGBClassifier', XGBClassifier(use_label_encoder=False, eval_metric='logloss'), {
@@ -223,13 +225,13 @@ def get_classifiers(n_features):
         }, False),
 
        
-        ('LGBMClassifier', LGBMClassifier(force_row_wise=True), {
-            'classifier__n_estimators': [100, 200, 500],
-            'classifier__learning_rate': [0.001, 0.01, 0.1],
-            'classifier__max_depth': range(2, 6),
-            'classifier__num_leaves': [70],
-            'classifier__subsample': [0.5, 0.7, 0.9, 1.0]
-        }, False),
+        # ('LGBMClassifier', LGBMClassifier(force_row_wise=True), {
+        #     'classifier__n_estimators': [100, 200, 500],
+        #     'classifier__learning_rate': [0.001, 0.01, 0.1],
+        #     'classifier__max_depth': range(2, 6),
+        #     'classifier__num_leaves': [70],
+        #     'classifier__subsample': [0.5, 0.7, 0.9, 1.0]
+        # }, False),
 
         #works. Good performance on Iris
         ('CatBoostClassifier', CatBoostClassifier(silent=True), {
@@ -244,17 +246,17 @@ def get_classifiers(n_features):
     # Define feature selectors and their parameters
     feature_selector_list = [
         ('variance_threshold', VarianceThreshold(), {
-            'feature_selection__threshold': [0.0, 0.01, 0.1]
+            'feature_selection__threshold': [0.0]#, 0.01, 0.1]
         }),
         # ('select_k_best_chi2', SelectKBest(score_func=f_classif), {
         #     'feature_selection__k': [10, 20, 30,  'all']
         # }),
-        ('select_k_best_mi', SelectKBest(score_func=mutual_info_classif), {
-            'feature_selection__k': [10, 20, 30,  'all']
-        }),
-        ('rfe', RFE(estimator=LogisticRegression(max_iter=1000)), {
-            'feature_selection__n_features_to_select': [10, 20, 30]
-        })
+        # ('select_k_best_mi', SelectKBest(score_func=mutual_info_classif), {
+        #     'feature_selection__k': [10, 20, 30,  'all']
+        #}),
+        # ('rfe', RFE(estimator=LogisticRegression(max_iter=1000)), {
+        #     'feature_selection__n_features_to_select': [10, 20, 30]
+        # })
     ]
 
     max_features = n_features
@@ -281,27 +283,27 @@ def get_classifiers(n_features):
                 params.append(param_grid)
 
             # Bagging Classifier
-            bagging_clf = BaggingClassifier(estimator=clf, n_estimators=10, max_samples=0.8,
-                                            bootstrap=True, n_jobs=-1, random_state=42)
-            steps_bagging = []
-            if needs_scaling:
-                steps_bagging.append(('scaler', scaler))
-            steps_bagging.append(('feature_selection', fs))
-            steps_bagging.append(('classifier', bagging_clf))
-            pipe_bagging = Pipeline(steps_bagging)
-            classifiers.append(pipe_bagging)
-            # Bagging parameters
-            if isinstance(clf_params, list):  # For classifiers with multiple parameter grids
-                for grid in clf_params:
-                    param_grid_bagging = {}
-                    param_grid_bagging.update({f'classifier__estimator__{k.split("__")[1]}': v for k, v in grid.items()})
-                    param_grid_bagging.update(fs_params)
-                    params.append(param_grid_bagging)
-            else:
-                param_grid_bagging = {}
-                param_grid_bagging.update({f'classifier__estimator__{k.split("__")[1]}': v for k, v in clf_params.items()})
-                param_grid_bagging.update(fs_params)
-                params.append(param_grid_bagging)
+            # bagging_clf = BaggingClassifier(estimator=clf, n_estimators=10, max_samples=0.8,
+            #                                 bootstrap=True, n_jobs=-1, random_state=42)
+            # steps_bagging = []
+            # if needs_scaling:
+            #     steps_bagging.append(('scaler', scaler))
+            # steps_bagging.append(('feature_selection', fs))
+            # steps_bagging.append(('classifier', bagging_clf))
+            # pipe_bagging = Pipeline(steps_bagging)
+            # classifiers.append(pipe_bagging)
+            # # Bagging parameters
+            # if isinstance(clf_params, list):  # For classifiers with multiple parameter grids
+            #     for grid in clf_params:
+            #         param_grid_bagging = {}
+            #         param_grid_bagging.update({f'classifier__estimator__{k.split("__")[1]}': v for k, v in grid.items()})
+            #         param_grid_bagging.update(fs_params)
+            #         params.append(param_grid_bagging)
+            # else:
+            #     param_grid_bagging = {}
+            #     param_grid_bagging.update({f'classifier__estimator__{k.split("__")[1]}': v for k, v in clf_params.items()})
+            #     param_grid_bagging.update(fs_params)
+            #     params.append(param_grid_bagging)
 
     return classifiers, params
 
@@ -418,13 +420,22 @@ def main_clf(X, y,metrics=['accuracy', 'f1']):
 
     # Sort models by the first metric specified
     sorted_models = sorted(sorted_models, key=lambda x: x[1]['metrics'][sort_metric], reverse=True)
+    
+    dict_to_return = {}
 
     # Print best models
     print("\nBest Models:")
+    best = True
     for clf_name, clf_info in sorted_models[:10]:  # Show top 10 models
+        d = {}
         print(f"{clf_name} performance:")
         for metric_name, metric_value in clf_info['metrics'].items():
+            if best:
+                d[metric_name] = metric_value
             print(f"  {metric_name}: {metric_value:.4f}")
+        if best:
+            dict_to_return[clf_name.split('_')[0]] = d
+        best = False
 
     # Ensembling with top 3 models
     top_models = [info['model'] for name, info in sorted_models[:3]]
@@ -445,6 +456,7 @@ def main_clf(X, y,metrics=['accuracy', 'f1']):
         y_prob = None
     metrics_results = calculate_metrics(y_valid, y_pred, y_prob, metrics)
     print(f"\nVoting Classifier performance:")
+    dict_to_return['Voting Classifier'] = {metric_name : metric_value for metric_name, metric_value in metrics_results.items()}
     for metric_name, metric_value in metrics_results.items():
         print(f"  {metric_name}: {metric_value:.4f}")
     best_models['VotingClassifier'] = {
@@ -466,6 +478,7 @@ def main_clf(X, y,metrics=['accuracy', 'f1']):
         y_prob = None
     metrics_results = calculate_metrics(y_valid, y_pred, y_prob, metrics)
     print(f"\nStacking Classifier performance:")
+    dict_to_return['Stacking Classifier'] = {metric_name : metric_value for metric_name, metric_value in metrics_results.items()}
     for metric_name, metric_value in metrics_results.items():
         print(f"  {metric_name}: {metric_value:.4f}")
     best_models['StackingClassifier'] = {
@@ -474,8 +487,10 @@ def main_clf(X, y,metrics=['accuracy', 'f1']):
         'predictions': y_pred,
         'probabilities': y_prob
     }
-
-    return best_models
+    #print(f'#######################\n{best_models}')
+    print('#' * 100)
+    print(dict_to_return)
+    return best_models, dict_to_return
 
 if __name__ == "__main__":
     # Specify the performance metrics you want to use
@@ -486,10 +501,12 @@ if __name__ == "__main__":
     # 2. delete nonnumeric
     # 3. replace NAN
     # 4. give as arg below
-    df = pd.read_csv('logs/data/df_for_experiments.csv')
-    y = df['Survived']
-    X = df.drop(['Unnamed: 0', 'Survived'], axis = 1)
+    df = pd.read_csv('logs/all_dataframes/Churn_gpt-4o/all_hyp_1_exp.csv')
+    y = df['Exited']
+    X = df.drop(['Exited'], axis = 1)
     X.fillna(X.median(), inplace=True)
     X.dropna(axis=1, how='all', inplace=True)
     X = X.loc[:, X.nunique() > 1]
     results = main_clf(X,y)
+    print('#############RESULTS')
+    print(results[1])

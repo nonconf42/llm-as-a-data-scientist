@@ -69,13 +69,13 @@ def get_regressors(n_features):
         #works on diabetes
     #     ('LinearRegression', LinearRegression(), {}, True),
 
-    #     #works on diabetes
-    #     ('Ridge', Ridge(), {
-    #         'regressor__alpha': np.logspace(-4, 4, 50),
-    #         'regressor__solver': ['auto', 'svd', 'cholesky', 'lsqr', 'sag', 'saga'],
-    #     }, True),
+    # #     #works on diabetes
+    # #     ('Ridge', Ridge(), {
+    # #         'regressor__alpha': np.logspace(-4, 4, 50),
+    # #         'regressor__solver': ['auto', 'svd', 'cholesky', 'lsqr', 'sag', 'saga'],
+    # #     }, True),
 
-    #     #works on diabetes
+    # #     #works on diabetes
     #     ('Lasso', Lasso(max_iter=10000), {
     #         'regressor__alpha': np.logspace(-4, 1, 50),
     #         'regressor__selection': ['cyclic', 'random'],
@@ -125,28 +125,28 @@ def get_regressors(n_features):
     #     }, True),
 
     #     #works on diabetes
-    #     ('KNeighborsRegressor', KNeighborsRegressor(), {
-    #         'regressor__n_neighbors': range(1, 31),
-    #         'regressor__weights': ['uniform', 'distance'],
-    #         'regressor__metric': ['euclidean', 'manhattan', 'minkowski'],
-    #     }, True),
+        ('KNeighborsRegressor', KNeighborsRegressor(), {
+            'regressor__n_neighbors': range(1, 31),
+            'regressor__weights': ['uniform', 'distance'],
+            'regressor__metric': ['euclidean', 'manhattan', 'minkowski'],
+        }, True),
 
     #     #works on diabetes
-    #     ('DecisionTreeRegressor', DecisionTreeRegressor(), {
-    #         'regressor__criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-    #         'regressor__max_depth': [None] + list(range(2, 20)),
-    #         'regressor__min_samples_split': range(2, 20),
-    #         'regressor__min_samples_leaf': range(1, 20)
-    #     }, False),
+        ('DecisionTreeRegressor', DecisionTreeRegressor(), {
+            'regressor__criterion': ['squared_error'], #'friedman_mse', 'absolute_error', 'poisson'],
+            'regressor__max_depth': [None] + list(range(2, 20)),
+            'regressor__min_samples_split': range(2, 20),
+            'regressor__min_samples_leaf': range(1, 20)
+        }, False),
 
     #     #works on diabetes
-    #     ('RandomForestRegressor', RandomForestRegressor(), {
-    #         'regressor__n_estimators': [100, 200, 500],
-    #         'regressor__criterion': ['squared_error', 'absolute_error', 'friedman_mse'],
-    #         'regressor__max_depth': [None] + list(range(2, 20)),
-    #         'regressor__min_samples_split': range(2, 20),
-    #         'regressor__min_samples_leaf': range(1, 20)
-    #     }, False),
+        ('RandomForestRegressor', RandomForestRegressor(), {
+            'regressor__n_estimators': [100, 200, 500],
+            'regressor__criterion': ['squared_error'],#, 'absolute_error', 'friedman_mse'],
+            'regressor__max_depth': [None] + list(range(2, 20, 3)),
+            'regressor__min_samples_split': range(2, 20, 3),
+            'regressor__min_samples_leaf': range(1, 20, 3)
+        }, False),
 
     #     #works on diabetes
     #     ('GradientBoostingRegressor', GradientBoostingRegressor(), {
@@ -205,14 +205,14 @@ def get_regressors(n_features):
         #     },
         # ], True),
 
-        #works on diabetes
-        # ('XGBRegressor', XGBRegressor(), {
-        #     'regressor__n_estimators': [100, 200, 500],
-        #     'regressor__learning_rate': [0.001, 0.01, 0.1],
-        #     'regressor__max_depth': range(2, 10),
-        #     'regressor__subsample': [0.5, 0.7, 0.9, 1.0],
-        #     'regressor__colsample_bytree': [0.5, 0.7, 0.9, 1.0]
-        # }, False),
+        
+        ('XGBRegressor', XGBRegressor(), {
+            'regressor__n_estimators': [100, 200, 500],
+            'regressor__learning_rate': [0.001, 0.01, 0.1],
+            'regressor__max_depth': range(2, 10),
+            'regressor__subsample': [0.5, 0.7, 0.9, 1.0],
+            'regressor__colsample_bytree': [0.5, 0.7, 0.9, 1.0]
+        }, False),
 
         #need to be fixed
         # ('LGBMRegressor', LGBMRegressor(), {
@@ -223,38 +223,38 @@ def get_regressors(n_features):
         #     'regressor__subsample': [0.5, 0.7, 0.9, 1.0]
         # }, False),
 
-        ('LGBMRegressor', LGBMRegressor(n_jobs=-1), {
-            'regressor__n_estimators': [5, 100, 200, 500],
-            'regressor__learning_rate': [0.01, 0.1, 0.2],
-            'regressor__max_depth': [3, 5, 7, 9],
-            'regressor__num_leaves': [1, 2, 5], #31, 50],
-            'regressor__subsample': [0.6, 0.8, 1.0],
-            'regressor__min_child_samples': [5, 10, 20]
-        }, False),
+        # ('LGBMRegressor', LGBMRegressor(n_jobs=-1), {
+        #     'regressor__n_estimators': [5, 100, 200, 500],
+        #     'regressor__learning_rate': [0.01, 0.1, 0.2],
+        #     'regressor__max_depth': [3, 5, 7, 9],
+        #     'regressor__num_leaves': [1, 2, 5], #31, 50],
+        #     'regressor__subsample': [0.6, 0.8, 1.0],
+        #     'regressor__min_child_samples': [5, 10, 20]
+        # }, False),
 
-        # ('CatBoostRegressor', CatBoostRegressor(silent=True), {
-        #     'regressor__iterations': [100, 200, 500],
-        #     'regressor__learning_rate': [0.001, 0.01, 0.1],
-        #     'regressor__depth': range(2, 10),
-        #     'regressor__l2_leaf_reg': [1, 3, 5, 7, 9],
-        #     'regressor__bagging_temperature': [0, 1, 2, 5, 10]
-        # }, False)
+        ('CatBoostRegressor', CatBoostRegressor(silent=True), {
+            'regressor__iterations': [100, 200, 500],
+            'regressor__learning_rate': [0.001, 0.01, 0.1],
+            'regressor__depth': range(2, 10),
+            'regressor__l2_leaf_reg': [1, 3, 5, 7, 9],
+            'regressor__bagging_temperature': [0, 1, 2, 5, 10]
+        }, False)
     ]
 
     # Define feature selectors and their parameters
     feature_selector_list = [
         ('variance_threshold', VarianceThreshold(), {
-            'feature_selection__threshold': [0.0, 0.01, 0.1]
+            'feature_selection__threshold': [0.0]#, 0.01, 0.1]
         }),
-        ('select_k_best_f', SelectKBest(score_func=f_regression), {
-            'feature_selection__k': [5, 10, 15, 20, 'all']
-        }),
-        ('select_k_best_mi', SelectKBest(score_func=mutual_info_regression), {
-            'feature_selection__k': [5, 10, 15, 20, 'all']
-        }),
-        ('rfe', RFE(estimator=LinearRegression()), {
-            'feature_selection__n_features_to_select': [5, 10, 15, 20, None]
-        })
+        # # ('select_k_best_f', SelectKBest(score_func=f_regression), {
+        #     'feature_selection__k': [5, 10, 15, 20, 'all']
+        # }),
+        # ('select_k_best_mi', SelectKBest(score_func=mutual_info_regression), {
+        #     'feature_selection__k': [5, 10, 15, 20, 'all']
+        # }),
+        # ('rfe', RFE(estimator=LinearRegression()), {
+        #     'feature_selection__n_features_to_select': [5, 10, 15, 20, None]
+        # })
     ]
 
     max_features = n_features
@@ -298,28 +298,28 @@ def get_regressors(n_features):
                 param_grid.update(fs_params)
                 params.append(param_grid)
 
-            # Bagging Regressor
-            bagging_reg = BaggingRegressor(base_estimator=reg, n_estimators=10, max_samples=0.8,
-                                           bootstrap=True, n_jobs=-1, random_state=42)
-            steps_bagging = []
-            if needs_scaling:
-                steps_bagging.append(('scaler', scaler))
-            steps_bagging.append(('feature_selection', fs))
-            steps_bagging.append(('regressor', bagging_reg))
-            pipe_bagging = Pipeline(steps_bagging)
-            regressors.append(pipe_bagging)
-            # Bagging parameters
-            if isinstance(reg_params, list):  # For regressors with multiple parameter grids
-                for grid in reg_params:
-                    param_grid_bagging = {}
-                    param_grid_bagging.update({f'regressor__base_estimator__{k.split("__")[1]}': v for k, v in grid.items()})
-                    param_grid_bagging.update(fs_params)
-                    params.append(param_grid_bagging)
-            else:
-                param_grid_bagging = {}
-                param_grid_bagging.update({f'regressor__base_estimator__{k.split("__")[1]}': v for k, v in reg_params.items()})
-                param_grid_bagging.update(fs_params)
-                params.append(param_grid_bagging)
+            # # Bagging Regressor
+            # bagging_reg = BaggingRegressor(base_estimator=reg, n_estimators=10, max_samples=0.8,
+            #                                bootstrap=True, n_jobs=-1, random_state=42)
+            # steps_bagging = []
+            # if needs_scaling:
+            #     steps_bagging.append(('scaler', scaler))
+            # steps_bagging.append(('feature_selection', fs))
+            # steps_bagging.append(('regressor', bagging_reg))
+            # pipe_bagging = Pipeline(steps_bagging)
+            # regressors.append(pipe_bagging)
+            # # Bagging parameters
+            # if isinstance(reg_params, list):  # For regressors with multiple parameter grids
+            #     for grid in reg_params:
+            #         param_grid_bagging = {}
+            #         param_grid_bagging.update({f'regressor__base_estimator__{k.split("__")[1]}': v for k, v in grid.items()})
+            #         param_grid_bagging.update(fs_params)
+            #         params.append(param_grid_bagging)
+            # else:
+            #     param_grid_bagging = {}
+            #     param_grid_bagging.update({f'regressor__base_estimator__{k.split("__")[1]}': v for k, v in reg_params.items()})
+            #     param_grid_bagging.update(fs_params)
+            #     params.append(param_grid_bagging)
 
     return regressors, params
 
@@ -356,17 +356,149 @@ def calculate_metrics(y_true, y_pred, metrics_list):
             print(f"Warning: Unknown metric '{metric}'")
     return metrics_results
 
-def main(metrics=['mse', 'r2']):
+import pandas as pd
+
+def impute_missing_values(df):
+    """
+    Imputes missing values in a DataFrame.
+    - Numerical columns: Imputed with the median.
+    - Non-numerical columns: Imputed with the mode.
+    
+    Parameters:
+        df (pd.DataFrame): Input DataFrame with potential missing values.
+    
+    Returns:
+        pd.DataFrame: DataFrame with missing values imputed.
+    """
+    df_imputed = df.copy()
+    
+    for column in df_imputed.columns:
+        if df_imputed[column].dtype in ['int64', 'float64']:
+            # Impute numerical columns with median
+            median_value = df_imputed[column].median()
+            df_imputed[column].fillna(median_value, inplace=True)
+        else:
+            # Impute non-numerical columns with mode
+            mode_value = df_imputed[column].mode()[0]
+            df_imputed[column].fillna(mode_value, inplace=True)
+    
+    return df_imputed
+
+import pandas as pd
+import numpy as np
+from datasets.data import DataReader
+def remove_multicollinear_columns(df, threshold=0.9):
+    """
+    Removes columns with high multicollinearity based on a correlation threshold.
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame.
+        threshold (float): Correlation threshold above which columns are considered multicollinear.
+
+    Returns:
+        pd.DataFrame: DataFrame with multicollinear columns removed.
+    """
+    # Compute the correlation matrix
+    corr_matrix = df.corr()
+
+    # Select upper triangle of the correlation matrix
+    upper_tri = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
+
+    # Find columns with a correlation greater than the threshold
+    to_drop = [column for column in upper_tri.columns if any(upper_tri[column].abs() > abs(threshold))]
+
+    # Drop the multicollinear columns
+    return df.drop(columns=to_drop)
+def encode_non_numerical_columns(df):
+    df_encoded = df.copy()  
+    label_encoders = {}  
+    
+    for column in df_encoded.select_dtypes(include=['object', 'category']).columns:
+        encoder = LabelEncoder()
+        df_encoded[column] = encoder.fit_transform(df_encoded[column])
+        label_encoders[column] = encoder  
+    
+    return df_encoded
+import numpy as np
+import pandas as pd
+
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+
+def scale_series(series):
+    """
+    Scales a Pandas Series using sklearn's StandardScaler.
+
+    Parameters:
+        series (pd.Series): Input Pandas Series to scale.
+
+    Returns:
+        pd.Series: Scaled Pandas Series.
+    """
+    scaler = StandardScaler()
+    # Reshape the Series to a 2D array
+    scaled_data = scaler.fit_transform(series.values.reshape(-1, 1))
+    # Return a Pandas Series
+    return pd.Series(scaled_data.flatten(), index=series.index)
+
+
+def remove_linearly_dependent_columns(df):
+    """
+    Removes linearly dependent columns from a DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame.
+
+    Returns:
+        pd.DataFrame: DataFrame with linearly dependent columns removed.
+    """
+    # Ensure the DataFrame contains only numeric columns
+    df_numeric = df.select_dtypes(include=[np.number])
+    
+    # Perform Singular Value Decomposition (SVD)
+    _, singular_values, vh = np.linalg.svd(df_numeric, full_matrices=False)
+    
+    # Identify columns to keep
+    tolerance = 1e-10  # Adjust tolerance for linear dependence
+    independent_columns = np.abs(singular_values) > tolerance
+
+    # Keep only independent columns
+    dependent_columns = [
+        df_numeric.columns[i] 
+        for i, is_independent in enumerate(independent_columns) 
+        if not is_independent
+    ]
+    
+    # Drop dependent columns
+    df_cleaned = df.drop(columns=dependent_columns)
+    
+    return df_cleaned
+
+import pandas as pd
+
+def remove_zero_variance_columns(df):
+    """
+    Removes columns with zero variance from the DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame.
+
+    Returns:
+        pd.DataFrame: DataFrame with zero-variance columns removed.
+    """
+    # Calculate variance for each column
+    variances = df.var()
+    
+    # Identify columns with zero variance
+    zero_variance_columns = variances[variances == 0].index
+
+    # Drop the zero-variance columns
+    return df.drop(columns=zero_variance_columns)
+
+
+def main_reg(X,y,metrics=['mse', 'r2']):
     # Set data path and target column
-    data_path = 'diabetes.csv'      # Replace with your data file path
-    target_column = 'target'    # Replace with your target column name
-
-    # Load data
-    X, y = load_data(data_path, target_column)
-
-    # Check for categorical features
-    if X.select_dtypes(include=['object', 'category']).shape[1] > 0:
-        raise ValueError("Categorical features detected. Please encode categorical variables before training.")
+   
 
     n_features = X.shape[1]
 
@@ -431,11 +563,18 @@ def main(metrics=['mse', 'r2']):
                            reverse=(sort_metric == 'r2' or sort_metric == 'explained_variance'))
 
     # Print best models
+    dict_to_return = {}
+    best = True
     print("\nBest Models:")
     for reg_name, reg_info in sorted_models[:10]:  # Show top 10 models
         print(f"{reg_name} performance:")
         for metric_name, metric_value in reg_info['metrics'].items():
+            if best:
+                d = {metric_name : metric_value for metric_name, metric_value in reg_info['metrics'].items()}
             print(f"  {metric_name}: {metric_value:.4f}")
+        if best:
+            dict_to_return[reg_name.split('_')[0]] = d
+        best = False
 
     # Ensembling with top 3 models
     top_models = [info['model'] for name, info in sorted_models[:3]]
@@ -450,6 +589,7 @@ def main(metrics=['mse', 'r2']):
     y_pred = voting_reg.predict(X_valid)
     metrics_results = calculate_metrics(y_valid, y_pred, metrics)
     print(f"\nVoting Regressor performance:")
+    dict_to_return['Voting Regressor'] = {metric_name : metric_value for metric_name, metric_value in metrics_results.items()}
     for metric_name, metric_value in metrics_results.items():
         print(f"  {metric_name}: {metric_value:.4f}")
     best_models['VotingRegressor'] = {
@@ -464,6 +604,7 @@ def main(metrics=['mse', 'r2']):
     y_pred = stacking_reg.predict(X_valid)
     metrics_results = calculate_metrics(y_valid, y_pred, metrics)
     print(f"\nStacking Regressor performance:")
+    dict_to_return['Stacking Regressor'] = {metric_name : metric_value for metric_name, metric_value in metrics_results.items()}
     for metric_name, metric_value in metrics_results.items():
         print(f"  {metric_name}: {metric_value:.4f}")
     best_models['StackingRegressor'] = {
@@ -472,10 +613,26 @@ def main(metrics=['mse', 'r2']):
         'predictions': y_pred
     }
 
-    return best_models
+    return best_models, dict_to_return
 
 if __name__ == "__main__":
+     data_path = 'logs/all_dataframes/Diamonds_gpt-4o/all_hyp_1_exp.csv'      # Replace with your data file path
+     target_column = 'price'    # Replace with your target column name
+    #diamonds = DataReader('Diamonds')
+    # Load data
+     df = pd.read_csv(data_path)
+     y = df[target_column]
+     X = df.drop([target_column], axis = 1)
+    #X = encode_non_numerical_columns(X)
+     X = X.dropna(axis=1, how='all')
+     X = impute_missing_values(X)
+     X = remove_linearly_dependent_columns(X)
+     X = remove_zero_variance_columns(X)
+    #Check for categorical features
+     if X.select_dtypes(include=['object', 'category']).shape[1] > 0:
+        raise ValueError("Categorical features detected. Please encode categorical variables before training.")
     # Specify the performance metrics you want to use
     # Available metrics: 'mse', 'mae', 'r2', 'rmse', 'mape', 'explained_variance'
-    performance_metrics = ['mse', 'mae', 'r2', 'rmse']
-    results = main(metrics=performance_metrics)
+     performance_metrics = ['r2', 'rmse']
+     results = main_reg(X=X, y=y)
+     print(results[1])

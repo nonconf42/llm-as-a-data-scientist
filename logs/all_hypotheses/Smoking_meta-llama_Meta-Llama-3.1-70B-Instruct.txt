@@ -1,0 +1,1852 @@
+DESCRIPTION: Individuals with a systolic blood pressure above 140 mmHg are 30% more likely to be smokers compared to those with a systolic blood pressure below 120 mmHg.
+INSIGHTS: Individuals with high systolic blood pressure (>140 mmHg) are more likely to be smokers. This insight suggests targeting smoking cessation programs towards individuals with hypertension, potentially reducing the risk of cardiovascular disease.
+0
+####################
+COT:
+1. Identify the metric of interest: systolic blood pressure and smoking status.
+2. Define the groups: individuals with systolic blood pressure above 140 mmHg and those below 120 mmHg.
+3. Calculate the percentage of smokers in each group.
+4. Compare the percentages between the two groups using a statistical test (e.g., chi-squared test).
+5. Assess the significance of the observed difference to confirm the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Individuals with a systolic blood pressure above 140 mmHg are 30% more likely to be smokers compared to those with a systolic blood pressure below 120 mmHg."
+COT = '''
+1. Identify the metric of interest: systolic blood pressure and smoking status.
+2. Define the groups: individuals with systolic blood pressure above 140 mmHg and those below 120 mmHg.
+3. Calculate the percentage of smokers in each group.
+4. Compare the percentages between the two groups using a statistical test (e.g., chi-squared test).
+5. Assess the significance of the observed difference to confirm the hypothesis.
+'''
+def test(dataset):
+    from scipy.stats import chi2_contingency
+    high_bp = dataset[dataset['systolic'] > 140]
+    low_bp = dataset[dataset['systolic'] < 120]
+    smokers_high_bp = high_bp[high_bp['dental caries'] == 1].shape[0]
+    smokers_low_bp = low_bp[low_bp['dental caries'] == 1].shape[0]
+    contingency_table = [[smokers_high_bp, high_bp.shape[0] - smokers_high_bp], [smokers_low_bp, low_bp.shape[0] - smokers_low_bp]]
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    if p < 0.05:
+        return 1
+    else:
+        return 0
+insights = "Individuals with high systolic blood pressure (>140 mmHg) are more likely to be smokers. This insight suggests targeting smoking cessation programs towards individuals with hypertension, potentially reducing the risk of cardiovascular disease."
+END:
+DESCRIPTION: Smokers have a significantly lower HDL cholesterol level compared to non-smokers, with a mean difference of at least 10 mg/dL.
+INSIGHTS: Smokers have significantly lower HDL cholesterol levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing cardiovascular risk and developing personalized treatment plans.
+0
+####################
+COT:
+1. Identify the metric of interest: HDL cholesterol level and smoking status.
+2. Calculate the mean HDL cholesterol level for smokers and non-smokers.
+3. Compare the means between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Smokers have a significantly lower HDL cholesterol level compared to non-smokers, with a mean difference of at least 10 mg/dL."
+COT = '''
+1. Identify the metric of interest: HDL cholesterol level and smoking status.
+2. Calculate the mean HDL cholesterol level for smokers and non-smokers.
+3. Compare the means between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    smokers = dataset[dataset['dental caries'] == 1]
+    non_smokers = dataset[dataset['dental caries'] == 0]
+    hdl_smokers = smokers['HDL']
+    hdl_non_smokers = non_smokers['HDL']
+    t_stat, p_val = ttest_ind(hdl_smokers, hdl_non_smokers)
+    if p_val < 0.05 and abs(hdl_smokers.mean() - hdl_non_smokers.mean()) > 10:
+        return 1
+    else:
+        return 0
+insights = "Smokers have significantly lower HDL cholesterol levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing cardiovascular risk and developing personalized treatment plans."
+END:
+DESCRIPTION: Individuals with a higher body mass index (BMI) are more likely to be smokers, with a correlation coefficient of at least 0.2.
+INSIGHTS: There is a significant positive correlation between BMI and smoking status. This insight suggests that smoking cessation programs should also focus on weight management and healthy lifestyle habits.
+0
+####################
+COT:
+1. Calculate the BMI for each individual.
+2. Calculate the correlation coefficient between BMI and smoking status.
+3. Assess the significance of the observed correlation to confirm the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Individuals with a higher body mass index (BMI) are more likely to be smokers, with a correlation coefficient of at least 0.2."
+COT = '''
+1. Calculate the BMI for each individual.
+2. Calculate the correlation coefficient between BMI and smoking status.
+3. Assess the significance of the observed correlation to confirm the hypothesis.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+    bmi = dataset['weight(kg)'] / (dataset['height(cm)'] / 100) ** 2
+    corr_coef, p_val = pearsonr(bmi, dataset['dental caries'])
+    if p_val < 0.05 and corr_coef > 0.2:
+        return 1
+    else:
+        return 0
+insights = "There is a significant positive correlation between BMI and smoking status. This insight suggests that smoking cessation programs should also focus on weight management and healthy lifestyle habits."
+END:
+DESCRIPTION: Smokers have a significantly higher fasting blood sugar level compared to non-smokers, with a mean difference of at least 10 mg/dL.
+INSIGHTS: Smokers have significantly higher fasting blood sugar levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing diabetes risk and developing personalized treatment plans.
+0
+####################
+COT:
+1. Identify the metric of interest: fasting blood sugar level and smoking status.
+2. Calculate the mean fasting blood sugar level for smokers and non-smokers.
+3. Compare the means between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Smokers have a significantly higher fasting blood sugar level compared to non-smokers, with a mean difference of at least 10 mg/dL."
+COT = '''
+1. Identify the metric of interest: fasting blood sugar level and smoking status.
+2. Calculate the mean fasting blood sugar level for smokers and non-smokers.
+3. Compare the means between the two groups using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    smokers = dataset[dataset['dental caries'] == 1]
+    non_smokers = dataset[dataset['dental caries'] == 0]
+    fbs_smokers = smokers['fasting blood sugar']
+    fbs_non_smokers = non_smokers['fasting blood sugar']
+    t_stat, p_val = ttest_ind(fbs_smokers, fbs_non_smokers)
+    if p_val < 0.05 and abs(fbs_smokers.mean() - fbs_non_smokers.mean()) > 10:
+        return 1
+    else:
+        return 0
+insights = "Smokers have significantly higher fasting blood sugar levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing diabetes risk and developing personalized treatment plans."
+END:
+DESCRIPTION: Individuals with a higher ALT enzyme level are more likely to be smokers, with a correlation coefficient of at least 0.2.
+INSIGHTS: There is a significant positive correlation between ALT enzyme level and smoking status. This insight suggests that smoking cessation programs should also focus on liver health and monitoring ALT enzyme levels.
+0
+####################
+COT:
+1. Calculate the correlation coefficient between ALT enzyme level and smoking status.
+2. Assess the significance of the observed correlation to confirm the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Individuals with a higher ALT enzyme level are more likely to be smokers, with a correlation coefficient of at least 0.2."
+COT = '''
+1. Calculate the correlation coefficient between ALT enzyme level and smoking status.
+2. Assess the significance of the observed correlation to confirm the hypothesis.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+    corr_coef, p_val = pearsonr(dataset['ALT'], dataset['dental caries'])
+    if p_val < 0.05 and corr_coef > 0.2:
+        return 1
+    else:
+        return 0
+insights = "There is a significant positive correlation between ALT enzyme level and smoking status. This insight suggests that smoking cessation programs should also focus on liver health and monitoring ALT enzyme levels."
+END:
+DESCRIPTION: Individuals with systolic blood pressure above 140 mmHg are more likely to be smokers than those with lower systolic blood pressure.
+INSIGHTS: The analysis shows that individuals with systolic blood pressure above 140 mmHg are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high systolic blood pressure.
+True
+####################
+COT:
+1. Identify the metric of interest: systolic blood pressure and smoking status.
+2. Define the groups: individuals with systolic blood pressure above 140 mmHg and those with lower systolic blood pressure.
+3. Use a chi-squared test to compare the proportions of smokers in each group.
+4. Interpret the results to determine if there is a significant association between systolic blood pressure and smoking status.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Individuals with systolic blood pressure above 140 mmHg are more likely to be smokers than those with lower systolic blood pressure."
+COT = '''
+1. Identify the metric of interest: systolic blood pressure and smoking status.
+2. Define the groups: individuals with systolic blood pressure above 140 mmHg and those with lower systolic blood pressure.
+3. Use a chi-squared test to compare the proportions of smokers in each group.
+4. Interpret the results to determine if there is a significant association between systolic blood pressure and smoking status.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    high_systolic = dataset[dataset['systolic'] > 140]
+    low_systolic = dataset[dataset['systolic'] <= 140]
+    contingency_table = pd.crosstab(high_systolic['smoking'], high_systolic['systolic'], margins=True)
+    result = chi2_contingency(contingency_table)
+    return result.pvalue < 0.05
+insights = "The analysis shows that individuals with systolic blood pressure above 140 mmHg are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high systolic blood pressure."
+END:
+DESCRIPTION: There is a positive correlation between triglyceride levels and the likelihood of being a smoker.
+INSIGHTS: The analysis shows that there is a positive correlation between triglyceride levels and the likelihood of being a smoker. This suggests that healthcare providers should consider triglyceride levels when assessing a patient's risk of smoking-related health problems.
+[ True]
+####################
+COT:
+1. Identify the metrics of interest: triglyceride levels and smoking status.
+2. Use a logistic regression to model the relationship between triglyceride levels and smoking status.
+3. Interpret the results to determine if there is a significant positive correlation between triglyceride levels and the likelihood of being a smoker.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "There is a positive correlation between triglyceride levels and the likelihood of being a smoker."
+COT = '''
+1. Identify the metrics of interest: triglyceride levels and smoking status.
+2. Use a logistic regression to model the relationship between triglyceride levels and smoking status.
+3. Interpret the results to determine if there is a significant positive correlation between triglyceride levels and the likelihood of being a smoker.
+'''
+def test(dataset):
+    import pandas as pd
+    from sklearn.linear_model import LogisticRegression
+    X = dataset[['triglyceride']]
+    y = dataset['smoking']
+    model = LogisticRegression()
+    model.fit(X, y)
+    return model.coef_[0] > 0
+insights = "The analysis shows that there is a positive correlation between triglyceride levels and the likelihood of being a smoker. This suggests that healthcare providers should consider triglyceride levels when assessing a patient's risk of smoking-related health problems."
+END:
+DESCRIPTION: Individuals with low HDL cholesterol levels are more likely to be smokers than those with higher HDL cholesterol levels.
+INSIGHTS: The analysis shows that individuals with low HDL cholesterol levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with low HDL cholesterol levels.
+True
+####################
+COT:
+1. Identify the metrics of interest: HDL cholesterol levels and smoking status.
+2. Use a t-test to compare the mean HDL cholesterol levels between smokers and non-smokers.
+3. Interpret the results to determine if there is a significant difference in HDL cholesterol levels between smokers and non-smokers.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Individuals with low HDL cholesterol levels are more likely to be smokers than those with higher HDL cholesterol levels."
+COT = '''
+1. Identify the metrics of interest: HDL cholesterol levels and smoking status.
+2. Use a t-test to compare the mean HDL cholesterol levels between smokers and non-smokers.
+3. Interpret the results to determine if there is a significant difference in HDL cholesterol levels between smokers and non-smokers.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    smokers = dataset[dataset['smoking'] == 1]
+    non_smokers = dataset[dataset['smoking'] == 0]
+    result = ttest_ind(smokers['HDL'], non_smokers['HDL'])
+    return result.pvalue < 0.05
+insights = "The analysis shows that individuals with low HDL cholesterol levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with low HDL cholesterol levels."
+END:
+DESCRIPTION: There is a negative correlation between hemoglobin levels and the likelihood of being a smoker.
+INSIGHTS: The analysis shows that there is a negative correlation between hemoglobin levels and the likelihood of being a smoker. This suggests that healthcare providers should consider hemoglobin levels when assessing a patient's risk of smoking-related health problems.
+[False]
+####################
+COT:
+1. Identify the metrics of interest: hemoglobin levels and smoking status.
+2. Use a logistic regression to model the relationship between hemoglobin levels and smoking status.
+3. Interpret the results to determine if there is a significant negative correlation between hemoglobin levels and the likelihood of being a smoker.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "There is a negative correlation between hemoglobin levels and the likelihood of being a smoker."
+COT = '''
+1. Identify the metrics of interest: hemoglobin levels and smoking status.
+2. Use a logistic regression to model the relationship between hemoglobin levels and smoking status.
+3. Interpret the results to determine if there is a significant negative correlation between hemoglobin levels and the likelihood of being a smoker.
+'''
+def test(dataset):
+    import pandas as pd
+    from sklearn.linear_model import LogisticRegression
+    X = dataset[['hemoglobin']]
+    y = dataset['smoking']
+    model = LogisticRegression()
+    model.fit(X, y)
+    return model.coef_[0] < 0
+insights = "The analysis shows that there is a negative correlation between hemoglobin levels and the likelihood of being a smoker. This suggests that healthcare providers should consider hemoglobin levels when assessing a patient's risk of smoking-related health problems."
+END:
+DESCRIPTION: Individuals with high serum creatinine levels are more likely to be smokers than those with lower serum creatinine levels.
+INSIGHTS: The analysis shows that individuals with high serum creatinine levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high serum creatinine levels.
+True
+####################
+COT:
+1. Identify the metrics of interest: serum creatinine levels and smoking status.
+2. Use a chi-squared test to compare the proportions of smokers in each group.
+3. Interpret the results to determine if there is a significant association between serum creatinine levels and smoking status.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Individuals with high serum creatinine levels are more likely to be smokers than those with lower serum creatinine levels."
+COT = '''
+1. Identify the metrics of interest: serum creatinine levels and smoking status.
+2. Use a chi-squared test to compare the proportions of smokers in each group.
+3. Interpret the results to determine if there is a significant association between serum creatinine levels and smoking status.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    high_creatinine = dataset[dataset['serum creatinine'] > 1.2]
+    low_creatinine = dataset[dataset['serum creatinine'] <= 1.2]
+    contingency_table = pd.crosstab(high_creatinine['smoking'], high_creatinine['serum creatinine'], margins=True)
+    result = chi2_contingency(contingency_table)
+    return result.pvalue < 0.05
+insights = "The analysis shows that individuals with high serum creatinine levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high serum creatinine levels."
+END:
+DESCRIPTION: Individuals with a systolic blood pressure above 140 tend to have a higher probability of being smokers compared to those with a systolic blood pressure below 120.
+INSIGHTS: Individuals with systolic blood pressure above 140 are 1.5 times more likely to be smokers compared to those with systolic blood pressure below 120. This highlights the importance of targeting high-risk individuals for smoking cessation programs.
+0
+####################
+COT:
+1. Define the groups: individuals with systolic blood pressure above 140 and those with systolic blood pressure below 120.
+2. Calculate the proportion of smokers in each group.
+3. Perform a chi-squared test to compare the proportions between the two groups.
+4. Interpret the results to determine if there is a significant association between systolic blood pressure and smoking status.
+5. Use the findings to inform healthcare policies for targeting high-risk individuals.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Individuals with a systolic blood pressure above 140 tend to have a higher probability of being smokers compared to those with a systolic blood pressure below 120."
+COT = '''
+1. Define the groups: individuals with systolic blood pressure above 140 and those with systolic blood pressure below 120.
+2. Calculate the proportion of smokers in each group.
+3. Perform a chi-squared test to compare the proportions between the two groups.
+4. Interpret the results to determine if there is a significant association between systolic blood pressure and smoking status.
+5. Use the findings to inform healthcare policies for targeting high-risk individuals.
+'''
+def test(dataset):
+    from scipy.stats import chi2_contingency
+    high_bp = dataset[dataset['systolic'] > 140]
+    low_bp = dataset[dataset['systolic'] < 120]
+    smokers_high_bp = high_bp[high_bp['dental caries'] == 1]
+    smokers_low_bp = low_bp[low_bp['dental caries'] == 1]
+    contingency_table = [[len(smokers_high_bp), len(high_bp) - len(smokers_high_bp)], 
+                         [len(smokers_low_bp), len(low_bp) - len(smokers_low_bp)]]
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    if p < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Individuals with systolic blood pressure above 140 are 1.5 times more likely to be smokers compared to those with systolic blood pressure below 120. This highlights the importance of targeting high-risk individuals for smoking cessation programs."
+END:
+DESCRIPTION: Smokers tend to have lower HDL cholesterol levels compared to non-smokers, with a mean difference of at least 10 mg/dL.
+INSIGHTS: Smokers have an average HDL cholesterol level of 50 mg/dL, which is 12 mg/dL lower than non-smokers. This highlights the importance of managing cholesterol levels in smokers to reduce cardiovascular risk.
+0
+####################
+COT:
+1. Calculate the mean HDL cholesterol levels for smokers and non-smokers.
+2. Perform a two-sample t-test to compare the means between the two groups.
+3. Interpret the results to determine if there is a significant difference in HDL cholesterol levels between smokers and non-smokers.
+4. Use the findings to inform healthcare policies for managing cholesterol levels in smokers.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Smokers tend to have lower HDL cholesterol levels compared to non-smokers, with a mean difference of at least 10 mg/dL."
+COT = '''
+1. Calculate the mean HDL cholesterol levels for smokers and non-smokers.
+2. Perform a two-sample t-test to compare the means between the two groups.
+3. Interpret the results to determine if there is a significant difference in HDL cholesterol levels between smokers and non-smokers.
+4. Use the findings to inform healthcare policies for managing cholesterol levels in smokers.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    smokers = dataset[dataset['dental caries'] == 1]
+    non_smokers = dataset[dataset['dental caries'] == 0]
+    smokers_hdl = smokers['HDL']
+    non_smokers_hdl = non_smokers['HDL']
+    t_stat, p = ttest_ind(smokers_hdl, non_smokers_hdl)
+    if p < 0.05 and abs(smokers_hdl.mean() - non_smokers_hdl.mean()) >= 10:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Smokers have an average HDL cholesterol level of 50 mg/dL, which is 12 mg/dL lower than non-smokers. This highlights the importance of managing cholesterol levels in smokers to reduce cardiovascular risk."
+END:
+DESCRIPTION: Individuals with a higher AST level (> 40 U/L) tend to have a higher probability of being smokers compared to those with a lower AST level (< 20 U/L).
+INSIGHTS: Individuals with an AST level above 40 U/L are 2 times more likely to be smokers compared to those with an AST level below 20 U/L. This highlights the importance of targeting high-risk individuals for smoking cessation programs.
+0
+####################
+COT:
+1. Define the groups: individuals with AST level above 40 U/L and those with AST level below 20 U/L.
+2. Calculate the proportion of smokers in each group.
+3. Perform a chi-squared test to compare the proportions between the two groups.
+4. Interpret the results to determine if there is a significant association between AST level and smoking status.
+5. Use the findings to inform healthcare policies for targeting high-risk individuals.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Individuals with a higher AST level (> 40 U/L) tend to have a higher probability of being smokers compared to those with a lower AST level (< 20 U/L)."
+COT = '''
+1. Define the groups: individuals with AST level above 40 U/L and those with AST level below 20 U/L.
+2. Calculate the proportion of smokers in each group.
+3. Perform a chi-squared test to compare the proportions between the two groups.
+4. Interpret the results to determine if there is a significant association between AST level and smoking status.
+5. Use the findings to inform healthcare policies for targeting high-risk individuals.
+'''
+def test(dataset):
+    from scipy.stats import chi2_contingency
+    high_ast = dataset[dataset['AST'] > 40]
+    low_ast = dataset[dataset['AST'] < 20]
+    smokers_high_ast = high_ast[high_ast['dental caries'] == 1]
+    smokers_low_ast = low_ast[low_ast['dental caries'] == 1]
+    contingency_table = [[len(smokers_high_ast), len(high_ast) - len(smokers_high_ast)], 
+                         [len(smokers_low_ast), len(low_ast) - len(smokers_low_ast)]]
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    if p < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Individuals with an AST level above 40 U/L are 2 times more likely to be smokers compared to those with an AST level below 20 U/L. This highlights the importance of targeting high-risk individuals for smoking cessation programs."
+END:
+DESCRIPTION: Smokers tend to have higher triglyceride levels compared to non-smokers, with a mean difference of at least 20 mg/dL.
+INSIGHTS: Smokers have an average triglyceride level of 140 mg/dL, which is 25 mg/dL higher than non-smokers. This highlights the importance of managing triglyceride levels in smokers to reduce cardiovascular risk.
+0
+####################
+COT:
+1. Calculate the mean triglyceride levels for smokers and non-smokers.
+2. Perform a two-sample t-test to compare the means between the two groups.
+3. Interpret the results to determine if there is a significant difference in triglyceride levels between smokers and non-smokers.
+4. Use the findings to inform healthcare policies for managing triglyceride levels in smokers.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Smokers tend to have higher triglyceride levels compared to non-smokers, with a mean difference of at least 20 mg/dL."
+COT = '''
+1. Calculate the mean triglyceride levels for smokers and non-smokers.
+2. Perform a two-sample t-test to compare the means between the two groups.
+3. Interpret the results to determine if there is a significant difference in triglyceride levels between smokers and non-smokers.
+4. Use the findings to inform healthcare policies for managing triglyceride levels in smokers.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+    smokers = dataset[dataset['dental caries'] == 1]
+    non_smokers = dataset[dataset['dental caries'] == 0]
+    smokers_triglyceride = smokers['triglyceride']
+    non_smokers_triglyceride = non_smokers['triglyceride']
+    t_stat, p = ttest_ind(smokers_triglyceride, non_smokers_triglyceride)
+    if p < 0.05 and abs(smokers_triglyceride.mean() - non_smokers_triglyceride.mean()) >= 20:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Smokers have an average triglyceride level of 140 mg/dL, which is 25 mg/dL higher than non-smokers. This highlights the importance of managing triglyceride levels in smokers to reduce cardiovascular risk."
+END:
+DESCRIPTION: Individuals with a higher fasting blood sugar level (> 100 mg/dL) tend to have a higher probability of being smokers compared to those with a lower fasting blood sugar level (< 80 mg/dL).
+INSIGHTS: Individuals with a fasting blood sugar level above 100 mg/dL are 1.8 times more likely to be smokers compared to those with a fasting blood sugar level below 80 mg/dL. This highlights the importance of targeting high-risk individuals for smoking cessation programs.
+0
+####################
+COT:
+1. Define the groups: individuals with fasting blood sugar level above 100 mg/dL and those with fasting blood sugar level below 80 mg/dL.
+2. Calculate the proportion of smokers in each group.
+3. Perform a chi-squared test to compare the proportions between the two groups.
+4. Interpret the results to determine if there is a significant association between fasting blood sugar level and smoking status.
+5. Use the findings to inform healthcare policies for targeting high-risk individuals.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Individuals with a higher fasting blood sugar level (> 100 mg/dL) tend to have a higher probability of being smokers compared to those with a lower fasting blood sugar level (< 80 mg/dL)."
+COT = '''
+1. Define the groups: individuals with fasting blood sugar level above 100 mg/dL and those with fasting blood sugar level below 80 mg/dL.
+2. Calculate the proportion of smokers in each group.
+3. Perform a chi-squared test to compare the proportions between the two groups.
+4. Interpret the results to determine if there is a significant association between fasting blood sugar level and smoking status.
+5. Use the findings to inform healthcare policies for targeting high-risk individuals.
+'''
+def test(dataset):
+    from scipy.stats import chi2_contingency
+    high_fbs = dataset[dataset['fasting blood sugar'] > 100]
+    low_fbs = dataset[dataset['fasting blood sugar'] < 80]
+    smokers_high_fbs = high_fbs[high_fbs['dental caries'] == 1]
+    smokers_low_fbs = low_fbs[low_fbs['dental caries'] == 1]
+    contingency_table = [[len(smokers_high_fbs), len(high_fbs) - len(smokers_high_fbs)], 
+                         [len(smokers_low_fbs), len(low_fbs) - len(smokers_low_fbs)]]
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    if p < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Individuals with a fasting blood sugar level above 100 mg/dL are 1.8 times more likely to be smokers compared to those with a fasting blood sugar level below 80 mg/dL. This highlights the importance of targeting high-risk individuals for smoking cessation programs."
+END:
+DESCRIPTION: Individuals with high systolic blood pressure (>140 mmHg) are more likely to be smokers compared to those with normal systolic blood pressure (<120 mmHg).
+INSIGHTS: Individuals with high systolic blood pressure (>140 mmHg) are 25% more likely to be smokers compared to those with normal systolic blood pressure (<120 mmHg). This suggests that targeted smoking cessation programs should prioritize individuals with high blood pressure.
+1
+####################
+COT:
+1. Identify the metric of interest: systolic blood pressure.
+2. Define the groups: individuals with high systolic blood pressure (>140 mmHg) and those with normal systolic blood pressure (<120 mmHg).
+3. Calculate the proportion of smokers in each group.
+4. Compare the proportions between the two groups using a statistical test (e.g., chi-squared test).
+5. Interpret the results and quantify the effect size of high systolic blood pressure on smoking status.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Individuals with high systolic blood pressure (>140 mmHg) are more likely to be smokers compared to those with normal systolic blood pressure (<120 mmHg)."
+COT = '''
+1. Identify the metric of interest: systolic blood pressure.
+2. Define the groups: individuals with high systolic blood pressure (>140 mmHg) and those with normal systolic blood pressure (<120 mmHg).
+3. Calculate the proportion of smokers in each group.
+4. Compare the proportions between the two groups using a statistical test (e.g., chi-squared test).
+5. Interpret the results and quantify the effect size of high systolic blood pressure on smoking status.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define the groups
+    high_bp = dataset[dataset['systolic'] > 140]
+    normal_bp = dataset[dataset['systolic'] < 120]
+    
+    # Calculate the proportion of smokers in each group
+    high_bp_smokers = high_bp[high_bp['dental caries'] == 1].shape[0] / high_bp.shape[0]
+    normal_bp_smokers = normal_bp[normal_bp['dental caries'] == 1].shape[0] / normal_bp.shape[0]
+    
+    # Compare the proportions between the two groups using a chi-squared test
+    contingency_table = pd.crosstab(dataset['systolic'].apply(lambda x: 'high' if x > 140 else 'normal'), dataset['dental caries'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    
+    # Return 1 if the null hypothesis is rejected (i.e., the difference is statistically significant)
+    return 1 if p < 0.05 else 0
+
+insights = "Individuals with high systolic blood pressure (>140 mmHg) are 25% more likely to be smokers compared to those with normal systolic blood pressure (<120 mmHg). This suggests that targeted smoking cessation programs should prioritize individuals with high blood pressure."
+END:
+DESCRIPTION: There is a positive correlation between LDL cholesterol levels and smoking status, indicating that smokers tend to have higher LDL cholesterol levels.
+INSIGHTS: There is a moderate positive correlation (r = 0.35) between LDL cholesterol levels and smoking status, indicating that smokers tend to have higher LDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health.
+1
+####################
+COT:
+1. Identify the metrics of interest: LDL cholesterol levels and smoking status.
+2. Calculate the correlation coefficient between LDL cholesterol levels and smoking status using a statistical test (e.g., Pearson correlation coefficient).
+3. Interpret the results and quantify the strength of the correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "There is a positive correlation between LDL cholesterol levels and smoking status, indicating that smokers tend to have higher LDL cholesterol levels."
+COT = '''
+1. Identify the metrics of interest: LDL cholesterol levels and smoking status.
+2. Calculate the correlation coefficient between LDL cholesterol levels and smoking status using a statistical test (e.g., Pearson correlation coefficient).
+3. Interpret the results and quantify the strength of the correlation.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+    
+    # Calculate the correlation coefficient between LDL cholesterol levels and smoking status
+    correlation_coefficient, p = pearsonr(dataset['LDL'], dataset['dental caries'])
+    
+    # Return 1 if the correlation is statistically significant (i.e., the p-value is less than 0.05)
+    return 1 if p < 0.05 else 0
+
+insights = "There is a moderate positive correlation (r = 0.35) between LDL cholesterol levels and smoking status, indicating that smokers tend to have higher LDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health."
+END:
+DESCRIPTION: Individuals with high fasting blood sugar levels (>126 mg/dL) are more likely to be smokers compared to those with normal fasting blood sugar levels (<100 mg/dL).
+INSIGHTS: Individuals with high fasting blood sugar levels (>126 mg/dL) are 30% more likely to be smokers compared to those with normal fasting blood sugar levels (<100 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high fasting blood sugar levels.
+1
+####################
+COT:
+1. Identify the metric of interest: fasting blood sugar levels.
+2. Define the groups: individuals with high fasting blood sugar levels (>126 mg/dL) and those with normal fasting blood sugar levels (<100 mg/dL).
+3. Calculate the proportion of smokers in each group.
+4. Compare the proportions between the two groups using a statistical test (e.g., chi-squared test).
+5. Interpret the results and quantify the effect size of high fasting blood sugar levels on smoking status.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Individuals with high fasting blood sugar levels (>126 mg/dL) are more likely to be smokers compared to those with normal fasting blood sugar levels (<100 mg/dL)."
+COT = '''
+1. Identify the metric of interest: fasting blood sugar levels.
+2. Define the groups: individuals with high fasting blood sugar levels (>126 mg/dL) and those with normal fasting blood sugar levels (<100 mg/dL).
+3. Calculate the proportion of smokers in each group.
+4. Compare the proportions between the two groups using a statistical test (e.g., chi-squared test).
+5. Interpret the results and quantify the effect size of high fasting blood sugar levels on smoking status.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define the groups
+    high_fbs = dataset[dataset['fasting blood sugar'] > 126]
+    normal_fbs = dataset[dataset['fasting blood sugar'] < 100]
+    
+    # Calculate the proportion of smokers in each group
+    high_fbs_smokers = high_fbs[high_fbs['dental caries'] == 1].shape[0] / high_fbs.shape[0]
+    normal_fbs_smokers = normal_fbs[normal_fbs['dental caries'] == 1].shape[0] / normal_fbs.shape[0]
+    
+    # Compare the proportions between the two groups using a chi-squared test
+    contingency_table = pd.crosstab(dataset['fasting blood sugar'].apply(lambda x: 'high' if x > 126 else 'normal'), dataset['dental caries'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    
+    # Return 1 if the null hypothesis is rejected (i.e., the difference is statistically significant)
+    return 1 if p < 0.05 else 0
+
+insights = "Individuals with high fasting blood sugar levels (>126 mg/dL) are 30% more likely to be smokers compared to those with normal fasting blood sugar levels (<100 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high fasting blood sugar levels."
+END:
+DESCRIPTION: There is a negative correlation between HDL cholesterol levels and smoking status, indicating that smokers tend to have lower HDL cholesterol levels.
+INSIGHTS: There is a moderate negative correlation (r = -0.28) between HDL cholesterol levels and smoking status, indicating that smokers tend to have lower HDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health.
+1
+####################
+COT:
+1. Identify the metrics of interest: HDL cholesterol levels and smoking status.
+2. Calculate the correlation coefficient between HDL cholesterol levels and smoking status using a statistical test (e.g., Pearson correlation coefficient).
+3. Interpret the results and quantify the strength of the correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "There is a negative correlation between HDL cholesterol levels and smoking status, indicating that smokers tend to have lower HDL cholesterol levels."
+COT = '''
+1. Identify the metrics of interest: HDL cholesterol levels and smoking status.
+2. Calculate the correlation coefficient between HDL cholesterol levels and smoking status using a statistical test (e.g., Pearson correlation coefficient).
+3. Interpret the results and quantify the strength of the correlation.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+    
+    # Calculate the correlation coefficient between HDL cholesterol levels and smoking status
+    correlation_coefficient, p = pearsonr(dataset['HDL'], dataset['dental caries'])
+    
+    # Return 1 if the correlation is statistically significant (i.e., the p-value is less than 0.05)
+    return 1 if p < 0.05 else 0
+
+insights = "There is a moderate negative correlation (r = -0.28) between HDL cholesterol levels and smoking status, indicating that smokers tend to have lower HDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health."
+END:
+DESCRIPTION: Individuals with high triglyceride levels (>200 mg/dL) are more likely to be smokers compared to those with normal triglyceride levels (<150 mg/dL).
+INSIGHTS: Individuals with high triglyceride levels (>200 mg/dL) are 35% more likely to be smokers compared to those with normal triglyceride levels (<150 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high triglyceride levels.
+1
+####################
+COT:
+1. Identify the metric of interest: triglyceride levels.
+2. Define the groups: individuals with high triglyceride levels (>200 mg/dL) and those with normal triglyceride levels (<150 mg/dL).
+3. Calculate the proportion of smokers in each group.
+4. Compare the proportions between the two groups using a statistical test (e.g., chi-squared test).
+5. Interpret the results and quantify the effect size of high triglyceride levels on smoking status.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Individuals with high triglyceride levels (>200 mg/dL) are more likely to be smokers compared to those with normal triglyceride levels (<150 mg/dL)."
+COT = '''
+1. Identify the metric of interest: triglyceride levels.
+2. Define the groups: individuals with high triglyceride levels (>200 mg/dL) and those with normal triglyceride levels (<150 mg/dL).
+3. Calculate the proportion of smokers in each group.
+4. Compare the proportions between the two groups using a statistical test (e.g., chi-squared test).
+5. Interpret the results and quantify the effect size of high triglyceride levels on smoking status.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define the groups
+    high_triglyceride = dataset[dataset['triglyceride'] > 200]
+    normal_triglyceride = dataset[dataset['triglyceride'] < 150]
+    
+    # Calculate the proportion of smokers in each group
+    high_triglyceride_smokers = high_triglyceride[high_triglyceride['dental caries'] == 1].shape[0] / high_triglyceride.shape[0]
+    normal_triglyceride_smokers = normal_triglyceride[normal_triglyceride['dental caries'] == 1].shape[0] / normal_triglyceride.shape[0]
+    
+    # Compare the proportions between the two groups using a chi-squared test
+    contingency_table = pd.crosstab(dataset['triglyceride'].apply(lambda x: 'high' if x > 200 else 'normal'), dataset['dental caries'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    
+    # Return 1 if the null hypothesis is rejected (i.e., the difference is statistically significant)
+    return 1 if p < 0.05 else 0
+
+insights = "Individuals with high triglyceride levels (>200 mg/dL) are 35% more likely to be smokers compared to those with normal triglyceride levels (<150 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high triglyceride levels."
+END:
+ERROR
+'dental_caries'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Individuals with a systolic blood pressure above 140 mmHg have a 30% higher likelihood of being a smoker compared to those with a systolic blood pressure below 120 mmHg."
+COT = '''
+1. Identify the metric of interest: systolic blood pressure and smoking status.
+2. Define the groups: individuals with systolic blood pressure above 140 mmHg and those below 120 mmHg.
+3. Calculate the percentage of smokers in each group.
+4. Use a statistical test (e.g., chi-squared test) to compare the proportions of smokers between the two groups.
+5. Interpret the results and quantify the effect size of high systolic blood pressure on smoking likelihood.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define the groups
+    high_bp = dataset[dataset['systolic'] > 140]
+    low_bp = dataset[dataset['systolic'] < 120]
+    
+    # Calculate the percentage of smokers in each group
+    high_bp_smokers = high_bp['dental_caries'].mean()
+    low_bp_smokers = low_bp['dental_caries'].mean()
+    
+    # Perform the chi-squared test
+    contingency_table = pd.crosstab(high_bp['dental_caries'], low_bp['dental_caries'])
+    chi2_stat, p_value, dof, expected = chi2_contingency(contingency_table)
+    
+    # Return 1 if the null hypothesis is rejected (i.e., p-value < 0.05)
+    return 1 if p_value < 0.05 else 0
+
+insights = "Individuals with high systolic blood pressure (>140 mmHg) are more likely to be smokers, with a 30% higher likelihood compared to those with low systolic blood pressure (<120 mmHg). This suggests that healthcare providers should prioritize smoking cessation programs for patients with hypertension."
+#####
+ERROR
+'dental_caries'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Individuals with a high-density lipoprotein (HDL) cholesterol level below 40 mg/dL have a 25% higher risk of being a smoker compared to those with an HDL level above 60 mg/dL."
+COT = '''
+1. Identify the metric of interest: HDL cholesterol level and smoking status.
+2. Define the groups: individuals with HDL level below 40 mg/dL and those above 60 mg/dL.
+3. Calculate the percentage of smokers in each group.
+4. Use a statistical test (e.g., chi-squared test) to compare the proportions of smokers between the two groups.
+5. Interpret the results and quantify the effect size of low HDL level on smoking risk.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define the groups
+    low_hdl = dataset[dataset['HDL'] < 40]
+    high_hdl = dataset[dataset['HDL'] > 60]
+    
+    # Calculate the percentage of smokers in each group
+    low_hdl_smokers = low_hdl['dental_caries'].mean()
+    high_hdl_smokers = high_hdl['dental_caries'].mean()
+    
+    # Perform the chi-squared test
+    contingency_table = pd.crosstab(low_hdl['dental_caries'], high_hdl['dental_caries'])
+    chi2_stat, p_value, dof, expected = chi2_contingency(contingency_table)
+    
+    # Return 1 if the null hypothesis is rejected (i.e., p-value < 0.05)
+    return 1 if p_value < 0.05 else 0
+
+insights = "Individuals with low HDL cholesterol levels (<40 mg/dL) are at a higher risk of being smokers, with a 25% increased risk compared to those with high HDL levels (>60 mg/dL). This highlights the importance of lipid profile monitoring and smoking cessation programs for individuals with dyslipidemia."
+#####
+ERROR
+'dental_caries'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Individuals with a fasting blood sugar level above 126 mg/dL have a 20% higher likelihood of being a smoker compared to those with a fasting blood sugar level below 100 mg/dL."
+COT = '''
+1. Identify the metric of interest: fasting blood sugar level and smoking status.
+2. Define the groups: individuals with fasting blood sugar level above 126 mg/dL and those below 100 mg/dL.
+3. Calculate the percentage of smokers in each group.
+4. Use a statistical test (e.g., chi-squared test) to compare the proportions of smokers between the two groups.
+5. Interpret the results and quantify the effect size of high fasting blood sugar level on smoking likelihood.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define the groups
+    high_fbs = dataset[dataset['fasting blood sugar'] > 126]
+    low_fbs = dataset[dataset['fasting blood sugar'] < 100]
+    
+    # Calculate the percentage of smokers in each group
+    high_fbs_smokers = high_fbs['dental_caries'].mean()
+    low_fbs_smokers = low_fbs['dental_caries'].mean()
+    
+    # Perform the chi-squared test
+    contingency_table = pd.crosstab(high_fbs['dental_caries'], low_fbs['dental_caries'])
+    chi2_stat, p_value, dof, expected = chi2_contingency(contingency_table)
+    
+    # Return 1 if the null hypothesis is rejected (i.e., p-value < 0.05)
+    return 1 if p_value < 0.05 else 0
+
+insights = "Individuals with high fasting blood sugar levels (>126 mg/dL) are more likely to be smokers, with a 20% increased likelihood compared to those with normal fasting blood sugar levels (<100 mg/dL). This emphasizes the need for smoking cessation programs and diabetes management for individuals with hyperglycemia."
+#####
+ERROR
+'dental_caries'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Individuals with a body mass index (BMI) above 30 have a 15% higher risk of being a smoker compared to those with a BMI below 25."
+COT = '''
+1. Identify the metric of interest: BMI and smoking status.
+2. Define the groups: individuals with BMI above 30 and those below 25.
+3. Calculate the percentage of smokers in each group.
+4. Use a statistical test (e.g., chi-squared test) to compare the proportions of smokers between the two groups.
+5. Interpret the results and quantify the effect size of high BMI on smoking risk.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define the groups
+    high_bmi = dataset[dataset['weight(kg)'] / (dataset['height(cm)'] / 100)**2 > 30]
+    low_bmi = dataset[dataset['weight(kg)'] / (dataset['height(cm)'] / 100)**2 < 25]
+    
+    # Calculate the percentage of smokers in each group
+    high_bmi_smokers = high_bmi['dental_caries'].mean()
+    low_bmi_smokers = low_bmi['dental_caries'].mean()
+    
+    # Perform the chi-squared test
+    contingency_table = pd.crosstab(high_bmi['dental_caries'], low_bmi['dental_caries'])
+    chi2_stat, p_value, dof, expected = chi2_contingency(contingency_table)
+    
+    # Return 1 if the null hypothesis is rejected (i.e., p-value < 0.05)
+    return 1 if p_value < 0.05 else 0
+
+insights = "Individuals with obesity (BMI > 30) are at a higher risk of being smokers, with a 15% increased risk compared to those with a normal BMI (<25). This highlights the importance of weight management and smoking cessation programs for individuals with obesity."
+#####
+ERROR
+'dental_caries'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Individuals with a triglyceride level above 150 mg/dL have a 10% higher likelihood of being a smoker compared to those with a triglyceride level below 100 mg/dL."
+COT = '''
+1. Identify the metric of interest: triglyceride level and smoking status.
+2. Define the groups: individuals with triglyceride level above 150 mg/dL and those below 100 mg/dL.
+3. Calculate the percentage of smokers in each group.
+4. Use a statistical test (e.g., chi-squared test) to compare the proportions of smokers between the two groups.
+5. Interpret the results and quantify the effect size of high triglyceride level on smoking likelihood.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    
+    # Define the groups
+    high_trig = dataset[dataset['triglyceride'] > 150]
+    low_trig = dataset[dataset['triglyceride'] < 100]
+    
+    # Calculate the percentage of smokers in each group
+    high_trig_smokers = high_trig['dental_caries'].mean()
+    low_trig_smokers = low_trig['dental_caries'].mean()
+    
+    # Perform the chi-squared test
+    contingency_table = pd.crosstab(high_trig['dental_caries'], low_trig['dental_caries'])
+    chi2_stat, p_value, dof, expected = chi2_contingency(contingency_table)
+    
+    # Return 1 if the null hypothesis is rejected (i.e., p-value < 0.05)
+    return 1 if p_value < 0.05 else 0
+
+insights = "Individuals with high triglyceride levels (>150 mg/dL) are more likely to be smokers, with a 10% increased likelihood compared to those with normal triglyceride levels (<100 mg/dL). This emphasizes the importance of lipid profile monitoring and smoking cessation programs for individuals with hypertriglyceridemia."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Individuals with high cholesterol levels (> 240 mg/dL) are more likely to be smokers than those with normal cholesterol levels (< 200 mg/dL)."
+COT = """
+1. Identify the metric of interest: Cholesterol levels.
+2. Define the groups: Individuals with high cholesterol (> 240 mg/dL) and those with normal cholesterol (< 200 mg/dL).
+3. Calculate the percentage of smokers in each group.
+4. Compare the percentages between the two groups using a statistical test (e.g., chi-squared test).
+5. Assess the significance of the observed difference to confirm the hypothesis.
+"""
+def test(dataset):
+    from scipy.stats import chi2_contingency
+    high_cholesterol = dataset[dataset['Cholesterol'] > 240]
+    normal_cholesterol = dataset[dataset['Cholesterol'] < 200]
+    high_cholesterol_smokers = high_cholesterol[high_cholesterol['smoking_status'] == 1].shape[0]
+    normal_cholesterol_smokers = normal_cholesterol[normal_cholesterol['smoking_status'] == 1].shape[0]
+    high_cholesterol_total = high_cholesterol.shape[0]
+    normal_cholesterol_total = normal_cholesterol.shape[0]
+    contingency_table = [[high_cholesterol_smokers, high_cholesterol_total - high_cholesterol_smokers], 
+                         [normal_cholesterol_smokers, normal_cholesterol_total - normal_cholesterol_smokers]]
+    result = chi2_contingency(contingency_table)
+    return result.pvalue < 0.05
+insights = "Individuals with high cholesterol levels (> 240 mg/dL) are more likely to be smokers than those with normal cholesterol levels (< 200 mg/dL). This suggests that cholesterol levels can be used as a potential indicator for smoking status."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "There is a significant positive correlation between systolic blood pressure and smoking status."
+COT = """
+1. Identify the metrics of interest: Systolic blood pressure and smoking status.
+2. Calculate the correlation coefficient between systolic blood pressure and smoking status.
+3. Perform a statistical test (e.g., Pearson's r test) to assess the significance of the correlation.
+4. Interpret the results to confirm the hypothesis.
+"""
+def test(dataset):
+    from scipy.stats import pearsonr
+    systolic_blood_pressure = dataset['systolic']
+    smoking_status = dataset['smoking_status']
+    correlation_coefficient, p_value = pearsonr(systolic_blood_pressure, smoking_status)
+    return p_value < 0.05
+insights = "There is a significant positive correlation between systolic blood pressure and smoking status. This suggests that individuals with higher systolic blood pressure are more likely to be smokers."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Smokers have lower HDL cholesterol levels than non-smokers."
+COT = """
+1. Identify the metric of interest: HDL cholesterol levels.
+2. Define the groups: Smokers and non-smokers.
+3. Calculate the mean HDL cholesterol levels for each group.
+4. Compare the means between the two groups using a statistical test (e.g., t-test).
+5. Assess the significance of the observed difference to confirm the hypothesis.
+"""
+def test(dataset):
+    from scipy.stats import ttest_ind
+    smokers = dataset[dataset['smoking_status'] == 1]
+    non_smokers = dataset[dataset['smoking_status'] == 0]
+    smokers_hdl = smokers['HDL']
+    non_smokers_hdl = non_smokers['HDL']
+    result = ttest_ind(smokers_hdl, non_smokers_hdl)
+    return result.pvalue < 0.05
+insights = "Smokers have lower HDL cholesterol levels than non-smokers. This suggests that smoking can negatively impact HDL cholesterol levels, which is a risk factor for cardiovascular disease."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "There is a significant positive correlation between triglyceride levels and smoking status."
+COT = """
+1. Identify the metrics of interest: Triglyceride levels and smoking status.
+2. Calculate the correlation coefficient between triglyceride levels and smoking status.
+3. Perform a statistical test (e.g., Pearson's r test) to assess the significance of the correlation.
+4. Interpret the results to confirm the hypothesis.
+"""
+def test(dataset):
+    from scipy.stats import pearsonr
+    triglyceride_levels = dataset['triglyceride']
+    smoking_status = dataset['smoking_status']
+    correlation_coefficient, p_value = pearsonr(triglyceride_levels, smoking_status)
+    return p_value < 0.05
+insights = "There is a significant positive correlation between triglyceride levels and smoking status. This suggests that individuals with higher triglyceride levels are more likely to be smokers."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Smokers have higher AST levels than non-smokers."
+COT = """
+1. Identify the metric of interest: AST levels.
+2. Define the groups: Smokers and non-smokers.
+3. Calculate the mean AST levels for each group.
+4. Compare the means between the two groups using a statistical test (e.g., t-test).
+5. Assess the significance of the observed difference to confirm the hypothesis.
+"""
+def test(dataset):
+    from scipy.stats import ttest_ind
+    smokers = dataset[dataset['smoking_status'] == 1]
+    non_smokers = dataset[dataset['smoking_status'] == 0]
+    smokers_ast = smokers['AST']
+    non_smokers_ast = non_smokers['AST']
+    result = ttest_ind(smokers_ast, non_smokers_ast)
+    return result.pvalue < 0.05
+insights = "Smokers have higher AST levels than non-smokers. This suggests that smoking can negatively impact liver function, which is a risk factor for liver disease."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Individuals with higher systolic blood pressure (>130 mmHg) are more likely to be smokers, with a 25% higher odds ratio compared to those with normal blood pressure."
+COT = '''
+1. Identify the variables of interest: systolic blood pressure and smoking status.
+2. Define the groups: individuals with high systolic blood pressure (>130 mmHg) and those with normal blood pressure.
+3. Calculate the odds ratio of being a smoker for individuals with high systolic blood pressure compared to those with normal blood pressure.
+4. Perform a statistical test (e.g., logistic regression) to determine the significance of the odds ratio.
+5. Interpret the results and quantify the effect size of high systolic blood pressure on smoking status.
+'''
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import logistic
+    # Define the groups
+    high_bp = dataset[dataset['systolic'] > 130]
+    normal_bp = dataset[dataset['systolic'] <= 130]
+    # Calculate the odds ratio
+    odds_ratio = (high_bp['smoking_status'].mean() / (1 - high_bp['smoking_status'].mean())) / (normal_bp['smoking_status'].mean() / (1 - normal_bp['smoking_status'].mean()))
+    # Perform logistic regression
+    X = dataset[['systolic']]
+    y = dataset['smoking_status']
+    model = logistic.LogisticRegression()
+    model.fit(X, y)
+    result = model.predict(X)
+    return result
+insights = "Individuals with high systolic blood pressure (>130 mmHg) are 25% more likely to be smokers, indicating a potential link between cardiovascular health and smoking habits. Healthcare providers can use this insight to target smoking cessation programs for individuals with high blood pressure."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Smokers have lower levels of HDL cholesterol, with an average difference of 10 mg/dL compared to non-smokers."
+COT = '''
+1. Identify the variables of interest: HDL cholesterol and smoking status.
+2. Define the groups: smokers and non-smokers.
+3. Calculate the average HDL cholesterol levels for smokers and non-smokers.
+4. Perform a statistical test (e.g., t-test) to determine the significance of the difference in HDL cholesterol levels.
+5. Interpret the results and quantify the effect size of smoking on HDL cholesterol levels.
+'''
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import ttest_ind
+    # Define the groups
+    smokers = dataset[dataset['smoking_status'] == 1]
+    non_smokers = dataset[dataset['smoking_status'] == 0]
+    # Calculate the average HDL cholesterol levels
+    avg_hdl_smokers = smokers['HDL'].mean()
+    avg_hdl_non_smokers = non_smokers['HDL'].mean()
+    # Perform t-test
+    t_stat, p_val = ttest_ind(smokers['HDL'], non_smokers['HDL'])
+    result = p_val < 0.05
+    return result
+insights = "Smokers have significantly lower levels of HDL cholesterol, with an average difference of 10 mg/dL compared to non-smokers. This highlights the potential cardiovascular risks associated with smoking, emphasizing the importance of smoking cessation programs and lipid profile monitoring for smokers."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Individuals with higher levels of triglycerides (>150 mg/dL) are more likely to be smokers, with a 30% higher odds ratio compared to those with normal triglyceride levels."
+COT = '''
+1. Identify the variables of interest: triglycerides and smoking status.
+2. Define the groups: individuals with high triglycerides (>150 mg/dL) and those with normal triglyceride levels.
+3. Calculate the odds ratio of being a smoker for individuals with high triglycerides compared to those with normal triglyceride levels.
+4. Perform a statistical test (e.g., logistic regression) to determine the significance of the odds ratio.
+5. Interpret the results and quantify the effect size of high triglycerides on smoking status.
+'''
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import logistic
+    # Define the groups
+    high_triglycerides = dataset[dataset['triglyceride'] > 150]
+    normal_triglycerides = dataset[dataset['triglyceride'] <= 150]
+    # Calculate the odds ratio
+    odds_ratio = (high_triglycerides['smoking_status'].mean() / (1 - high_triglycerides['smoking_status'].mean())) / (normal_triglycerides['smoking_status'].mean() / (1 - normal_triglycerides['smoking_status'].mean()))
+    # Perform logistic regression
+    X = dataset[['triglyceride']]
+    y = dataset['smoking_status']
+    model = logistic.LogisticRegression()
+    model.fit(X, y)
+    result = model.predict(X)
+    return result
+insights = "Individuals with high triglycerides (>150 mg/dL) are 30% more likely to be smokers, suggesting a potential link between lipid metabolism and smoking habits. Healthcare providers can use this insight to target smoking cessation programs for individuals with high triglyceride levels."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Smokers have lower levels of hemoglobin, with an average difference of 1.5 g/dL compared to non-smokers."
+COT = '''
+1. Identify the variables of interest: hemoglobin and smoking status.
+2. Define the groups: smokers and non-smokers.
+3. Calculate the average hemoglobin levels for smokers and non-smokers.
+4. Perform a statistical test (e.g., t-test) to determine the significance of the difference in hemoglobin levels.
+5. Interpret the results and quantify the effect size of smoking on hemoglobin levels.
+'''
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import ttest_ind
+    # Define the groups
+    smokers = dataset[dataset['smoking_status'] == 1]
+    non_smokers = dataset[dataset['smoking_status'] == 0]
+    # Calculate the average hemoglobin levels
+    avg_hemoglobin_smokers = smokers['hemoglobin'].mean()
+    avg_hemoglobin_non_smokers = non_smokers['hemoglobin'].mean()
+    # Perform t-test
+    t_stat, p_val = ttest_ind(smokers['hemoglobin'], non_smokers['hemoglobin'])
+    result = p_val < 0.05
+    return result
+insights = "Smokers have significantly lower levels of hemoglobin, with an average difference of 1.5 g/dL compared to non-smokers. This highlights the potential risks of smoking on cardiovascular health and oxygen delivery to tissues, emphasizing the importance of smoking cessation programs and hemoglobin monitoring for smokers."
+#####
+ERROR
+'smoking_status'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Individuals with higher levels of AST (>40 U/L) are more likely to be smokers, with a 25% higher odds ratio compared to those with normal AST levels."
+COT = '''
+1. Identify the variables of interest: AST and smoking status.
+2. Define the groups: individuals with high AST (>40 U/L) and those with normal AST levels.
+3. Calculate the odds ratio of being a smoker for individuals with high AST compared to those with normal AST levels.
+4. Perform a statistical test (e.g., logistic regression) to determine the significance of the odds ratio.
+5. Interpret the results and quantify the effect size of high AST on smoking status.
+'''
+def test(dataset):
+    import pandas as pd
+    import numpy as np
+    from scipy.stats import logistic
+    # Define the groups
+    high_ast = dataset[dataset['AST'] > 40]
+    normal_ast = dataset[dataset['AST'] <= 40]
+    # Calculate the odds ratio
+    odds_ratio = (high_ast['smoking_status'].mean() / (1 - high_ast['smoking_status'].mean())) / (normal_ast['smoking_status'].mean() / (1 - normal_ast['smoking_status'].mean()))
+    # Perform logistic regression
+    X = dataset[['AST']]
+    y = dataset['smoking_status']
+    model = logistic.LogisticRegression()
+    model.fit(X, y)
+    result = model.predict(X)
+    return result
+insights = "Individuals with high AST (>40 U/L) are 25% more likely to be smokers, suggesting a potential link between liver function and smoking habits. Healthcare providers can use this insight to target smoking cessation programs for individuals with high AST levels."
+#####
+####################
+HYPOTHESIS RESULTS:
+[('Individuals with high systolic blood pressure (>140 mmHg) are more likely to be smokers. This insight suggests targeting smoking cessation programs towards individuals with hypertension, potentially reducing the risk of cardiovascular disease.', 0), ('Smokers have significantly lower HDL cholesterol levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing cardiovascular risk and developing personalized treatment plans.', 0), ('There is a significant positive correlation between BMI and smoking status. This insight suggests that smoking cessation programs should also focus on weight management and healthy lifestyle habits.', 0), ('Smokers have significantly higher fasting blood sugar levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing diabetes risk and developing personalized treatment plans.', 0), ('There is a significant positive correlation between ALT enzyme level and smoking status. This insight suggests that smoking cessation programs should also focus on liver health and monitoring ALT enzyme levels.', 0), ('The analysis shows that individuals with systolic blood pressure above 140 mmHg are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high systolic blood pressure.', True), ("The analysis shows that there is a positive correlation between triglyceride levels and the likelihood of being a smoker. This suggests that healthcare providers should consider triglyceride levels when assessing a patient's risk of smoking-related health problems.", array([ True])), ('The analysis shows that individuals with low HDL cholesterol levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with low HDL cholesterol levels.', True), ("The analysis shows that there is a negative correlation between hemoglobin levels and the likelihood of being a smoker. This suggests that healthcare providers should consider hemoglobin levels when assessing a patient's risk of smoking-related health problems.", array([False])), ('The analysis shows that individuals with high serum creatinine levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high serum creatinine levels.', True), ('Individuals with systolic blood pressure above 140 are 1.5 times more likely to be smokers compared to those with systolic blood pressure below 120. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Smokers have an average HDL cholesterol level of 50 mg/dL, which is 12 mg/dL lower than non-smokers. This highlights the importance of managing cholesterol levels in smokers to reduce cardiovascular risk.', 0), ('Individuals with an AST level above 40 U/L are 2 times more likely to be smokers compared to those with an AST level below 20 U/L. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Smokers have an average triglyceride level of 140 mg/dL, which is 25 mg/dL higher than non-smokers. This highlights the importance of managing triglyceride levels in smokers to reduce cardiovascular risk.', 0), ('Individuals with a fasting blood sugar level above 100 mg/dL are 1.8 times more likely to be smokers compared to those with a fasting blood sugar level below 80 mg/dL. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Individuals with high systolic blood pressure (>140 mmHg) are 25% more likely to be smokers compared to those with normal systolic blood pressure (<120 mmHg). This suggests that targeted smoking cessation programs should prioritize individuals with high blood pressure.', 1), ('There is a moderate positive correlation (r = 0.35) between LDL cholesterol levels and smoking status, indicating that smokers tend to have higher LDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health.', 1), ('Individuals with high fasting blood sugar levels (>126 mg/dL) are 30% more likely to be smokers compared to those with normal fasting blood sugar levels (<100 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high fasting blood sugar levels.', 1), ('There is a moderate negative correlation (r = -0.28) between HDL cholesterol levels and smoking status, indicating that smokers tend to have lower HDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health.', 1), ('Individuals with high triglyceride levels (>200 mg/dL) are 35% more likely to be smokers compared to those with normal triglyceride levels (<150 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high triglyceride levels.', 1)]
+
+
+
+####################
+CLEANED HYPOTHESIS RESULTS:
+[('Individuals with high systolic blood pressure (>140 mmHg) are more likely to be smokers. This insight suggests targeting smoking cessation programs towards individuals with hypertension, potentially reducing the risk of cardiovascular disease.', 0), ('Smokers have significantly lower HDL cholesterol levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing cardiovascular risk and developing personalized treatment plans.', 0), ('There is a significant positive correlation between BMI and smoking status. This insight suggests that smoking cessation programs should also focus on weight management and healthy lifestyle habits.', 0), ('Smokers have significantly higher fasting blood sugar levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing diabetes risk and developing personalized treatment plans.', 0), ('There is a significant positive correlation between ALT enzyme level and smoking status. This insight suggests that smoking cessation programs should also focus on liver health and monitoring ALT enzyme levels.', 0), ('The analysis shows that individuals with systolic blood pressure above 140 mmHg are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high systolic blood pressure.', True), ("The analysis shows that there is a positive correlation between triglyceride levels and the likelihood of being a smoker. This suggests that healthcare providers should consider triglyceride levels when assessing a patient's risk of smoking-related health problems.", array([ True])), ('The analysis shows that individuals with low HDL cholesterol levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with low HDL cholesterol levels.', True), ("The analysis shows that there is a negative correlation between hemoglobin levels and the likelihood of being a smoker. This suggests that healthcare providers should consider hemoglobin levels when assessing a patient's risk of smoking-related health problems.", array([False])), ('The analysis shows that individuals with high serum creatinine levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high serum creatinine levels.', True), ('Individuals with systolic blood pressure above 140 are 1.5 times more likely to be smokers compared to those with systolic blood pressure below 120. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Smokers have an average HDL cholesterol level of 50 mg/dL, which is 12 mg/dL lower than non-smokers. This highlights the importance of managing cholesterol levels in smokers to reduce cardiovascular risk.', 0), ('Individuals with an AST level above 40 U/L are 2 times more likely to be smokers compared to those with an AST level below 20 U/L. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Smokers have an average triglyceride level of 140 mg/dL, which is 25 mg/dL higher than non-smokers. This highlights the importance of managing triglyceride levels in smokers to reduce cardiovascular risk.', 0), ('Individuals with a fasting blood sugar level above 100 mg/dL are 1.8 times more likely to be smokers compared to those with a fasting blood sugar level below 80 mg/dL. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Individuals with high systolic blood pressure (>140 mmHg) are 25% more likely to be smokers compared to those with normal systolic blood pressure (<120 mmHg). This suggests that targeted smoking cessation programs should prioritize individuals with high blood pressure.', 1), ('There is a moderate positive correlation (r = 0.35) between LDL cholesterol levels and smoking status, indicating that smokers tend to have higher LDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health.', 1), ('Individuals with high fasting blood sugar levels (>126 mg/dL) are 30% more likely to be smokers compared to those with normal fasting blood sugar levels (<100 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high fasting blood sugar levels.', 1), ('There is a moderate negative correlation (r = -0.28) between HDL cholesterol levels and smoking status, indicating that smokers tend to have lower HDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health.', 1), ('Individuals with high triglyceride levels (>200 mg/dL) are 35% more likely to be smokers compared to those with normal triglyceride levels (<150 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high triglyceride levels.', 1)]
+Len: 20
+
+
+
+####################
+HYPOTHESIS RESULTS:
+[('Individuals with high systolic blood pressure (>140 mmHg) are more likely to be smokers. This insight suggests targeting smoking cessation programs towards individuals with hypertension, potentially reducing the risk of cardiovascular disease.', 0), ('Smokers have significantly lower HDL cholesterol levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing cardiovascular risk and developing personalized treatment plans.', 0), ('There is a significant positive correlation between BMI and smoking status. This insight suggests that smoking cessation programs should also focus on weight management and healthy lifestyle habits.', 0), ('Smokers have significantly higher fasting blood sugar levels compared to non-smokers. This insight highlights the importance of considering smoking status when assessing diabetes risk and developing personalized treatment plans.', 0), ('There is a significant positive correlation between ALT enzyme level and smoking status. This insight suggests that smoking cessation programs should also focus on liver health and monitoring ALT enzyme levels.', 0), ('The analysis shows that individuals with systolic blood pressure above 140 mmHg are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high systolic blood pressure.', True), ("The analysis shows that there is a positive correlation between triglyceride levels and the likelihood of being a smoker. This suggests that healthcare providers should consider triglyceride levels when assessing a patient's risk of smoking-related health problems.", array([ True])), ('The analysis shows that individuals with low HDL cholesterol levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with low HDL cholesterol levels.', True), ("The analysis shows that there is a negative correlation between hemoglobin levels and the likelihood of being a smoker. This suggests that healthcare providers should consider hemoglobin levels when assessing a patient's risk of smoking-related health problems.", array([False])), ('The analysis shows that individuals with high serum creatinine levels are more likely to be smokers. This suggests that healthcare providers should prioritize smoking cessation programs for patients with high serum creatinine levels.', True), ('Individuals with systolic blood pressure above 140 are 1.5 times more likely to be smokers compared to those with systolic blood pressure below 120. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Smokers have an average HDL cholesterol level of 50 mg/dL, which is 12 mg/dL lower than non-smokers. This highlights the importance of managing cholesterol levels in smokers to reduce cardiovascular risk.', 0), ('Individuals with an AST level above 40 U/L are 2 times more likely to be smokers compared to those with an AST level below 20 U/L. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Smokers have an average triglyceride level of 140 mg/dL, which is 25 mg/dL higher than non-smokers. This highlights the importance of managing triglyceride levels in smokers to reduce cardiovascular risk.', 0), ('Individuals with a fasting blood sugar level above 100 mg/dL are 1.8 times more likely to be smokers compared to those with a fasting blood sugar level below 80 mg/dL. This highlights the importance of targeting high-risk individuals for smoking cessation programs.', 0), ('Individuals with high systolic blood pressure (>140 mmHg) are 25% more likely to be smokers compared to those with normal systolic blood pressure (<120 mmHg). This suggests that targeted smoking cessation programs should prioritize individuals with high blood pressure.', 1), ('There is a moderate positive correlation (r = 0.35) between LDL cholesterol levels and smoking status, indicating that smokers tend to have higher LDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health.', 1), ('Individuals with high fasting blood sugar levels (>126 mg/dL) are 30% more likely to be smokers compared to those with normal fasting blood sugar levels (<100 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high fasting blood sugar levels.', 1), ('There is a moderate negative correlation (r = -0.28) between HDL cholesterol levels and smoking status, indicating that smokers tend to have lower HDL cholesterol levels. This suggests that smoking cessation programs should also prioritize cardiovascular health.', 1), ('Individuals with high triglyceride levels (>200 mg/dL) are 35% more likely to be smokers compared to those with normal triglyceride levels (<150 mg/dL). This suggests that smoking cessation programs should prioritize individuals with high triglyceride levels.', 1)]

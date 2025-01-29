@@ -396,7 +396,7 @@ def get_cols_stats_prompt(dataset):
         cols_info_prompt += f'Examples: {examples}\n'
     return cols_info_prompt
 
-def generate_hypothesis_prompt(hypothesis_type, dataset, num_hypothesis = 10):
+def generate_hypothesis_prompt(dataset, num_hypothesis = 10):
     dataset_description = textwrap.dedent(dataset.description)
     cols_stats = get_cols_stats_prompt(dataset)
     #hypothesis_description = hypotheses_dict[hypothesis_type][0]
@@ -430,7 +430,7 @@ def generate_hypothesis_prompt(hypothesis_type, dataset, num_hypothesis = 10):
                                 1. Write a brief description that is **specific, detailed, and actionable**, supported by numerical evidence and real-world insights relevant to decision-makers, and save it as a string variable called description.
                                 2. Provide a detailed step-by-step chain-of-thought (COT) that identifies the hypothesis requirements, selects the correct statistical test, and explains the reasoning behind the method, saving it to a variable called COT.
                                 3. Provide Python code based on the COT variable to test the hypothesis using the dataset DataFrame. The code should define a function `test(dataset)` to implement the appropriate statistical test and return a binary variable called `result`, which is equal to 1 if we accept the hypothesis. All imports and helper functions shall be inside the `test()` function. For any hyperparameters, choose values based on dataset statistics (e.g., variance, dataset shape). Do not rename the test function or the description variable. 
-                                4. Generate detailed **business insights** for each hypothesis based on {hypothesis_type}, incorporating specific metrics, trends, or thresholds derived from the dataset to provide meaningful, practical recommendations.
+                                4. Generate detailed **business insights** for each hypothesis , incorporating specific metrics, trends, or thresholds derived from the dataset to provide meaningful, practical recommendations.
 
                                 **Example Hypotheses from Different Domains:**
 
@@ -514,7 +514,7 @@ def generate_prompt(instruction_type, dataset, transformation_type=None, hypothe
     dataset_description = textwrap.dedent(dataset.description)
     
     #columns infromation prompt
-    cols_stats = get_cols_stats_prompt(dataset)
+    #cols_stats = get_cols_stats_prompt(dataset)
     cols_info = get_cols_info_prompt(dataset)
     temp = ','.join(preprocessing_techniques[transformation_type])
     transformation_prompt = f'Focus only on {transformation_type} transformations, such as: {temp}.\n'
@@ -674,6 +674,8 @@ def auto_ml_agent(
     ml_model_type,
     llm_model_type,
     model_name,
+    df_csv_path,
+    df_features_path,
     num_of_generations=1,
     num_of_features=20,
     debug=False,
@@ -741,13 +743,20 @@ def auto_ml_agent(
                     print(f'After {transformation}: {dataset.train_input.shape}')
 
             prepare_data_for_model(dataset=dataset)
-            ml_model.fit(data=dataset)
+            try:
+                ml_model.fit(data=dataset)
+            except:
+                ml_model.fit(data=dataset, subset='top')
+
             
             if debug:
                 print(f'Model score after gen {i} (prep): {ml_model.score}')
 
             feature_importances = get_feature_importance(ml_model)
-            select_features(dataset=dataset, feature_importances=feature_importances, num_features=num_of_features, temp=1)
+            try:
+                select_features(dataset=dataset, feature_importances=feature_importances, num_features=num_of_features, temp=1)
+            except:
+                select_features(dataset=dataset,feature_importances=feature_importances,num_features=num_of_features,method='top',temp=1)
             dataset.chosen_features = list(dataset.train_input_selected.columns)
 
         # Feature Engineering
@@ -787,12 +796,21 @@ def auto_ml_agent(
                     method='positive importance'
                 )
             else:
-                select_features(
-                    dataset=dataset,
-                    feature_importances=feature_importances,
-                    num_features=num_of_features,
-                    temp=1
-                )
+                try:
+                    select_features(
+                        dataset=dataset,
+                        feature_importances=feature_importances,
+                        num_features=num_of_features,
+                        temp=1
+                    )
+                except:
+                    select_features(
+                        dataset=dataset,
+                        feature_importances=feature_importances,
+                        num_features=num_of_features,
+                        method='top',
+                        temp=1
+                    )
 
             dataset.chosen_features = list(dataset.train_input_selected.columns)
             ml_model.fit(data=dataset, subset='top')
@@ -803,8 +821,9 @@ def auto_ml_agent(
     
     df = dataset.train_input_clean.copy()
     df[dataset.label_name] = dataset.train_labels
-    output_file_name = dataset_name + f'{i}th iterations' + '_hypothesis.csv' if hypothesis else dataset_name + f'{i}th iterations' + '.csv'
-    df.to_csv(f'iterations/{output_file_name}')
+    df_feature_description = pd.DataFrame(list(dataset.features_description.items()), columns=["Feature Name", "Feature Description"])
+    df.to_csv(df_csv_path)
+    df_feature_description.to_csv(df_features_path)
 
     print('RESULTS OF AUTO ML AGENT IN THE END:')
 

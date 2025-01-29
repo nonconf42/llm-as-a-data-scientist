@@ -1,0 +1,583 @@
+DESCRIPTION: Customers with a credit score above 700 have a 20% lower probability of exiting the bank compared to those with a credit score below 700.
+INSIGHTS: Customers with a credit score above 700 have a 20% lower chance of exiting the bank, indicating that credit score is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with lower credit scores to improve retention rates.
+0
+####################
+COT:
+1. Segment customers into two groups: those with a credit score above 700 and those below 700.
+2. Calculate the percentage of customers in each group who exited the bank.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted strategies to retain customers with lower credit scores.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers with a credit score above 700 have a 20% lower probability of exiting the bank compared to those with a credit score below 700."
+COT = '''
+1. Segment customers into two groups: those with a credit score above 700 and those below 700.
+2. Calculate the percentage of customers in each group who exited the bank.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted strategies to retain customers with lower credit scores.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    above_700 = dataset[dataset['CreditScore'] > 700]
+    below_700 = dataset[dataset['CreditScore'] <= 700]
+    exit_above = above_700['Exited'].sum() / len(above_700)
+    exit_below = below_700['Exited'].sum() / len(below_700)
+    contingency_table = pd.crosstab(dataset['CreditScore'] > 700, dataset['Exited'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers with a credit score above 700 have a 20% lower chance of exiting the bank, indicating that credit score is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with lower credit scores to improve retention rates."
+END:
+DESCRIPTION: Customers who are active members have a 30% higher probability of having a credit card with the bank compared to non-active members.
+INSIGHTS: Active members have a 30% higher chance of having a credit card with the bank, indicating that active membership is a strong predictor of credit card adoption. The bank can leverage this insight by offering targeted promotions and benefits to non-active members to increase credit card adoption rates.
+0
+####################
+COT:
+1. Segment customers into two groups: active members and non-active members.
+2. Calculate the percentage of customers in each group who have a credit card with the bank.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted strategies to increase credit card adoption among non-active members.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers who are active members have a 30% higher probability of having a credit card with the bank compared to non-active members."
+COT = '''
+1. Segment customers into two groups: active members and non-active members.
+2. Calculate the percentage of customers in each group who have a credit card with the bank.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted strategies to increase credit card adoption among non-active members.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    active_members = dataset[dataset['IsActiveMember'] == 1]
+    non_active_members = dataset[dataset['IsActiveMember'] == 0]
+    credit_card_active = active_members['HasCrCard'].sum() / len(active_members)
+    credit_card_non_active = non_active_members['HasCrCard'].sum() / len(non_active_members)
+    contingency_table = pd.crosstab(dataset['IsActiveMember'], dataset['HasCrCard'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Active members have a 30% higher chance of having a credit card with the bank, indicating that active membership is a strong predictor of credit card adoption. The bank can leverage this insight by offering targeted promotions and benefits to non-active members to increase credit card adoption rates."
+END:
+ERROR
+tuple indices must be integers or slices, not str
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Customers with a higher estimated salary have a higher average balance in their accounts."
+COT = '''
+1. Calculate the average balance for customers in different estimated salary ranges.
+2. Compare the average balances across different salary ranges using a statistical test (e.g., ANOVA).
+3. Assess the significance of the observed difference to confirm the hypothesis.
+4. Use results to suggest targeted strategies to increase average balance among customers with lower estimated salaries.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import f_oneway
+    bins = [0, 50000, 100000, 150000, 200000]
+    groups = dataset.groupby(pd.cut(dataset['EstimatedSalary'], bins))
+    avg_balance = groups['Balance'].mean()
+    f_stat, p = f_oneway(*[group['Balance'] for group in groups])
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers with higher estimated salaries have higher average balances in their accounts, indicating that estimated salary is a strong predictor of account balance. The bank can leverage this insight by offering targeted services and benefits to customers with lower estimated salaries to increase average balance and improve customer retention."
+#####
+DESCRIPTION: Customers who have been with the bank for a longer period have a lower probability of exiting the bank.
+INSIGHTS: Customers who have been with the bank for a longer period have a lower chance of exiting the bank, indicating that tenure is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with shorter tenure to improve retention rates.
+0
+####################
+COT:
+1. Calculate the probability of exiting the bank for customers in different tenure ranges.
+2. Compare the probabilities across different tenure ranges using a statistical test (e.g., chi-squared test).
+3. Assess the significance of the observed difference to confirm the hypothesis.
+4. Use results to suggest targeted strategies to retain customers with shorter tenure.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers who have been with the bank for a longer period have a lower probability of exiting the bank."
+COT = '''
+1. Calculate the probability of exiting the bank for customers in different tenure ranges.
+2. Compare the probabilities across different tenure ranges using a statistical test (e.g., chi-squared test).
+3. Assess the significance of the observed difference to confirm the hypothesis.
+4. Use results to suggest targeted strategies to retain customers with shorter tenure.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    bins = [0, 2, 5, 10]
+    groups = dataset.groupby(pd.cut(dataset['Tenure'], bins))
+    exit_prob = groups['Exited'].mean()
+    contingency_table = pd.crosstab(pd.cut(dataset['Tenure'], bins), dataset['Exited'])
+    chi2, p, dof, expected = chi2_contingency(contingency_table)
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers who have been with the bank for a longer period have a lower chance of exiting the bank, indicating that tenure is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with shorter tenure to improve retention rates."
+END:
+ERROR
+tuple indices must be integers or slices, not str
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Customers who have a higher number of products with the bank have a higher average balance in their accounts."
+COT = '''
+1. Calculate the average balance for customers with different numbers of products.
+2. Compare the average balances across different product counts using a statistical test (e.g., ANOVA).
+3. Assess the significance of the observed difference to confirm the hypothesis.
+4. Use results to suggest targeted strategies to increase average balance among customers with fewer products.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import f_oneway
+    groups = dataset.groupby('NumOfProducts')
+    avg_balance = groups['Balance'].mean()
+    f_stat, p = f_oneway(*[group['Balance'] for group in groups])
+    result = 1 if p < 0.05 else 0
+    return result
+insights = "Customers who have a higher number of products with the bank have a higher average balance in their accounts, indicating that product count is a strong predictor of account balance. The bank can leverage this insight by offering targeted services and benefits to customers with fewer products to increase average balance and improve customer retention."
+#####
+DESCRIPTION: Customers with higher credit scores (> 700) have a 20% lower probability of closing their accounts compared to those with lower credit scores.
+INSIGHTS: Customers with high credit scores (> 700) have a 20% lower chance of closing their accounts, indicating that credit score is a significant factor in customer retention. Banks can leverage this insight by offering premium services to high-credit customers to enhance loyalty and reduce churn.
+0
+####################
+COT:
+1. Segment customers into groups: those with credit scores > 700 and those with credit scores ≤ 700.
+2. Calculate the percentage of customers in each group who closed their accounts.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to retain customers with high credit scores.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Customers with higher credit scores (> 700) have a 20% lower probability of closing their accounts compared to those with lower credit scores."
+COT = '''
+1. Segment customers into groups: those with credit scores > 700 and those with credit scores ≤ 700.
+2. Calculate the percentage of customers in each group who closed their accounts.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to retain customers with high credit scores.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    # Segment customers into groups
+    high_credit = dataset[dataset['CreditScore'] > 700]
+    low_credit = dataset[dataset['CreditScore'] <= 700]
+    # Calculate the percentage of customers in each group who closed their accounts
+    high_credit_closed = len(high_credit[high_credit['Exited'] == 1]) / len(high_credit)
+    low_credit_closed = len(low_credit[low_credit['Exited'] == 1]) / len(low_credit)
+    # Compare the probabilities between the two groups using a statistical test
+    contingency_table = pd.crosstab(dataset['CreditScore'] > 700, dataset['Exited'])
+    chi2_stat, p_val, dof, _ = chi2_contingency(contingency_table)
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Customers with high credit scores (> 700) have a 20% lower chance of closing their accounts, indicating that credit score is a significant factor in customer retention. Banks can leverage this insight by offering premium services to high-credit customers to enhance loyalty and reduce churn."
+END:
+DESCRIPTION: Customers who are active members and have a higher number of products (> 2) have a 30% higher probability of retaining their accounts compared to those who are not active members and have fewer products.
+INSIGHTS: Customers who are active members and have multiple products (> 2) have a 30% higher chance of retaining their accounts, indicating that product diversification and active membership are key factors in customer retention. Banks can leverage this insight by offering bundled products and services to active members to enhance loyalty and reduce churn.
+1
+####################
+COT:
+1. Segment customers into groups: those who are active members and have > 2 products, and those who are not active members and have ≤ 2 products.
+2. Calculate the percentage of customers in each group who retained their accounts.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to retain customers with multiple products.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Customers who are active members and have a higher number of products (> 2) have a 30% higher probability of retaining their accounts compared to those who are not active members and have fewer products."
+COT = '''
+1. Segment customers into groups: those who are active members and have > 2 products, and those who are not active members and have ≤ 2 products.
+2. Calculate the percentage of customers in each group who retained their accounts.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to retain customers with multiple products.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    # Segment customers into groups
+    active_members = dataset[(dataset['IsActiveMember'] == 1) & (dataset['NumOfProducts'] > 2)]
+    non_active_members = dataset[(dataset['IsActiveMember'] == 0) & (dataset['NumOfProducts'] <= 2)]
+    # Calculate the percentage of customers in each group who retained their accounts
+    active_members_retained = len(active_members[active_members['Exited'] == 0]) / len(active_members)
+    non_active_members_retained = len(non_active_members[non_active_members['Exited'] == 0]) / len(non_active_members)
+    # Compare the probabilities between the two groups using a statistical test
+    contingency_table = pd.crosstab((dataset['IsActiveMember'] == 1) & (dataset['NumOfProducts'] > 2), dataset['Exited'])
+    chi2_stat, p_val, dof, _ = chi2_contingency(contingency_table)
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Customers who are active members and have multiple products (> 2) have a 30% higher chance of retaining their accounts, indicating that product diversification and active membership are key factors in customer retention. Banks can leverage this insight by offering bundled products and services to active members to enhance loyalty and reduce churn."
+END:
+DESCRIPTION: Customers with higher estimated salaries (> $100,000) have a 25% higher probability of purchasing additional products compared to those with lower estimated salaries.
+INSIGHTS: Customers with high estimated salaries (> $100,000) have a 25% higher chance of purchasing additional products, indicating that salary is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to high-salary customers to enhance revenue and loyalty.
+0
+####################
+COT:
+1. Segment customers into groups: those with estimated salaries > $100,000 and those with estimated salaries ≤ $100,000.
+2. Calculate the percentage of customers in each group who purchased additional products.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to customers with high estimated salaries.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Customers with higher estimated salaries (> $100,000) have a 25% higher probability of purchasing additional products compared to those with lower estimated salaries."
+COT = '''
+1. Segment customers into groups: those with estimated salaries > $100,000 and those with estimated salaries ≤ $100,000.
+2. Calculate the percentage of customers in each group who purchased additional products.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to customers with high estimated salaries.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    # Segment customers into groups
+    high_salary = dataset[dataset['EstimatedSalary'] > 100000]
+    low_salary = dataset[dataset['EstimatedSalary'] <= 100000]
+    # Calculate the percentage of customers in each group who purchased additional products
+    high_salary_purchased = len(high_salary[high_salary['NumOfProducts'] > 1]) / len(high_salary)
+    low_salary_purchased = len(low_salary[low_salary['NumOfProducts'] > 1]) / len(low_salary)
+    # Compare the probabilities between the two groups using a statistical test
+    contingency_table = pd.crosstab(dataset['EstimatedSalary'] > 100000, dataset['NumOfProducts'] > 1)
+    chi2_stat, p_val, dof, _ = chi2_contingency(contingency_table)
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Customers with high estimated salaries (> $100,000) have a 25% higher chance of purchasing additional products, indicating that salary is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to high-salary customers to enhance revenue and loyalty."
+END:
+DESCRIPTION: Customers who have been with the bank for a longer period (> 5 years) have a 20% higher probability of retaining their accounts compared to those who have been with the bank for a shorter period.
+INSIGHTS: Customers who have been with the bank for a longer period (> 5 years) have a 20% higher chance of retaining their accounts, indicating that tenure is a significant factor in customer retention. Banks can leverage this insight by offering loyalty programs and rewards to long-term customers to enhance loyalty and reduce churn.
+0
+####################
+COT:
+1. Segment customers into groups: those who have been with the bank for > 5 years and those who have been with the bank for ≤ 5 years.
+2. Calculate the percentage of customers in each group who retained their accounts.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to long-term customers.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Customers who have been with the bank for a longer period (> 5 years) have a 20% higher probability of retaining their accounts compared to those who have been with the bank for a shorter period."
+COT = '''
+1. Segment customers into groups: those who have been with the bank for > 5 years and those who have been with the bank for ≤ 5 years.
+2. Calculate the percentage of customers in each group who retained their accounts.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to long-term customers.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    # Segment customers into groups
+    long_term = dataset[dataset['Tenure'] > 5]
+    short_term = dataset[dataset['Tenure'] <= 5]
+    # Calculate the percentage of customers in each group who retained their accounts
+    long_term_retained = len(long_term[long_term['Exited'] == 0]) / len(long_term)
+    short_term_retained = len(short_term[short_term['Exited'] == 0]) / len(short_term)
+    # Compare the probabilities between the two groups using a statistical test
+    contingency_table = pd.crosstab(dataset['Tenure'] > 5, dataset['Exited'])
+    chi2_stat, p_val, dof, _ = chi2_contingency(contingency_table)
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Customers who have been with the bank for a longer period (> 5 years) have a 20% higher chance of retaining their accounts, indicating that tenure is a significant factor in customer retention. Banks can leverage this insight by offering loyalty programs and rewards to long-term customers to enhance loyalty and reduce churn."
+END:
+DESCRIPTION: Customers who have a higher balance (> $50,000) have a 30% higher probability of purchasing additional products compared to those with a lower balance.
+INSIGHTS: Customers with high balances (> $50,000) have a 30% higher chance of purchasing additional products, indicating that balance is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to customers with high balances to enhance revenue and loyalty.
+1
+####################
+COT:
+1. Segment customers into groups: those with a balance > $50,000 and those with a balance ≤ $50,000.
+2. Calculate the percentage of customers in each group who purchased additional products.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to customers with high balances.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Customers who have a higher balance (> $50,000) have a 30% higher probability of purchasing additional products compared to those with a lower balance."
+COT = '''
+1. Segment customers into groups: those with a balance > $50,000 and those with a balance ≤ $50,000.
+2. Calculate the percentage of customers in each group who purchased additional products.
+3. Compare the probabilities between the two groups using a statistical test (e.g., chi-squared test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to suggest targeted marketing strategies to customers with high balances.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import chi2_contingency
+    # Segment customers into groups
+    high_balance = dataset[dataset['Balance'] > 50000]
+    low_balance = dataset[dataset['Balance'] <= 50000]
+    # Calculate the percentage of customers in each group who purchased additional products
+    high_balance_purchased = len(high_balance[high_balance['NumOfProducts'] > 1]) / len(high_balance)
+    low_balance_purchased = len(low_balance[low_balance['NumOfProducts'] > 1]) / len(low_balance)
+    # Compare the probabilities between the two groups using a statistical test
+    contingency_table = pd.crosstab(dataset['Balance'] > 50000, dataset['NumOfProducts'] > 1)
+    chi2_stat, p_val, dof, _ = chi2_contingency(contingency_table)
+    # Assess the significance of the observed difference
+    if p_val < 0.05:
+        result = 1
+    else:
+        result = 0
+    return result
+insights = "Customers with high balances (> $50,000) have a 30% higher chance of purchasing additional products, indicating that balance is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to customers with high balances to enhance revenue and loyalty."
+END:
+####################
+HYPOTHESIS RESULTS:
+[('Customers with a credit score above 700 have a 20% lower chance of exiting the bank, indicating that credit score is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with lower credit scores to improve retention rates.', 0), ('Active members have a 30% higher chance of having a credit card with the bank, indicating that active membership is a strong predictor of credit card adoption. The bank can leverage this insight by offering targeted promotions and benefits to non-active members to increase credit card adoption rates.', 0), ('Customers who have been with the bank for a longer period have a lower chance of exiting the bank, indicating that tenure is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with shorter tenure to improve retention rates.', 0), ('Customers with high credit scores (> 700) have a 20% lower chance of closing their accounts, indicating that credit score is a significant factor in customer retention. Banks can leverage this insight by offering premium services to high-credit customers to enhance loyalty and reduce churn.', 0), ('Customers who are active members and have multiple products (> 2) have a 30% higher chance of retaining their accounts, indicating that product diversification and active membership are key factors in customer retention. Banks can leverage this insight by offering bundled products and services to active members to enhance loyalty and reduce churn.', 1), ('Customers with high estimated salaries (> $100,000) have a 25% higher chance of purchasing additional products, indicating that salary is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to high-salary customers to enhance revenue and loyalty.', 0), ('Customers who have been with the bank for a longer period (> 5 years) have a 20% higher chance of retaining their accounts, indicating that tenure is a significant factor in customer retention. Banks can leverage this insight by offering loyalty programs and rewards to long-term customers to enhance loyalty and reduce churn.', 0), ('Customers with high balances (> $50,000) have a 30% higher chance of purchasing additional products, indicating that balance is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to customers with high balances to enhance revenue and loyalty.', 1)]
+
+
+
+####################
+CLEANED HYPOTHESIS RESULTS:
+[('Customers with a credit score above 700 have a 20% lower chance of exiting the bank, indicating that credit score is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with lower credit scores to improve retention rates.', 0), ('Active members have a 30% higher chance of having a credit card with the bank, indicating that active membership is a strong predictor of credit card adoption. The bank can leverage this insight by offering targeted promotions and benefits to non-active members to increase credit card adoption rates.', 0), ('Customers who have been with the bank for a longer period have a lower chance of exiting the bank, indicating that tenure is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with shorter tenure to improve retention rates.', 0), ('Customers with high credit scores (> 700) have a 20% lower chance of closing their accounts, indicating that credit score is a significant factor in customer retention. Banks can leverage this insight by offering premium services to high-credit customers to enhance loyalty and reduce churn.', 0), ('Customers who are active members and have multiple products (> 2) have a 30% higher chance of retaining their accounts, indicating that product diversification and active membership are key factors in customer retention. Banks can leverage this insight by offering bundled products and services to active members to enhance loyalty and reduce churn.', 1), ('Customers with high estimated salaries (> $100,000) have a 25% higher chance of purchasing additional products, indicating that salary is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to high-salary customers to enhance revenue and loyalty.', 0), ('Customers who have been with the bank for a longer period (> 5 years) have a 20% higher chance of retaining their accounts, indicating that tenure is a significant factor in customer retention. Banks can leverage this insight by offering loyalty programs and rewards to long-term customers to enhance loyalty and reduce churn.', 0), ('Customers with high balances (> $50,000) have a 30% higher chance of purchasing additional products, indicating that balance is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to customers with high balances to enhance revenue and loyalty.', 1)]
+Len: 8
+
+
+
+####################
+HYPOTHESIS RESULTS:
+[('Customers with a credit score above 700 have a 20% lower chance of exiting the bank, indicating that credit score is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with lower credit scores to improve retention rates.', 0), ('Active members have a 30% higher chance of having a credit card with the bank, indicating that active membership is a strong predictor of credit card adoption. The bank can leverage this insight by offering targeted promotions and benefits to non-active members to increase credit card adoption rates.', 0), ('Customers who have been with the bank for a longer period have a lower chance of exiting the bank, indicating that tenure is a strong predictor of customer retention. The bank can leverage this insight by offering targeted services and benefits to customers with shorter tenure to improve retention rates.', 0), ('Customers with high credit scores (> 700) have a 20% lower chance of closing their accounts, indicating that credit score is a significant factor in customer retention. Banks can leverage this insight by offering premium services to high-credit customers to enhance loyalty and reduce churn.', 0), ('Customers who are active members and have multiple products (> 2) have a 30% higher chance of retaining their accounts, indicating that product diversification and active membership are key factors in customer retention. Banks can leverage this insight by offering bundled products and services to active members to enhance loyalty and reduce churn.', 1), ('Customers with high estimated salaries (> $100,000) have a 25% higher chance of purchasing additional products, indicating that salary is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to high-salary customers to enhance revenue and loyalty.', 0), ('Customers who have been with the bank for a longer period (> 5 years) have a 20% higher chance of retaining their accounts, indicating that tenure is a significant factor in customer retention. Banks can leverage this insight by offering loyalty programs and rewards to long-term customers to enhance loyalty and reduce churn.', 0), ('Customers with high balances (> $50,000) have a 30% higher chance of purchasing additional products, indicating that balance is a significant factor in product adoption. Banks can leverage this insight by offering premium products and services to customers with high balances to enhance revenue and loyalty.', 1)]

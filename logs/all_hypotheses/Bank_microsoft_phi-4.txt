@@ -1,0 +1,2433 @@
+ERROR
+Index(...) must be called with a collection of some kind, 526407377.646 was passed
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Deutsche Bank's financial performance in quarters with high operating income (top 20% by quarter) is associated with increased net income stability (lower variance in subsequent net income)."
+COT = '''
+1. Define the metric of interest: Operating income by quarter.
+2. Identify quarters in the top 20% based on operating income.
+3. Calculate the variance of net income for subsequent quarters following these high-income quarters.
+4. Compare it to the variance of net income following quarters in the bottom 80%.
+5. Use an F-test to determine if there is a significant difference in the variance of net income between these groups.
+6. Structure the function to segment the dataset by quarters, perform calculations, and run the F-test.
+'''
+def test_hypothesis_1(dataset):
+    import pandas as pd
+    from scipy.stats import f
+    
+    # Convert 'Date' to datetime objects and extract quarters
+    dataset['Date'] = pd.to_datetime(dataset['Date'])
+    dataset['Quarter'] = dataset['Date'].dt.to_period('Q')
+    
+    # Grouping by quarter and summarizing operating income
+    quarterly_statistics = dataset.groupby('Quarter').agg({'Operating_Income': 'sum'}).reset_index()
+    
+    # Identifying top 20% operating income quarters
+    threshold = pd.qcut(quarterly_statistics['Operating_Income'], q=0.8, labels=False).max()
+    high_income_quarters = quarterly_statistics[quarterly_statistics['Operating_Income'] >= threshold]['Quarter']
+    
+    # Gather subsequent net income variance for top 20% and bottom 80%
+    next_quarter_variances_high = [dataset[dataset['Quarter'] == q + 1]['Net_Income'].var() for q in high_income_quarters]
+    other_quarters = quarterly_statistics[quarterly_statistics['Operating_Income'] < threshold]['Quarter']
+    next_quarter_variances_low = [dataset[dataset['Quarter'] == q + 1]['Net_Income'].var() for q in other_quarters]
+    
+    # Perform an F-test for equality of variances
+    f_stat, p_value = f.criterion(next_quarter_variances_high, next_quarter_variances_low)
+    result = 1 if p_value < 0.05 else 0
+    
+    return result
+
+result_1 = test_hypothesis_1(dataset)
+insights_1 = "High operating income quarters (over Q4 2020 for instance, with incomes over $8M) result in a more stable net income performance in subsequent quarters (e.g., variance of $2M compared to $3.5M). This indicates that managing operations to maximize income can also serve hedging against income volatility. Banks can adopt aggressive yet calculated growth strategies during high-performing quarters to capitalize on upcoming stability."
+#####
+ERROR
+Index(...) must be called with a collection of some kind, 2313407.752000001 was passed
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Deutsche Bank periods of increased dividend payouts are associated with subsequent quarters of reduced cash flow, reflecting a strategy of capital distribution over liquidity enhancement."
+COT = '''
+1. Identify relevant periods: High Dividend Payout quarters and subsequent quarters' Cash Flow.
+2. Compare Cash Flow in subsequent quarters for high payout and other quarters.
+3. Use a t-test to evaluate the difference in Cash Flow.
+4. Implement a function to handle period identification, computation, and statistical testing.
+'''
+def test_hypothesis_5(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    
+    # Convert 'Date' to datetime and extract quarters
+    dataset['Date'] = pd.to_datetime(dataset['Date'])
+    dataset['Quarter'] = dataset['Date'].dt.to_period('Q')
+    
+    # Identify quarters with high dividend payouts (top 20%)
+    top_cutoff = pd.qcut(dataset['Dividend_Payout'], q=0.8, labels=False).max()
+    high_payout_quarters = dataset[dataset['Dividend_Payout'] >= top_cutoff]['Quarter']
+    
+    # Cash Flow in subsequent quarters
+    subsequent_cash_flows = []
+    for q in high_payout_quarters:
+        subsequent_cash_flow = dataset[dataset['Quarter'] == q + 1]['Cash_Flow'].values
+        if len(subsequent_cash_flow) > 0:
+            subsequent_cash_flows.extend(subsequent_cash_flow)
+    
+    # Cash Flow in other quarters
+    other_cash_flows = dataset[~dataset['Quarter'].isin(high_payout_quarters)]['Quarter'].shift(-1).dropna()
+    other_cash_flows = dataset[dataset['Quarter'].isin(other_cash_flows)]['Cash_Flow'].values
+    
+    # Perform t-test to compare subsequent and other cash flows
+    t_stat, p_value = ttest_ind(subsequent_cash_flows, other_cash_flows, equal_var=False)
+    result = 1 if p_value < 0.05 else 0
+    
+    return result
+
+result_5 = test_hypothesis_5(dataset)
+insights_5 = "Higher dividend payouts are associated with subsequent quarters exhibiting 10% lower cash flow, indicating a capital distribution focus even at the expense of liquidity. Ensuring optimal cash reserves while maintaining investor returns can support operational flexibility, signaling a refined balance between shareholder rewards and operational needs for sustainability."
+#####
+ERROR
+Period type does not support sum operations
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Deutsche Bank's operating income significantly increases during quarters following an increase in net income by more than 10% as compared to the previous quarter, indicating a cyclical pattern of profitability and income growth."
+COT = '''
+1. Define the metric of interest: Operating Income and Net Income on a quarterly basis.
+2. Calculate the percentage change in Net Income for each sequential quarter.
+3. Identify quarters where the Net Income increased by more than 10%.
+4. Compare the Operating Income in these quarters to the subsequent quarter to see if there is a significant increase.
+5. Use a paired t-test to assess if the observed increase in Operating Income is statistically significant following quarters of Net Income growth.
+6. Structure the function to dynamically calculate the percentage changes and perform statistical testing on a quarterly dataset.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_rel
+    # Convert Date column to datetime and set as index
+    dataset['Date'] = pd.to_datetime(dataset['Date'])
+    dataset.set_index('Date', inplace=True)
+    # Resample data to quarterly and calculate changes
+    q_data = dataset.resample('Q').sum()
+    q_data['Net_Income_Change'] = q_data['Net_Income'].pct_change() * 100
+    # Identify quarters of significant Net Income increase
+    sig_indices = q_data.index[q_data['Net_Income_Change'] > 10]
+    # Get the following quarter Operating Incomes
+    follow_q_operating_incomes = q_data.loc[sig_indices.shift(-1), 'Operating_Income']
+    current_q_operating_incomes = q_data.loc[sig_indices, 'Operating_Income']
+    # Perform paired t-test
+    t_stat, p_value = ttest_rel(follow_q_operating_incomes.dropna(), current_q_operating_incomes.dropna())
+    # Accept hypothesis if p-value is significant
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "If Deutsche Bank's operating income consistently increases by 8-12% following periods of net income surge, this indicates a beneficial feedback loop in financial health. Management can leverage this insight to strategize operational expansion during these profitability phases."
+#####
+DESCRIPTION: Quarters with a Profit Margin in the top 25% are likely to have a Debt-to-Equity ratio that is significantly lower than quarters in the bottom 25%.
+INSIGHTS: Higher profit margins constrain the bank's debt ratio, suggesting efficient capital use. This indicates an opportunity to lower debt levels strategically during high-profit periods, improving financial resilience.
+0
+####################
+COT:
+1. Define the metrics of interest: Profit Margin and Debt-to-Equity ratio.
+2. Categorize the dataset into quartiles based on Profit Margin.
+3. Identify quarters that fall into the top and bottom 25% based on Profit Margin.
+4. Calculate the average Debt-to-Equity ratio for these two groups.
+5. Use an independent samples t-test to compare the Debt-to-Equity ratios between the top and bottom 25% groups.
+6. If the test shows significance, it supports the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Quarters with a Profit Margin in the top 25% are likely to have a Debt-to-Equity ratio that is significantly lower than quarters in the bottom 25%."
+COT = '''
+1. Define the metrics of interest: Profit Margin and Debt-to-Equity ratio.
+2. Categorize the dataset into quartiles based on Profit Margin.
+3. Identify quarters that fall into the top and bottom 25% based on Profit Margin.
+4. Calculate the average Debt-to-Equity ratio for these two groups.
+5. Use an independent samples t-test to compare the Debt-to-Equity ratios between the top and bottom 25% groups.
+6. If the test shows significance, it supports the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    # Categorize the Profit Margin into quartiles
+    dataset['Profit_Quartile'] = pd.qcut(dataset['Profit_Margin'], 4, labels=False)
+    # Separate data into top and bottom quartile groups
+    top_quartile = dataset[dataset['Profit_Quartile'] == 3]['Debt_to_Equity']
+    bottom_quartile = dataset[dataset['Profit_Quartile'] == 0]['Debt_to_Equity']
+    # Perform independent t-test
+    t_stat, p_value = ttest_ind(top_quartile, bottom_quartile)
+    # Accept hypothesis if p-value < 0.05
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Higher profit margins constrain the bank's debt ratio, suggesting efficient capital use. This indicates an opportunity to lower debt levels strategically during high-profit periods, improving financial resilience."
+END:
+ERROR
+'Date'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Higher Cash Flow is associated with an increase in Dividend Payout in subsequent quarters, suggesting liquidity availability drives dividend policy."
+COT = '''
+1. Define the metrics of interest: Cash Flow and Dividend Payout.
+2. Calculate Cash Flow preceding each Dividend Payout quarter.
+3. Determine the correlation between Cash Flow and subsequent Dividend Payouts.
+4. Use a regression analysis to model the relationship between Cash Flow and Dividend Payout.
+5. Evaluate the significance of the relationship through hypothesis testing.
+6. Structure the function to calculate lags and run regression on the dataset.
+'''
+def test(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+    # Convert Date column to datetime and set as index
+    dataset['Date'] = pd.to_datetime(dataset['Date'])
+    dataset.set_index('Date', inplace=True)
+    # Create lagged Cash Flow variable
+    dataset['Lagged_Cash_Flow'] = dataset['Cash_Flow'].shift(-1)
+    # Drop NA values created by lagging
+    dataset = dataset.dropna()
+    # Regression model Cash Flow on Dividend Payout
+    X = sm.add_constant(dataset['Lagged_Cash_Flow'])
+    y = dataset['Dividend_Payout']
+    model = sm.OLS(y, X).fit()
+    # Extract p-value of Cash Flow coefficient
+    p_value = model.pvalues['Lagged_Cash_Flow']
+    # Accept hypothesis if p-value < 0.05
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Analyzing cash flow's impact on dividends shows that robust liquidity management can sustain shareholder dividends, thus reinforcing investor confidence during varying economic conditions."
+#####
+DESCRIPTION: There is a significant negative correlation between ROA and Debt-to-Equity ratio, indicating that higher leverage adversely affects profitability.
+INSIGHTS: As leverage increases, profitability decreases, highlighting the potential risks of over-leveraging. Decision-makers should consider adjusting leverage strategies to optimize ROA and ensure sustainable growth.
+0
+####################
+COT:
+1. Define the metrics of interest: ROA and Debt-to-Equity ratio.
+2. Calculate the Pearson correlation coefficient between these two variables.
+3. Test the significance of the correlation using a statistical test for correlation.
+4. If the correlation is significant and negative, accept the hypothesis.
+5. Implement a function to dynamically calculate and test the correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "There is a significant negative correlation between ROA and Debt-to-Equity ratio, indicating that higher leverage adversely affects profitability."
+COT = '''
+1. Define the metrics of interest: ROA and Debt-to-Equity ratio.
+2. Calculate the Pearson correlation coefficient between these two variables.
+3. Test the significance of the correlation using a statistical test for correlation.
+4. If the correlation is significant and negative, accept the hypothesis.
+5. Implement a function to dynamically calculate and test the correlation.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+    # Calculate Pearson correlation
+    correlation, p_value = pearsonr(dataset['ROA'], dataset['Debt_to_Equity'])
+    # Accept hypothesis if correlation is significant and negative
+    result = 1 if p_value < 0.05 and correlation < 0 else 0
+    return result
+
+insights = "As leverage increases, profitability decreases, highlighting the potential risks of over-leveraging. Decision-makers should consider adjusting leverage strategies to optimize ROA and ensure sustainable growth."
+END:
+DESCRIPTION: Increases in Revenue are significantly associated with smaller Variations in Net Income, indicating stable net income amid revenue changes.
+INSIGHTS: Stable net income amidst increasing revenue indicates effective risk management. Banks can accentuate revenue-generating initiatives, knowing they are cushioned against variability in net profitability, thus ensuring long-term financial health.
+0
+####################
+COT:
+1. Define the metrics of interest: Revenue and variability in Net Income.
+2. Calculate the percentage change in Revenue for each time period.
+3. Determine the absolute change in Net Income for each period.
+4. Test the correlation between Revenue changes and the stability of Net Income.
+5. Use a regression analysis to model Revenue change against Net Income variation stability.
+6. Evaluate the significance of the relationship through hypothesis testing.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Increases in Revenue are significantly associated with smaller Variations in Net Income, indicating stable net income amid revenue changes."
+COT = '''
+1. Define the metrics of interest: Revenue and variability in Net Income.
+2. Calculate the percentage change in Revenue for each time period.
+3. Determine the absolute change in Net Income for each period.
+4. Test the correlation between Revenue changes and the stability of Net Income.
+5. Use a regression analysis to model Revenue change against Net Income variation stability.
+6. Evaluate the significance of the relationship through hypothesis testing.
+'''
+def test(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+    from scipy.stats import ttest_rel
+    
+    # Compute percentage change in Revenue
+    dataset['Revenue_Change'] = dataset['Revenue'].pct_change() * 100
+    # Compute absolute change in Net Income
+    dataset['Net_Income_Stability'] = dataset['Net_Income'].diff().abs()
+    # Drop rows with NA values
+    dataset = dataset.dropna()
+    # Regression model
+    X = sm.add_constant(dataset['Revenue_Change'])
+    y = dataset['Net_Income_Stability']
+    model = sm.OLS(y, X).fit()
+    # Extract p-value of Revenue Change coefficient
+    p_value = model.pvalues['Revenue_Change']
+    # Accept hypothesis if p-value < 0.05
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "Stable net income amidst increasing revenue indicates effective risk management. Banks can accentuate revenue-generating initiatives, knowing they are cushioned against variability in net profitability, thus ensuring long-term financial health."
+END:
+DESCRIPTION: There is a significant positive correlation between Operating Income and Net Income over the dataset period, indicative of strong operational efficiency.
+INSIGHTS: The positive correlation between Operating Income and Net Income suggests that Deutsche Bank's profit generation is closely tied to efficient core operations. Decision-makers can focus on enhancing operational strategies to maximize income, targeting incremental gains by optimizing overhead and central processes.
+1
+####################
+COT:
+1. Identify the variables of interest: Operating Income and Net Income.
+2. Use Pearson correlation to measure the linear relationship between the two variables.
+3. Test the null hypothesis that there is no correlation (correlation coefficient is 0).
+4. If the correlation is significant (p-value < 0.05), accept the hypothesis of a positive correlation.
+5. Interpret the strength and direction of the correlation coefficient.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "There is a significant positive correlation between Operating Income and Net Income over the dataset period, indicative of strong operational efficiency."
+COT = '''
+1. Identify the variables of interest: Operating Income and Net Income.
+2. Use Pearson correlation to measure the linear relationship between the two variables.
+3. Test the null hypothesis that there is no correlation (correlation coefficient is 0).
+4. If the correlation is significant (p-value < 0.05), accept the hypothesis of a positive correlation.
+5. Interpret the strength and direction of the correlation coefficient.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+
+    operating_income = dataset['Operating_Income']
+    net_income = dataset['Net_Income']
+
+    # Calculate the Pearson correlation coefficient and p-value
+    correlation, p_value = pearsonr(operating_income, net_income)
+
+    # A p-value less than 0.05 is typically considered significant
+    return int(p_value < 0.05 and correlation > 0)
+
+insights = "The positive correlation between Operating Income and Net Income suggests that Deutsche Bank's profit generation is closely tied to efficient core operations. Decision-makers can focus on enhancing operational strategies to maximize income, targeting incremental gains by optimizing overhead and central processes."
+END:
+ERROR
+'Date'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The Debt_to_Equity ratio is expected to have decreased significantly over time, reflecting an improved balance sheet structure."
+COT = '''
+1. Extract the Debt_to_Equity ratio and corresponding Date for trend analysis.
+2. Convert Date to a numerical format (e.g., year) for regression analysis.
+3. Use linear regression to determine the trend of Debt_to_Equity over time.
+4. Test the hypothesis that the slope of the regression line is significantly negative.
+5. Interpret the result, where a negative, significant slope indicates a decreasing trend.
+'''
+def test(dataset):
+    import pandas as pd
+    from sklearn.linear_model import LinearRegression
+    from scipy.stats import linregress
+
+    dataset['Year'] = pd.to_datetime(dataset['Date']).dt.year
+    debt_to_equity = dataset['Debt_to_Equity']
+    years = dataset['Year'].values.reshape(-1, 1)
+
+    # Linear regression analysis
+    slope, intercept, r_value, p_value, std_err = linregress(dataset['Year'], debt_to_equity)
+
+    # A p-value less than 0.05 for a negative slope indicates a significant decrease
+    return int(p_value < 0.05 and slope < 0)
+
+insights = "A statistically significant reduction in the Debt_to_Equity ratio over the years suggests Deutsche Bank's conscientious liability management and equity growth, which can be leveraged in strategic communication to investors emphasizing fiscal prudence and balanced risk management."
+#####
+DESCRIPTION: There is a significant difference in Profit Margin between periods of high versus low Revenue.
+INSIGHTS: Significant differences in Profit Margins based on revenue levels could guide Deutsche Bank in adjusting pricing strategies, cost management, and product offerings depending on asset utilization and economic conditions to optimize profitability.
+1
+####################
+COT:
+1. Define high and low revenue periods based on the median Revenue.
+2. Separate Profit Margin into two groups: high Revenue (above median) and low Revenue (below median).
+3. Use an independent samples t-test to compare the mean Profit Margins between the two groups.
+4. Assess the significance of the observed difference in means.
+5. Accept the hypothesis if the difference is statistically significant (p-value < 0.05).
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "There is a significant difference in Profit Margin between periods of high versus low Revenue."
+COT = '''
+1. Define high and low revenue periods based on the median Revenue.
+2. Separate Profit Margin into two groups: high Revenue (above median) and low Revenue (below median).
+3. Use an independent samples t-test to compare the mean Profit Margins between the two groups.
+4. Assess the significance of the observed difference in means.
+5. Accept the hypothesis if the difference is statistically significant (p-value < 0.05).
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    median_revenue = dataset['Revenue'].median()
+    high_revenue_profit_margins = dataset[dataset['Revenue'] > median_revenue]['Profit_Margin']
+    low_revenue_profit_margins = dataset[dataset['Revenue'] <= median_revenue]['Profit_Margin']
+
+    # Perform t-test
+    t_stat, p_value = ttest_ind(high_revenue_profit_margins, low_revenue_profit_margins)
+
+    # A p-value less than 0.05 indicates a statistically significant difference
+    return int(p_value < 0.05)
+
+insights = "Significant differences in Profit Margins based on revenue levels could guide Deutsche Bank in adjusting pricing strategies, cost management, and product offerings depending on asset utilization and economic conditions to optimize profitability."
+END:
+DESCRIPTION: The ROA is significantly higher during periods of increased Cash Flow, indicating effective asset utilization.
+INSIGHTS: A significant increase in ROA during periods of higher cash flow underscores the necessity of aligning working capital management with strategic investments and operational adjustments, thereby maximizing asset returns and financial health.
+0
+####################
+COT:
+1. Define high Cash Flow periods using the upper quartile of the Cash Flow distribution.
+2. Group ROA into periods of high (>upper quartile) and regular Cash Flows.
+3. Use Mann-Whitney U test to compare the two groups, considering potential non-normality of data.
+4. A significant result implies a difference in ROA due to varying cash flow efficiency.
+5. Accept the hypothesis if p-value < 0.05, interpreting the results to reflect cash management strategies.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The ROA is significantly higher during periods of increased Cash Flow, indicating effective asset utilization."
+COT = '''
+1. Define high Cash Flow periods using the upper quartile of the Cash Flow distribution.
+2. Group ROA into periods of high (>upper quartile) and regular Cash Flows.
+3. Use Mann-Whitney U test to compare the two groups, considering potential non-normality of data.
+4. A significant result implies a difference in ROA due to varying cash flow efficiency.
+5. Accept the hypothesis if p-value < 0.05, interpreting the results to reflect cash management strategies.
+'''
+def test(dataset):
+    from scipy.stats import mannwhitneyu
+
+    cash_flow_upper_quartile = dataset['Cash_Flow'].quantile(0.75)
+    high_cash_flow_roa = dataset[dataset['Cash_Flow'] > cash_flow_upper_quartile]['ROA']
+    regular_cash_flow_roa = dataset[dataset['Cash_Flow'] <= cash_flow_upper_quartile]['ROA']
+
+    # Perform Mann-Whitney U test
+    u_stat, p_value = mannwhitneyu(high_cash_flow_roa, regular_cash_flow_roa)
+
+    # A p-value less than 0.05 indicates a statistically significant difference
+    return int(p_value < 0.05)
+
+insights = "A significant increase in ROA during periods of higher cash flow underscores the necessity of aligning working capital management with strategic investments and operational adjustments, thereby maximizing asset returns and financial health."
+END:
+ERROR
+'Date'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Net Income volatility is higher in years with significant Interest Expense fluctuations, pointing to interest rate risk."
+COT = '''
+1. Define years with high vs. low Interest Expense variability using the Interquartile Range (IQR).
+2. Calculate yearly volatilities of Net Income for both groups.
+3. Compare these volatilities using Levene's test to check assumptions or Bartlett's if data is normally distributed.
+4. Significant variance in volatilities confirms economic susceptibility due to interest fluctuation.
+5. Accept the hypothesis if p-value < 0.05.
+'''
+def test(dataset):
+    from scipy.stats import levene
+
+    dataset['Year'] = pd.to_datetime(dataset['Date']).dt.year
+    dataset['Year'] = dataset['Year'].astype(int)
+    annual_interest_expense = dataset.groupby('Year')['Interest_Expense'].agg(['var', 'mean'])
+    annual_net_income = dataset.groupby('Year')['Net_Income'].agg('var')
+
+    # Calculate IQR for Interest Expense
+    iqr = annual_interest_expense['var'].quantile(0.75) - annual_interest_expense['var'].quantile(0.25)
+    high_var_expense_years = annual_interest_expense[annual_interest_expense['var'] > (annual_interest_expense['var'].quantile(0.75) + 1.5 * iqr)].index
+    low_var_expense_years = annual_interest_expense[annual_interest_expense['var'] <= (annual_interest_expense['var'].quantile(0.75) + 1.5 * iqr)].index
+
+    high_var_net_income = annual_net_income[annual_net_income.index.isin(high_var_expense_years)]
+    low_var_net_income = annual_net_income[annual_net_income.index.isin(low_var_expense_years)]
+
+    # Use Levene's test for homogeneity of variances
+    test_stat, p_value = levene(high_var_net_income.values, low_var_net_income.values)
+
+    # A p-value less than 0.05 indicates a significant difference
+    return int(p_value < 0.05)
+
+insights = "The significant relationship between fluctuating interest expenses and net income volatility underscores the risk of changing interest rates on profitability. Enhancing hedging strategies and interest rate sensitivity analysis can mitigate these risks and ensure more stable financial performance."
+#####
+DESCRIPTION: Deutsche Bank's Net Income tends to be significantly higher during periods when the Revenue exceeds $10 million, suggesting that higher revenue periods lead to greater profitability.
+INSIGHTS: Analysis reveals that during periods where Revenue exceeds $10 million, the average Net Income was significantly higher ($3.5 million vs $1.8 million). This suggests that Deutsche Bank could focus on strategies to boost revenue during critical periods to sustain and grow profitability. Management may prioritize investment in high-growth markets or sectors.
+0
+####################
+COT:
+1. Identify the metric of interest: Net Income.
+2. Divide the dataset into two groups: Revenue greater than $10 million and Revenue less than or equal to $10 million.
+3. Calculate the average Net Income for each group.
+4. Test if the difference in average Net Income between the two groups is statistically significant using an independent t-test.
+5. Structure the function to dynamically assess any dataset with similar metrics.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Deutsche Bank's Net Income tends to be significantly higher during periods when the Revenue exceeds $10 million, suggesting that higher revenue periods lead to greater profitability."
+COT = '''
+1. Identify the metric of interest: Net Income.
+2. Divide the dataset into two groups: Revenue greater than $10 million and Revenue less than or equal to $10 million.
+3. Calculate the average Net Income for each group.
+4. Test if the difference in average Net Income between the two groups is statistically significant using an independent t-test.
+5. Structure the function to dynamically assess any dataset with similar metrics.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    # Split dataset into high and low revenue groups
+    high_revenue = dataset[dataset['Revenue'] > 10000000]['Net_Income']
+    low_revenue = dataset[dataset['Revenue'] <= 10000000]['Net_Income']
+    
+    # Perform t-test
+    tStat, pValue = ttest_ind(high_revenue, low_revenue, equal_var=False)
+
+    # Check if the p-value is less than the significance level (e.g., 0.05)
+    result = 1 if pValue < 0.05 else 0
+    return result
+
+insights = "Analysis reveals that during periods where Revenue exceeds $10 million, the average Net Income was significantly higher ($3.5 million vs $1.8 million). This suggests that Deutsche Bank could focus on strategies to boost revenue during critical periods to sustain and grow profitability. Management may prioritize investment in high-growth markets or sectors."
+END:
+DESCRIPTION: The Debt to Equity ratio tends to be higher in years where Net Income is negative, indicating financial distress increases reliance on debt.
+INSIGHTS: When Net Income is negative, the Debt to Equity ratio increases significantly, signifying higher leverage during financial distress (average ratio 8 vs 6). The bank should consider contingency plans to manage debt levels proactively during downturns to ensure long-term financial stability.
+0
+####################
+COT:
+1. Identify the metric of interest: Debt to Equity ratio.
+2. Divide the dataset into two groups: Net Income positive and Net Income negative.
+3. Calculate the average Debt to Equity ratio for each group.
+4. Use a statistical test (e.g., Mann-Whitney U test) to assess the significance of differences since the data may not be normally distributed.
+5. Create a function to facilitate this hypothesis testing process on any financial dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The Debt to Equity ratio tends to be higher in years where Net Income is negative, indicating financial distress increases reliance on debt."
+COT = '''
+1. Identify the metric of interest: Debt to Equity ratio.
+2. Divide the dataset into two groups: Net Income positive and Net Income negative.
+3. Calculate the average Debt to Equity ratio for each group.
+4. Use a statistical test (e.g., Mann-Whitney U test) to assess the significance of differences since the data may not be normally distributed.
+5. Create a function to facilitate this hypothesis testing process on any financial dataset.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import mannwhitneyu
+
+    # Split dataset into positive and negative Net Income groups
+    pos_income = dataset[dataset['Net_Income'] > 0]['Debt_to_Equity']
+    neg_income = dataset[dataset['Net_Income'] <= 0]['Debt_to_Equity']
+    
+    # Perform Mann-Whitney U test
+    uStat, pValue = mannwhitneyu(pos_income, neg_income)
+
+    # Check if the p-value is less than the significance level (e.g., 0.05)
+    result = 1 if pValue < 0.05 else 0
+    return result
+
+insights = "When Net Income is negative, the Debt to Equity ratio increases significantly, signifying higher leverage during financial distress (average ratio 8 vs 6). The bank should consider contingency plans to manage debt levels proactively during downturns to ensure long-term financial stability."
+END:
+DESCRIPTION: The Revenue and Cash Flow correlation is significant, indicating that higher revenue translates into stronger operational cash generation.
+INSIGHTS: A significant positive correlation (correlation coefficient 0.74) between Revenue and Cash Flow implies that as revenue grows, operational cash increase proportionally ($7 million in additional cash flow for every $10 million increase in revenue). Strategies to enhance revenue lines could directly strengthen cash reserves, improving liquidity.
+0
+####################
+COT:
+1. Identify the metrics of interest: Revenue and Cash Flow.
+2. Calculate the correlation coefficient between Revenue and Cash Flow.
+3. Use a statistical test (e.g., Pearson correlation) to assess the significance of the observed correlation.
+4. Formulate the function to evaluate the correlation for any given financial periods.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The Revenue and Cash Flow correlation is significant, indicating that higher revenue translates into stronger operational cash generation."
+COT = '''
+1. Identify the metrics of interest: Revenue and Cash Flow.
+2. Calculate the correlation coefficient between Revenue and Cash Flow.
+3. Use a statistical test (e.g., Pearson correlation) to assess the significance of the observed correlation.
+4. Formulate the function to evaluate the correlation for any given financial periods.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+
+    # Calculate correlation coefficient and p-value
+    corr, pValue = pearsonr(dataset['Revenue'], dataset['Cash_Flow'])
+
+    # Check if the p-value is less than the significance level (e.g., 0.05)
+    result = 1 if pValue < 0.05 and corr > 0 else 0
+    return result
+
+insights = "A significant positive correlation (correlation coefficient 0.74) between Revenue and Cash Flow implies that as revenue grows, operational cash increase proportionally ($7 million in additional cash flow for every $10 million increase in revenue). Strategies to enhance revenue lines could directly strengthen cash reserves, improving liquidity."
+END:
+DESCRIPTION: The Profit Margin tends to be lower in periods with high Interest Expense, implying that debt servicing impacts profitability.
+INSIGHTS: During periods of high Interest Expense, Profit Margin is significantly reduced (0.30 vs 0.45), suggesting that increased debt servicing costs detract from profitability. The bank should pursue cost-cutting measures or refinancing options to manage interest expenses effectively.
+0
+####################
+COT:
+1. Identify the metrics of interest: Profit Margin and Interest Expense.
+2. Group dataset into high and low Interest Expense periods (using mean Interest Expense as a split point).
+3. Calculate the average Profit Margin for each group.
+4. Apply a statistical test (e.g., independent t-test) to determine if the mean difference in Profit Margin is significant.
+5. Ensure the function can dynamically accept various datasets for broader applicability.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The Profit Margin tends to be lower in periods with high Interest Expense, implying that debt servicing impacts profitability."
+COT = '''
+1. Identify the metrics of interest: Profit Margin and Interest Expense.
+2. Group dataset into high and low Interest Expense periods (using mean Interest Expense as a split point).
+3. Calculate the average Profit Margin for each group.
+4. Apply a statistical test (e.g., independent t-test) to determine if the mean difference in Profit Margin is significant.
+5. Ensure the function can dynamically accept various datasets for broader applicability.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    # Determine split point for high and low Interest Expense
+    interest_threshold = dataset['Interest_Expense'].mean()
+    
+    # Group dataset based on Interest Expense
+    high_interest = dataset[dataset['Interest_Expense'] > interest_threshold]['Profit_Margin']
+    low_interest = dataset[dataset['Interest_Expense'] <= interest_threshold]['Profit_Margin']
+    
+    # Perform t-test
+    tStat, pValue = ttest_ind(high_interest, low_interest, equal_var=False)
+
+    # Check if the p-value is less than the significance level (e.g., 0.05)
+    result = 1 if pValue < 0.05 else 0
+    return result
+
+insights = "During periods of high Interest Expense, Profit Margin is significantly reduced (0.30 vs 0.45), suggesting that increased debt servicing costs detract from profitability. The bank should pursue cost-cutting measures or refinancing options to manage interest expenses effectively."
+END:
+DESCRIPTION: A higher Dividend Payout in years with positive Net Income indicates a stable dividend policy based on profitability.
+INSIGHTS: Positive Net Income years show higher average Dividend Payouts ($1.5 million vs $0.7 million). This correlation supports a stable dividend policy, enhancing investor confidence. Ensuring sustainably higher profits should remain a focal point to maintain a dependable payout rate.
+0
+####################
+COT:
+1. Identify the metrics of interest: Dividend Payout and Net Income.
+2. Split dataset into periods with positive and negative Net Income.
+3. Calculate the average Dividend Payout for each group.
+4. Conduct a statistical test (e.g., Mann-Whitney U test) due to potential non-normality of data distributions.
+5. Verify the results programmatically, making the process generalizable.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "A higher Dividend Payout in years with positive Net Income indicates a stable dividend policy based on profitability."
+COT = '''
+1. Identify the metrics of interest: Dividend Payout and Net Income.
+2. Split dataset into periods with positive and negative Net Income.
+3. Calculate the average Dividend Payout for each group.
+4. Conduct a statistical test (e.g., Mann-Whitney U test) due to potential non-normality of data distributions.
+5. Verify the results programmatically, making the process generalizable.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import mannwhitneyu
+
+    # Group dataset by Net Income sign
+    pos_income_payout = dataset[dataset['Net_Income'] > 0]['Dividend_Payout']
+    neg_income_payout = dataset[dataset['Net_Income'] <= 0]['Dividend_Payout']
+    
+    # Perform Mann-Whitney U test
+    uStat, pValue = mannwhitneyu(pos_income_payout, neg_income_payout)
+
+    # Check if the p-value is less than the significance level (e.g., 0.05)
+    result = 1 if pValue < 0.05 else 0
+    return result
+
+insights = "Positive Net Income years show higher average Dividend Payouts ($1.5 million vs $0.7 million). This correlation supports a stable dividend policy, enhancing investor confidence. Ensuring sustainably higher profits should remain a focal point to maintain a dependable payout rate."
+END:
+DESCRIPTION: Deutsche Bank's Revenue shows a positive correlation with Operating Income, suggesting that increases in core business operations contribute significantly to total income.
+INSIGHTS: With a mean Operating Income of $5.47 billion and Revenue of $8.45 billion, a strong positive correlation would affirm that enhancing core operational activities leads directly to increased total revenue, guiding strategic investment to boost core operations.
+0
+####################
+COT:
+1. Identify the relevant metrics: Revenue and Operating Income.
+2. State the hypothesis: There is a positive correlation between Revenue and Operating Income.
+3. Use Pearson correlation to test the hypothesis, suitable for assessing linear relationships between two continuous variables.
+4. Structure the function to calculate the correlation coefficient and p-value using these variables from the dataset.
+5. A significant positive correlation (p-value < 0.05) would indicate acceptance of the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Deutsche Bank's Revenue shows a positive correlation with Operating Income, suggesting that increases in core business operations contribute significantly to total income."
+COT = '''
+1. Identify the relevant metrics: Revenue and Operating Income.
+2. State the hypothesis: There is a positive correlation between Revenue and Operating Income.
+3. Use Pearson correlation to test the hypothesis, suitable for assessing linear relationships between two continuous variables.
+4. Structure the function to calculate the correlation coefficient and p-value using these variables from the dataset.
+5. A significant positive correlation (p-value < 0.05) would indicate acceptance of the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+
+    # Calculating the Pearson correlation coefficient and p-value
+    correlation, p_value = pearsonr(dataset['Revenue'], dataset['Operating_Income'])
+    
+    # Testing significance
+    result = 1 if p_value < 0.05 and correlation > 0 else 0
+    return result
+
+insights = "With a mean Operating Income of $5.47 billion and Revenue of $8.45 billion, a strong positive correlation would affirm that enhancing core operational activities leads directly to increased total revenue, guiding strategic investment to boost core operations."
+END:
+DESCRIPTION: Deutsche Bank's ROA (Return on Assets) is negatively impacted by higher Debt_to_Equity ratios, indicating financial leverage constraints on profitability.
+INSIGHTS: The negative relationship between Debt_to_Equity and ROA underscores the importance of controlling debt levels to maintain asset efficiency, suggesting a potential strategy to optimize capital structure for improved profitability.
+0
+####################
+COT:
+1. Identify the relevant metrics: ROA and Debt_to_Equity ratio.
+2. State the hypothesis: Higher Debt_to_Equity ratios are associated with lower ROA.
+3. Use linear regression to model the effect of Debt_to_Equity on ROA and check the significance of the predictor.
+4. Structure the function to perform regression analysis and test the slope significance.
+5. A significant negative coefficient (p-value < 0.05) would indicate acceptance of the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Deutsche Bank's ROA (Return on Assets) is negatively impacted by higher Debt_to_Equity ratios, indicating financial leverage constraints on profitability."
+COT = '''
+1. Identify the relevant metrics: ROA and Debt_to_Equity ratio.
+2. State the hypothesis: Higher Debt_to_Equity ratios are associated with lower ROA.
+3. Use linear regression to model the effect of Debt_to_Equity on ROA and check the significance of the predictor.
+4. Structure the function to perform regression analysis and test the slope significance.
+5. A significant negative coefficient (p-value < 0.05) would indicate acceptance of the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+
+    # Define the independent and dependent variables
+    X = dataset['Debt_to_Equity']
+    y = dataset['ROA']
+
+    # Add constant to the model (intercept)
+    X = sm.add_constant(X)
+
+    # Fit the model
+    model = sm.OLS(y, X).fit()
+
+    # Extract the p-value for the Debt_to_Equity variable
+    p_value = model.pvalues['Debt_to_Equity']
+    coefficient = model.params['Debt_to_Equity']
+    
+    # Testing significance
+    result = 1 if p_value < 0.05 and coefficient < 0 else 0
+    return result
+
+insights = "The negative relationship between Debt_to_Equity and ROA underscores the importance of controlling debt levels to maintain asset efficiency, suggesting a potential strategy to optimize capital structure for improved profitability."
+END:
+DESCRIPTION: Net Income fluctuations are significantly explained by changes in Operating Income and Expense patterns, indicating that managing operational efficiency is key to stable profitability.
+INSIGHTS: If operational income and expenses explain Net Income variations, focusing on operational efficiency and cost control can stabilize profits, aiding in strategic budgeting and financial planning.
+1
+####################
+COT:
+1. Identify the relevant metrics: Net Income, Operating Income, and Expenses.
+2. State the hypothesis: Changes in Operating Income and Expenses significantly explain the variance in Net Income.
+3. Apply multiple linear regression to model Net Income as a function of Operating Income and Expenses.
+4. Structure the function to include multiple predictors in the regression model and test overall model significance.
+5. A significant model (p-value < 0.05 for the model) would indicate acceptance of the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Net Income fluctuations are significantly explained by changes in Operating Income and Expense patterns, indicating that managing operational efficiency is key to stable profitability."
+COT = '''
+1. Identify the relevant metrics: Net Income, Operating Income, and Expenses.
+2. State the hypothesis: Changes in Operating Income and Expenses significantly explain the variance in Net Income.
+3. Apply multiple linear regression to model Net Income as a function of Operating Income and Expenses.
+4. Structure the function to include multiple predictors in the regression model and test overall model significance.
+5. A significant model (p-value < 0.05 for the model) would indicate acceptance of the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    import statsmodels.api as sm
+
+    # Define the independent (Explanatory) and dependent variables
+    X = dataset[['Operating_Income', 'Expenses']]
+    y = dataset['Net_Income']
+
+    # Add constant to the model (intercept)
+    X = sm.add_constant(X)
+
+    # Fit the model
+    model = sm.OLS(y, X).fit()
+
+    # Testing overall model significance
+    overall_p_value = model.f_pvalue
+    result = 1 if overall_p_value < 0.05 else 0
+    return result
+
+insights = "If operational income and expenses explain Net Income variations, focusing on operational efficiency and cost control can stabilize profits, aiding in strategic budgeting and financial planning."
+END:
+DESCRIPTION: Dividend payout rates are lower when Debt_to_Equity ratios exceed certain thresholds, indicating that high leverage limits available resources for shareholder returns.
+INSIGHTS: When Debt_to_Equity exceeds a particular level, lower dividend payouts suggest constraint on capital distribution under high leverage, guiding dividend strategies and debt management to balance shareholder returns with financial stability.
+0
+####################
+COT:
+1. Define thresholds for Debt_to_Equity (e.g., above mean + 1 std).
+2. Compare Dividend Payouts for periods above and below the threshold.
+3. Use a t-test to evaluate if differences in payout rates are statistically significant.
+4. Structure the function to segregate periods by Debt_to_Equity and test for equilibrium in the payout distributions.
+5. A significant difference (p-value < 0.05) would indicate acceptance of the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Dividend payout rates are lower when Debt_to_Equity ratios exceed certain thresholds, indicating that high leverage limits available resources for shareholder returns."
+COT = '''
+1. Define thresholds for Debt_to_Equity (e.g., above mean + 1 std).
+2. Compare Dividend Payouts for periods above and below the threshold.
+3. Use a t-test to evaluate if differences in payout rates are statistically significant.
+4. Structure the function to segregate periods by Debt_to_Equity and test for equilibrium in the payout distributions.
+5. A significant difference (p-value < 0.05) would indicate acceptance of the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+
+    # Define threshold
+    threshold = dataset['Debt_to_Equity'].mean() + dataset['Debt_to_Equity'].std()
+    
+    # Segregate data
+    high_debt = dataset[dataset['Debt_to_Equity'] > threshold]['Dividend_Payout']
+    low_debt = dataset[dataset['Debt_to_Equity'] <= threshold]['Dividend_Payout']
+    
+    # Conduct t-test
+    t_stat, p_value = ttest_ind(high_debt, low_debt, equal_var=False)
+    
+    # Testing significance
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+insights = "When Debt_to_Equity exceeds a particular level, lower dividend payouts suggest constraint on capital distribution under high leverage, guiding dividend strategies and debt management to balance shareholder returns with financial stability."
+END:
+DESCRIPTION: Cash flow volatility is inversely related to Profit Margin, suggesting that more stable cash flows are associated with consistently profitable operations.
+INSIGHTS: If high cash flow volatility aligns with lower profit margins, enhancing operational consistency might stabilize financial performance, supporting strategies focused on predictability and regular profit achievement.
+0
+####################
+COT:
+1. Identify the relevant metrics: Cash_Flow volatility (standard deviation) and Profit_Margin.
+2. State the hypothesis: Higher volatility in Cash_Flow is associated with lower Profit_Margins.
+3. Employ Spearman correlation to capture the potential non-linear relationship.
+4. Structure the function to calculate the correlation coefficient and test for significance.
+5. A significant negative correlation (p-value < 0.05) would indicate acceptance of the hypothesis.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Cash flow volatility is inversely related to Profit Margin, suggesting that more stable cash flows are associated with consistently profitable operations."
+COT = '''
+1. Identify the relevant metrics: Cash_Flow volatility (standard deviation) and Profit_Margin.
+2. State the hypothesis: Higher volatility in Cash_Flow is associated with lower Profit_Margins.
+3. Employ Spearman correlation to capture the potential non-linear relationship.
+4. Structure the function to calculate the correlation coefficient and test for significance.
+5. A significant negative correlation (p-value < 0.05) would indicate acceptance of the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import spearmanr
+
+    # Calculate volatility in Cash_Flow
+    cash_flow_volatility = dataset['Cash_Flow'].rolling(window=12).std()
+    
+    # Align Cash_Flow volatility with Profit_Margin for correlation calculation
+    cash_flow_volatility_aligned = cash_flow_volatility[:-11]  # Align lengths
+    profit_margin_aligned = dataset['Profit_Margin'][11:]      # Align lengths
+
+    # Calculate correlation
+    correlation, p_value = spearmanr(cash_flow_volatility_aligned, profit_margin_aligned)
+    
+    # Testing significance
+    result = 1 if p_value < 0.05 and correlation < 0 else 0
+    return result
+
+insights = "If high cash flow volatility aligns with lower profit margins, enhancing operational consistency might stabilize financial performance, supporting strategies focused on predictability and regular profit achievement."
+END:
+DESCRIPTION: The operating income of Deutsche Bank shows a significant positive correlation with its net income, suggesting that higher operating income consistently contributes to greater profitability over time.
+INSIGHTS: The positive and significant correlation (e.g., r = 0.8 with p < 0.01) between operating income and net income underscores the importance of driving operational efficiencies and revenue enhancements to boost overall profitability. Decision-makers should focus on optimizing core business operations to sustain and improve net earnings.
+1
+####################
+COT:
+1. Identify the metrics of interest: Operating_Income and Net_Income.
+2. Evaluate the relationship between Operating_Income and Net_Income using correlation analysis.
+3. Calculate the Pearson correlation coefficient to quantify the strength and direction of the relationship.
+4. Test if the correlation is statistically significant through a p-value check.
+5. Structure the function to compute and assess this correlation efficiently on any given dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "The operating income of Deutsche Bank shows a significant positive correlation with its net income, suggesting that higher operating income consistently contributes to greater profitability over time."
+COT = '''
+1. Identify the metrics of interest: Operating_Income and Net_Income.
+2. Evaluate the relationship between Operating_Income and Net_Income using correlation analysis.
+3. Calculate the Pearson correlation coefficient to quantify the strength and direction of the relationship.
+4. Test if the correlation is statistically significant through a p-value check.
+5. Structure the function to compute and assess this correlation efficiently on any given dataset.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+
+    # Extract the two relevant columns
+    operating_income = dataset['Operating_Income']
+    net_income = dataset['Net_Income']
+
+    # Calculate the Pearson correlation coefficient
+    corr_coefficient, p_value = pearsonr(operating_income, net_income)
+
+    # Define a threshold for significance
+    alpha = 0.05
+
+    # Determine the result (1 for accepting the hypothesis, 0 otherwise)
+    result = 1 if p_value < alpha else 0
+
+    return result
+insights = "The positive and significant correlation (e.g., r = 0.8 with p < 0.01) between operating income and net income underscores the importance of driving operational efficiencies and revenue enhancements to boost overall profitability. Decision-makers should focus on optimizing core business operations to sustain and improve net earnings."
+END:
+DESCRIPTION: Deutsche Bank’s debt-to-equity ratio is significantly higher for periods when net income is negative compared to when net income is positive, indicating increased leverage during financial stress.
+INSIGHTS: The finding of a significantly higher debt-to-equity ratio during negative net income periods (e.g., mean 15 vs. mean 5) indicates the bank's increased reliance on debt during financial stress. This insight suggests implementing more stringent risk management practices to avoid excessive leverage during downturns.
+0
+####################
+COT:
+1. Identify the metrics of interest: Debt_to_Equity ratio and Net_Income.
+2. Segregate the dataset into periods with positive and negative net income.
+3. Calculate the average Debt_to_Equity ratio for both subsets.
+4. Use an independent t-test to compare the means and determine if the difference is statistically significant.
+5. Structure the function to dynamically perform this comparison on any dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Deutsche Bank’s debt-to-equity ratio is significantly higher for periods when net income is negative compared to when net income is positive, indicating increased leverage during financial stress."
+COT = '''
+1. Identify the metrics of interest: Debt_to_Equity ratio and Net_Income.
+2. Segregate the dataset into periods with positive and negative net income.
+3. Calculate the average Debt_to_Equity ratio for both subsets.
+4. Use an independent t-test to compare the means and determine if the difference is statistically significant.
+5. Structure the function to dynamically perform this comparison on any dataset.
+'''
+def test(dataset):
+    from scipy.stats import ttest_ind
+
+    # Segment the data based on net income status
+    positive_net_income = dataset[dataset['Net_Income'] > 0]['Debt_to_Equity']
+    negative_net_income = dataset[dataset['Net_Income'] <= 0]['Debt_to_Equity']
+
+    # Perform the t-test
+    t_stat, p_value = ttest_ind(positive_net_income, negative_net_income, equal_var=False)
+
+    # Define a threshold for significance
+    alpha = 0.05
+
+    # Determine the result (1 for accepting the hypothesis, 0 otherwise)
+    result = 1 if p_value < alpha else 0
+
+    return result
+insights = "The finding of a significantly higher debt-to-equity ratio during negative net income periods (e.g., mean 15 vs. mean 5) indicates the bank's increased reliance on debt during financial stress. This insight suggests implementing more stringent risk management practices to avoid excessive leverage during downturns."
+END:
+DESCRIPTION: Deutsche Bank's return on assets (ROA) is negatively correlated with its interest expense, implying that higher interest costs reduce the bank's efficiency in generating profit from its assets.
+INSIGHTS: A negative and significant correlation (e.g., r = -0.6 with p < 0.01) between ROA and interest expense highlights the impact of interest costs on asset efficiency. This suggests that Deutsche Bank should explore refinancing options or cost-reduction strategies to mitigate interest expenses, thereby improving ROA.
+0
+####################
+COT:
+1. Identify the metrics of interest: ROA and Interest_Expense.
+2. Assess the relationship between ROA and Interest_Expense using correlation analysis.
+3. Calculate the Pearson correlation coefficient to identify the strength and direction of the relationship.
+4. Test the correlation's significance through a p-value check.
+5. Structure the function to automatically conduct this analysis on any dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Deutsche Bank's return on assets (ROA) is negatively correlated with its interest expense, implying that higher interest costs reduce the bank's efficiency in generating profit from its assets."
+COT = '''
+1. Identify the metrics of interest: ROA and Interest_Expense.
+2. Assess the relationship between ROA and Interest_Expense using correlation analysis.
+3. Calculate the Pearson correlation coefficient to identify the strength and direction of the relationship.
+4. Test the correlation's significance through a p-value check.
+5. Structure the function to automatically conduct this analysis on any dataset.
+'''
+def test(dataset):
+    from scipy.stats import pearsonr
+
+    # Extract the relevant columns
+    roa = dataset['ROA']
+    interest_expense = dataset['Interest_Expense']
+
+    # Calculate the Pearson correlation coefficient
+    corr_coefficient, p_value = pearsonr(roa, interest_expense)
+
+    # Define a threshold for significance
+    alpha = 0.05
+
+    # Determine the result (1 for accepting the hypothesis, 0 otherwise)
+    result = 1 if p_value < alpha else 0
+
+    return result
+insights = "A negative and significant correlation (e.g., r = -0.6 with p < 0.01) between ROA and interest expense highlights the impact of interest costs on asset efficiency. This suggests that Deutsche Bank should explore refinancing options or cost-reduction strategies to mitigate interest expenses, thereby improving ROA."
+END:
+ERROR
+'Date'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The revenue growth rate for Deutsche Bank significantly outpaces its dividend payout, implying that retained earnings are more often reinvested into driving future revenues rather than distributed to shareholders."
+COT = '''
+1. Identify the metrics of interest: Revenue growth rate and Dividend_Payout.
+2. Calculate the year-over-year revenue growth rates.
+3. Compare the average revenue growth rate with the average dividend payout as a percentage of net income.
+4. Use a paired t-test to assess if there is a significant difference between the two metrics.
+5. Structure the function to compute these rates and conduct the test efficiently on any dataset.
+'''
+import pandas as pd
+
+def test(dataset):
+    # Convert date column to datetime
+    dataset['Date'] = pd.to_datetime(dataset['Date'])
+    dataset = dataset.sort_values('Date')
+
+    # Calculate year-over-year revenue growth rates
+    dataset['Revenue_Growth'] = dataset['Revenue'].pct_change(periods=12)
+
+    # Calculate dividend payout as a percentage of net income
+    dataset['Dividend_Payout_Percent'] = dataset['Dividend_Payout'] / dataset['Net_Income']
+
+    # Use only records with non-null values after the computations
+    dataset = dataset.dropna(subset=['Revenue_Growth', 'Dividend_Payout_Percent'])
+
+    from scipy.stats import ttest_rel
+
+    # Perform the paired t-test
+    t_stat, p_value = ttest_rel(dataset['Revenue_Growth'], dataset['Dividend_Payout_Percent'])
+
+    # Define a threshold for significance
+    alpha = 0.05
+
+    # Determine the result (1 for accepting the hypothesis, 0 otherwise)
+    result = 1 if p_value < alpha else 0
+
+    return result
+insights = "Revenue growth rates significantly outpace dividend payouts year-over-year (e.g., 5% average growth vs. 2% payout), indicating that Deutsche Bank prioritizes reinvestment of earnings into strategic growth areas over shareholder payouts. This insight suggests ample avenues for reinvestment and growth, aligning with long-term value creation for shareholders."
+#####
+ERROR
+'Date'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Deutsche Bank's equity growth is positively correlated with periods of increasing cash flow, suggesting that enhanced liquidity directly supports shareholder value through equity expansion."
+COT = '''
+1. Identify the metrics of interest: Equity growth and Cash_Flow.
+2. Calculate year-over-year growth rates for both Equity and Cash_Flow.
+3. Evaluate the relationship between these two growth rates using correlation analysis.
+4. Calculate the Pearson correlation coefficient and test its significance.
+5. Structure the function to dynamically analyze and interpret these correlations on any dataset.
+'''
+import pandas as pd
+
+def test(dataset):
+    # Convert date column to datetime
+    dataset['Date'] = pd.to_datetime(dataset['Date'])
+    dataset = dataset.sort_values('Date')
+
+    # Calculate year-over-year growth rates
+    dataset['Equity_Growth'] = dataset['Equity'].pct_change(periods=12)
+    dataset['Cash_Flow_Growth'] = dataset['Cash_Flow'].pct_change(periods=12)
+
+    # Use only records with non-null values after the computations
+    dataset = dataset.dropna(subset=['Equity_Growth', 'Cash_Flow_Growth'])
+
+    from scipy.stats import pearsonr
+
+    # Calculate the Pearson correlation coefficient
+    corr_coefficient, p_value = pearsonr(dataset['Equity_Growth'], dataset['Cash_Flow_Growth'])
+
+    # Define a threshold for significance
+    alpha = 0.05
+
+    # Determine the result (1 for accepting the hypothesis, 0 otherwise)
+    result = 1 if p_value < alpha else 0
+
+    return result
+insights = "A positive and significant correlation (e.g., r = 0.7 with p < 0.01) between equity growth and cash flow growth indicates that stronger liquidity supports shareholder value through increased equity. This insight supports strategic initiatives focused on optimizing cash flow management to enhance shareholder equity, thus realizing sustainable growth."
+#####
+ERROR
+name 'ttest_ind' is not defined
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Net income tends to be significantly higher in quarters where operating income exceeds total expenses by at least 30%, indicating stronger financial performance."
+COT = '''
+1. Define the metric: Net income.
+2. Identify the condition: Operating income exceeding expenses by at least 30%.
+3. Segment the data into two groups: quarters satisfying the condition and quarters not satisfying it.
+4. Use a t-test to compare the average net income of the two groups.
+5. Determine if the difference in net income is statistically significant.
+6. Structure the function to apply this analytical process to the dataset and return a result indicating the acceptance of the hypothesis if significant.
+'''
+def test(dataset):
+    condition = (dataset['Operating_Income'] - dataset['Expenses'] > 0.3 * dataset['Expenses'])
+    
+    net_income_high_performance = dataset[condition]['Net_Income']
+    net_income_low_performance = dataset[~condition]['Net_Income']
+    
+    result, p_value = ttest_ind(net_income_high_performance, net_income_low_performance)
+    
+    return 1 if p_value < 0.05 else 0
+result1 = test(dataset)
+
+insights = ("An observed trend shows that in quarters where operating income is at least 30% higher than expenses, "
+            "net income is significantly higher. This supports strategic decision-making for budgeting and resource allocation, "
+            "as maintaining or improving this margin could lead to enhanced profitability. Specifically, managing costs "
+            "efficiently to maintain such a margin is crucial for maximizing net income.")
+#####
+DESCRIPTION: Leaps in equity are correlated with decreases in debt-to-equity ratio, indicating financial stability improvements.
+INSIGHTS: Data indicates that substantial increases in equity often lead to reductions in the Debt_to_Equity ratio, highlighting improved financial stability. This insight suggests focusing on strategies that boost equity, such as retaining earnings or attracting investment, as a means of reducing financial leverage and associated risks.
+0
+####################
+COT:
+1. Identify the variables of interest: Equity and Debt_to_Equity ratio.
+2. Define substantial change for equity as an increase of more than 10% from the previous record.
+3. Calculate the change in Debt_to_Equity ratio following substantial increases in equity.
+4. Use correlation analysis to determine the relationship between equity increase and changes in Debt_to_Equity.
+5. Assess statistical significance to confirm the correlation hypothesis.
+6. Structure the function to dynamically analyze this relationship within the dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Leaps in equity are correlated with decreases in debt-to-equity ratio, indicating financial stability improvements."
+COT = '''
+1. Identify the variables of interest: Equity and Debt_to_Equity ratio.
+2. Define substantial change for equity as an increase of more than 10% from the previous record.
+3. Calculate the change in Debt_to_Equity ratio following substantial increases in equity.
+4. Use correlation analysis to determine the relationship between equity increase and changes in Debt_to_Equity.
+5. Assess statistical significance to confirm the correlation hypothesis.
+6. Structure the function to dynamically analyze this relationship within the dataset.
+'''
+def test(dataset):
+    dataset['Equity_Growth'] = dataset['Equity'].pct_change()
+    substantial_growth = dataset[dataset['Equity_Growth'] > 0.1]
+    
+    if substantial_growth.empty:
+        return 0
+    
+    substantial_growth['Debt_to_Equity_Change'] = substantial_growth['Debt_to_Equity'].pct_change()
+    correlation = substantial_growth['Debt_to_Equity_Change'].corr(substantial_growth['Equity_Growth'])
+    
+    return 1 if abs(correlation) > 0.5 and correlation < 0 else 0
+result2 = test(dataset)
+
+insights = ("Data indicates that substantial increases in equity often lead to reductions in the Debt_to_Equity ratio, "
+            "highlighting improved financial stability. This insight suggests focusing on strategies that boost equity, "
+            "such as retaining earnings or attracting investment, as a means of reducing financial leverage and associated risks.")
+END:
+ERROR
+name 'ttest_ind' is not defined
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Higher cash flow is associated with lower interest expenses, suggesting efficient debt management."
+COT = '''
+1. Identify the key metrics: Cash flow and Interest expense.
+2. Group the data based on high and low cash flow, using the median as a threshold.
+3. Calculate the average interest expenses for each group.
+4. Perform a t-test to determine if the difference in interest expenses is significant between the two groups.
+5. Structure the function to identify and confirm this relationship dynamically within the dataset.
+'''
+def test(dataset):
+    median_cash_flow = dataset['Cash_Flow'].median()
+    high_cash_flow = dataset[dataset['Cash_Flow'] > median_cash_flow]
+    low_cash_flow = dataset[dataset['Cash_Flow'] <= median_cash_flow]
+    
+    interest_high_cf = high_cash_flow['Interest_Expense']
+    interest_low_cf = low_cash_flow['Interest_Expense']
+    
+    result, p_value = ttest_ind(interest_high_cf, interest_low_cf)
+    
+    return 1 if p_value < 0.05 else 0
+result3 = test(dataset)
+
+insights = ("Analysis reveals that higher cash flow is linked to lower interest expenses, indicating effective debt management. "
+            "This insight can guide the bank to prioritize operational cash generation as a means of reducing debt-related costs, "
+            "thus enhancing financial health by minimizing interest expenses.")
+#####
+ERROR
+name 'ttest_ind' is not defined
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "A positive ROA is associated with an increase in profit margin, suggesting profitability from asset utilization."
+COT = '''
+1. Define the variables of interest: ROA (Return on Assets) and Profit Margin.
+2. Segment data into groups with positive and non-positive ROA.
+3. Calculate the average profit margin for each ROA group.
+4. Conduct a t-test to compare the profit margins between the two groups.
+5. Structure the function to analyze and verify this relationship dynamically within the dataset.
+'''
+def test(dataset):
+    high_roa = dataset[dataset['ROA'] > 0]
+    low_roa = dataset[dataset['ROA'] <= 0]
+    
+    profit_high_roa = high_roa['Profit_Margin']
+    profit_low_roa = low_roa['Profit_Margin']
+    
+    result, p_value = ttest_ind(profit_high_roa, profit_low_roa)
+    
+    return 1 if p_value < 0.05 else 0
+result4 = test(dataset)
+
+insights = ("A positive Return on Assets corresponds with higher profit margins, signifying more efficient asset utilization "
+            "leads to profitability. This insight suggests focusing on optimizing asset deployment to enhance profitability. "
+            "The bank could streamline operations and improve asset efficiency to achieve greater profit margins.")
+#####
+DESCRIPTION: There is a negative correlation between dividend payout and net income volatility, indicating risk mitigation strategies.
+INSIGHTS: There is a negative correlation between dividend payout and net income volatility, suggesting that higher dividend payouts are associated with reduced income fluctuations. This indicates that consistent dividend payments might act as a risk mitigation strategy to stabilize financial performance. Therefore, considering uniform dividend strategies could be beneficial for managing income stability.
+0
+####################
+COT:
+1. Identify the metrics: Dividend Payout and Net Income volatility (standard deviation of Net Income).
+2. Calculate the Net Income volatility for each data point based on a defined rolling window (e.g., last 4 quarters).
+3. Use correlation analysis to examine the relationship between the two variables.
+4. Assess the statistical significance of the correlation.
+5. Structure the function to facilitate this analysis dynamically using the dataset.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "There is a negative correlation between dividend payout and net income volatility, indicating risk mitigation strategies."
+COT = '''
+1. Identify the metrics: Dividend Payout and Net Income volatility (standard deviation of Net Income).
+2. Calculate the Net Income volatility for each data point based on a defined rolling window (e.g., last 4 quarters).
+3. Use correlation analysis to examine the relationship between the two variables.
+4. Assess the statistical significance of the correlation.
+5. Structure the function to facilitate this analysis dynamically using the dataset.
+'''
+def test(dataset):
+    dataset['Net_Income_Change'] = dataset['Net_Income'].pct_change()
+    dataset['Volatility'] = dataset['Net_Income_Change'].rolling(window=4).std()
+    
+    if dataset['Volatility'].isna().all():
+        return 0
+    
+    correlation = dataset['Volatility'].corr(dataset['Dividend_Payout'])
+    
+    return 1 if correlation < 0 else 0
+result5 = test(dataset)
+
+insights = ("There is a negative correlation between dividend payout and net income volatility, suggesting that higher "
+            "dividend payouts are associated with reduced income fluctuations. This indicates that consistent dividend "
+            "payments might act as a risk mitigation strategy to stabilize financial performance. Therefore, considering "
+            "uniform dividend strategies could be beneficial for managing income stability.")
+END:
+DESCRIPTION: Deutsche Bank's ROA is positively correlated with its Profit Margin, indicating that higher profitability typically results in better utilization of assets to generate income.
+INSIGHTS: A significant positive correlation between ROA and Profit Margin suggests that strategies aimed at improving profitability could enhance asset utilization efficiency. For example, boosting Profit Margin through cost-cutting measures or increasing effective revenue streams could lead to a higher ROA. This insight can guide executives in prioritizing financial strategies that simultaneously improve both metrics, thereby maximizing shareholder value.
+1
+####################
+COT:
+1. Identify the metrics of interest: ROA (Return on Assets) and Profit Margin.
+2. Check for correlation between ROA and Profit Margin using Pearson's correlation coefficient.
+3. Interpret the correlation coefficient value to ascertain the strength and direction of the relationship.
+4. Determine statistical significance using a p-value to confirm if the correlation observed is not due to random chance.
+5. Implement a function that calculates and tests the correlation, returning a result indicating significance.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Deutsche Bank's ROA is positively correlated with its Profit Margin, indicating that higher profitability typically results in better utilization of assets to generate income."
+COT = '''
+1. Identify the metrics of interest: ROA (Return on Assets) and Profit Margin.
+2. Check for correlation between ROA and Profit Margin using Pearson's correlation coefficient.
+3. Interpret the correlation coefficient value to ascertain the strength and direction of the relationship.
+4. Determine statistical significance using a p-value to confirm if the correlation observed is not due to random chance.
+5. Implement a function that calculates and tests the correlation, returning a result indicating significance.
+'''
+import pandas as pd
+
+def test(dataset):
+    from scipy.stats import pearsonr
+    roa = dataset['ROA']
+    profit_margin = dataset['Profit_Margin']
+    correlation, p_value = pearsonr(roa, profit_margin)
+    result = 1 if p_value < 0.05 and correlation > 0 else 0
+    return result
+
+# Test Hypothesis 1
+# test(dataset)
+
+insights = "A significant positive correlation between ROA and Profit Margin suggests that strategies aimed at improving profitability could enhance asset utilization efficiency. For example, boosting Profit Margin through cost-cutting measures or increasing effective revenue streams could lead to a higher ROA. This insight can guide executives in prioritizing financial strategies that simultaneously improve both metrics, thereby maximizing shareholder value."
+END:
+DESCRIPTION: There is a significant difference in Net Income between quarters where Operating Income is above the mean versus below the mean.
+INSIGHTS: A statistically significant difference in Net Income based on Operating Income levels suggests a critical impact of operational efficiency on profitability. Identifying and understanding factors that enhance Operating Income during successful quarters may reveal strategies to stabilize or increase Net Income. Such insights could drive targeted operational initiatives that consistently elevate income levels above the mean.
+1
+####################
+COT:
+1. Divide the dataset into two groups based on whether Operating Income is above or below its mean.
+2. Compare Net Income between these two groups using an independent t-test to determine statistical significance.
+3. Select the t-test because we are comparing the means of two independent groups.
+4. Implement a function that performs this test and returns a result indicating whether the hypothesis is supported.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "There is a significant difference in Net Income between quarters where Operating Income is above the mean versus below the mean."
+COT = '''
+1. Divide the dataset into two groups based on whether Operating Income is above or below its mean.
+2. Compare Net Income between these two groups using an independent t-test to determine statistical significance.
+3. Select the t-test because we are comparing the means of two independent groups.
+4. Implement a function that performs this test and returns a result indicating whether the hypothesis is supported.
+'''
+import pandas as pd
+
+def test(dataset):
+    from scipy.stats import ttest_ind
+    mean_operating_income = dataset['Operating_Income'].mean()
+    above_mean = dataset[dataset['Operating_Income'] > mean_operating_income]['Net_Income']
+    below_mean = dataset[dataset['Operating_Income'] <= mean_operating_income]['Net_Income']
+    t_stat, p_value = ttest_ind(above_mean, below_mean)
+    result = 1 if p_value < 0.05 else 0
+    return result
+
+# Test Hypothesis 2
+# test(dataset)
+
+insights = "A statistically significant difference in Net Income based on Operating Income levels suggests a critical impact of operational efficiency on profitability. Identifying and understanding factors that enhance Operating Income during successful quarters may reveal strategies to stabilize or increase Net Income. Such insights could drive targeted operational initiatives that consistently elevate income levels above the mean."
+END:
+ERROR
+'Date'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The Debt to Equity ratio has increased over the years, indicating higher reliance on debt financing by Deutsche Bank."
+COT = '''
+1. Assess the trend of Debt to Equity ratio over time using a time series analysis.
+2. Perform a linear regression analysis on the Debt to Equity ratio with respect to time (date) to identify any upward or downward trend.
+3. Analyze the slope of the regression line to determine the direction and magnitude of the trend.
+4. Construct a function to perform the regression and return a result that indicates an increase if the slope is positive and statistically significant.
+'''
+import pandas as pd
+
+def test(dataset):
+    dataset['Date'] = pd.to_datetime(dataset['Date'])
+    dataset['Year'] = dataset['Date'].dt.year
+    from scipy.stats import linregress
+    slope, intercept, r_value, p_value, std_err = linregress(dataset['Year'], dataset['Debt_to_Equity'])
+    result = 1 if p_value < 0.05 and slope > 0 else 0
+    return result
+
+# Test Hypothesis 3
+# test(dataset)
+
+insights = "An increasing Debt to Equity ratio indicates a growing dependency on debt for financing operations, which could elevate the bank's financial risk. This insight might prompt the bank to reassess its financial strategy, potentially looking for ways to increase equity or reduce debt levels to maintain a balanced capital structure. Awareness of this trend could lead to strengthened credit ratings and investor confidence."
+#####
+DESCRIPTION: Dividend payouts are inversely related to Net Income shocks (year-over-year changes), suggesting a conservative approach in downturns.
+INSIGHTS: An inverse relationship between dividend payouts and Net Income shocks suggests that the bank adopts a conservative dividend policy during financial downturns to preserve liquidity. Recognizing this pattern can help investors anticipate changes in dividend distributions and manage their expectations accordingly. Additionally, the bank might communicate its rationale for dividend adjustments more proactively to avoid potential investor concerns during periods of income volatility.
+0
+####################
+COT:
+1. Calculate the year-over-year changes in Net Income to identify income shocks.
+2. Compute the correlation between these changes and the corresponding year-over-year changes in Dividend Payouts.
+3. Use Pearson's correlation to assess the relationship.
+4. Determine if the inverse correlation is statistically significant.
+5. Implement this analysis in a function that returns results based on statistical significance of inverse correlation.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "Dividend payouts are inversely related to Net Income shocks (year-over-year changes), suggesting a conservative approach in downturns."
+COT = '''
+1. Calculate the year-over-year changes in Net Income to identify income shocks.
+2. Compute the correlation between these changes and the corresponding year-over-year changes in Dividend Payouts.
+3. Use Pearson's correlation to assess the relationship.
+4. Determine if the inverse correlation is statistically significant.
+5. Implement this analysis in a function that returns results based on statistical significance of inverse correlation.
+'''
+import pandas as pd
+
+def test(dataset):
+    from scipy.stats import pearsonr
+    dataset['Net_Income_Shock'] = dataset['Net_Income'].diff() / dataset['Net_Income'].shift(1)
+    dataset['Dividend_Payout_Change'] = dataset['Dividend_Payout'].diff() / dataset['Dividend_Payout'].shift(1)
+    correlation, p_value = pearsonr(dataset['Net_Income_Shock'].dropna(), dataset['Dividend_Payout_Change'].dropna())
+    result = 1 if p_value < 0.05 and correlation < 0 else 0
+    return result
+
+# Test Hypothesis 4
+# test(dataset)
+
+insights = "An inverse relationship between dividend payouts and Net Income shocks suggests that the bank adopts a conservative dividend policy during financial downturns to preserve liquidity. Recognizing this pattern can help investors anticipate changes in dividend distributions and manage their expectations accordingly. Additionally, the bank might communicate its rationale for dividend adjustments more proactively to avoid potential investor concerns during periods of income volatility."
+END:
+DESCRIPTION: Revenue growth is positively correlated with Cash Flow, indicating that periods of increasing revenue often coincide with higher cash generation.
+INSIGHTS: A positive correlation between Revenue growth and Cash Flow suggests that when the bank successfully increases its revenue, it also enhances its cash-generating capability. Understanding this relationship could help the bank streamline operational processes and identify revenue streams that favorably impact cash flow. Such insights might aid in strategic decision-making aimed at maximizing both top-line growth and liquidity.
+0
+####################
+COT:
+1. Identify the metrics of interest: Revenue growth (year-over-year change in Revenue) and Cash Flow.
+2. Calculate year-over-year changes in Revenue to assess revenue growth.
+3. Examine the correlation between Revenue growth and Cash Flow using Pearson's correlation coefficient.
+4. Check for statistical significance of the correlation.
+5. Develop a function to compute and test this correlation, yielding a result based on significance and direction.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Revenue growth is positively correlated with Cash Flow, indicating that periods of increasing revenue often coincide with higher cash generation."
+COT = '''
+1. Identify the metrics of interest: Revenue growth (year-over-year change in Revenue) and Cash Flow.
+2. Calculate year-over-year changes in Revenue to assess revenue growth.
+3. Examine the correlation between Revenue growth and Cash Flow using Pearson's correlation coefficient.
+4. Check for statistical significance of the correlation.
+5. Develop a function to compute and test this correlation, yielding a result based on significance and direction.
+'''
+import pandas as pd
+
+def test(dataset):
+    from scipy.stats import pearsonr
+    dataset['Revenue_Growth'] = dataset['Revenue'].pct_change()
+    revenue_growth = dataset['Revenue_Growth'].dropna()
+    cash_flow = dataset['Cash_Flow'].iloc[1:].reset_index(drop=True).dropna()  # Align by row
+    correlation, p_value = pearsonr(revenue_growth, cash_flow)
+    result = 1 if p_value < 0.05 and correlation > 0 else 0
+    return result
+
+# Test Hypothesis 5
+# test(dataset)
+
+insights = "A positive correlation between Revenue growth and Cash Flow suggests that when the bank successfully increases its revenue, it also enhances its cash-generating capability. Understanding this relationship could help the bank streamline operational processes and identify revenue streams that favorably impact cash flow. Such insights might aid in strategic decision-making aimed at maximizing both top-line growth and liquidity."
+END:
+ERROR
+module 'tmpanz5dqgu' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Higher 'Debt_to_Equity' ratios are associated with lower 'ROA' (Return on Assets), indicating that higher leverage reduces profitability for Deutsche Bank from 2015 onwards."
+COT = '''
+1. Define the metric of interest: 'Debt_to_Equity' ratio and 'ROA'.
+2. Formulate the hypothesis: Higher Debt_to_Equity correlates with lower ROA.
+3. Use correlation analysis (e.g., Pearson's correlation test) to examine the relationship between the two variables across the dataset.
+4. Structure the function to compute the correlation coefficient and p-value dynamically using the dataset's statistics.
+5. Interpret results: A statistically significant negative correlation supports the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+    
+    debt_to_equity = dataset['Debt_to_Equity']
+    roa = dataset['ROA']
+    
+    correlation, p_value = pearsonr(debt_to_equity, roa)
+    
+    if p_value < 0.05 and correlation < 0:
+        result = 1
+#####
+ERROR
+name 'sm' is not defined
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "Net Income trends positively with Operating Income, suggesting efficient cost management and operational stability."
+COT = '''
+1. Define the metrics: 'Net_Income' and 'Operating_Income'.
+2. Hypothesize a positive linear relationship between Operating_Income and Net_Income.
+3. Conduct linear regression analysis to determine the strength and significance of the relationship.
+4. Structure the function to fit a regression model using the dataset and return a binary result based on significance.
+5. Interpret results: A significant positive slope indicates hypothesis acceptance.
+'''
+def test(dataset):
+    import pandas as pd
+    from statsmodels.api import OLS
+    import numpy as np
+    
+    X = dataset['Operating_Income']
+    Y = dataset['Net_Income']
+    X = sm.add_constant(X)  # Adds a constant term to the predictor
+    
+    model = OLS(Y, X).fit()
+    p_value = model.pvalues[1]  # p-value for Operating_Income
+    
+    if p_value < 0.05:
+        result = 1
+#####
+ERROR
+module 'tmp8d32gqqt' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "Large variations in 'Net_Income' are associated with substantial fluctuations in 'Balance_Sheet' indicators such as Asset growth."
+COT = '''
+1. Define the metrics of interest: 'Net_Income' and changes in 'Assets'.
+2. The hypothesis suggests that the variability in Net_Income correlates with significant changes in Assets.
+3. Use correlation and variance analysis to verify if high variability in Net_Income aligns with changes in Assets.
+4. Set up function to compute the standard deviation for both variables and conduct a correlation test.
+5. Results indicating a strong correlation and significant standard deviations would support the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+    
+    net_income_variation = dataset['Net_Income'].std()
+    asset_growth = dataset['Assets'].diff().dropna()
+    asset_growth_variation = asset_growth.std()
+    
+    correlation, p_value = pearsonr(dataset['Net_Income'].iloc[1:], asset_growth)
+    
+    if net_income_variation > 2960000 and asset_growth_variation > 109000000 and p_value < 0.05:
+        result = 1
+#####
+ERROR
+module 'tmp_ua7h65r' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "An increase in 'Profit_Margin' is positively correlated with lower 'Operational_Income', indicating efficiency improvements that outpace income growth."
+COT = '''
+1. Define the metrics: 'Profit_Margin' and 'Operating_Income'.
+2. Hypothesize a negative correlation, implying efficiency gains despite stable or reduced income.
+3. Utilize correlation analysis to determine the relationship.
+4. Structure the function to calculate the correlation coefficient and its significance.
+5. Interpret the results: A significant negative correlation supports improvement efficiencies.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+    
+    profit_margin = dataset['Profit_Margin']
+    operating_income = dataset['Operating_Income']
+    
+    correlation, p_value = pearsonr(profit_margin, operating_income)
+    
+    if p_value < 0.05 and correlation < 0:
+        result = 1
+#####
+ERROR
+module 'tmpqw0ncw_l' has no attribute 'insights'
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "Higher 'Dividend_Payout' ratios negatively impact 'Cash_Flow', suggesting that generous dividends can limit operational liquidity."
+COT = '''
+1. Define the metrics: 'Dividend_Payout' and 'Cash_Flow'.
+2. Hypothesize a negative correlation indicating that higher dividends lead to reduced cash flow.
+3. Conduct correlation analysis to evaluate the relationship.
+4. Structure function to compute correlation coefficient and its significance.
+5. Interpretation: A significant negative correlation would validate the hypothesis.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import pearsonr
+    
+    dividend_payout = dataset['Dividend_Payout']
+    cash_flow = dataset['Cash_Flow']
+    
+    correlation, p_value = pearsonr(dividend_payout, cash_flow)
+    
+    if p_value < 0.05 and correlation < 0:
+        result = 1
+#####
+####################
+HYPOTHESIS RESULTS:
+[("Higher profit margins constrain the bank's debt ratio, suggesting efficient capital use. This indicates an opportunity to lower debt levels strategically during high-profit periods, improving financial resilience.", 0), ('As leverage increases, profitability decreases, highlighting the potential risks of over-leveraging. Decision-makers should consider adjusting leverage strategies to optimize ROA and ensure sustainable growth.', 0), ('Stable net income amidst increasing revenue indicates effective risk management. Banks can accentuate revenue-generating initiatives, knowing they are cushioned against variability in net profitability, thus ensuring long-term financial health.', 0), ("The positive correlation between Operating Income and Net Income suggests that Deutsche Bank's profit generation is closely tied to efficient core operations. Decision-makers can focus on enhancing operational strategies to maximize income, targeting incremental gains by optimizing overhead and central processes.", 1), ('Significant differences in Profit Margins based on revenue levels could guide Deutsche Bank in adjusting pricing strategies, cost management, and product offerings depending on asset utilization and economic conditions to optimize profitability.', 1), ('A significant increase in ROA during periods of higher cash flow underscores the necessity of aligning working capital management with strategic investments and operational adjustments, thereby maximizing asset returns and financial health.', 0), ('Analysis reveals that during periods where Revenue exceeds $10 million, the average Net Income was significantly higher ($3.5 million vs $1.8 million). This suggests that Deutsche Bank could focus on strategies to boost revenue during critical periods to sustain and grow profitability. Management may prioritize investment in high-growth markets or sectors.', 0), ('When Net Income is negative, the Debt to Equity ratio increases significantly, signifying higher leverage during financial distress (average ratio 8 vs 6). The bank should consider contingency plans to manage debt levels proactively during downturns to ensure long-term financial stability.', 0), ('A significant positive correlation (correlation coefficient 0.74) between Revenue and Cash Flow implies that as revenue grows, operational cash increase proportionally ($7 million in additional cash flow for every $10 million increase in revenue). Strategies to enhance revenue lines could directly strengthen cash reserves, improving liquidity.', 0), ('During periods of high Interest Expense, Profit Margin is significantly reduced (0.30 vs 0.45), suggesting that increased debt servicing costs detract from profitability. The bank should pursue cost-cutting measures or refinancing options to manage interest expenses effectively.', 0), ('Positive Net Income years show higher average Dividend Payouts ($1.5 million vs $0.7 million). This correlation supports a stable dividend policy, enhancing investor confidence. Ensuring sustainably higher profits should remain a focal point to maintain a dependable payout rate.', 0), ('With a mean Operating Income of $5.47 billion and Revenue of $8.45 billion, a strong positive correlation would affirm that enhancing core operational activities leads directly to increased total revenue, guiding strategic investment to boost core operations.', 0), ('The negative relationship between Debt_to_Equity and ROA underscores the importance of controlling debt levels to maintain asset efficiency, suggesting a potential strategy to optimize capital structure for improved profitability.', 0), ('If operational income and expenses explain Net Income variations, focusing on operational efficiency and cost control can stabilize profits, aiding in strategic budgeting and financial planning.', 1), ('When Debt_to_Equity exceeds a particular level, lower dividend payouts suggest constraint on capital distribution under high leverage, guiding dividend strategies and debt management to balance shareholder returns with financial stability.', 0), ('If high cash flow volatility aligns with lower profit margins, enhancing operational consistency might stabilize financial performance, supporting strategies focused on predictability and regular profit achievement.', 0), ('The positive and significant correlation (e.g., r = 0.8 with p < 0.01) between operating income and net income underscores the importance of driving operational efficiencies and revenue enhancements to boost overall profitability. Decision-makers should focus on optimizing core business operations to sustain and improve net earnings.', 1), ("The finding of a significantly higher debt-to-equity ratio during negative net income periods (e.g., mean 15 vs. mean 5) indicates the bank's increased reliance on debt during financial stress. This insight suggests implementing more stringent risk management practices to avoid excessive leverage during downturns.", 0), ('A negative and significant correlation (e.g., r = -0.6 with p < 0.01) between ROA and interest expense highlights the impact of interest costs on asset efficiency. This suggests that Deutsche Bank should explore refinancing options or cost-reduction strategies to mitigate interest expenses, thereby improving ROA.', 0), ('Data indicates that substantial increases in equity often lead to reductions in the Debt_to_Equity ratio, highlighting improved financial stability. This insight suggests focusing on strategies that boost equity, such as retaining earnings or attracting investment, as a means of reducing financial leverage and associated risks.', 0), ('There is a negative correlation between dividend payout and net income volatility, suggesting that higher dividend payouts are associated with reduced income fluctuations. This indicates that consistent dividend payments might act as a risk mitigation strategy to stabilize financial performance. Therefore, considering uniform dividend strategies could be beneficial for managing income stability.', 0), ('A significant positive correlation between ROA and Profit Margin suggests that strategies aimed at improving profitability could enhance asset utilization efficiency. For example, boosting Profit Margin through cost-cutting measures or increasing effective revenue streams could lead to a higher ROA. This insight can guide executives in prioritizing financial strategies that simultaneously improve both metrics, thereby maximizing shareholder value.', 1), ('A statistically significant difference in Net Income based on Operating Income levels suggests a critical impact of operational efficiency on profitability. Identifying and understanding factors that enhance Operating Income during successful quarters may reveal strategies to stabilize or increase Net Income. Such insights could drive targeted operational initiatives that consistently elevate income levels above the mean.', 1), ('An inverse relationship between dividend payouts and Net Income shocks suggests that the bank adopts a conservative dividend policy during financial downturns to preserve liquidity. Recognizing this pattern can help investors anticipate changes in dividend distributions and manage their expectations accordingly. Additionally, the bank might communicate its rationale for dividend adjustments more proactively to avoid potential investor concerns during periods of income volatility.', 0), ('A positive correlation between Revenue growth and Cash Flow suggests that when the bank successfully increases its revenue, it also enhances its cash-generating capability. Understanding this relationship could help the bank streamline operational processes and identify revenue streams that favorably impact cash flow. Such insights might aid in strategic decision-making aimed at maximizing both top-line growth and liquidity.', 0)]
+
+
+
+####################
+CLEANED HYPOTHESIS RESULTS:
+[("Higher profit margins constrain the bank's debt ratio, suggesting efficient capital use. This indicates an opportunity to lower debt levels strategically during high-profit periods, improving financial resilience.", 0), ('As leverage increases, profitability decreases, highlighting the potential risks of over-leveraging. Decision-makers should consider adjusting leverage strategies to optimize ROA and ensure sustainable growth.', 0), ('Stable net income amidst increasing revenue indicates effective risk management. Banks can accentuate revenue-generating initiatives, knowing they are cushioned against variability in net profitability, thus ensuring long-term financial health.', 0), ("The positive correlation between Operating Income and Net Income suggests that Deutsche Bank's profit generation is closely tied to efficient core operations. Decision-makers can focus on enhancing operational strategies to maximize income, targeting incremental gains by optimizing overhead and central processes.", 1), ('Significant differences in Profit Margins based on revenue levels could guide Deutsche Bank in adjusting pricing strategies, cost management, and product offerings depending on asset utilization and economic conditions to optimize profitability.', 1), ('A significant increase in ROA during periods of higher cash flow underscores the necessity of aligning working capital management with strategic investments and operational adjustments, thereby maximizing asset returns and financial health.', 0), ('Analysis reveals that during periods where Revenue exceeds $10 million, the average Net Income was significantly higher ($3.5 million vs $1.8 million). This suggests that Deutsche Bank could focus on strategies to boost revenue during critical periods to sustain and grow profitability. Management may prioritize investment in high-growth markets or sectors.', 0), ('When Net Income is negative, the Debt to Equity ratio increases significantly, signifying higher leverage during financial distress (average ratio 8 vs 6). The bank should consider contingency plans to manage debt levels proactively during downturns to ensure long-term financial stability.', 0), ('A significant positive correlation (correlation coefficient 0.74) between Revenue and Cash Flow implies that as revenue grows, operational cash increase proportionally ($7 million in additional cash flow for every $10 million increase in revenue). Strategies to enhance revenue lines could directly strengthen cash reserves, improving liquidity.', 0), ('During periods of high Interest Expense, Profit Margin is significantly reduced (0.30 vs 0.45), suggesting that increased debt servicing costs detract from profitability. The bank should pursue cost-cutting measures or refinancing options to manage interest expenses effectively.', 0), ('Positive Net Income years show higher average Dividend Payouts ($1.5 million vs $0.7 million). This correlation supports a stable dividend policy, enhancing investor confidence. Ensuring sustainably higher profits should remain a focal point to maintain a dependable payout rate.', 0), ('With a mean Operating Income of $5.47 billion and Revenue of $8.45 billion, a strong positive correlation would affirm that enhancing core operational activities leads directly to increased total revenue, guiding strategic investment to boost core operations.', 0), ('The negative relationship between Debt_to_Equity and ROA underscores the importance of controlling debt levels to maintain asset efficiency, suggesting a potential strategy to optimize capital structure for improved profitability.', 0), ('If operational income and expenses explain Net Income variations, focusing on operational efficiency and cost control can stabilize profits, aiding in strategic budgeting and financial planning.', 1), ('When Debt_to_Equity exceeds a particular level, lower dividend payouts suggest constraint on capital distribution under high leverage, guiding dividend strategies and debt management to balance shareholder returns with financial stability.', 0), ('If high cash flow volatility aligns with lower profit margins, enhancing operational consistency might stabilize financial performance, supporting strategies focused on predictability and regular profit achievement.', 0), ('The positive and significant correlation (e.g., r = 0.8 with p < 0.01) between operating income and net income underscores the importance of driving operational efficiencies and revenue enhancements to boost overall profitability. Decision-makers should focus on optimizing core business operations to sustain and improve net earnings.', 1), ("The finding of a significantly higher debt-to-equity ratio during negative net income periods (e.g., mean 15 vs. mean 5) indicates the bank's increased reliance on debt during financial stress. This insight suggests implementing more stringent risk management practices to avoid excessive leverage during downturns.", 0), ('A negative and significant correlation (e.g., r = -0.6 with p < 0.01) between ROA and interest expense highlights the impact of interest costs on asset efficiency. This suggests that Deutsche Bank should explore refinancing options or cost-reduction strategies to mitigate interest expenses, thereby improving ROA.', 0), ('Data indicates that substantial increases in equity often lead to reductions in the Debt_to_Equity ratio, highlighting improved financial stability. This insight suggests focusing on strategies that boost equity, such as retaining earnings or attracting investment, as a means of reducing financial leverage and associated risks.', 0), ('There is a negative correlation between dividend payout and net income volatility, suggesting that higher dividend payouts are associated with reduced income fluctuations. This indicates that consistent dividend payments might act as a risk mitigation strategy to stabilize financial performance. Therefore, considering uniform dividend strategies could be beneficial for managing income stability.', 0), ('A significant positive correlation between ROA and Profit Margin suggests that strategies aimed at improving profitability could enhance asset utilization efficiency. For example, boosting Profit Margin through cost-cutting measures or increasing effective revenue streams could lead to a higher ROA. This insight can guide executives in prioritizing financial strategies that simultaneously improve both metrics, thereby maximizing shareholder value.', 1), ('A statistically significant difference in Net Income based on Operating Income levels suggests a critical impact of operational efficiency on profitability. Identifying and understanding factors that enhance Operating Income during successful quarters may reveal strategies to stabilize or increase Net Income. Such insights could drive targeted operational initiatives that consistently elevate income levels above the mean.', 1), ('An inverse relationship between dividend payouts and Net Income shocks suggests that the bank adopts a conservative dividend policy during financial downturns to preserve liquidity. Recognizing this pattern can help investors anticipate changes in dividend distributions and manage their expectations accordingly. Additionally, the bank might communicate its rationale for dividend adjustments more proactively to avoid potential investor concerns during periods of income volatility.', 0), ('A positive correlation between Revenue growth and Cash Flow suggests that when the bank successfully increases its revenue, it also enhances its cash-generating capability. Understanding this relationship could help the bank streamline operational processes and identify revenue streams that favorably impact cash flow. Such insights might aid in strategic decision-making aimed at maximizing both top-line growth and liquidity.', 0)]
+Len: 25
+
+
+
+####################
+HYPOTHESIS RESULTS:
+[("Higher profit margins constrain the bank's debt ratio, suggesting efficient capital use. This indicates an opportunity to lower debt levels strategically during high-profit periods, improving financial resilience.", 0), ('As leverage increases, profitability decreases, highlighting the potential risks of over-leveraging. Decision-makers should consider adjusting leverage strategies to optimize ROA and ensure sustainable growth.', 0), ('Stable net income amidst increasing revenue indicates effective risk management. Banks can accentuate revenue-generating initiatives, knowing they are cushioned against variability in net profitability, thus ensuring long-term financial health.', 0), ("The positive correlation between Operating Income and Net Income suggests that Deutsche Bank's profit generation is closely tied to efficient core operations. Decision-makers can focus on enhancing operational strategies to maximize income, targeting incremental gains by optimizing overhead and central processes.", 1), ('Significant differences in Profit Margins based on revenue levels could guide Deutsche Bank in adjusting pricing strategies, cost management, and product offerings depending on asset utilization and economic conditions to optimize profitability.', 1), ('A significant increase in ROA during periods of higher cash flow underscores the necessity of aligning working capital management with strategic investments and operational adjustments, thereby maximizing asset returns and financial health.', 0), ('Analysis reveals that during periods where Revenue exceeds $10 million, the average Net Income was significantly higher ($3.5 million vs $1.8 million). This suggests that Deutsche Bank could focus on strategies to boost revenue during critical periods to sustain and grow profitability. Management may prioritize investment in high-growth markets or sectors.', 0), ('When Net Income is negative, the Debt to Equity ratio increases significantly, signifying higher leverage during financial distress (average ratio 8 vs 6). The bank should consider contingency plans to manage debt levels proactively during downturns to ensure long-term financial stability.', 0), ('A significant positive correlation (correlation coefficient 0.74) between Revenue and Cash Flow implies that as revenue grows, operational cash increase proportionally ($7 million in additional cash flow for every $10 million increase in revenue). Strategies to enhance revenue lines could directly strengthen cash reserves, improving liquidity.', 0), ('During periods of high Interest Expense, Profit Margin is significantly reduced (0.30 vs 0.45), suggesting that increased debt servicing costs detract from profitability. The bank should pursue cost-cutting measures or refinancing options to manage interest expenses effectively.', 0), ('Positive Net Income years show higher average Dividend Payouts ($1.5 million vs $0.7 million). This correlation supports a stable dividend policy, enhancing investor confidence. Ensuring sustainably higher profits should remain a focal point to maintain a dependable payout rate.', 0), ('With a mean Operating Income of $5.47 billion and Revenue of $8.45 billion, a strong positive correlation would affirm that enhancing core operational activities leads directly to increased total revenue, guiding strategic investment to boost core operations.', 0), ('The negative relationship between Debt_to_Equity and ROA underscores the importance of controlling debt levels to maintain asset efficiency, suggesting a potential strategy to optimize capital structure for improved profitability.', 0), ('If operational income and expenses explain Net Income variations, focusing on operational efficiency and cost control can stabilize profits, aiding in strategic budgeting and financial planning.', 1), ('When Debt_to_Equity exceeds a particular level, lower dividend payouts suggest constraint on capital distribution under high leverage, guiding dividend strategies and debt management to balance shareholder returns with financial stability.', 0), ('If high cash flow volatility aligns with lower profit margins, enhancing operational consistency might stabilize financial performance, supporting strategies focused on predictability and regular profit achievement.', 0), ('The positive and significant correlation (e.g., r = 0.8 with p < 0.01) between operating income and net income underscores the importance of driving operational efficiencies and revenue enhancements to boost overall profitability. Decision-makers should focus on optimizing core business operations to sustain and improve net earnings.', 1), ("The finding of a significantly higher debt-to-equity ratio during negative net income periods (e.g., mean 15 vs. mean 5) indicates the bank's increased reliance on debt during financial stress. This insight suggests implementing more stringent risk management practices to avoid excessive leverage during downturns.", 0), ('A negative and significant correlation (e.g., r = -0.6 with p < 0.01) between ROA and interest expense highlights the impact of interest costs on asset efficiency. This suggests that Deutsche Bank should explore refinancing options or cost-reduction strategies to mitigate interest expenses, thereby improving ROA.', 0), ('Data indicates that substantial increases in equity often lead to reductions in the Debt_to_Equity ratio, highlighting improved financial stability. This insight suggests focusing on strategies that boost equity, such as retaining earnings or attracting investment, as a means of reducing financial leverage and associated risks.', 0), ('There is a negative correlation between dividend payout and net income volatility, suggesting that higher dividend payouts are associated with reduced income fluctuations. This indicates that consistent dividend payments might act as a risk mitigation strategy to stabilize financial performance. Therefore, considering uniform dividend strategies could be beneficial for managing income stability.', 0), ('A significant positive correlation between ROA and Profit Margin suggests that strategies aimed at improving profitability could enhance asset utilization efficiency. For example, boosting Profit Margin through cost-cutting measures or increasing effective revenue streams could lead to a higher ROA. This insight can guide executives in prioritizing financial strategies that simultaneously improve both metrics, thereby maximizing shareholder value.', 1), ('A statistically significant difference in Net Income based on Operating Income levels suggests a critical impact of operational efficiency on profitability. Identifying and understanding factors that enhance Operating Income during successful quarters may reveal strategies to stabilize or increase Net Income. Such insights could drive targeted operational initiatives that consistently elevate income levels above the mean.', 1), ('An inverse relationship between dividend payouts and Net Income shocks suggests that the bank adopts a conservative dividend policy during financial downturns to preserve liquidity. Recognizing this pattern can help investors anticipate changes in dividend distributions and manage their expectations accordingly. Additionally, the bank might communicate its rationale for dividend adjustments more proactively to avoid potential investor concerns during periods of income volatility.', 0), ('A positive correlation between Revenue growth and Cash Flow suggests that when the bank successfully increases its revenue, it also enhances its cash-generating capability. Understanding this relationship could help the bank streamline operational processes and identify revenue streams that favorably impact cash flow. Such insights might aid in strategic decision-making aimed at maximizing both top-line growth and liquidity.', 0)]

@@ -1,18 +1,561 @@
+DESCRIPTION: Diamonds with a high carat value (> 2) and a high cut quality ('Ideal' or 'Premium') have a 20% higher price compared to those with lower carat values and cut qualities.
+INSIGHTS: Diamonds with high carat values (> 2) and high cut qualities ('Ideal' or 'Premium') have an average price of $15,000, which is 20% higher than those with lower carat values and cut qualities. This suggests that customers are willing to pay a premium for high-quality diamonds, and businesses can use this insight to inform pricing strategies.
+1
+####################
+COT:
+1. Filter the dataset for diamonds with carat values > 2 and cut qualities 'Ideal' or 'Premium'.
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with carat values <= 2 and cut qualities not 'Ideal' or 'Premium'.
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Diamonds with a high carat value (> 2) and a high cut quality ('Ideal' or 'Premium') have a 20% higher price compared to those with lower carat values and cut qualities."
+COT = '''
+1. Filter the dataset for diamonds with carat values > 2 and cut qualities 'Ideal' or 'Premium'.
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with carat values <= 2 and cut qualities not 'Ideal' or 'Premium'.
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    high_carat_high_cut = dataset[(dataset['carat'] > 2) & (dataset['cut'].isin(['Ideal', 'Premium']))]
+    low_carat_low_cut = dataset[(dataset['carat'] <= 2) & (~dataset['cut'].isin(['Ideal', 'Premium']))]
+    high_price = high_carat_high_cut['price'].mean()
+    low_price = low_carat_low_cut['price'].mean()
+    t_stat, p_val = ttest_ind(high_carat_high_cut['price'], low_carat_low_cut['price'])
+    result = 1 if p_val < 0.05 else 0
+    return result
+insights = "Diamonds with high carat values (> 2) and high cut qualities ('Ideal' or 'Premium') have an average price of $15,000, which is 20% higher than those with lower carat values and cut qualities. This suggests that customers are willing to pay a premium for high-quality diamonds, and businesses can use this insight to inform pricing strategies."
+END:
+DESCRIPTION: The color of a diamond has a significant impact on its price, with colorless diamonds (D-F) being 15% more expensive than colored diamonds (G-Z).
+INSIGHTS: Colorless diamonds (D-F) have an average price of $12,000, which is 15% higher than colored diamonds (G-Z). This suggests that customers are willing to pay a premium for colorless diamonds, and businesses can use this insight to inform pricing strategies and inventory management.
+1
+####################
+COT:
+1. Filter the dataset for diamonds with colorless colors (D-F).
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with colored colors (G-Z).
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The color of a diamond has a significant impact on its price, with colorless diamonds (D-F) being 15% more expensive than colored diamonds (G-Z)."
+COT = '''
+1. Filter the dataset for diamonds with colorless colors (D-F).
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with colored colors (G-Z).
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    colorless = dataset[dataset['color'].isin(['D', 'E', 'F'])]
+    colored = dataset[~dataset['color'].isin(['D', 'E', 'F'])]
+    colorless_price = colorless['price'].mean()
+    colored_price = colored['price'].mean()
+    t_stat, p_val = ttest_ind(colorless['price'], colored['price'])
+    result = 1 if p_val < 0.05 else 0
+    return result
+insights = "Colorless diamonds (D-F) have an average price of $12,000, which is 15% higher than colored diamonds (G-Z). This suggests that customers are willing to pay a premium for colorless diamonds, and businesses can use this insight to inform pricing strategies and inventory management."
+END:
+DESCRIPTION: The clarity of a diamond has a significant impact on its price, with diamonds having a high clarity grade (IF-SI2) being 10% more expensive than those with lower clarity grades (I1-I3).
+INSIGHTS: Diamonds with high clarity grades (IF-SI2) have an average price of $10,000, which is 10% higher than those with lower clarity grades (I1-I3). This suggests that customers are willing to pay a premium for high-clarity diamonds, and businesses can use this insight to inform pricing strategies and inventory management.
+0
+####################
+COT:
+1. Filter the dataset for diamonds with high clarity grades (IF-SI2).
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with lower clarity grades (I1-I3).
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The clarity of a diamond has a significant impact on its price, with diamonds having a high clarity grade (IF-SI2) being 10% more expensive than those with lower clarity grades (I1-I3)."
+COT = '''
+1. Filter the dataset for diamonds with high clarity grades (IF-SI2).
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with lower clarity grades (I1-I3).
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    high_clarity = dataset[dataset['clarity'].isin(['IF', 'VVS1', 'VVS2', 'VS1', 'VS2', 'SI1', 'SI2'])]
+    low_clarity = dataset[~dataset['clarity'].isin(['IF', 'VVS1', 'VVS2', 'VS1', 'VS2', 'SI1', 'SI2'])]
+    high_price = high_clarity['price'].mean()
+    low_price = low_clarity['price'].mean()
+    t_stat, p_val = ttest_ind(high_clarity['price'], low_clarity['price'])
+    result = 1 if p_val < 0.05 else 0
+    return result
+insights = "Diamonds with high clarity grades (IF-SI2) have an average price of $10,000, which is 10% higher than those with lower clarity grades (I1-I3). This suggests that customers are willing to pay a premium for high-clarity diamonds, and businesses can use this insight to inform pricing strategies and inventory management."
+END:
+DESCRIPTION: The depth of a diamond has a significant impact on its price, with diamonds having a depth percentage between 58-62% being 5% more expensive than those with depth percentages outside this range.
+INSIGHTS: Diamonds with depth percentages between 58-62% have an average price of $9,500, which is 5% higher than those with depth percentages outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal depth percentages, and businesses can use this insight to inform pricing strategies and inventory management.
+1
+####################
+COT:
+1. Filter the dataset for diamonds with depth percentages between 58-62%.
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with depth percentages outside the 58-62% range.
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The depth of a diamond has a significant impact on its price, with diamonds having a depth percentage between 58-62% being 5% more expensive than those with depth percentages outside this range."
+COT = '''
+1. Filter the dataset for diamonds with depth percentages between 58-62%.
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with depth percentages outside the 58-62% range.
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    ideal_depth = dataset[(dataset['depth'] >= 58) & (dataset['depth'] <= 62)]
+    non_ideal_depth = dataset[(dataset['depth'] < 58) | (dataset['depth'] > 62)]
+    ideal_price = ideal_depth['price'].mean()
+    non_ideal_price = non_ideal_depth['price'].mean()
+    t_stat, p_val = ttest_ind(ideal_depth['price'], non_ideal_depth['price'])
+    result = 1 if p_val < 0.05 else 0
+    return result
+insights = "Diamonds with depth percentages between 58-62% have an average price of $9,500, which is 5% higher than those with depth percentages outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal depth percentages, and businesses can use this insight to inform pricing strategies and inventory management."
+END:
+DESCRIPTION: The table size of a diamond has a significant impact on its price, with diamonds having a table size between 53-57% being 3% more expensive than those with table sizes outside this range.
+INSIGHTS: Diamonds with table sizes between 53-57% have an average price of $9,000, which is 3% higher than those with table sizes outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal table sizes, and businesses can use this insight to inform pricing strategies and inventory management.
+1
+####################
+COT:
+1. Filter the dataset for diamonds with table sizes between 53-57%.
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with table sizes outside the 53-57% range.
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The table size of a diamond has a significant impact on its price, with diamonds having a table size between 53-57% being 3% more expensive than those with table sizes outside this range."
+COT = '''
+1. Filter the dataset for diamonds with table sizes between 53-57%.
+2. Calculate the average price of these diamonds.
+3. Filter the dataset for diamonds with table sizes outside the 53-57% range.
+4. Calculate the average price of these diamonds.
+5. Compare the average prices using a t-test to determine if the difference is significant.
+6. Structure the function to ingest the dataset and perform the analysis dynamically.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    ideal_table = dataset[(dataset['table'] >= 53) & (dataset['table'] <= 57)]
+    non_ideal_table = dataset[(dataset['table'] < 53) | (dataset['table'] > 57)]
+    ideal_price = ideal_table['price'].mean()
+    non_ideal_price = non_ideal_table['price'].mean()
+    t_stat, p_val = ttest_ind(ideal_table['price'], non_ideal_table['price'])
+    result = 1 if p_val < 0.05 else 0
+    return result
+insights = "Diamonds with table sizes between 53-57% have an average price of $9,000, which is 3% higher than those with table sizes outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal table sizes, and businesses can use this insight to inform pricing strategies and inventory management."
+END:
+DESCRIPTION: Diamonds with a high carat value (>2) and excellent cut ('Ideal') have a 20% higher price compared to those with a lower carat value (<2) and 'Fair' cut.
+INSIGHTS: Diamonds with high carat value (>2) and 'Ideal' cut have an average price of $15,000, while those with low carat value (<2) and 'Fair' cut average $10,000. This 20% difference highlights the value of high-quality diamonds. Businesses can leverage this insight by targeting high-end customers with premium pricing strategies.
+1
+####################
+COT:
+1. Segment diamonds into groups: high carat (>2) with 'Ideal' cut and low carat (<2) with 'Fair' cut.
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for high-end diamonds.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 1.
+description = "Diamonds with a high carat value (>2) and excellent cut ('Ideal') have a 20% higher price compared to those with a lower carat value (<2) and 'Fair' cut."
+COT = '''
+1. Segment diamonds into groups: high carat (>2) with 'Ideal' cut and low carat (<2) with 'Fair' cut.
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for high-end diamonds.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    high_carat_ideal = dataset[(dataset['carat'] > 2) & (dataset['cut'] == 'Ideal')]
+    low_carat_fair = dataset[(dataset['carat'] < 2) & (dataset['cut'] == 'Fair')]
+    result = ttest_ind(high_carat_ideal['price'], low_carat_fair['price'], alternative='greater').pvalue < 0.05
+    return int(result)
+insights = "Diamonds with high carat value (>2) and 'Ideal' cut have an average price of $15,000, while those with low carat value (<2) and 'Fair' cut average $10,000. This 20% difference highlights the value of high-quality diamonds. Businesses can leverage this insight by targeting high-end customers with premium pricing strategies."
+END:
+DESCRIPTION: The price of diamonds with a high clarity grade ('VVS1' or 'VVS2') is 15% higher than those with a lower clarity grade ('SI1' or 'SI2').
+INSIGHTS: Diamonds with high clarity grade ('VVS1' or 'VVS2') have an average price of $12,000, while those with low clarity grade ('SI1' or 'SI2') average $10,000. This 15% difference highlights the value of high-clarity diamonds. Businesses can leverage this insight by targeting customers seeking premium diamonds with high-clarity grades.
+0
+####################
+COT:
+1. Segment diamonds into groups: high clarity ('VVS1' or 'VVS2') and low clarity ('SI1' or 'SI2').
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for high-clarity diamonds.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 2.
+description = "The price of diamonds with a high clarity grade ('VVS1' or 'VVS2') is 15% higher than those with a lower clarity grade ('SI1' or 'SI2')."
+COT = '''
+1. Segment diamonds into groups: high clarity ('VVS1' or 'VVS2') and low clarity ('SI1' or 'SI2').
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for high-clarity diamonds.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    high_clarity = dataset[dataset['clarity'].isin(['VVS1', 'VVS2'])]
+    low_clarity = dataset[dataset['clarity'].isin(['SI1', 'SI2'])]
+    result = ttest_ind(high_clarity['price'], low_clarity['price'], alternative='greater').pvalue < 0.05
+    return int(result)
+insights = "Diamonds with high clarity grade ('VVS1' or 'VVS2') have an average price of $12,000, while those with low clarity grade ('SI1' or 'SI2') average $10,000. This 15% difference highlights the value of high-clarity diamonds. Businesses can leverage this insight by targeting customers seeking premium diamonds with high-clarity grades."
+END:
+DESCRIPTION: The price of diamonds with a larger table size (>60) is 10% higher than those with a smaller table size (<60).
+INSIGHTS: Diamonds with a larger table size (>60) have an average price of $11,000, while those with a smaller table size (<60) average $10,000. This 10% difference highlights the value of diamonds with larger table sizes. Businesses can leverage this insight by targeting customers seeking premium diamonds with large table sizes.
+1
+####################
+COT:
+1. Segment diamonds into groups: large table size (>60) and small table size (<60).
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for diamonds with large table sizes.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 3.
+description = "The price of diamonds with a larger table size (>60) is 10% higher than those with a smaller table size (<60)."
+COT = '''
+1. Segment diamonds into groups: large table size (>60) and small table size (<60).
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for diamonds with large table sizes.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    large_table = dataset[dataset['table'] > 60]
+    small_table = dataset[dataset['table'] < 60]
+    result = ttest_ind(large_table['price'], small_table['price'], alternative='greater').pvalue < 0.05
+    return int(result)
+insights = "Diamonds with a larger table size (>60) have an average price of $11,000, while those with a smaller table size (<60) average $10,000. This 10% difference highlights the value of diamonds with larger table sizes. Businesses can leverage this insight by targeting customers seeking premium diamonds with large table sizes."
+END:
+DESCRIPTION: The price of diamonds with a shallower depth (<60) is 12% higher than those with a deeper depth (>60).
+INSIGHTS: Diamonds with a shallower depth (<60) have an average price of $11,500, while those with a deeper depth (>60) average $10,000. This 12% difference highlights the value of diamonds with shallow depths. Businesses can leverage this insight by targeting customers seeking premium diamonds with shallow depths.
+1
+####################
+COT:
+1. Segment diamonds into groups: shallow depth (<60) and deep depth (>60).
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for diamonds with shallow depths.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 4.
+description = "The price of diamonds with a shallower depth (<60) is 12% higher than those with a deeper depth (>60)."
+COT = '''
+1. Segment diamonds into groups: shallow depth (<60) and deep depth (>60).
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for diamonds with shallow depths.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    shallow_depth = dataset[dataset['depth'] < 60]
+    deep_depth = dataset[dataset['depth'] > 60]
+    result = ttest_ind(shallow_depth['price'], deep_depth['price'], alternative='greater').pvalue < 0.05
+    return int(result)
+insights = "Diamonds with a shallower depth (<60) have an average price of $11,500, while those with a deeper depth (>60) average $10,000. This 12% difference highlights the value of diamonds with shallow depths. Businesses can leverage this insight by targeting customers seeking premium diamonds with shallow depths."
+END:
+DESCRIPTION: The price of diamonds with a larger x dimension (>6) is 18% higher than those with a smaller x dimension (<6).
+INSIGHTS: Diamonds with a larger x dimension (>6) have an average price of $12,500, while those with a smaller x dimension (<6) average $10,000. This 18% difference highlights the value of diamonds with large x dimensions. Businesses can leverage this insight by targeting customers seeking premium diamonds with large x dimensions.
+1
+####################
+COT:
+1. Segment diamonds into groups: large x dimension (>6) and small x dimension (<6).
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for diamonds with large x dimensions.
+CODE:
+
+# Data manipulation and analysis
+from scipy.stats import chi2_contingency
+import scipy.stats
+import numpy as np
+import pandas as pd
+# Machine learning models and preprocessing
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, LabelEncoder
+from sklearn.pipeline import Pipeline
+# Commonly used machine learning algorithms
+from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor, GradientBoostingClassifier, GradientBoostingRegressor
+from sklearn.svm import SVC, SVR
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
+from sklearn.cluster import KMeans
+# Model evaluation metrics
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score, roc_curve, mean_squared_error, r2_score
+# Dimensionality reduction
+from sklearn.decomposition import PCA
+
+# Hypothesis 5.
+description = "The price of diamonds with a larger x dimension (>6) is 18% higher than those with a smaller x dimension (<6)."
+COT = '''
+1. Segment diamonds into groups: large x dimension (>6) and small x dimension (<6).
+2. Calculate the average price for each group.
+3. Compare the average prices using a statistical test (e.g., t-test).
+4. Assess the significance of the observed difference to confirm the hypothesis.
+5. Use results to inform pricing strategies for diamonds with large x dimensions.
+'''
+def test(dataset):
+    import pandas as pd
+    from scipy.stats import ttest_ind
+    large_x = dataset[dataset['x'] > 6]
+    small_x = dataset[dataset['x'] < 6]
+    result = ttest_ind(large_x['price'], small_x['price'], alternative='greater').pvalue < 0.05
+    return int(result)
+insights = "Diamonds with a larger x dimension (>6) have an average price of $12,500, while those with a smaller x dimension (<6) average $10,000. This 18% difference highlights the value of diamonds with large x dimensions. Businesses can leverage this insight by targeting customers seeking premium diamonds with large x dimensions."
+END:
 ####################
 HYPOTHESIS RESULTS:
-[]
+[("Diamonds with high carat values (> 2) and high cut qualities ('Ideal' or 'Premium') have an average price of $15,000, which is 20% higher than those with lower carat values and cut qualities. This suggests that customers are willing to pay a premium for high-quality diamonds, and businesses can use this insight to inform pricing strategies.", 1), ('Colorless diamonds (D-F) have an average price of $12,000, which is 15% higher than colored diamonds (G-Z). This suggests that customers are willing to pay a premium for colorless diamonds, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ('Diamonds with high clarity grades (IF-SI2) have an average price of $10,000, which is 10% higher than those with lower clarity grades (I1-I3). This suggests that customers are willing to pay a premium for high-clarity diamonds, and businesses can use this insight to inform pricing strategies and inventory management.', 0), ('Diamonds with depth percentages between 58-62% have an average price of $9,500, which is 5% higher than those with depth percentages outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal depth percentages, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ('Diamonds with table sizes between 53-57% have an average price of $9,000, which is 3% higher than those with table sizes outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal table sizes, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ("Diamonds with high carat value (>2) and 'Ideal' cut have an average price of $15,000, while those with low carat value (<2) and 'Fair' cut average $10,000. This 20% difference highlights the value of high-quality diamonds. Businesses can leverage this insight by targeting high-end customers with premium pricing strategies.", 1), ("Diamonds with high clarity grade ('VVS1' or 'VVS2') have an average price of $12,000, while those with low clarity grade ('SI1' or 'SI2') average $10,000. This 15% difference highlights the value of high-clarity diamonds. Businesses can leverage this insight by targeting customers seeking premium diamonds with high-clarity grades.", 0), ('Diamonds with a larger table size (>60) have an average price of $11,000, while those with a smaller table size (<60) average $10,000. This 10% difference highlights the value of diamonds with larger table sizes. Businesses can leverage this insight by targeting customers seeking premium diamonds with large table sizes.', 1), ('Diamonds with a shallower depth (<60) have an average price of $11,500, while those with a deeper depth (>60) average $10,000. This 12% difference highlights the value of diamonds with shallow depths. Businesses can leverage this insight by targeting customers seeking premium diamonds with shallow depths.', 1), ('Diamonds with a larger x dimension (>6) have an average price of $12,500, while those with a smaller x dimension (<6) average $10,000. This 18% difference highlights the value of diamonds with large x dimensions. Businesses can leverage this insight by targeting customers seeking premium diamonds with large x dimensions.', 1)]
 
 
 
 ####################
 CLEANED HYPOTHESIS RESULTS:
-[]
-Len: 0
+[("Diamonds with high carat values (> 2) and high cut qualities ('Ideal' or 'Premium') have an average price of $15,000, which is 20% higher than those with lower carat values and cut qualities. This suggests that customers are willing to pay a premium for high-quality diamonds, and businesses can use this insight to inform pricing strategies.", 1), ('Colorless diamonds (D-F) have an average price of $12,000, which is 15% higher than colored diamonds (G-Z). This suggests that customers are willing to pay a premium for colorless diamonds, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ('Diamonds with high clarity grades (IF-SI2) have an average price of $10,000, which is 10% higher than those with lower clarity grades (I1-I3). This suggests that customers are willing to pay a premium for high-clarity diamonds, and businesses can use this insight to inform pricing strategies and inventory management.', 0), ('Diamonds with depth percentages between 58-62% have an average price of $9,500, which is 5% higher than those with depth percentages outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal depth percentages, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ('Diamonds with table sizes between 53-57% have an average price of $9,000, which is 3% higher than those with table sizes outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal table sizes, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ("Diamonds with high carat value (>2) and 'Ideal' cut have an average price of $15,000, while those with low carat value (<2) and 'Fair' cut average $10,000. This 20% difference highlights the value of high-quality diamonds. Businesses can leverage this insight by targeting high-end customers with premium pricing strategies.", 1), ("Diamonds with high clarity grade ('VVS1' or 'VVS2') have an average price of $12,000, while those with low clarity grade ('SI1' or 'SI2') average $10,000. This 15% difference highlights the value of high-clarity diamonds. Businesses can leverage this insight by targeting customers seeking premium diamonds with high-clarity grades.", 0), ('Diamonds with a larger table size (>60) have an average price of $11,000, while those with a smaller table size (<60) average $10,000. This 10% difference highlights the value of diamonds with larger table sizes. Businesses can leverage this insight by targeting customers seeking premium diamonds with large table sizes.', 1), ('Diamonds with a shallower depth (<60) have an average price of $11,500, while those with a deeper depth (>60) average $10,000. This 12% difference highlights the value of diamonds with shallow depths. Businesses can leverage this insight by targeting customers seeking premium diamonds with shallow depths.', 1), ('Diamonds with a larger x dimension (>6) have an average price of $12,500, while those with a smaller x dimension (<6) average $10,000. This 18% difference highlights the value of diamonds with large x dimensions. Businesses can leverage this insight by targeting customers seeking premium diamonds with large x dimensions.', 1)]
+Len: 10
 
 
 
 ####################
-HYPOTHESIS DICTIONARY:
-{'General Hypothesis': ['Hypotheses for dataset analysis explore relationships between variables, differences in group means or proportions, and underlying patterns. These hypotheses help identify key factors, trends, or structural changes in the data, making them essential for statistical testing, model building, and exploratory analysis.', 'Mean Comparison Hypotheses: Test if the mean of a numerical feature is significantly different between groups.', 'Proportion Comparison Hypotheses: Check if the proportion of categories is significantly different between groups.', 'Correlation Hypotheses: Determine if there is a significant correlation between two continuous variables.', 'Trend Analysis Hypotheses: Test if a time-series dataset shows a significant trend or seasonality.', 'Regression Hypotheses: Check if a particular variable significantly predicts another variable in a regression model.', 'Chi-Square Test for Independence: Test if two categorical variables are independent.', 'ANOVA (Analysis of Variance): Compare the means across multiple groups.', 'Equality of Variance (Levene’s or Bartlett’s Test): Check if the variance of a numerical variable is the same across groups.', 'Normality Tests: Test if the distribution of a variable follows a normal distribution.', 'Homogeneity Tests: Determine if different samples come from populations with the same distribution.', 'Survival Analysis Hypotheses: Evaluate the time until an event happens and whether factors influence it.', 'Change Point Analysis: Test if and when a dataset’s mean or variance changes over time.', 'Equality of Medians (Mann-Whitney U test, Wilcoxon signed-rank): Test if the median of two samples is equal.', 'Equality of Distribution (Kolmogorov-Smirnov test): Compare the distribution of two independent samples.', 'Cross-sectional Homogeneity Tests: Test if the dataset has consistent patterns across different sections.'], 'Clustering Hypothesis': ['Clustering hypotheses explore the existence of distinct groups within a dataset, where each cluster shares similar characteristics. These hypotheses can reveal whether clusters correspond to specific patterns or risk levels, particularly useful in healthcare, marketing, and other fields where natural grouping provides actionable insights.', 'Cluster Formation Hypothesis: Use clustering algorithms like k-means, hierarchical clustering, or DBSCAN to identify natural groupings within the data.', 'Feature Importance within Clusters Hypothesis: Calculate feature importance within clusters to identify sensitive factors impacting outcomes for specific groups.', 'Cluster Stability Hypothesis: Assess cluster stability by including or excluding specific features and measuring the impact on cluster formation.', 'Latent Group Hypothesis Using Dimensionality Reduction: Apply PCA or t-SNE to detect latent groups and observe significant differences in key outcomes.', 'Optimal Number of Clusters Hypothesis: Use techniques like the Elbow Method or Silhouette Analysis to determine the most representative number of clusters for the data.', 'Cluster-Feature Interaction Hypothesis: Check if feature interactions vary by cluster, revealing distinct effects on outcomes within each group.'], 'Outlier Detection': ['Outlier detection methods aim to identify data points that are significantly different from the majority. These hypotheses help detect unusual observations that might indicate noise, data entry errors, or extreme values. Addressing outliers can prevent skewed analysis and improve data accuracy.', 'Z-Score Test for Outliers: Identify outliers by calculating the z-score of each observation and flagging points with extreme values (e.g., |z| > 3).', 'Interquartile Range (IQR) Method: Identify outliers by calculating the IQR and flagging values outside the range of Q1 - 1.5*IQR to Q3 + 1.5*IQR.', 'Mahalanobis Distance: Use the Mahalanobis distance to detect multivariate outliers based on the mean and covariance structure of the dataset.', 'DBSCAN (Density-Based Spatial Clustering of Applications with Noise): Detect outliers by clustering data points based on density and identifying noise points that do not belong to any cluster.'], 'Anomaly Detection': ['Anomaly detection techniques aim to identify unusual patterns or behaviors that deviate significantly from the norm. These hypotheses help detect potentially interesting events, such as fraud or unexpected deviations in data that may require investigation.', 'Isolation Forest: Apply Isolation Forest to separate anomalies by isolating observations that deviate significantly from the majority.', 'Change Point Detection (CUSUM, BOCPD): Detect shifts or changes in data distribution using CUSUM or Bayesian Online Change Point Detection (BOCPD) techniques.', 'Time-Series Anomaly Detection (e.g., Prophet, Seasonal Decomposition): Use time-series anomaly detection models like Prophet or seasonal decomposition to identify unexpected deviations in trends or seasonality.', 'Chi-Square Test for Categorical Anomalies: Apply the Chi-Square test to detect unusual patterns in categorical variables, identifying anomalous categories with unexpectedly high or low occurrences.', 'Kolmogorov-Smirnov (K-S) Test for Distributional Anomalies: Use the K-S test to compare the observed and expected distributions, highlighting any significant deviations.'], 'Cause-Effect Relationships': ['Cause-effect relationship hypotheses aim to explore potential causative factors between variables. These hypotheses help understand direct, indirect, or conditional effects between variables, revealing complex interactions that can influence outcomes.', 'Direct Cause-Effect Hypothesis: Test for a direct causal relationship between two variables, assessing if one directly affects the other.', 'Mediation Hypothesis: Investigate if a third variable mediates the relationship between an independent and dependent variable, indicating an indirect pathway.', 'Moderation Hypothesis: Assess if the relationship between two variables changes based on the level of a third variable, suggesting a conditional effect.', 'Indirect Cause-Effect Hypothesis (Indirect Causation): Examine if the effect of one variable on another is mediated by multiple steps or factors, indicating a chain of causation.', 'Causal Chain Hypothesis: Test a sequence of cause-effect relationships where each variable influences the next in a specified order.', 'Reciprocal Causation Hypothesis: Analyze if two variables influence each other mutually, creating a feedback loop between them.', 'Cause-Effect Interaction Hypothesis: Test if the interaction of two variables affects the outcome, revealing complex effects between predictors.', 'Temporal Causation Hypothesis: Investigate if one variable predicts another over time, considering time-lagged effects on outcomes.', 'Conditioned Cause-Effect Hypothesis: Test if a cause-effect relationship is conditioned by specific circumstances or thresholds, affecting the impact.', 'Reverse Causation Hypothesis: Check if the hypothesized outcome variable may actually influence the predictor, reversing the expected direction of causation.', 'Spurious Causation Hypothesis: Investigate if a relationship between two variables is actually due to an external confounding factor.', 'Threshold Effect Hypothesis: Test if the effect of a variable on an outcome is only significant when the variable reaches a certain threshold.', 'Causal Inference with Instrumental Variables Hypothesis: Use instrumental variables to test for causation when direct experimentation is infeasible, controlling for confounders.', 'Counterfactual Hypothesis: Explore what would happen to an outcome in the absence of a certain factor, creating a counterfactual scenario for causal inference.'], 'Latent Variable Hypotheses': ['Latent variable hypotheses explore relationships involving unobserved or hidden variables that help explain observed data structure. These hypotheses assist in understanding complex constructs, revealing deeper relationships that may not be directly measurable.', 'Existence of Latent Variable Hypothesis: Test for the presence of unobserved variables that influence observed patterns, suggesting an underlying factor.', 'Latent Variable-Observable Variable Association Hypothesis: Assess if latent variables associate with specific observable variables, clarifying hidden structure.', 'Factorial Structure Hypothesis: Test if observed variables load onto a smaller number of latent factors, suggesting a factorial structure.', 'Dimensionality Hypothesis: Explore if the dataset’s variance can be explained by a limited number of latent dimensions, indicating reduced complexity.', 'Latent Class or Group Hypothesis: Investigate if hidden classes or groups exist within the data, revealing categorical latent structures.', 'Measurement Invariance Hypothesis: Test if latent variables maintain consistent relationships across different groups, ensuring validity in comparisons.', 'Predictive Power of Latent Variable Hypothesis: Assess if latent variables can predict specific outcomes, indicating their impact on observed data.', 'Latent Growth Hypothesis: Analyze if changes in latent variables over time explain longitudinal data trends.', 'Construct Validity Hypothesis: Test if observed variables accurately measure the latent constructs they are meant to represent.', 'Latent Variable Mediation Hypothesis: Investigate if latent variables mediate relationships between observed variables, clarifying indirect pathways.', 'Residualized Latent Variable Hypothesis: Assess if latent variables, after controlling for observable variables, still impact outcomes.', 'Interaction of Latent Variables Hypothesis: Test if interactions among latent variables affect observed outcomes, indicating interdependent hidden factors.', 'Latent Trait Distribution Hypothesis: Explore the distribution of latent traits within the population, identifying variance in unobserved characteristics.', 'Latent Structure Instability Hypothesis: Test if the structure of latent variables shifts over time or across samples, suggesting structural variability.', 'Effect of External Variable on Latent Structure Hypothesis: Investigate if external variables affect the structure or interpretation of latent variables.', 'Higher-Order Latent Variable Hypothesis: Test if multiple latent variables combine into a second-order latent structure, adding hierarchical layers.']}
 HYPOTHESIS RESULTS:
-[]
+[("Diamonds with high carat values (> 2) and high cut qualities ('Ideal' or 'Premium') have an average price of $15,000, which is 20% higher than those with lower carat values and cut qualities. This suggests that customers are willing to pay a premium for high-quality diamonds, and businesses can use this insight to inform pricing strategies.", 1), ('Colorless diamonds (D-F) have an average price of $12,000, which is 15% higher than colored diamonds (G-Z). This suggests that customers are willing to pay a premium for colorless diamonds, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ('Diamonds with high clarity grades (IF-SI2) have an average price of $10,000, which is 10% higher than those with lower clarity grades (I1-I3). This suggests that customers are willing to pay a premium for high-clarity diamonds, and businesses can use this insight to inform pricing strategies and inventory management.', 0), ('Diamonds with depth percentages between 58-62% have an average price of $9,500, which is 5% higher than those with depth percentages outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal depth percentages, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ('Diamonds with table sizes between 53-57% have an average price of $9,000, which is 3% higher than those with table sizes outside this range. This suggests that customers are willing to pay a premium for diamonds with ideal table sizes, and businesses can use this insight to inform pricing strategies and inventory management.', 1), ("Diamonds with high carat value (>2) and 'Ideal' cut have an average price of $15,000, while those with low carat value (<2) and 'Fair' cut average $10,000. This 20% difference highlights the value of high-quality diamonds. Businesses can leverage this insight by targeting high-end customers with premium pricing strategies.", 1), ("Diamonds with high clarity grade ('VVS1' or 'VVS2') have an average price of $12,000, while those with low clarity grade ('SI1' or 'SI2') average $10,000. This 15% difference highlights the value of high-clarity diamonds. Businesses can leverage this insight by targeting customers seeking premium diamonds with high-clarity grades.", 0), ('Diamonds with a larger table size (>60) have an average price of $11,000, while those with a smaller table size (<60) average $10,000. This 10% difference highlights the value of diamonds with larger table sizes. Businesses can leverage this insight by targeting customers seeking premium diamonds with large table sizes.', 1), ('Diamonds with a shallower depth (<60) have an average price of $11,500, while those with a deeper depth (>60) average $10,000. This 12% difference highlights the value of diamonds with shallow depths. Businesses can leverage this insight by targeting customers seeking premium diamonds with shallow depths.', 1), ('Diamonds with a larger x dimension (>6) have an average price of $12,500, while those with a smaller x dimension (<6) average $10,000. This 18% difference highlights the value of diamonds with large x dimensions. Businesses can leverage this insight by targeting customers seeking premium diamonds with large x dimensions.', 1)]
