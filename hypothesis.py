@@ -151,7 +151,6 @@ import inspect
 
 
 # Set up your OpenAI API key
-api_key = "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"  # Replace with your actual API key
 llm_model = LLM('gpt')
 model_name = "gpt-4o"
 
